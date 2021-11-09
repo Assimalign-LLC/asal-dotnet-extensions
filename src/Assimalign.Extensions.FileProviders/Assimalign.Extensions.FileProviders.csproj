@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>$(TargetFrameworks)</TargetFrameworks>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Assimalign.Extensions.FileSystemGlobbing\Assimalign.Extensions.FileSystemGlobbing.csproj" />
+	  <ProjectReference Include="..\Assimalign.Extensions.Primitives\Assimalign.Extensions.Primitives.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="FileSystemGlobbing\" />
+	</ItemGroup>
+
+</Project>

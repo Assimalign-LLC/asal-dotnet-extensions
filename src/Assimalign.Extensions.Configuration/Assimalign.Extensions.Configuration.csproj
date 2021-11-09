@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>$(TargetFrameworks)</TargetFrameworks>
+	    <EnableDefaultItems>true</EnableDefaultItems>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Assimalign.Extensions.FileProviders\Assimalign.Extensions.FileProviders.csproj" />
+        <ProjectReference Include="..\Assimalign.Extensions.Primitives\Assimalign.Extensions.Primitives.csproj" />
+    </ItemGroup>
+
+</Project>
