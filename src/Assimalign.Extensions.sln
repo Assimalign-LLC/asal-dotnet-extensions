@@ -18,13 +18,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Confi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.DependencyInjection", "Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj", "{B91057B3-24DE-4FEC-9A13-0FE753FBF320}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.FileProviders", "Assimalign.Extensions.FileProviders\Assimalign.Extensions.FileProviders.csproj", "{CABAC296-B99D-4F9F-831F-62F89465FD40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.FileProviders", "Assimalign.Extensions.FileProviders\Assimalign.Extensions.FileProviders.csproj", "{CABAC296-B99D-4F9F-831F-62F89465FD40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Logging", "Assimalign.Extensions.Logging\Assimalign.Extensions.Logging.csproj", "{0863BDB7-1728-4962-82F2-816A46B1F676}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Logging", "Assimalign.Extensions.Logging\Assimalign.Extensions.Logging.csproj", "{0863BDB7-1728-4962-82F2-816A46B1F676}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Options", "Assimalign.Extensions.Options\Assimalign.Extensions.Options.csproj", "{1EEFB8A8-4AF4-47BA-BD6E-4240F9DB55A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Options", "Assimalign.Extensions.Options\Assimalign.Extensions.Options.csproj", "{1EEFB8A8-4AF4-47BA-BD6E-4240F9DB55A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.FileSystemGlobbing", "Assimalign.Extensions.FileSystemGlobbing\Assimalign.Extensions.FileSystemGlobbing.csproj", "{65BD0269-5CFB-4DEC-9B7B-C24ADD582262}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.FileSystemGlobbing", "Assimalign.Extensions.FileSystemGlobbing\Assimalign.Extensions.FileSystemGlobbing.csproj", "{65BD0269-5CFB-4DEC-9B7B-C24ADD582262}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A833112E-3BFE-4F5F-AFF6-9A7841FA87B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Diagnostics", "Assimalign.Extensions.Diagnostics\Assimalign.Extensions.Diagnostics.csproj", "{20B6A00A-C62E-480D-B6E6-EA25D41B817A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.ObjectPool", "Assimalign.Extensions.ObjectPool\Assimalign.Extensions.ObjectPool.csproj", "{A6D699F1-91D2-4B64-905F-2602EAB31D5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Scheduling", "Assimalign.Extensions.Scheduling\Assimalign.Extensions.Scheduling.csproj", "{3826117A-EF82-4822-82AE-12936F58CBB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,6 +72,18 @@ Global
 		{65BD0269-5CFB-4DEC-9B7B-C24ADD582262}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65BD0269-5CFB-4DEC-9B7B-C24ADD582262}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65BD0269-5CFB-4DEC-9B7B-C24ADD582262}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20B6A00A-C62E-480D-B6E6-EA25D41B817A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20B6A00A-C62E-480D-B6E6-EA25D41B817A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20B6A00A-C62E-480D-B6E6-EA25D41B817A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20B6A00A-C62E-480D-B6E6-EA25D41B817A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6D699F1-91D2-4B64-905F-2602EAB31D5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6D699F1-91D2-4B64-905F-2602EAB31D5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6D699F1-91D2-4B64-905F-2602EAB31D5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6D699F1-91D2-4B64-905F-2602EAB31D5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3826117A-EF82-4822-82AE-12936F58CBB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3826117A-EF82-4822-82AE-12936F58CBB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3826117A-EF82-4822-82AE-12936F58CBB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3826117A-EF82-4822-82AE-12936F58CBB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,6 +97,9 @@ Global
 		{0863BDB7-1728-4962-82F2-816A46B1F676} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
 		{1EEFB8A8-4AF4-47BA-BD6E-4240F9DB55A7} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
 		{65BD0269-5CFB-4DEC-9B7B-C24ADD582262} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
+		{20B6A00A-C62E-480D-B6E6-EA25D41B817A} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
+		{A6D699F1-91D2-4B64-905F-2602EAB31D5D} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
+		{3826117A-EF82-4822-82AE-12936F58CBB3} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0E48D3C9-706C-4079-9E6E-2D9C88CEB612}

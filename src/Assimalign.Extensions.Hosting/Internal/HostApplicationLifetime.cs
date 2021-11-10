@@ -57,7 +57,7 @@ namespace Assimalign.Extensions.Hosting.Internal
                 }
                 catch (Exception ex)
                 {
-                    _logger.ApplicationError(LoggerEventIds.ApplicationStoppingException,
+                    _logger.ApplicationError(HostLoggerEventIds.ApplicationStoppingException,
                                              "An error occurred stopping the application",
                                              ex);
                 }
@@ -75,7 +75,7 @@ namespace Assimalign.Extensions.Hosting.Internal
             }
             catch (Exception ex)
             {
-                _logger.ApplicationError(LoggerEventIds.ApplicationStartupException,
+                _logger.ApplicationError(HostLoggerEventIds.ApplicationStartupException,
                                          "An error occurred starting the application",
                                          ex);
             }
@@ -92,7 +92,7 @@ namespace Assimalign.Extensions.Hosting.Internal
             }
             catch (Exception ex)
             {
-                _logger.ApplicationError(LoggerEventIds.ApplicationStoppedException,
+                _logger.ApplicationError(HostLoggerEventIds.ApplicationStoppedException,
                                          "An error occurred stopping the application",
                                          ex);
             }

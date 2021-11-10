@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 
+
 namespace Assimalign.Extensions.Primitives
 {
     using Assimalign.Extensions.Primitives.Abstractions;

@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Logging
 {
-    using Assimalign.Extensions.DependencyInjection;
-    using Assimalign.Extensions.DependencyInjection.Abstractions;
     using Assimalign.Extensions.Options;
     using Assimalign.Extensions.Options.Abstractions;
     using Assimalign.Extensions.Logging.Abstractions;
+    using Assimalign.Extensions.DependencyInjection;
 
     public static class LoggerBuilderExtensions
     {

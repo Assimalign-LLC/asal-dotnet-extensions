@@ -8,7 +8,6 @@
   <ItemGroup>
     <Folder Include="Debuging\" />
     <Folder Include="Console\" />
-    <Folder Include="EventLog\" />
     <Folder Include="EventSource\" />
   </ItemGroup>
 

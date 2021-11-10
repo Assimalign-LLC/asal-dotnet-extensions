@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>$(TargetFrameworks)</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<EnableDefaultItems>true</EnableDefaultItems>
 		<LangVersion>Latest</LangVersion>
