@@ -10,7 +10,7 @@ namespace Assimalign.Extensions.Hosting.Abstractions
     /// <summary>
     /// A program abstraction.
     /// </summary>
-    public interface IHost
+    public interface IHost : IDisposable
     {
         /// <summary>
         /// The programs configured services.

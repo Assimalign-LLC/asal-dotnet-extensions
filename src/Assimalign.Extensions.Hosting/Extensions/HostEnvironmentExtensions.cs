@@ -26,7 +26,7 @@ namespace Assimalign.Extensions.Hosting
                 throw new ArgumentNullException(nameof(hostEnvironment));
             }
 
-            return hostEnvironment.IsEnvironment(Environment.Development);
+            return hostEnvironment.IsEnvironment(HostEnvironments.Development);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Assimalign.Extensions.Hosting
                 throw new ArgumentNullException(nameof(hostEnvironment));
             }
 
-            return hostEnvironment.IsEnvironment(Environment.Staging);
+            return hostEnvironment.IsEnvironment(HostEnvironments.Staging);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Assimalign.Extensions.Hosting
                 throw new ArgumentNullException(nameof(hostEnvironment));
             }
 
-            return hostEnvironment.IsEnvironment(Environment.Production);
+            return hostEnvironment.IsEnvironment(HostEnvironments.Production);
         }
 
         /// <summary>

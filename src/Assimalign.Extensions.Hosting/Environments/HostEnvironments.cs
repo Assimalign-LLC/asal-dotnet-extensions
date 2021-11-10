@@ -9,7 +9,7 @@ namespace Assimalign.Extensions.Hosting.Environments
     /// <summary>
     /// Commonly used environment names.
     /// </summary>
-    public class Environment
+    public class HostEnvironments
     {
         public const string Staging = "Staging";
         public const string Development = "Development";

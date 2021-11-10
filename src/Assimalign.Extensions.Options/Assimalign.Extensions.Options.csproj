@@ -4,4 +4,10 @@
 	  <TargetFrameworks>$(TargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Assimalign.Extensions.Configuration\Assimalign.Extensions.Configuration.csproj" />
+    <ProjectReference Include="..\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj" />
+    <ProjectReference Include="..\Assimalign.Extensions.Primitives\Assimalign.Extensions.Primitives.csproj" />
+  </ItemGroup>
+
 </Project>
