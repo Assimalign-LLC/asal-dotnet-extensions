@@ -25,5 +25,5 @@ jobs:
       run: dotnet build --configuration Release --no-restore
       working-directory: './src'
     - name: Publish
-      run: dotnet nuget push "*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json
-      working-directory: './src/**/bin/Release/'
+      run: dotnet nuget push "**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      working-directory: './src'
