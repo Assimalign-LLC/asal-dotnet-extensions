@@ -8,11 +8,11 @@ namespace Assimalign.Extensions.Scheduling.Crontab
 {
     public readonly struct CrontabValue
     {
-        private string second;
-        private string minute;
-        private string hour;
-        private string month;
-        private string weekday;
+        private readonly string second;
+        private readonly string minute;
+        private readonly string hour;
+        private readonly string month;
+        private readonly string weekday;
 
 
         /// <summary>
@@ -26,7 +26,11 @@ namespace Assimalign.Extensions.Scheduling.Crontab
 
             if (segments.Length == 6 || segments.Length == 5)
             {
-                
+                second = "";
+                minute = "";
+                hour = "";
+                month = "";
+                weekday = "";
             }
             else
             {
