@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Assimalign.Extensions.Hosting
 {
     using Assimalign.Extensions.Hosting.Abstractions;
@@ -11,7 +6,7 @@ namespace Assimalign.Extensions.Hosting
     /// <summary>
     /// Constants for HostBuilder configuration keys.
     /// </summary>
-    public static class HostDefaults
+    public static class HostDefaultConfigurationKeys
     {
         /// <summary>
         /// The configuration key used to set <see cref="IHostEnvironment.ApplicationName"/>.

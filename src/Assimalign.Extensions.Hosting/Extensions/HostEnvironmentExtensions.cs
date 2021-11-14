@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Hosting
 {
@@ -10,74 +6,57 @@ namespace Assimalign.Extensions.Hosting
     using Assimalign.Extensions.Hosting.Abstractions;
 
     /// <summary>
-    /// Extension methods for <see cref="IHostingEnvironment"/>.
+    /// Extension methods for <see cref="IHostEnvironment"/>.
     /// </summary>
     public static class HostEnvironmentExtensions
     {
         /// <summary>
-        /// Checks if the current host environment name is <see cref="EnvironmentName.Development"/>.
+        /// Checks if the current host environment name is <see cref="HostEnvironments.Development"/>.
         /// </summary>
         /// <param name="hostEnvironment">An instance of <see cref="IHostEnvironment"/>.</param>
-        /// <returns>True if the environment name is <see cref="EnvironmentName.Development"/>, otherwise false.</returns>
+        /// <returns>True if the environment name is <see cref="HostEnvironments.Development"/>, otherwise false.</returns>
         public static bool IsDevelopment(this IHostEnvironment hostEnvironment)
         {
-            if (hostEnvironment == null)
-            {
-                throw new ArgumentNullException(nameof(hostEnvironment));
-            }
-
             return hostEnvironment.IsEnvironment(HostEnvironments.Development);
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="hostEnvironment"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public static bool IsQualityAsurance(this IHostEnvironment hostEnvironment)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="hostEnvironment"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public static bool IsUserAcceptanceTesting(this IHostEnvironment hostEnvironment)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Checks if the current host environment name is <see cref="EnvironmentName.Staging"/>.
+        /// Checks if the current host environment name is <see cref="HostEnvironments.QualityAssurance"/>.
         /// </summary>
         /// <param name="hostEnvironment">An instance of <see cref="IHostEnvironment"/>.</param>
-        /// <returns>True if the environment name is <see cref="EnvironmentName.Staging"/>, otherwise false.</returns>
+        /// <returns>True if the environment name is <see cref="HostEnvironments.QualityAssurance"/>, otherwise false.</returns>
+        public static bool IsQualityAsurance(this IHostEnvironment hostEnvironment)
+        {
+            return hostEnvironment.IsEnvironment(HostEnvironments.QualityAssurance);
+        }
+
+        /// <summary>
+        /// Checks if the current host environment name is <see cref="HostEnvironments.UserAcceptance"/>.
+        /// </summary>
+        /// <param name="hostEnvironment">An instance of <see cref="IHostEnvironment"/>.</param>
+        /// <returns>True if the environment name is <see cref="HostEnvironments.UserAcceptance"/>, otherwise false.</returns>
+        public static bool IsUserAcceptanceTesting(this IHostEnvironment hostEnvironment)
+        {
+            return hostEnvironment.IsEnvironment(HostEnvironments.UserAcceptance);
+        }
+
+        /// <summary>
+        /// Checks if the current host environment name is <see cref="HostEnvironments.Staging"/>.
+        /// </summary>
+        /// <param name="hostEnvironment">An instance of <see cref="IHostEnvironment"/>.</param>
+        /// <returns>True if the environment name is <see cref="HostEnvironments.Staging"/>, otherwise false.</returns>
         public static bool IsStaging(this IHostEnvironment hostEnvironment)
         {
-            if (hostEnvironment == null)
-            {
-                throw new ArgumentNullException(nameof(hostEnvironment));
-            }
-
             return hostEnvironment.IsEnvironment(HostEnvironments.Staging);
         }
 
         /// <summary>
-        /// Checks if the current host environment name is <see cref="EnvironmentName.Production"/>.
+        /// Checks if the current host environment name is <see cref="HostEnvironments.Production"/>.
         /// </summary>
         /// <param name="hostEnvironment">An instance of <see cref="IHostEnvironment"/>.</param>
-        /// <returns>True if the environment name is <see cref="EnvironmentName.Production"/>, otherwise false.</returns>
+        /// <returns>True if the environment name is <see cref="HostEnvironments.Production"/>, otherwise false.</returns>
         public static bool IsProduction(this IHostEnvironment hostEnvironment)
         {
-            if (hostEnvironment == null)
-            {
-                throw new ArgumentNullException(nameof(hostEnvironment));
-            }
-
             return hostEnvironment.IsEnvironment(HostEnvironments.Production);
         }
 
@@ -87,9 +66,7 @@ namespace Assimalign.Extensions.Hosting
         /// <param name="hostEnvironment">An instance of <see cref="IHostEnvironment"/>.</param>
         /// <param name="environmentName">Environment name to validate against.</param>
         /// <returns>True if the specified name is the same as the current environment, otherwise false.</returns>
-        public static bool IsEnvironment(
-            this IHostEnvironment hostEnvironment,
-            string environmentName)
+        public static bool IsEnvironment(this IHostEnvironment hostEnvironment, string environmentName)
         {
             if (hostEnvironment == null)
             {

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Hosting
 {
@@ -13,7 +10,7 @@ namespace Assimalign.Extensions.Hosting
     {
         public HostBuilderContext(IDictionary<object, object> properties)
         {
-            Properties = properties ?? throw new System.ArgumentNullException(nameof(properties));
+            Properties = properties ?? throw new ArgumentNullException(nameof(properties));
         }
 
         /// <summary>

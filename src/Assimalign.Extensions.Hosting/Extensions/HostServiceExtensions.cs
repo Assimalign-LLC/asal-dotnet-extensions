@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Hosting
 {
@@ -13,9 +9,9 @@ namespace Assimalign.Extensions.Hosting
     public static class HostServiceExtensions
     {
         /// <summary>
-        /// Add an <see cref="IHostedService"/> registration for the given type.
+        /// Add an <see cref="IHostService"/> registration for the given type.
         /// </summary>
-        /// <typeparam name="THostedService">An <see cref="IHostedService"/> to register.</typeparam>
+        /// <typeparam name="THostedService">An <see cref="IHostService"/> to register.</typeparam>
         /// <param name="services">The <see cref="IServiceCollection"/> to register with.</param>
         /// <returns>The original <see cref="IServiceCollection"/>.</returns>
         public static IServiceCollection AddHostedService<THostedService>(this IServiceCollection services)
@@ -27,9 +23,9 @@ namespace Assimalign.Extensions.Hosting
         }
 
         /// <summary>
-        /// Add an <see cref="IHostedService"/> registration for the given type.
+        /// Add an <see cref="IHostService"/> registration for the given type.
         /// </summary>
-        /// <typeparam name="THostedService">An <see cref="IHostedService"/> to register.</typeparam>
+        /// <typeparam name="THostedService">An <see cref="IHostService"/> to register.</typeparam>
         /// <param name="services">The <see cref="IServiceCollection"/> to register with.</param>
         /// <param name="implementationFactory">A factory to create new instances of the service implementation.</param>
         /// <returns>The original <see cref="IServiceCollection"/>.</returns>

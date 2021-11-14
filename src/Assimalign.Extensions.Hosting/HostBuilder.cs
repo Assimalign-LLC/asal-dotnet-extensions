@@ -17,30 +17,37 @@ namespace Assimalign.Extensions.Hosting
     using Assimalign.Extensions.Logging.Abstractions;
     using Assimalign.Extensions.Options;
     using Assimalign.Extensions.Options.Abstractions;
-
-
+    using Assimalign.Extensions.FileProviders.Abstractions;
 
 
     /// <summary>
     /// A program initialization utility.
     /// </summary>
-    public partial class HostBuilder : IHostBuilder
+    public abstract class HostBuilder : IHostBuilder
     {
-        private List<Action<IConfigurationBuilder>> _configureHostConfigActions = new();
-        private List<Action<HostBuilderContext, IConfigurationBuilder>> _configureAppConfigActions = new();
-        private List<Action<HostBuilderContext, IServiceCollection>> _configureServicesActions = new();
-        private List<IHostConfigureContainerAdapter> configureContainerActions = new List<IHostConfigureContainerAdapter>();
-        
-        
-        private IHostServiceFactoryAdapter hostServiceProviderFactory = new HostServiceFactoryAdapter<IServiceCollection>(new ServiceProviderFactoryDefault());
-        
         private bool isHostBuilt;
-        private IConfiguration hostConfiguration;
-        private IConfiguration appConfiguration;
-        private HostBuilderContext hostBuilderContext;
-        private HostEnvironment hostEnvironment;
+
+        private IList<Action<IConfigurationBuilder>> hostConfigurationActions;
+        private IList<Action<HostBuilderContext, IServiceCollection>> hostServiceCollectionActions;
+        private IList<Action<HostBuilderContext, IConfigurationBuilder>> appConfigurationActions;
+        private IList<IHostConfigureContainerAdapter> containerConfigurationActions;
         private IServiceProvider appServiceProvider;
-        private PhysicalFileProvider defaultProvider;
+        private IConfiguration appConfiguration;
+        private IHostServiceFactoryAdapter hostServiceProviderFactory;
+        private IHostEnvironment hostEnvironment;
+        private IConfiguration hostConfiguration;
+        private HostBuilderContext hostBuilderContext;
+        private IFileProvider hostDefaultFileProvider;
+
+        protected HostBuilder()
+        {
+            this.hostConfigurationActions = new List<Action<IConfigurationBuilder>>();
+            this.hostServiceCollectionActions = new List<Action<HostBuilderContext, IServiceCollection>>();
+            this.hostServiceProviderFactory = new HostServiceFactoryAdapter<IServiceCollection>(new ServiceProviderFactoryDefault());
+            this.appConfigurationActions = new List<Action<HostBuilderContext, IConfigurationBuilder>>();
+            this.containerConfigurationActions = new List<IHostConfigureContainerAdapter>();
+        }
+
 
         /// <summary>
         /// A central location for sharing state between components during the host building process.
@@ -48,15 +55,33 @@ namespace Assimalign.Extensions.Hosting
         public IDictionary<object, object> Properties { get; } = new Dictionary<object, object>();
 
         /// <summary>
+        /// Enables configuring the instantiated dependency container. This can be called multiple times and
+        /// the results will be additive.
+        /// </summary>
+        /// <typeparam name="TContainerBuilder">The type of the builder to create.</typeparam>
+        /// <param name="configure">The delegate for configuring the <see cref="IConfigurationBuilder"/> that will be used
+        /// to construct the <see cref="IConfiguration"/> for the host.</param>
+        /// <returns>The same instance of the <see cref="IHostBuilder"/> for chaining.</returns>
+        public IHostBuilder ConfigureContainer<TContainerBuilder>(Action<HostBuilderContext, TContainerBuilder> configure)
+        {
+            containerConfigurationActions.Add(new HostConfigureContainerAdapter<TContainerBuilder>(configure
+                ?? throw new ArgumentNullException(nameof(configure))));
+
+            return this;
+        }
+
+        /// <summary>
         /// Set up the configuration for the builder itself. This will be used to initialize the <see cref="IHostEnvironment"/>
         /// for use later in the build process. This can be called multiple times and the results will be additive.
         /// </summary>
-        /// <param name="configureDelegate">The delegate for configuring the <see cref="IConfigurationBuilder"/> that will be used
+        /// <param name="configure">The delegate for configuring the <see cref="IConfigurationBuilder"/> that will be used
         /// to construct the <see cref="IConfiguration"/> for the host.</param>
         /// <returns>The same instance of the <see cref="IHostBuilder"/> for chaining.</returns>
-        public IHostBuilder ConfigureHostConfiguration(Action<IConfigurationBuilder> configureDelegate)
+        public IHostBuilder ConfigureHostConfiguration(Action<IConfigurationBuilder> configure)
         {
-            _configureHostConfigActions.Add(configureDelegate ?? throw new ArgumentNullException(nameof(configureDelegate)));
+            hostConfigurationActions.Add(configure ?? 
+                throw new ArgumentNullException(nameof(configure)));
+
             return this;
         }
 
@@ -65,24 +90,28 @@ namespace Assimalign.Extensions.Hosting
         /// the results will be additive. The results will be available at <see cref="HostBuilderContext.Configuration"/> for
         /// subsequent operations, as well as in <see cref="IHost.Services"/>.
         /// </summary>
-        /// <param name="configureDelegate">The delegate for configuring the <see cref="IConfigurationBuilder"/> that will be used
+        /// <param name="configure">The delegate for configuring the <see cref="IConfigurationBuilder"/> that will be used
         /// to construct the <see cref="IConfiguration"/> for the host.</param>
         /// <returns>The same instance of the <see cref="IHostBuilder"/> for chaining.</returns>
-        public IHostBuilder ConfigureAppConfiguration(Action<HostBuilderContext, IConfigurationBuilder> configureDelegate)
+        public IHostBuilder ConfigureAppConfiguration(Action<HostBuilderContext, IConfigurationBuilder> configure)
         {
-            _configureAppConfigActions.Add(configureDelegate ?? throw new ArgumentNullException(nameof(configureDelegate)));
+            appConfigurationActions.Add(configure ?? 
+                throw new ArgumentNullException(nameof(configure)));
+
             return this;
         }
 
         /// <summary>
         /// Adds services to the container. This can be called multiple times and the results will be additive.
         /// </summary>
-        /// <param name="configureDelegate">The delegate for configuring the <see cref="IConfigurationBuilder"/> that will be used
+        /// <param name="configure">The delegate for configuring the <see cref="IConfigurationBuilder"/> that will be used
         /// to construct the <see cref="IConfiguration"/> for the host.</param>
         /// <returns>The same instance of the <see cref="IHostBuilder"/> for chaining.</returns>
-        public IHostBuilder ConfigureServices(Action<HostBuilderContext, IServiceCollection> configureDelegate)
+        public IHostBuilder ConfigureServices(Action<HostBuilderContext, IServiceCollection> configure)
         {
-            _configureServicesActions.Add(configureDelegate ?? throw new ArgumentNullException(nameof(configureDelegate)));
+            hostServiceCollectionActions.Add(configure ?? 
+                throw new ArgumentNullException(nameof(configure)));
+
             return this;
         }
 
@@ -94,7 +123,9 @@ namespace Assimalign.Extensions.Hosting
         /// <returns>The same instance of the <see cref="IHostBuilder"/> for chaining.</returns>
         public IHostBuilder UseServiceProviderFactory<TContainerBuilder>(IServiceProviderFactory<TContainerBuilder> factory)
         {
-            hostServiceProviderFactory = new HostServiceFactoryAdapter<TContainerBuilder>(factory ?? throw new ArgumentNullException(nameof(factory)));
+            hostServiceProviderFactory = new HostServiceFactoryAdapter<TContainerBuilder>(factory ??
+                throw new ArgumentNullException(nameof(factory)));
+
             return this;
         }
 
@@ -105,23 +136,10 @@ namespace Assimalign.Extensions.Hosting
         /// <typeparam name="TContainerBuilder">The type of the builder to create.</typeparam>
         /// <returns>The same instance of the <see cref="IHostBuilder"/> for chaining.</returns>
         public IHostBuilder UseServiceProviderFactory<TContainerBuilder>(Func<HostBuilderContext, IServiceProviderFactory<TContainerBuilder>> factory)
-        {
-            hostServiceProviderFactory = new HostServiceFactoryAdapter<TContainerBuilder>(() => hostBuilderContext, factory ?? throw new ArgumentNullException(nameof(factory)));
-            return this;
-        }
+        { 
+            hostServiceProviderFactory = new HostServiceFactoryAdapter<TContainerBuilder>(() => hostBuilderContext, factory ?? 
+                throw new ArgumentNullException(nameof(factory)));
 
-        /// <summary>
-        /// Enables configuring the instantiated dependency container. This can be called multiple times and
-        /// the results will be additive.
-        /// </summary>
-        /// <typeparam name="TContainerBuilder">The type of the builder to create.</typeparam>
-        /// <param name="configureDelegate">The delegate for configuring the <see cref="IConfigurationBuilder"/> that will be used
-        /// to construct the <see cref="IConfiguration"/> for the host.</param>
-        /// <returns>The same instance of the <see cref="IHostBuilder"/> for chaining.</returns>
-        public IHostBuilder ConfigureContainer<TContainerBuilder>(Action<HostBuilderContext, TContainerBuilder> configureDelegate)
-        {
-            configureContainerActions.Add(new HostConfigureContainerAdapter<TContainerBuilder>(configureDelegate
-                ?? throw new ArgumentNullException(nameof(configureDelegate))));
             return this;
         }
 
@@ -133,65 +151,113 @@ namespace Assimalign.Extensions.Hosting
         {
             if (isHostBuilt)
             {
-                throw new InvalidOperationException();// SR.BuildCalled);
+                throw new InvalidOperationException("Build has already been called.");// SR.BuildCalled);
             }
-            isHostBuilt = true;
-
-            // REVIEW: If we want to raise more events outside of these calls then we will need to
-            // stash this in a field.
-            using var diagnosticListener = new DiagnosticListener("Assimalign.Extensions.Hosting");
-            const string hostBuildingEventName = "HostBuilding";
-            const string hostBuiltEventName = "HostBuilt";
-
-            if (diagnosticListener.IsEnabled() && diagnosticListener.IsEnabled(hostBuildingEventName))
+            else
             {
-                Write(diagnosticListener, hostBuildingEventName, this);
+                isHostBuilt = true;
+
+                // REVIEW: If we want to raise more events outside of these calls then we will need to
+                // stash this in a field.
+                using (var diagnosticListener = new DiagnosticListener("Assimalign.Extensions.Hosting"))
+                {
+                    const string hostBuildingEventName = "HostBuilding";
+                    const string hostBuiltEventName = "HostBuilt";
+
+                    if (diagnosticListener.IsEnabled() && 
+                        diagnosticListener.IsEnabled(hostBuildingEventName))
+                    {
+                        diagnosticListener.Write(hostBuildingEventName, this);
+                    }
+
+                    BuildHostConfiguration();
+                    CreateHostEnvironment();
+                    CreateHostBuilderContext();
+                    BuildAppConfiguration();
+                    CreateServiceProvider();
+
+                    var host = appServiceProvider.GetRequiredService<IHost>();
+
+                    if (diagnosticListener.IsEnabled() && 
+                        diagnosticListener.IsEnabled(hostBuiltEventName))
+                    {
+                        diagnosticListener.Write(hostBuiltEventName, host);
+                    }
+
+                    return host;
+                }
             }
-
-            BuildHostConfiguration();
-            CreateHostingEnvironment();
-            CreateHostBuilderContext();
-            BuildAppConfiguration();
-            CreateServiceProvider();
-
-            var host = appServiceProvider.GetRequiredService<IHost>();
-            if (diagnosticListener.IsEnabled() && diagnosticListener.IsEnabled(hostBuiltEventName))
-            {
-                Write(diagnosticListener, hostBuiltEventName, host);
-            }
-
-            return host;
         }
 
-        //[UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:UnrecognizedReflectionPattern",
-        //    Justification = "The values being passed into Write are being consumed by the application already.")]
-        private static void Write<T>(
-            DiagnosticSource diagnosticSource,
-            string name,
-            T value)
+
+        /// <summary>
+        /// Initializes the build for the specified host.
+        /// </summary>
+        /// <param name="implementation">A delegate configuring the host to be implemented.</param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public IHost BuildWithHost(Func<IServiceProvider, IHost> implementation)
         {
-            diagnosticSource.Write(name, value);
+            if (isHostBuilt)
+            {
+                throw new InvalidOperationException("Build has already been called.");// SR.BuildCalled);
+            }
+            else
+            {
+                isHostBuilt = true;
+
+                // REVIEW: If we want to raise more events outside of these calls then we will need to
+                // stash this in a field.
+                using (var diagnosticListener = new DiagnosticListener("Assimalign.Extensions.Hosting"))
+                {
+                    const string hostBuildingEventName = "HostBuilding";
+                    const string hostBuiltEventName = "HostBuilt";
+
+                    if (diagnosticListener.IsEnabled() &&
+                        diagnosticListener.IsEnabled(hostBuildingEventName))
+                    {
+                        diagnosticListener.Write(hostBuildingEventName, this);
+                    }
+
+                    BuildHostConfiguration();
+                    CreateHostEnvironment();
+                    CreateHostBuilderContext();
+                    BuildAppConfiguration();
+                    CreateServiceProvider(implementation);
+
+                    var host = appServiceProvider.GetRequiredService<IHost>();
+
+                    if (diagnosticListener.IsEnabled() &&
+                        diagnosticListener.IsEnabled(hostBuiltEventName))
+                    {
+                        diagnosticListener.Write(hostBuiltEventName, host);
+                    }
+
+                    return host;
+                }
+            }
         }
+        
 
         private void BuildHostConfiguration()
-        {
-            IConfigurationBuilder configBuilder = new ConfigurationBuilder()
-                .AddInMemoryCollection(); // Make sure there's some default storage since there are no default providers
+        { 
+            // Make sure there's some default storage since there are no default providers
+            var hostConfigurationBuilder = new ConfigurationBuilder().AddInMemoryCollection();
 
-            foreach (Action<IConfigurationBuilder> buildAction in _configureHostConfigActions)
+            foreach (var action in hostConfigurationActions)
             {
-                buildAction(configBuilder);
+                action.Invoke(hostConfigurationBuilder);
             }
-            hostConfiguration = configBuilder.Build();
-        }
 
-        private void CreateHostingEnvironment()
+            hostConfiguration = hostConfigurationBuilder.Build();
+        }
+        private void CreateHostEnvironment()
         {
             hostEnvironment = new HostEnvironment()
             {
-                ApplicationName = hostConfiguration[HostDefaults.ApplicationKey],
-                EnvironmentName = hostConfiguration[HostDefaults.EnvironmentKey] ?? Environments.HostEnvironments.Production,
-                ContentRootPath = ResolveContentRootPath(hostConfiguration[HostDefaults.ContentRootKey], AppContext.BaseDirectory),
+                ApplicationName = hostConfiguration[HostDefaultConfigurationKeys.ApplicationKey],
+                EnvironmentName = hostConfiguration[HostDefaultConfigurationKeys.EnvironmentKey] ?? Environments.HostEnvironments.Production,
+                ContentRootPath = ResolveContentRootPath(hostConfiguration[HostDefaultConfigurationKeys.ContentRootKey], AppContext.BaseDirectory),
             };
 
             if (string.IsNullOrEmpty(hostEnvironment.ApplicationName))
@@ -200,22 +266,9 @@ namespace Assimalign.Extensions.Hosting
                 hostEnvironment.ApplicationName = Assembly.GetEntryAssembly()?.GetName().Name;
             }
 
-            hostEnvironment.ContentRootFileProvider = defaultProvider = new PhysicalFileProvider(hostEnvironment.ContentRootPath);
+            hostDefaultFileProvider = new PhysicalFileProvider(hostEnvironment.ContentRootPath);
+            hostEnvironment.ContentRootFileProvider = hostDefaultFileProvider;
         }
-
-        private string ResolveContentRootPath(string contentRootPath, string basePath)
-        {
-            if (string.IsNullOrEmpty(contentRootPath))
-            {
-                return basePath;
-            }
-            if (Path.IsPathRooted(contentRootPath))
-            {
-                return contentRootPath;
-            }
-            return Path.Combine(Path.GetFullPath(basePath), contentRootPath);
-        }
-
         private void CreateHostBuilderContext()
         {
             hostBuilderContext = new HostBuilderContext(Properties)
@@ -224,61 +277,80 @@ namespace Assimalign.Extensions.Hosting
                 Configuration = hostConfiguration
             };
         }
-
         private void BuildAppConfiguration()
         {
-            IConfigurationBuilder configBuilder = new ConfigurationBuilder()
+            var appConfigurationBuilder = new ConfigurationBuilder()
                 .SetBasePath(hostEnvironment.ContentRootPath)
                 .AddConfiguration(hostConfiguration, shouldDisposeConfiguration: true);
 
-            foreach (Action<HostBuilderContext, IConfigurationBuilder> buildAction in _configureAppConfigActions)
+            foreach (var action in appConfigurationActions)
             {
-                buildAction(hostBuilderContext, configBuilder);
+                action.Invoke(hostBuilderContext, appConfigurationBuilder);
             }
-            appConfiguration = configBuilder.Build();
+
+            appConfiguration = appConfigurationBuilder.Build();
             hostBuilderContext.Configuration = appConfiguration;
         }
-
-        private void CreateServiceProvider()
+        private void CreateServiceProvider(Func<IServiceProvider, IHost> implementation = null)
         {
             var services = new ServiceCollection();
 
             services.AddSingleton<IHostEnvironment>(hostEnvironment);
-
             services.AddSingleton<IHostEnvironment>(hostEnvironment);
             services.AddSingleton(hostBuilderContext);
-            // register configuration as factory to make it dispose with the service provider
-            services.AddSingleton(_ => appConfiguration);
-
-            services.AddSingleton<IHostApplicationLifetime>(s => (IHostApplicationLifetime)s.GetService<IHostApplicationLifetime>());
-
+            services.AddSingleton(serviceProvider => appConfiguration); // register configuration as factory to make it dispose with the service provider
+            services.AddSingleton<IHostApplicationLifetime>(serviceProvider => serviceProvider.GetService<IHostApplicationLifetime>());
             services.AddSingleton<IHostApplicationLifetime, HostApplicationLifetime>();
 
-            AddLifetime(services);
-
-            services.AddSingleton<IHost>(_ =>
+            if (!OperatingSystem.IsAndroid() && 
+                !OperatingSystem.IsBrowser() && 
+                !OperatingSystem.IsIOS() && 
+                !OperatingSystem.IsTvOS())
             {
-                return new Internal.Host(appServiceProvider,
-                    hostEnvironment,
-                    defaultProvider,
-                    appServiceProvider.GetRequiredService<IHostApplicationLifetime>(),
-                    appServiceProvider.GetRequiredService<ILogger<Internal.Host>>(),
-                    appServiceProvider.GetRequiredService<IHostLifetime>(),
-                    appServiceProvider.GetRequiredService<IOptions<HostOptions>>());
-            });
-            services.AddOptions().Configure<HostOptions>(options => { options.Initialize(hostConfiguration); });
-            services.AddLogging();
-
-            foreach (Action<HostBuilderContext, IServiceCollection> configureServicesAction in _configureServicesActions)
+                services.AddSingleton<IHostLifetime, HostConsoleLifetime>();
+            }
+            else
             {
-                configureServicesAction(hostBuilderContext, services);
+                services.AddSingleton<IHostLifetime, HostNullLifetime>();
             }
 
-            object containerBuilder = hostServiceProviderFactory.CreateBuilder(services);
-
-            foreach (IHostConfigureContainerAdapter containerAction in configureContainerActions)
+            if (implementation is null)
             {
-                containerAction.ConfigureContainer(hostBuilderContext, containerBuilder);
+                services.AddSingleton<IHost>(serviceProvider =>
+                {
+                    return new HostDefault(
+                        appServiceProvider,
+                        hostEnvironment,
+                        hostDefaultFileProvider,
+                        appServiceProvider.GetRequiredService<IHostApplicationLifetime>(),
+                        appServiceProvider.GetRequiredService<ILogger<HostDefault>>(),
+                        appServiceProvider.GetRequiredService<IHostLifetime>(),
+                        appServiceProvider.GetRequiredService<IOptions<HostOptions>>());
+                });
+            }
+            else
+            {
+                services.AddSingleton(implementation);
+            }
+
+            services.AddOptions()
+                .Configure<HostOptions>(options => 
+                { 
+                    options.Initialize(hostConfiguration); 
+                });
+
+            services.AddLogging();
+
+            foreach (var action in hostServiceCollectionActions)
+            {
+                action.Invoke(hostBuilderContext, services);
+            }
+
+            var containerBuilder = hostServiceProviderFactory.CreateBuilder(services);
+
+            foreach (var action in containerConfigurationActions)
+            {
+                action.ConfigureContainer(hostBuilderContext, containerBuilder);
             }
 
             appServiceProvider = hostServiceProviderFactory.CreateServiceProvider(containerBuilder);
@@ -292,19 +364,26 @@ namespace Assimalign.Extensions.Hosting
             // service provider, ensuring it will be properly disposed with the provider
             _ = appServiceProvider.GetService<IConfiguration>();
         }
-
-
-        private static void AddLifetime(ServiceCollection services)
+        private string ResolveContentRootPath(string contentRootPath, string basePath)
         {
-            if (!OperatingSystem.IsAndroid() && !OperatingSystem.IsBrowser() && !OperatingSystem.IsIOS() && !OperatingSystem.IsTvOS())
+            if (string.IsNullOrEmpty(contentRootPath))
             {
-                services.AddSingleton<IHostLifetime, HostConsoleLifetime>();
+                return basePath;
             }
-            else
+            if (Path.IsPathRooted(contentRootPath))
             {
-                services.AddSingleton<IHostLifetime, HostNullLifetime>();
+                return contentRootPath;
             }
+            return Path.Combine(Path.GetFullPath(basePath), contentRootPath);
         }
+
+
+        /// <summary>
+        /// Implement default IHost with Host Builder.
+        /// </summary>
+        /// <returns></returns>
+        public static IHostBuilder Create() => 
+            new HostBuilderDefault();
     }
 }
 

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assimalign.Extensions.Hosting.Abstractions
+﻿namespace Assimalign.Extensions.Hosting.Abstractions
 {
     using Assimalign.Extensions.FileProviders.Abstractions;
 
+    /// <summary>
+    /// Provides information about the hosting environment an application is running in.
+    /// </summary>
     public interface IHostEnvironment
     {   
         /// <summary>

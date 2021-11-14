@@ -4,6 +4,7 @@
 		<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<Authors>Chase Crawford</Authors>
 		<Copyright>© Assimalign LLC 2021</Copyright>
 		<PackageIcon>.assimalign.logo.png</PackageIcon>
 		<PackageIconUrl>https://corporate.assets.assimalign.com/assets/logos/.assimalign.logo.png</PackageIconUrl>

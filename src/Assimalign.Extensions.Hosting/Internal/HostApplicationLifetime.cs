@@ -12,34 +12,34 @@ namespace Assimalign.Extensions.Hosting.Internal
 
     public class HostApplicationLifetime : IHostApplicationLifetime
     {
-        private readonly CancellationTokenSource _startedSource = new CancellationTokenSource();
-        private readonly CancellationTokenSource _stoppingSource = new CancellationTokenSource();
-        private readonly CancellationTokenSource _stoppedSource = new CancellationTokenSource();
-        private readonly ILogger<HostApplicationLifetime> _logger;
+        private readonly CancellationTokenSource startedSource = new CancellationTokenSource();
+        private readonly CancellationTokenSource stoppingSource = new CancellationTokenSource();
+        private readonly CancellationTokenSource stoppedSource = new CancellationTokenSource();
+        private readonly ILogger<HostApplicationLifetime> logger;
 
         public HostApplicationLifetime(ILogger<HostApplicationLifetime> logger)
         {
-            _logger = logger;
+            this.logger = logger;
         }
 
         /// <summary>
         /// Triggered when the application host has fully started and is about to wait
         /// for a graceful shutdown.
         /// </summary>
-        public CancellationToken ApplicationStarted => _startedSource.Token;
+        public CancellationToken ApplicationStarted => startedSource.Token;
 
         /// <summary>
         /// Triggered when the application host is performing a graceful shutdown.
         /// Request may still be in flight. Shutdown will block until this event completes.
         /// </summary>
-        public CancellationToken ApplicationStopping => _stoppingSource.Token;
+        public CancellationToken ApplicationStopping => stoppingSource.Token;
 
         /// <summary>
         /// Triggered when the application host is performing a graceful shutdown.
         /// All requests should be complete at this point. Shutdown will block
         /// until this event completes.
         /// </summary>
-        public CancellationToken ApplicationStopped => _stoppedSource.Token;
+        public CancellationToken ApplicationStopped => stoppedSource.Token;
 
         /// <summary>
         /// Signals the ApplicationStopping event and blocks until it completes.
@@ -49,17 +49,18 @@ namespace Assimalign.Extensions.Hosting.Internal
             // Lock on CTS to synchronize multiple calls to StopApplication. This guarantees that the first call
             // to StopApplication and its callbacks run to completion before subsequent calls to StopApplication,
             // which will no-op since the first call already requested cancellation, get a chance to execute.
-            lock (_stoppingSource)
+            lock (stoppingSource)
             {
                 try
                 {
-                    ExecuteHandlers(_stoppingSource);
+                    ExecuteHandlers(stoppingSource);
                 }
-                catch (Exception ex)
+                catch (Exception exception)
                 {
-                    _logger.ApplicationError(HostLoggerEventIds.ApplicationStoppingException,
-                                             "An error occurred stopping the application",
-                                             ex);
+                    logger.ApplicationError(
+                        HostLoggerEventIds.ApplicationStoppingException,
+                        "An error occurred stopping the application",
+                        exception);
                 }
             }
         }
@@ -71,13 +72,14 @@ namespace Assimalign.Extensions.Hosting.Internal
         {
             try
             {
-                ExecuteHandlers(_startedSource);
+                ExecuteHandlers(startedSource);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.ApplicationError(HostLoggerEventIds.ApplicationStartupException,
-                                         "An error occurred starting the application",
-                                         ex);
+                logger.ApplicationError(
+                    HostLoggerEventIds.ApplicationStartupException,
+                    "An error occurred starting the application",
+                    exception);
             }
         }
 
@@ -88,13 +90,14 @@ namespace Assimalign.Extensions.Hosting.Internal
         {
             try
             {
-                ExecuteHandlers(_stoppedSource);
+                ExecuteHandlers(stoppedSource);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.ApplicationError(HostLoggerEventIds.ApplicationStoppedException,
-                                         "An error occurred stopping the application",
-                                         ex);
+                logger.ApplicationError(
+                    HostLoggerEventIds.ApplicationStoppedException,
+                    "An error occurred stopping the application",
+                    exception);
             }
         }
 

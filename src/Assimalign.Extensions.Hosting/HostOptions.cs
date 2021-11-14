@@ -20,10 +20,10 @@ namespace Assimalign.Extensions.Hosting
 
         /// <summary>
         /// The behavior the <see cref="IHost"/> will follow when any of
-        /// its <see cref="BackgroundService"/> instances throw an unhandled exception.
+        /// its <see cref="HostBackgroundService"/> instances throw an unhandled exception.
         /// </summary>
         /// <remarks>
-        /// Defaults to <see cref="BackgroundServiceExceptionBehavior.StopHost"/>.
+        /// Defaults to <see cref="HostBackgroundServiceExceptionBehavior.StopHost"/>.
         /// </remarks>
         public HostBackgroundServiceExceptionBehavior BackgroundServiceExceptionBehavior { get; set; } =
             HostBackgroundServiceExceptionBehavior.StopHost;

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,7 +23,7 @@ namespace Assimalign.Extensions.Hosting
         public virtual Task ExecuteTask => _executeTask;
 
         /// <summary>
-        /// This method is called when the <see cref="IHostedService"/> starts. The implementation should return a task that represents
+        /// This method is called when the <see cref="IHostService"/> starts. The implementation should return a task that represents
         /// the lifetime of the long running operation(s) being performed.
         /// </summary>
         /// <param name="stoppingToken">Triggered when <see cref="IHostService.StopAsync(CancellationToken)"/> is called.</param>

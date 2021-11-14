@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Hosting.Internal
 {
+    using Assimalign.Extensions.Hosting.Abstractions;
     using Assimalign.Extensions.DependencyInjection.Abstractions;
 
-    public class HostServiceFactoryAdapter<TContainerBuilder> : IHostServiceFactoryAdapter
+    internal sealed class HostServiceFactoryAdapter<TContainerBuilder> : IHostServiceFactoryAdapter
     {
         private readonly Func<HostBuilderContext> hostContextResolver;
         private IServiceProviderFactory<TContainerBuilder> serviceProviderFactory;
@@ -21,20 +18,24 @@ namespace Assimalign.Extensions.Hosting.Internal
                 throw new ArgumentNullException(nameof(serviceProviderFactory));
         }
 
+
         public HostServiceFactoryAdapter(
             Func<HostBuilderContext> hostContextResolver, 
             Func<HostBuilderContext, IServiceProviderFactory<TContainerBuilder>> serviceProviderFactoryResolver)
         {
-            this.hostContextResolver = hostContextResolver ?? throw new ArgumentNullException(nameof(hostContextResolver));
-            this.serviceProviderFactoryResolver = serviceProviderFactoryResolver ?? throw new ArgumentNullException(nameof(serviceProviderFactoryResolver));
+            this.hostContextResolver = hostContextResolver ?? 
+                throw new ArgumentNullException(nameof(hostContextResolver));
+
+            this.serviceProviderFactoryResolver = serviceProviderFactoryResolver ?? 
+                throw new ArgumentNullException(nameof(serviceProviderFactoryResolver));
         }
+
 
         public object CreateBuilder(IServiceCollection services)
         {
             if (this.serviceProviderFactory == null)
             {
-                serviceProviderFactory = serviceProviderFactoryResolver(hostContextResolver());
-
+                serviceProviderFactory = serviceProviderFactoryResolver.Invoke(hostContextResolver.Invoke());
                 if (serviceProviderFactory == null)
                 {
                     throw new InvalidOperationException();// SR.ResolverReturnedNull);

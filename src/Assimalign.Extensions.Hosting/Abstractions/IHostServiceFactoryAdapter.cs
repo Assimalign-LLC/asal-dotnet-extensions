@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.Hosting.Internal
+namespace Assimalign.Extensions.Hosting.Abstractions
 {
     using Assimalign.Extensions.DependencyInjection.Abstractions;
 

@@ -27,55 +27,70 @@ namespace Assimalign.Extensions.Hosting.Internal
     [UnsupportedOSPlatform("tvos")]
     public class HostConsoleLifetime : IHostLifetime, IDisposable
     {
-		private readonly ManualResetEvent _shutdownBlock = new ManualResetEvent(initialState: false);
+		private readonly ManualResetEvent signal = new ManualResetEvent(initialState: false);
+		private CancellationTokenRegistration applicationStartedRegistration;
+		private CancellationTokenRegistration applicationStoppingRegistration;
+		private HostConsoleLifetimeOptions lifetimOptions;
+		private IHostEnvironment environment;
+		private IHostApplicationLifetime applicationLifetime;
+		private HostOptions hostOptions;
+		private ILogger logger;
 
-		private CancellationTokenRegistration _applicationStartedRegistration;
 
-		private CancellationTokenRegistration _applicationStoppingRegistration;
-
-		private HostConsoleLifetimeOptions Options { get; }
-
-		private IHostEnvironment Environment { get; }
-
-		private IHostApplicationLifetime ApplicationLifetime { get; }
-
-		private HostOptions HostOptions { get; }
-
-		private ILogger Logger { get; }
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="lifetimOptions"></param>
+		/// <param name="environment"></param>
+		/// <param name="applicationLifetime"></param>
+		/// <param name="hostOptions"></param>
 		public HostConsoleLifetime(
-			IOptions<HostConsoleLifetimeOptions> options, 
+			IOptions<HostConsoleLifetimeOptions> lifetimOptions, 
 			IHostEnvironment environment, 
 			IHostApplicationLifetime applicationLifetime, 
 			IOptions<HostOptions> hostOptions)
-			: this(options, environment, applicationLifetime, hostOptions, NullLoggerFactory.Instance)
+			: this(lifetimOptions, environment, applicationLifetime, hostOptions, NullLoggerFactory.Instance)
 		{
 
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="lifetimOptions"></param>
+		/// <param name="environment"></param>
+		/// <param name="applicationLifetime"></param>
+		/// <param name="hostOptions"></param>
+		/// <param name="loggerFactory"></param>
+		/// <exception cref="ArgumentNullException"></exception>
 		public HostConsoleLifetime(
-			IOptions<HostConsoleLifetimeOptions> options, 
+			IOptions<HostConsoleLifetimeOptions> lifetimOptions, 
 			IHostEnvironment environment, 
 			IHostApplicationLifetime applicationLifetime, 
 			IOptions<HostOptions> hostOptions, 
 			ILoggerFactory loggerFactory)
 		{
-			Options = options?.Value ?? throw new ArgumentNullException("options");
-			Environment = environment ?? throw new ArgumentNullException("environment");
-			ApplicationLifetime = applicationLifetime ?? throw new ArgumentNullException("applicationLifetime");
-			HostOptions = hostOptions?.Value ?? throw new ArgumentNullException("hostOptions");
-			Logger = loggerFactory.CreateLogger("Microsoft.Hosting.Lifetime");
+			this.lifetimOptions = lifetimOptions.Value ?? throw new ArgumentNullException("options");
+			this.environment = environment ?? throw new ArgumentNullException("environment");
+			this.applicationLifetime = applicationLifetime ?? throw new ArgumentNullException("applicationLifetime");
+			this.hostOptions = hostOptions?.Value ?? throw new ArgumentNullException("hostOptions");
+			this.logger = loggerFactory.CreateLogger("Assimalign.Hosting.Lifetime");
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
 		public Task WaitForStartAsync(CancellationToken cancellationToken)
 		{
-			if (!Options.SuppressStatusMessages)
+			if (!lifetimOptions.SuppressStatusMessages)
 			{
-				_applicationStartedRegistration = ApplicationLifetime.ApplicationStarted.Register(delegate (object state)
+				applicationStartedRegistration = applicationLifetime.ApplicationStarted.Register(delegate (object state)
 				{
 					((HostConsoleLifetime)state).OnApplicationStarted();
 				}, this);
-				_applicationStoppingRegistration = ApplicationLifetime.ApplicationStopping.Register(delegate (object state)
+				applicationStoppingRegistration = applicationLifetime.ApplicationStopping.Register(delegate (object state)
 				{
 					((HostConsoleLifetime)state).OnApplicationStopping();
 				}, this);
@@ -87,31 +102,31 @@ namespace Assimalign.Extensions.Hosting.Internal
 
 		private void OnApplicationStarted()
 		{
-			Logger.LogInformation("Application started. Press Ctrl+C to shut down.");
-			Logger.LogInformation("Hosting environment: {envName}", Environment.EnvironmentName);
-			Logger.LogInformation("Content root path: {contentRoot}", Environment.ContentRootPath);
+			logger.LogInformation("Application started. Press Ctrl+C to shut down.");
+			logger.LogInformation("Hosting environment: {envName}", this.environment.EnvironmentName);
+			logger.LogInformation("Content root path: {contentRoot}", this.environment.ContentRootPath);
 		}
 
 		private void OnApplicationStopping()
 		{
-			Logger.LogInformation("Application is shutting down...");
+			logger.LogInformation("Application is shutting down...");
 		}
 
 		private void OnProcessExit(object sender, EventArgs e)
 		{
-			ApplicationLifetime.StopApplication();
-			if (!_shutdownBlock.WaitOne(HostOptions.ShutdownTimeout))
+			applicationLifetime.StopApplication();
+			if (!signal.WaitOne(hostOptions.ShutdownTimeout))
 			{
-				Logger.LogInformation("Waiting for the host to be disposed. Ensure all 'IHost' instances are wrapped in 'using' blocks.");
+				logger.LogInformation("Waiting for the host to be disposed. Ensure all 'IHost' instances are wrapped in 'using' blocks.");
 			}
-			_shutdownBlock.WaitOne();
+			signal.WaitOne();
 			System.Environment.ExitCode = 0;
 		}
 
-		private void OnCancelKeyPress(object sender, ConsoleCancelEventArgs e)
+		private void OnCancelKeyPress(object sender, ConsoleCancelEventArgs eventArgs)
 		{
-			e.Cancel = true;
-			ApplicationLifetime.StopApplication();
+			eventArgs.Cancel = true;
+			applicationLifetime.StopApplication();
 		}
 
 		public Task StopAsync(CancellationToken cancellationToken)
@@ -121,11 +136,11 @@ namespace Assimalign.Extensions.Hosting.Internal
 
 		public void Dispose()
 		{
-			_shutdownBlock.Set();
+			signal.Set();
 			AppDomain.CurrentDomain.ProcessExit -= new EventHandler(OnProcessExit);
 			Console.CancelKeyPress -= OnCancelKeyPress;
-			_applicationStartedRegistration.Dispose();
-			_applicationStoppingRegistration.Dispose();
+			applicationStartedRegistration.Dispose();
+			applicationStoppingRegistration.Dispose();
 		}
 	}
 }
