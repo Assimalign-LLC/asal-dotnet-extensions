@@ -118,7 +118,7 @@ namespace Assimalign.Extensions.Configuration
         ///   <code>
         ///     // dotnet run key1=value1 --key2=value2 /key3=value3 --key4 value4 /key5 value5
         ///
-        ///     using Microsoft.Extensions.Configuration;
+        ///     using Assimalign.Extensions.Configuration;
         ///     using System;
         ///
         ///     namespace CommandLineSample
@@ -193,7 +193,7 @@ namespace Assimalign.Extensions.Configuration
         ///   <code>
         ///     // dotnet run -k1=value1 -k2 value2 --alt3=value2 /alt4=value3 --alt5 value5 /alt6 value6
         ///
-        ///     using Microsoft.Extensions.Configuration;
+        ///     using Assimalign.Extensions.Configuration;
         ///     using System;
         ///     using System.Collections.Generic;
         ///

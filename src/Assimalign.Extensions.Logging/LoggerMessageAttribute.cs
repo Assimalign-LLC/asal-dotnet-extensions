@@ -14,8 +14,8 @@ namespace Assimalign.Extensions.Logging
     /// <para>   - Must be a partial method.</para>
     /// <para>   - Must return <c>void</c>.</para>
     /// <para>   - Must not be generic.</para>
-    /// <para>   - Must have an <see cref="ILogger"/> as one of its parameters.</para>
-    /// <para>   - Must have a <see cref="Microsoft.Extensions.Logging.LogLevel"/> as one of its parameters.</para>
+    /// <para>   - Must have an <see cref="Assimalign.Extensions.Logging.Abstractions.ILogger"/> as one of its parameters.</para>
+    /// <para>   - Must have a <see cref="Assimalign.Extensions.Logging.LogLevel"/> as one of its parameters.</para>
     /// <para>   - None of the parameters can be generic.</para>
     /// </remarks>
     /// <example>

@@ -13,16 +13,16 @@ namespace Assimalign.Extensions.ObjectPool
     /// </para>
     /// </summary>
     /// <typeparam name="T">The type of object which is being pooled.</typeparam>
-    public class LeakTrackingObjectPool<T> : ObjectPool<T> where T : class
+    public class ObjectPoolLeakTracking<T> : ObjectPool<T> where T : class
     {
         private readonly ConditionalWeakTable<T, Tracker> _trackers = new ConditionalWeakTable<T, Tracker>();
         private readonly ObjectPool<T> _inner;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="LeakTrackingObjectPool{T}"/>.
+        /// Initializes a new instance of <see cref="ObjectPoolLeakTracking{T}"/>.
         /// </summary>
         /// <param name="inner">The <see cref="ObjectPool{T}"/> instance to track leaks in.</param>
-        public LeakTrackingObjectPool(ObjectPool<T> inner)
+        public ObjectPoolLeakTracking(ObjectPool<T> inner)
         {
             if (inner == null)
             {

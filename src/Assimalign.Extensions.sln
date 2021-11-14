@@ -38,6 +38,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.HostingBenchmarks", "..\benchmarks\Assimalign.Extensions.HostingBenchmarks\Assimalign.Extensions.HostingBenchmarks.csproj", "{FF2E3660-B7FF-4922-875C-471DB0993AA6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Http", "Assimalign.Extensions.Http\Assimalign.Extensions.Http.csproj", "{7609ADDC-E407-401E-BAB6-203E103F133E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,10 @@ Global
 		{FF2E3660-B7FF-4922-875C-471DB0993AA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF2E3660-B7FF-4922-875C-471DB0993AA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF2E3660-B7FF-4922-875C-471DB0993AA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7609ADDC-E407-401E-BAB6-203E103F133E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7609ADDC-E407-401E-BAB6-203E103F133E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7609ADDC-E407-401E-BAB6-203E103F133E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7609ADDC-E407-401E-BAB6-203E103F133E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +115,7 @@ Global
 		{A6D699F1-91D2-4B64-905F-2602EAB31D5D} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
 		{3826117A-EF82-4822-82AE-12936F58CBB3} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
 		{FF2E3660-B7FF-4922-875C-471DB0993AA6} = {D490871C-D054-4C49-9C53-479598847C9B}
+		{7609ADDC-E407-401E-BAB6-203E103F133E} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0E48D3C9-706C-4079-9E6E-2D9C88CEB612}

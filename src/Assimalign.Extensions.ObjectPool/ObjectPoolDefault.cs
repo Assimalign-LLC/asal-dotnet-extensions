@@ -31,7 +31,7 @@ namespace Assimalign.Extensions.ObjectPool
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="DefaultObjectPool{T}"/>.
+        /// Creates an instance of <see cref="ObjectPoolDefault{T}"/>.
         /// </summary>
         /// <param name="policy">The pooling policy to use.</param>
         /// <param name="maximumRetained">The maximum number of objects to retain in the pool.</param>

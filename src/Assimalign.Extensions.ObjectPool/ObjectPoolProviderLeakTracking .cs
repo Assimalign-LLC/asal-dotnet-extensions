@@ -4,7 +4,7 @@ namespace Assimalign.Extensions.ObjectPool
 {
     /// <summary>
     /// An <see cref="ObjectPoolProvider"/> that produces instances of
-    /// <see cref="LeakTrackingObjectPool{T}"/>.
+    /// <see cref="ObjectPoolLeakTracking{T}"/>.
     /// </summary>
     public class LeakTrackingObjectPoolProvider : ObjectPoolProvider
     {
@@ -28,7 +28,7 @@ namespace Assimalign.Extensions.ObjectPool
         public override ObjectPool<T> Create<T>(IPooledObjectPolicy<T> policy)
         {
             var inner = _inner.Create<T>(policy);
-            return new LeakTrackingObjectPool<T>(inner);
+            return new ObjectPoolLeakTracking<T>(inner);
         }
     }
 }

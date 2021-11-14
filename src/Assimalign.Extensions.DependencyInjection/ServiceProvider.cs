@@ -32,7 +32,7 @@ namespace Assimalign.Extensions.DependencyInjection
         internal ServiceProviderEngineScope Root { get; }
 
         internal static bool VerifyOpenGenericServiceTrimmability { get; } =
-            AppContext.TryGetSwitch("Microsoft.Extensions.DependencyInjection.VerifyOpenGenericServiceTrimmability", out bool verifyOpenGenerics) ? verifyOpenGenerics : false;
+            AppContext.TryGetSwitch("Assimalign.Extensions.DependencyInjection.VerifyOpenGenericServiceTrimmability", out bool verifyOpenGenerics) ? verifyOpenGenerics : false;
 
         internal ServiceProvider(ICollection<ServiceDescriptor> serviceDescriptors, ServiceProviderOptions options)
         {

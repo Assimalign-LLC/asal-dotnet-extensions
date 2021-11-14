@@ -1,6 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -19,7 +16,7 @@ namespace Assimalign.Extensions.Logging.EventSource
     ///
     /// You turn this logging on by enabling the EventSource called
     ///
-    ///      Microsoft-Extensions-Logging
+    ///      Assimalign-Extensions-Logging
     ///
     /// When you enabled the EventSource, the EventLevel you set is translated in the obvious way to the level
     /// associated with the ILogger (thus Debug = verbose, Informational = Informational ... Critical == Critical)
@@ -79,7 +76,7 @@ namespace Assimalign.Extensions.Logging.EventSource
     ///     }
     /// }
     /// </summary>
-    [EventSource(Name = "Microsoft-Extensions-Logging")]
+    [EventSource(Name = "Assimalign-Extensions-Logging")]
     public sealed class LoggingEventSource : System.Diagnostics.Tracing.EventSource
     {
         /// <summary>

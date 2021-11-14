@@ -11,7 +11,7 @@ namespace Assimalign.Extensions.DependencyInjection
     using Assimalign.Extensions.DependencyInjection.ServiceLoopkup;
 
 
-    [EventSource(Name = "Microsoft-Extensions-DependencyInjection")]
+    [EventSource(Name = "Assimalign-Extensions-DependencyInjection")]
     internal sealed class ServiceEventSource : EventSource
     {
         public static readonly ServiceEventSource Log = new ServiceEventSource();

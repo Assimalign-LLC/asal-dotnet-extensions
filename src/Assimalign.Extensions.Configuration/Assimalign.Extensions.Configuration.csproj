@@ -2,6 +2,9 @@
 
     <PropertyGroup>
 	    <EnableDefaultItems>true</EnableDefaultItems>
+		<Description>
+			Implementation of key-value pair based configuration for Assimalign.Extensions.Configuration. Includes the memory configuration provider.
+		</Description>
     </PropertyGroup>
 
     <ItemGroup>

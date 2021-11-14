@@ -334,7 +334,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
 
         /// <summary>
         ///     <para>Creates a <see cref="IChangeToken" /> for the specified <paramref name="filter" />.</para>
-        ///     <para>Globbing patterns are interpreted by <seealso cref="Microsoft.Extensions.FileSystemGlobbing.Matcher" />.</para>
+        ///     <para>Globbing patterns are interpreted by <seealso cref="Assimalign.Extensions.FileSystemGlobbing.Matcher" />.</para>
         /// </summary>
         /// <param name="filter">
         /// Filter string used to determine what files or folders to monitor. Example: **/*.cs, *.*,

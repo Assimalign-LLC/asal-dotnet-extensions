@@ -6,7 +6,7 @@ namespace Assimalign.Extensions.ObjectPool
     /// <summary>
     /// A policy for pooling <see cref="StringBuilder"/> instances.
     /// </summary>
-    public class StringBuilderPooledObjectPolicy : PooledObjectPolicy<StringBuilder>
+    public class PooledObjectPolicyStringBuilder : PooledObjectPolicy<StringBuilder>
     {
         /// <summary>
         /// Gets or sets the initial capacity of pooled <see cref="StringBuilder"/> instances.

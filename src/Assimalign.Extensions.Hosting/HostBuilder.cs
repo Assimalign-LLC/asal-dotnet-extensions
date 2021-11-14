@@ -23,7 +23,7 @@ namespace Assimalign.Extensions.Hosting
     /// <summary>
     /// A program initialization utility.
     /// </summary>
-    public abstract class HostBuilder : IHostBuilder
+    public sealed class HostBuilder : IHostBuilder
     {
         private bool isHostBuilt;
 
@@ -38,8 +38,14 @@ namespace Assimalign.Extensions.Hosting
         private IConfiguration hostConfiguration;
         private HostBuilderContext hostBuilderContext;
         private IFileProvider hostDefaultFileProvider;
+        private Func<IServiceProvider, IHost> implementation;
 
-        protected HostBuilder()
+        internal HostBuilder(Func<IServiceProvider, IHost> implementation) : this()
+        {
+            this.implementation = implementation;
+        }
+
+        internal HostBuilder() 
         {
             this.hostConfigurationActions = new List<Action<IConfigurationBuilder>>();
             this.hostServiceCollectionActions = new List<Action<HostBuilderContext, IServiceCollection>>();
@@ -189,55 +195,20 @@ namespace Assimalign.Extensions.Hosting
             }
         }
 
+        /// <summary>
+        /// Implements the default IHost with Host Builder.
+        /// </summary>
+        /// <returns></returns>
+        public static IHostBuilder Create() =>
+            new HostBuilder();
 
         /// <summary>
-        /// Initializes the build for the specified host.
+        /// Implements the default host builder with Custom Host.
         /// </summary>
-        /// <param name="implementation">A delegate configuring the host to be implemented.</param>
         /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
-        public IHost BuildWithHost(Func<IServiceProvider, IHost> implementation)
-        {
-            if (isHostBuilt)
-            {
-                throw new InvalidOperationException("Build has already been called.");// SR.BuildCalled);
-            }
-            else
-            {
-                isHostBuilt = true;
+        public static IHostBuilder CreateWithHost(Func<IServiceProvider, IHost> implementation) =>
+            new HostBuilder(implementation);
 
-                // REVIEW: If we want to raise more events outside of these calls then we will need to
-                // stash this in a field.
-                using (var diagnosticListener = new DiagnosticListener("Assimalign.Extensions.Hosting"))
-                {
-                    const string hostBuildingEventName = "HostBuilding";
-                    const string hostBuiltEventName = "HostBuilt";
-
-                    if (diagnosticListener.IsEnabled() &&
-                        diagnosticListener.IsEnabled(hostBuildingEventName))
-                    {
-                        diagnosticListener.Write(hostBuildingEventName, this);
-                    }
-
-                    BuildHostConfiguration();
-                    CreateHostEnvironment();
-                    CreateHostBuilderContext();
-                    BuildAppConfiguration();
-                    CreateServiceProvider(implementation);
-
-                    var host = appServiceProvider.GetRequiredService<IHost>();
-
-                    if (diagnosticListener.IsEnabled() &&
-                        diagnosticListener.IsEnabled(hostBuiltEventName))
-                    {
-                        diagnosticListener.Write(hostBuiltEventName, host);
-                    }
-
-                    return host;
-                }
-            }
-        }
-        
 
         private void BuildHostConfiguration()
         { 
@@ -291,7 +262,7 @@ namespace Assimalign.Extensions.Hosting
             appConfiguration = appConfigurationBuilder.Build();
             hostBuilderContext.Configuration = appConfiguration;
         }
-        private void CreateServiceProvider(Func<IServiceProvider, IHost> implementation = null)
+        private void CreateServiceProvider()
         {
             var services = new ServiceCollection();
 
@@ -330,7 +301,7 @@ namespace Assimalign.Extensions.Hosting
             }
             else
             {
-                services.AddSingleton(implementation);
+                services.AddSingleton<IHost>(implementation);
             }
 
             services.AddOptions()
@@ -378,12 +349,7 @@ namespace Assimalign.Extensions.Hosting
         }
 
 
-        /// <summary>
-        /// Implement default IHost with Host Builder.
-        /// </summary>
-        /// <returns></returns>
-        public static IHostBuilder Create() => 
-            new HostBuilderDefault();
+        
     }
 }
 

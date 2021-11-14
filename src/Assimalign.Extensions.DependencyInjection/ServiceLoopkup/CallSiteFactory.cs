@@ -349,7 +349,7 @@ namespace Assimalign.Extensions.DependencyInjection.ServiceLoopkup
 
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2055:MakeGenericType",
             Justification = "MakeGenericType here is used to create a closed generic implementation type given the closed service type. " +
-            "Trimming annotations on the generic types are verified when 'Microsoft.Extensions.DependencyInjection.VerifyOpenGenericServiceTrimmability' is set, which is set by default when PublishTrimmed=true. " +
+            "Trimming annotations on the generic types are verified when 'Assimalign.Extensions.DependencyInjection.VerifyOpenGenericServiceTrimmability' is set, which is set by default when PublishTrimmed=true. " +
             "That check informs developers when these generic types don't have compatible trimming annotations.")]
         private CallSiteService TryCreateOpenGeneric(ServiceDescriptor descriptor, Type serviceType, CallSiteChain callSiteChain, int slot, bool throwOnConstraintViolation)
         {

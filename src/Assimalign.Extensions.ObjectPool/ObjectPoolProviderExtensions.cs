@@ -15,7 +15,7 @@ namespace Assimalign.Extensions.ObjectPool
         /// <returns>The <see cref="ObjectPool{T}"/>.</returns>
         public static ObjectPool<StringBuilder> CreateStringBuilderPool(this ObjectPoolProvider provider)
         {
-            return provider.Create<StringBuilder>(new StringBuilderPooledObjectPolicy());
+            return provider.Create<StringBuilder>(new PooledObjectPolicyStringBuilder());
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Assimalign.Extensions.ObjectPool
             int initialCapacity,
             int maximumRetainedCapacity)
         {
-            var policy = new StringBuilderPooledObjectPolicy()
+            var policy = new PooledObjectPolicyStringBuilder()
             {
                 InitialCapacity = initialCapacity,
                 MaximumRetainedCapacity = maximumRetainedCapacity,
