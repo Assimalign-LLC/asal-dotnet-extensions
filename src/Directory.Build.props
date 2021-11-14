@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<Version>1.0.0-pre.1.0</Version>
 		<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
-		<GeneratePackageOnBuild Condition="$(RootNamespace) != 'Assimalign.Extensions.Scheduling'">true</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild Condition="$(RootNamespace) != 'Assimalign.Extensions.Scheduling' and $(RootNamespace) != 'Assimalign.Extensions.Diagnostics'">true</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
