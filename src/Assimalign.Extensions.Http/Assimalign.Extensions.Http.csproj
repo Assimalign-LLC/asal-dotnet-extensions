@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj" />
+    <ProjectReference Include="..\Assimalign.Extensions.Logging\Assimalign.Extensions.Logging.csproj" />
+  </ItemGroup>
+</Project>

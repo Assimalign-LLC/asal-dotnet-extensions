@@ -1,0 +1,20 @@
+<Project>
+	<PropertyGroup>
+		<Version>1.0.0-pre.1.0</Version>
+		<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+		<GeneratePackageOnBuild Condition="$(RootNamespace) != 'Assimalign.Extensions.Scheduling'">true</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<Authors>Chase Crawford</Authors>
+		<Copyright>© Assimalign LLC 2021</Copyright>
+		<PackageIcon>.assimalign.logo.png</PackageIcon>
+		<PackageIconUrl>https://corporate.assets.assimalign.com/assets/logos/.assimalign.logo.png</PackageIconUrl>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Include="..\..\.assimalign.logo.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+</Project>

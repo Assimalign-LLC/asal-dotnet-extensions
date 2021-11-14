@@ -1,0 +1,7 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<Nullable>enable</Nullable>
+		<EnableDefaultItems>true</EnableDefaultItems>
+		<LangVersion>Latest</LangVersion>
+	</PropertyGroup>
+</Project>

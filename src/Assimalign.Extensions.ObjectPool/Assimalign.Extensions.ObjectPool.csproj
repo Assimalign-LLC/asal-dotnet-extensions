@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Description>A simple object pool implementation.</Description>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<PackageTags>pooling</PackageTags>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+</Project>
