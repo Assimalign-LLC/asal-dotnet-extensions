@@ -3,27 +3,66 @@ name: .NET
 on:
   push:
     branches: [ main, tags/release/* ]
-
+    paths: 
+      - '/src/*'
+      - '/.github/*'
+    
 jobs:
   build:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Setup dotnet
+    - name: Setup dotnet 5
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '5.0.x'
-    - name: Setup dotnet
+        
+    - name: Setup dotnet 6
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '6.0.x'
         include-prerelease: true
+        
     - name: Restore Project dependencies
       run: dotnet restore 
       working-directory: './src'
-    - name: Build Projects .Net Core App 3.1
+      
+    - name: Build Projects
       run: dotnet build --configuration Release --no-restore
       working-directory: './src'
-    - name: Publish
-      run: dotnet nuget push "**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      
+    - name: Publish Assimalign.Extensions.Configuration Nuget
+      run: dotnet nuget push "Assimalign.Extensions.Configuration/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json -sk
+      working-directory: './src'
+      
+    - name: Publish Assimalign.Extensions.DependencyInjection Nuget
+      run: dotnet nuget push "Assimalign.Extensions.DependencyInjection/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json -sk
+      working-directory: './src'
+      
+    - name: Publish Assimalign.Extensions.FileSystemGlobbing Nuget
+      run: dotnet nuget push "Assimalign.Extensions.FileSystemGlobbing/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json -sk
+      working-directory: './src'
+    
+    - name: Publish Assimalign.Extensions.FileProviders Nuget
+      run: dotnet nuget push "Assimalign.Extensions.FileProviders/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json -sk
+      working-directory: './src'
+      
+    - name: Publish Assimalign.Extensions.Hosting Nuget
+      run: dotnet nuget push "Assimalign.Extensions.Hosting/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json -sk
+      working-directory: './src'
+      
+    - name: Publish Assimalign.Extensions.Http Nuget
+      run: dotnet nuget push "Assimalign.Extensions.Http/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json -sk
+      working-directory: './src'
+      
+    - name: Publish Assimalign.Extensions.Logging Nuget
+      run: dotnet nuget push "Assimalign.Extensions.Logging/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json -sk
+      working-directory: './src'
+
+    - name: Publish Assimalign.Extensions.Options Nuget
+      run: dotnet nuget push "Assimalign.Extensions.Options/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json -sk
+      working-directory: './src'
+      
+    - name: Publish Assimalign.Extensions.Primitives Nuget
+      run: dotnet nuget push "Assimalign.Extensions.Primitives/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json -sk
       working-directory: './src'
