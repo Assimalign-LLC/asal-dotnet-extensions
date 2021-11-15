@@ -12,4 +12,10 @@
         <ProjectReference Include="..\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj" />
         <ProjectReference Include="..\Assimalign.Extensions.Options\Assimalign.Extensions.Options.csproj" />
     </ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\docs\.assimalign.extensions.logging\readme.md">
+			<Pack>true</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
 </Project>

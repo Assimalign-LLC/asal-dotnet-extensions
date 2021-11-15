@@ -4,4 +4,10 @@
 		<EnableDefaultItems>true</EnableDefaultItems>
 		<LangVersion>Latest</LangVersion>
 	</PropertyGroup>
+	<ItemGroup>
+		<None Include="..\..\docs\.assimalign.extensions.dependencyinjection\readme.md">
+			<Pack>true</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
 </Project>

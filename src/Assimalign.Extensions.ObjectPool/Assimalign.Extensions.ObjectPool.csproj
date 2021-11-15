@@ -5,5 +5,11 @@
 		<PackageTags>pooling</PackageTags>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
+	<ItemGroup>
+		<None Include="..\..\docs\.assimalign.extensions.objectpool\readme.md">
+			<Pack>true</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>

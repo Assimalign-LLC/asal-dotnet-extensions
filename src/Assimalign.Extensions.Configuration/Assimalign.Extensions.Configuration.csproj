@@ -11,5 +11,10 @@
         <ProjectReference Include="..\Assimalign.Extensions.FileProviders\Assimalign.Extensions.FileProviders.csproj" />
         <ProjectReference Include="..\Assimalign.Extensions.Primitives\Assimalign.Extensions.Primitives.csproj" />
     </ItemGroup>
-
+	<ItemGroup>
+		<None Include="..\..\docs\.assimalign.extensions.configuration\readme.md">
+			<Pack>true</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 </Project>

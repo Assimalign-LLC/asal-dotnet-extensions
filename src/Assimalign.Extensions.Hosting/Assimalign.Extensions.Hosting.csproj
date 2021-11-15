@@ -1,10 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <ItemGroup>
-    <ProjectReference Include="..\Assimalign.Extensions.Configuration\Assimalign.Extensions.Configuration.csproj" />
-    <ProjectReference Include="..\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj" />
-    <ProjectReference Include="..\Assimalign.Extensions.Logging\Assimalign.Extensions.Logging.csproj" />
-    <ProjectReference Include="..\Assimalign.Extensions.Options\Assimalign.Extensions.Options.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Assimalign.Extensions.Configuration\Assimalign.Extensions.Configuration.csproj" />
+		<ProjectReference Include="..\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj" />
+		<ProjectReference Include="..\Assimalign.Extensions.Logging\Assimalign.Extensions.Logging.csproj" />
+		<ProjectReference Include="..\Assimalign.Extensions.Options\Assimalign.Extensions.Options.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\docs\.assimalign.extensions.hosting\readme.md">
+			<Pack>true</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>
