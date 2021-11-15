@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Configuration.Providers
 {
     /// <summary>
     /// A command line based <see cref="ConfigurationProvider"/>.
     /// </summary>
-    public class CommandLineConfigurationProvider : ConfigurationProvider
+    public class ConfigurationCommandLineProvider : ConfigurationProvider
     {
         private readonly Dictionary<string, string> _switchMappings;
 
@@ -18,7 +15,7 @@ namespace Assimalign.Extensions.Configuration.Providers
         /// </summary>
         /// <param name="args">The command line args.</param>
         /// <param name="switchMappings">The switch mappings.</param>
-        public CommandLineConfigurationProvider(IEnumerable<string> args, IDictionary<string, string> switchMappings = null)
+        public ConfigurationCommandLineProvider(IEnumerable<string> args, IDictionary<string, string> switchMappings = null)
         {
             Args = args ?? throw new ArgumentNullException(nameof(args));
 

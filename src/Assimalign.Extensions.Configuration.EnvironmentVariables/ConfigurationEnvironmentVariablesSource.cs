@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.Configuration.Sources
+namespace Assimalign.Extensions.Configuration.Providers
 {
-    using Assimalign.Extensions.Configuration.Providers;
     using Assimalign.Extensions.Configuration.Abstractions;
 
     /// <summary>
     /// Represents environment variables as an <see cref="IConfigurationSource"/>.
     /// </summary>
-    public class EnvironmentVariablesConfigurationSource : IConfigurationSource
+    public class ConfigurationEnvironmentVariablesSource : IConfigurationSource
     {
         /// <summary>
         /// A prefix used to filter environment variables.
@@ -20,13 +19,13 @@ namespace Assimalign.Extensions.Configuration.Sources
         public string Prefix { get; set; }
 
         /// <summary>
-        /// Builds the <see cref="EnvironmentVariablesConfigurationProvider"/> for this source.
+        /// Builds the <see cref="ConfigurationEnvironmentVariablesProvider"/> for this source.
         /// </summary>
         /// <param name="builder">The <see cref="IConfigurationBuilder"/>.</param>
-        /// <returns>A <see cref="EnvironmentVariablesConfigurationProvider"/></returns>
+        /// <returns>A <see cref="ConfigurationEnvironmentVariablesProvider"/></returns>
         public IConfigurationProvider Build(IConfigurationBuilder builder)
         {
-            return new EnvironmentVariablesConfigurationProvider(Prefix);
+            return new ConfigurationEnvironmentVariablesProvider(Prefix);
         }
     }
 }

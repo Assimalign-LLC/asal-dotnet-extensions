@@ -5,6 +5,7 @@
 		<ProjectReference Include="..\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj" />
 		<ProjectReference Include="..\Assimalign.Extensions.Logging\Assimalign.Extensions.Logging.csproj" />
 		<ProjectReference Include="..\Assimalign.Extensions.Options\Assimalign.Extensions.Options.csproj" />
+		<ProjectReference Include="..\Assimalign.Extensions.FileProviders\Assimalign.Extensions.FileProviders.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="..\..\docs\.assimalign.extensions.hosting\readme.md">

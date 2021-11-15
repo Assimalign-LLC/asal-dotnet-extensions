@@ -1,15 +1,14 @@
 ﻿using System;
 using System.IO;
 
-namespace Assimalign.Extensions.Configuration.Sources
+namespace Assimalign.Extensions.Configuration.Providers
 {
-    using Assimalign.Extensions.Configuration.Providers;
     using Assimalign.Extensions.Configuration.Abstractions;
 
     /// <summary>
     /// Stream based <see cref="IConfigurationSource" />.
     /// </summary>
-    public abstract class StreamConfigurationSource : IConfigurationSource
+    public abstract class ConfigurationStreamSource : IConfigurationSource
     {
         /// <summary>
         /// The stream containing the configuration data.
@@ -17,7 +16,7 @@ namespace Assimalign.Extensions.Configuration.Sources
         public Stream Stream { get; set; }
 
         /// <summary>
-        /// Builds the <see cref="StreamConfigurationProvider"/> for this source.
+        /// Builds the <see cref="ConfigurationStreamProvider"/> for this source.
         /// </summary>
         /// <param name="builder">The <see cref="IConfigurationBuilder"/>.</param>
         /// <returns>An <see cref="IConfigurationProvider"/></returns>

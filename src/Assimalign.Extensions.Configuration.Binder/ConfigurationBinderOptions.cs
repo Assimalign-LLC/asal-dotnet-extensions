@@ -1,6 +1,6 @@
 ﻿
 
-namespace Assimalign.Extensions.Configuration.Binder
+namespace Assimalign.Extensions.Configuration
 {
     /// <summary>
     /// When false (the default), the binder will only attempt to set public properties.

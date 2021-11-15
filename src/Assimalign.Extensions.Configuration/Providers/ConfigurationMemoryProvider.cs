@@ -1,26 +1,23 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Assimalign.Extensions.Configuration.Providers
 {
-    using Assimalign.Extensions.Configuration.Sources;
 
     /// <summary>
-    /// In-memory implementation of <see cref="IConfigurationProvider"/>
+    /// In-memory implementation of <see cref="Assimalign.Extensions.Configuration.Abstractions.IConfigurationProvider"/>
     /// </summary>
-    public class MemoryConfigurationProvider : ConfigurationProvider, IEnumerable<KeyValuePair<string, string>>
+    public class ConfigurationMemoryProvider : ConfigurationProvider, IEnumerable<KeyValuePair<string, string>>
     {
-        private readonly MemoryConfigurationSource _source;
+        private readonly ConfigurationMemorySource _source;
 
         /// <summary>
         /// Initialize a new instance from the source.
         /// </summary>
         /// <param name="source">The source settings.</param>
-        public MemoryConfigurationProvider(MemoryConfigurationSource source)
+        public ConfigurationMemoryProvider(ConfigurationMemorySource source)
         {
             if (source == null)
             {

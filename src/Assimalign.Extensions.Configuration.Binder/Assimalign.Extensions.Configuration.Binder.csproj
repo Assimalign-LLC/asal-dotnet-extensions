@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>Assimalign.Extensions.Configuration</RootNamespace>
+		<Description>Functionality to bind an object to data in configuration providers for Assimalign.Extensions.Configuration.</Description>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Assimalign.Extensions.Configuration\Assimalign.Extensions.Configuration.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\docs\.assimalign.extensions.configuration\readme.md">
+			<Pack>true</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+</Project>

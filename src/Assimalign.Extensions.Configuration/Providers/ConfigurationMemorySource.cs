@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Assimalign.Extensions.Configuration.Sources
+namespace Assimalign.Extensions.Configuration.Providers
 {
-    using Assimalign.Extensions.Configuration.Providers;
     using Assimalign.Extensions.Configuration.Abstractions;
 
     /// <summary>
     /// Represents in-memory data as an <see cref="IConfigurationSource"/>.
     /// </summary>
-    public class MemoryConfigurationSource : IConfigurationSource
+    public class ConfigurationMemorySource : IConfigurationSource
     {
         /// <summary>
         /// The initial key value configuration pairs.
@@ -17,13 +16,13 @@ namespace Assimalign.Extensions.Configuration.Sources
         public IEnumerable<KeyValuePair<string, string>> InitialData { get; set; }
 
         /// <summary>
-        /// Builds the <see cref="MemoryConfigurationProvider"/> for this source.
+        /// Builds the <see cref="ConfigurationMemoryProvider"/> for this source.
         /// </summary>
         /// <param name="builder">The <see cref="IConfigurationBuilder"/>.</param>
-        /// <returns>A <see cref="MemoryConfigurationProvider"/></returns>
+        /// <returns>A <see cref="ConfigurationMemoryProvider"/></returns>
         public IConfigurationProvider Build(IConfigurationBuilder builder)
         {
-            return new MemoryConfigurationProvider(this);
+            return new ConfigurationMemoryProvider(this);
         }
     }
 }

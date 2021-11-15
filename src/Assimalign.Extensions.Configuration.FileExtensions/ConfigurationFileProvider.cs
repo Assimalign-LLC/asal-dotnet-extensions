@@ -8,13 +8,12 @@ using System.Threading;
 namespace Assimalign.Extensions.Configuration.Providers
 {
     using Assimalign.Extensions.Primitives;
-    using Assimalign.Extensions.Configuration.Sources;
     using Assimalign.Extensions.FileProviders.Abstractions;
 
     /// <summary>
     /// Base class for file based <see cref="ConfigurationProvider"/>.
     /// </summary>
-    public abstract class FileConfigurationProvider : ConfigurationProvider, IDisposable
+    public abstract class ConfigurationFileProvider : ConfigurationProvider, IDisposable
     {
         private readonly IDisposable _changeTokenRegistration;
 
@@ -22,7 +21,7 @@ namespace Assimalign.Extensions.Configuration.Providers
         /// Initializes a new instance with the specified source.
         /// </summary>
         /// <param name="source">The source settings.</param>
-        public FileConfigurationProvider(FileConfigurationSource source)
+        public ConfigurationFileProvider(ConfigurationFileSource source)
         {
             Source = source ?? throw new ArgumentNullException(nameof(source));
 
@@ -41,7 +40,7 @@ namespace Assimalign.Extensions.Configuration.Providers
         /// <summary>
         /// The source settings for this provider.
         /// </summary>
-        public FileConfigurationSource Source { get; }
+        public ConfigurationFileSource Source { get; }
 
         /// <summary>
         /// Generates a string representing this provider name and relevant details.
@@ -117,7 +116,7 @@ namespace Assimalign.Extensions.Configuration.Providers
         /// <exception cref="FileNotFoundException">If Optional is <c>false</c> on the source and a
         /// file does not exist at specified Path.</exception>
         /// <exception cref="InvalidDataException">Wrapping any exception thrown by the concrete implementation of the
-        /// <see cref="Load()"/> method. Use the source <see cref="FileConfigurationSource.OnLoadException"/> callback
+        /// <see cref="Load()"/> method. Use the source <see cref="ConfigurationFileSource.OnLoadException"/> callback
         /// if you need more control over the exception.</exception>
         public override void Load()
         {
@@ -135,7 +134,7 @@ namespace Assimalign.Extensions.Configuration.Providers
             bool ignoreException = false;
             if (Source.OnLoadException != null)
             {
-                var exceptionContext = new FileLoadExceptionContext
+                var exceptionContext = new ConfigurationFileLoadExceptionContext
                 {
                     Provider = this,
                     Exception = info.SourceException

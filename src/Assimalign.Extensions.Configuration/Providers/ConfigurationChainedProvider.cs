@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Configuration.Providers
 {
-    using Assimalign.Extensions.Configuration.Sources;
     using Assimalign.Extensions.Primitives.Abstractions;
     using Assimalign.Extensions.Configuration.Abstractions;
 
-    public class ChainedConfigurationProvider : IConfigurationProvider, IDisposable
+    public class ConfigurationChainedProvider : IConfigurationProvider, IDisposable
     {
         private readonly IConfiguration configuration;
         private readonly bool disposeConfiguration;
@@ -19,7 +15,7 @@ namespace Assimalign.Extensions.Configuration.Providers
         /// Initialize a new instance from the source configuration.
         /// </summary>
         /// <param name="source">The source configuration.</param>
-        public ChainedConfigurationProvider(ChainedConfigurationSource source)
+        public ConfigurationChainedProvider(ConfigurationChainedSource source)
         {
             if (source == null)
             {

@@ -1,22 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.Configuration.Sources
+namespace Assimalign.Extensions.Configuration.Providers
 {
-    using Assimalign.Extensions.Configuration.Providers;
-
     /// <summary>
     /// Contains information about a file load exception.
     /// </summary>
-    public class FileLoadExceptionContext
+    public class ConfigurationFileLoadExceptionContext
     {
         /// <summary>
-        /// The <see cref="FileConfigurationProvider"/> that caused the exception.
+        /// The <see cref="ConfigurationFileProvider"/> that caused the exception.
         /// </summary>
-        public FileConfigurationProvider Provider { get; set; }
+        public ConfigurationFileProvider Provider { get; set; }
 
         /// <summary>
         /// The exception that occurred in Load.

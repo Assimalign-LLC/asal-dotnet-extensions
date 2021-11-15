@@ -8,7 +8,7 @@ namespace Assimalign.Extensions.Configuration.Providers
     /// <summary>
     /// An environment variable based <see cref="ConfigurationProvider"/>.
     /// </summary>
-    public class EnvironmentVariablesConfigurationProvider : ConfigurationProvider
+    public class ConfigurationEnvironmentVariablesProvider : ConfigurationProvider
     {
         private const string MySqlServerPrefix = "MYSQLCONNSTR_";
         private const string SqlAzureServerPrefix = "SQLAZURECONNSTR_";
@@ -20,14 +20,14 @@ namespace Assimalign.Extensions.Configuration.Providers
         /// <summary>
         /// Initializes a new instance.
         /// </summary>
-        public EnvironmentVariablesConfigurationProvider() =>
+        public ConfigurationEnvironmentVariablesProvider() =>
             _prefix = string.Empty;
 
         /// <summary>
         /// Initializes a new instance with the specified prefix.
         /// </summary>
         /// <param name="prefix">A prefix used to filter the environment variables.</param>
-        public EnvironmentVariablesConfigurationProvider(string prefix) =>
+        public ConfigurationEnvironmentVariablesProvider(string prefix) =>
             _prefix = prefix ?? string.Empty;
 
         /// <summary>

@@ -2,7 +2,7 @@
 using System.IO;
 
 
-namespace Assimalign.Extensions.Configuration.Sources
+namespace Assimalign.Extensions.Configuration.Providers
 {
     using Assimalign.Extensions.FileProviders.Physical;
     using Assimalign.Extensions.FileProviders.Abstractions;
@@ -12,7 +12,7 @@ namespace Assimalign.Extensions.Configuration.Sources
     /// <summary>
     /// Represents a base class for file based <see cref="IConfigurationSource"/>.
     /// </summary>
-    public abstract class FileConfigurationSource : IConfigurationSource
+    public abstract class ConfigurationFileSource : IConfigurationSource
     {
         /// <summary>
         /// Used to access the contents of the file.
@@ -43,7 +43,7 @@ namespace Assimalign.Extensions.Configuration.Sources
         /// <summary>
         /// Will be called if an uncaught exception occurs in FileConfigurationProvider.Load.
         /// </summary>
-        public Action<FileLoadExceptionContext> OnLoadException { get; set; }
+        public Action<ConfigurationFileLoadExceptionContext> OnLoadException { get; set; }
 
         /// <summary>
         /// Builds the <see cref="IConfigurationProvider"/> for this source.

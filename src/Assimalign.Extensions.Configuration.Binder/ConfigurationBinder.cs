@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 
 
-namespace Assimalign.Extensions.Configuration.Binder
+namespace Assimalign.Extensions.Configuration
 {
     using Assimalign.Extensions.Configuration.Abstractions;
 

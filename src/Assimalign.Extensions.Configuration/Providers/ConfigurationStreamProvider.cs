@@ -4,17 +4,16 @@ using System.IO;
 
 namespace Assimalign.Extensions.Configuration.Providers
 {
-    using Assimalign.Extensions.Configuration.Sources;
 
     /// <summary>
     /// Stream based configuration provider
     /// </summary>
-    public abstract class StreamConfigurationProvider : ConfigurationProvider
+    public abstract class ConfigurationStreamProvider : ConfigurationProvider
     {
         /// <summary>
         /// The source settings for this provider.
         /// </summary>
-        public StreamConfigurationSource Source { get; }
+        public ConfigurationStreamSource Source { get; }
 
         private bool _loaded;
 
@@ -22,7 +21,7 @@ namespace Assimalign.Extensions.Configuration.Providers
         /// Constructor.
         /// </summary>
         /// <param name="source">The source.</param>
-        public StreamConfigurationProvider(StreamConfigurationSource source)
+        public ConfigurationStreamProvider(ConfigurationStreamSource source)
         {
             Source = source ?? throw new ArgumentNullException(nameof(source));
         }

@@ -7,18 +7,17 @@ using System.Text.Json;
 
 namespace Assimalign.Extensions.Configuration.Providers
 {
-    using Assimalign.Extensions.Configuration.Sources;
 
     /// <summary>
-    /// A JSON file based <see cref="FileConfigurationProvider"/>.
+    /// A JSON file based <see cref="ConfigurationFileProvider"/>.
     /// </summary>
-    public class JsonConfigurationProvider : FileConfigurationProvider
+    public class ConfigurationJsonProvider : ConfigurationFileProvider
     {
         /// <summary>
         /// Initializes a new instance with the specified source.
         /// </summary>
         /// <param name="source">The source settings.</param>
-        public JsonConfigurationProvider(JsonConfigurationSource source) : base(source) { }
+        public ConfigurationJsonProvider(ConfigurationJsonSource source) : base(source) { }
 
         /// <summary>
         /// Loads the JSON data from a stream.
