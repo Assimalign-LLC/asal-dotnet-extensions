@@ -4,8 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Assimalign.Extensions.Options
 {
+    using Assimalign.Extensions.Configuration;
     using Assimalign.Extensions.Configuration.Abstractions;
-    using Assimalign.Extensions.Configuration.Binder;
 
 
     // REVIEW: consider deleting/obsoleting, not used by Configure anymore (in favor of name), left for breaking change)

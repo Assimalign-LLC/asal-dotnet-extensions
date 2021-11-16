@@ -31,7 +31,27 @@ jobs:
     - name: Publish Assimalign.Extensions.Configuration Nuget
       run: dotnet nuget push "Assimalign.Extensions.Configuration/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
       working-directory: './src'
+
+    - name: Publish Assimalign.Extensions.Configuration.Binder Nuget
+      run: dotnet nuget push "Assimalign.Extensions.Configuration.Binder/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      working-directory: './src'
+
+    - name: Publish Assimalign.Extensions.Configuration.CommandLine Nuget
+      run: dotnet nuget push "Assimalign.Extensions.Configuration.CommandLine/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      working-directory: './src'
+
+    - name: Publish Assimalign.Extensions.Configuration.EnvironmentVariables Nuget
+      run: dotnet nuget push "Assimalign.Extensions.Configuration.EnvironmentVariables/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      working-directory: './src'
       
+    - name: Publish Assimalign.Extensions.Configuration.FileExtensions Nuget
+      run: dotnet nuget push "Assimalign.Extensions.Configuration.FileExtensions/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      working-directory: './src'
+
+    - name: Publish Assimalign.Extensions.Configuration.Json Nuget
+      run: dotnet nuget push "Assimalign.Extensions.Configuration.Json/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      working-directory: './src'
+
     - name: Publish Assimalign.Extensions.DependencyInjection Nuget
       run: dotnet nuget push "Assimalign.Extensions.DependencyInjection/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
       working-directory: './src'
@@ -54,6 +74,30 @@ jobs:
       
     - name: Publish Assimalign.Extensions.Logging Nuget
       run: dotnet nuget push "Assimalign.Extensions.Logging/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      working-directory: './src'
+
+    - name: Publish Assimalign.Extensions.Logging.Configuration Nuget
+      run: dotnet nuget push "Assimalign.Extensions.Logging.Configuration/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      working-directory: './src'
+
+    - name: Publish Assimalign.Extensions.Logging.Console Nuget
+      run: dotnet nuget push "Assimalign.Extensions.Logging.Console/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      working-directory: './src'
+
+    - name: Publish Assimalign.Extensions.Logging.Debug Nuget
+      run: dotnet nuget push "Assimalign.Extensions.Logging.Debug/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      working-directory: './src'
+
+    - name: Publish Assimalign.Extensions.Logging.EventLog Nuget
+      run: dotnet nuget push "Assimalign.Extensions.Logging.EventLog/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      working-directory: './src'
+
+    - name: Publish Assimalign.Extensions.Logging.EventSource Nuget
+      run: dotnet nuget push "Assimalign.Extensions.Logging.EventSource/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      working-directory: './src'
+
+    - name: Publish Assimalign.Extensions.ObjectPool Nuget
+      run: dotnet nuget push "Assimalign.Extensions.ObjectPool/**/*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
       working-directory: './src'
 
     - name: Publish Assimalign.Extensions.Options Nuget

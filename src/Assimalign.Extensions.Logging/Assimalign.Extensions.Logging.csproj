@@ -3,14 +3,9 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <ItemGroup>
-        <Folder Include="Debuging\" />
-        <Folder Include="Console\" />
-        <Folder Include="EventSource\" />
-    </ItemGroup>
-    <ItemGroup>
+        <ProjectReference Include="..\Assimalign.Extensions.Options\Assimalign.Extensions.Options.csproj" />
         <ProjectReference Include="..\Assimalign.Extensions.Configuration\Assimalign.Extensions.Configuration.csproj" />
         <ProjectReference Include="..\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj" />
-        <ProjectReference Include="..\Assimalign.Extensions.Options\Assimalign.Extensions.Options.csproj" />
     </ItemGroup>
 	<ItemGroup>
 		<None Include="..\..\docs\.assimalign.extensions.logging\readme.md">

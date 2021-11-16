@@ -9,7 +9,7 @@ namespace Assimalign.Extensions.Logging
     {
         private const string AliasAttibuteTypeFullName = "Assimalign.Extensions.Logging.ProviderAliasAttribute";
 
-        internal static string GetAlias(Type providerType)
+        public static string GetAlias(Type providerType)
         {
             IList<CustomAttributeData> attributes = CustomAttributeData.GetCustomAttributes(providerType);
 
