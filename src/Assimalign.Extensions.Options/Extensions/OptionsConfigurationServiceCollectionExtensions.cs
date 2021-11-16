@@ -5,8 +5,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Assimalign.Extensions.Options
 {
+    using Assimalign.Extensions.Configuration;
     using Assimalign.Extensions.Configuration.Abstractions;
-    using Assimalign.Extensions.Configuration.Binder;
     using Assimalign.Extensions.Options.Abstractions;
     using Assimalign.Extensions.DependencyInjection;
     using Assimalign.Extensions.DependencyInjection.Abstractions;

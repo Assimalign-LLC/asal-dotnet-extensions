@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace Assimalign.Extensions.Logging.Configuration
+namespace Assimalign.Extensions.Logging
 {
     using Assimalign.Extensions.Configuration.Abstractions;
 

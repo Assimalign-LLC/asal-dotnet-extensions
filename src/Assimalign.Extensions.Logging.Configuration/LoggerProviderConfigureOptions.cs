@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Assimalign.Extensions.Logging.Configuration
+namespace Assimalign.Extensions.Logging
 {
     using Assimalign.Extensions.Options;
 

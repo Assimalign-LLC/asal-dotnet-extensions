@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 
 
-namespace Assimalign.Extensions.Logging.Configuration
+namespace Assimalign.Extensions.Logging
 {
     using Assimalign.Extensions.Configuration;
     using Assimalign.Extensions.Configuration.Abstractions;
-    using Assimalign.Extensions.Configuration.Binder;
     using Assimalign.Extensions.Options.Abstractions;
 
     internal sealed class LoggerFilterConfigureOptions : IConfigureOptions<LoggerFilterOptions>

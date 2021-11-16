@@ -44,15 +44,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Confi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.DependencyInjectionTests", "..\tests\Assimalign.Extensions.DependencyInjectionTests\Assimalign.Extensions.DependencyInjectionTests.csproj", "{6BE03383-779C-4809-90BD-E33C3107A185}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Configuration.Binder", "Assimalign.Extensions.Configuration.Binder\Assimalign.Extensions.Configuration.Binder.csproj", "{E26029C2-E74A-4CE8-AD02-FE62405E80E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Configuration.Binder", "Assimalign.Extensions.Configuration.Binder\Assimalign.Extensions.Configuration.Binder.csproj", "{E26029C2-E74A-4CE8-AD02-FE62405E80E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Configuration.CommandLine", "Assimalign.Extensions.Configuration.CommandLine\Assimalign.Extensions.Configuration.CommandLine.csproj", "{4F1D9CB9-426A-4A7E-AFDE-7914C588B0F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Configuration.CommandLine", "Assimalign.Extensions.Configuration.CommandLine\Assimalign.Extensions.Configuration.CommandLine.csproj", "{4F1D9CB9-426A-4A7E-AFDE-7914C588B0F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Configuration.EnvironmentVariables", "Assimalign.Extensions.Configuration.EnvironmentVariables\Assimalign.Extensions.Configuration.EnvironmentVariables.csproj", "{A9E775CE-C8CC-4CA6-A9C0-00FF20BA3088}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Configuration.EnvironmentVariables", "Assimalign.Extensions.Configuration.EnvironmentVariables\Assimalign.Extensions.Configuration.EnvironmentVariables.csproj", "{A9E775CE-C8CC-4CA6-A9C0-00FF20BA3088}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Configuration.FileExtensions", "Assimalign.Extensions.Configuration.FileExtensions\Assimalign.Extensions.Configuration.FileExtensions.csproj", "{13A98A91-50F2-4D84-B134-0B279977A885}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Configuration.FileExtensions", "Assimalign.Extensions.Configuration.FileExtensions\Assimalign.Extensions.Configuration.FileExtensions.csproj", "{13A98A91-50F2-4D84-B134-0B279977A885}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Configuration.Json", "Assimalign.Extensions.Configuration.Json\Assimalign.Extensions.Configuration.Json.csproj", "{8F3085B9-4DDA-40D2-99F5-BA358AB60241}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Configuration.Json", "Assimalign.Extensions.Configuration.Json\Assimalign.Extensions.Configuration.Json.csproj", "{8F3085B9-4DDA-40D2-99F5-BA358AB60241}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Logging.Configuration", "Assimalign.Extensions.Logging.Configuration\Assimalign.Extensions.Logging.Configuration.csproj", "{7718B9CF-0983-4BBD-9A01-21C5A22A5817}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Configuration.Xml", "Assimalign.Extensions.Configuration.Xml\Assimalign.Extensions.Configuration.Xml.csproj", "{522388C2-D3D8-4564-A51F-DEAE2D205AFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Logging.Console", "Assimalign.Extensions.Logging.Console\Assimalign.Extensions.Logging.Console.csproj", "{6009B449-2529-4242-ACC7-AC6B854CD299}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Logging.EventSource", "Assimalign.Extensions.Logging.EventSource\Assimalign.Extensions.Logging.EventSource.csproj", "{4D36E2C7-E5DB-4D77-88E6-0DD456588EF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Logging.Debug", "Assimalign.Extensions.Logging.Debug\Assimalign.Extensions.Logging.Debug.csproj", "{92ED08DD-AA4B-4295-BEAF-76215ED09FB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -140,6 +150,26 @@ Global
 		{8F3085B9-4DDA-40D2-99F5-BA358AB60241}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F3085B9-4DDA-40D2-99F5-BA358AB60241}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F3085B9-4DDA-40D2-99F5-BA358AB60241}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7718B9CF-0983-4BBD-9A01-21C5A22A5817}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7718B9CF-0983-4BBD-9A01-21C5A22A5817}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7718B9CF-0983-4BBD-9A01-21C5A22A5817}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7718B9CF-0983-4BBD-9A01-21C5A22A5817}.Release|Any CPU.Build.0 = Release|Any CPU
+		{522388C2-D3D8-4564-A51F-DEAE2D205AFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{522388C2-D3D8-4564-A51F-DEAE2D205AFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{522388C2-D3D8-4564-A51F-DEAE2D205AFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{522388C2-D3D8-4564-A51F-DEAE2D205AFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6009B449-2529-4242-ACC7-AC6B854CD299}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6009B449-2529-4242-ACC7-AC6B854CD299}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6009B449-2529-4242-ACC7-AC6B854CD299}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6009B449-2529-4242-ACC7-AC6B854CD299}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D36E2C7-E5DB-4D77-88E6-0DD456588EF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D36E2C7-E5DB-4D77-88E6-0DD456588EF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D36E2C7-E5DB-4D77-88E6-0DD456588EF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D36E2C7-E5DB-4D77-88E6-0DD456588EF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92ED08DD-AA4B-4295-BEAF-76215ED09FB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92ED08DD-AA4B-4295-BEAF-76215ED09FB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92ED08DD-AA4B-4295-BEAF-76215ED09FB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92ED08DD-AA4B-4295-BEAF-76215ED09FB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -165,6 +195,11 @@ Global
 		{A9E775CE-C8CC-4CA6-A9C0-00FF20BA3088} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
 		{13A98A91-50F2-4D84-B134-0B279977A885} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
 		{8F3085B9-4DDA-40D2-99F5-BA358AB60241} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
+		{7718B9CF-0983-4BBD-9A01-21C5A22A5817} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
+		{522388C2-D3D8-4564-A51F-DEAE2D205AFA} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
+		{6009B449-2529-4242-ACC7-AC6B854CD299} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
+		{4D36E2C7-E5DB-4D77-88E6-0DD456588EF8} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
+		{92ED08DD-AA4B-4295-BEAF-76215ED09FB9} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0E48D3C9-706C-4079-9E6E-2D9C88CEB612}

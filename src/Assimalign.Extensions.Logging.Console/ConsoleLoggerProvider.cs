@@ -105,19 +105,9 @@ namespace Assimalign.Extensions.Logging.Console
         // warning:  ReloadLoggerOptions can be called before the ctor completed,... before registering all of the state used in this method need to be initialized
         private void ReloadLoggerOptions(ConsoleLoggerOptions options)
         {
-            if (options.FormatterName == null || !_formatters.TryGetValue(options.FormatterName, out ConsoleFormatter logFormatter))
+            if (!_formatters.TryGetValue(_options.CurrentValue.FormatterName, out ConsoleFormatter logFormatter))
             {
-#pragma warning disable CS0618
-                logFormatter = options.Format switch
-                {
-                    ConsoleLoggerFormat.Systemd => _formatters[ConsoleFormatterNames.Systemd],
-                    _ => _formatters[ConsoleFormatterNames.Simple],
-                };
-                if (options.FormatterName == null)
-                {
-                    UpdateFormatterOptions(logFormatter, options);
-                }
-#pragma warning restore CS0618
+                logFormatter = _formatters[ConsoleFormatterNames.Systemd];
             }
 
             foreach (KeyValuePair<string, ConsoleLogger> logger in _loggers)
@@ -130,20 +120,9 @@ namespace Assimalign.Extensions.Logging.Console
         /// <inheritdoc />
         public ILogger CreateLogger(string name)
         {
-            if (_options.CurrentValue.FormatterName == null || !_formatters.TryGetValue(_options.CurrentValue.FormatterName, out ConsoleFormatter logFormatter))
+            if (!_formatters.TryGetValue(_options.CurrentValue.FormatterName, out ConsoleFormatter logFormatter))
             {
-#pragma warning disable CS0618
-                logFormatter = _options.CurrentValue.Format switch
-                {
-                    ConsoleLoggerFormat.Systemd => _formatters[ConsoleFormatterNames.Systemd],
-                    _ => _formatters[ConsoleFormatterNames.Simple],
-                };
-#pragma warning restore CS0618
-
-                if (_options.CurrentValue.FormatterName == null)
-                {
-                    UpdateFormatterOptions(logFormatter, _options.CurrentValue);
-                }
+                logFormatter = _formatters[ConsoleFormatterNames.Systemd];
             }
 
             return _loggers.TryGetValue(name, out ConsoleLogger logger) ?
@@ -156,32 +135,6 @@ namespace Assimalign.Extensions.Logging.Console
                 });
         }
 
-#pragma warning disable CS0618
-        private void UpdateFormatterOptions(ConsoleFormatter formatter, ConsoleLoggerOptions deprecatedFromOptions)
-        {
-            // kept for deprecated apis:
-            if (formatter is SimpleConsoleFormatter defaultFormatter)
-            {
-                defaultFormatter.FormatterOptions = new SimpleConsoleFormatterOptions()
-                {
-                    ColorBehavior = deprecatedFromOptions.DisableColors ? LoggerColorBehavior.Disabled : LoggerColorBehavior.Enabled,
-                    IncludeScopes = deprecatedFromOptions.IncludeScopes,
-                    TimestampFormat = deprecatedFromOptions.TimestampFormat,
-                    UseUtcTimestamp = deprecatedFromOptions.UseUtcTimestamp,
-                };
-            }
-            else
-            if (formatter is SystemdConsoleFormatter systemdFormatter)
-            {
-                systemdFormatter.FormatterOptions = new ConsoleFormatterOptions()
-                {
-                    IncludeScopes = deprecatedFromOptions.IncludeScopes,
-                    TimestampFormat = deprecatedFromOptions.TimestampFormat,
-                    UseUtcTimestamp = deprecatedFromOptions.UseUtcTimestamp,
-                };
-            }
-        }
-#pragma warning restore CS0618
 
         /// <inheritdoc />
         public void Dispose()

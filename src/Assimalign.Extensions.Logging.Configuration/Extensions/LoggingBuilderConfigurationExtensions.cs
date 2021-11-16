@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.Logging.Configuration
+namespace Assimalign.Extensions.Logging
 {
     using Assimalign.Extensions.DependencyInjection;
     using Assimalign.Extensions.Logging.Abstractions;

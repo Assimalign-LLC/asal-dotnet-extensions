@@ -1,14 +1,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Versioning;
-using Assimalign.Extensions.Configuration;
 
 namespace Assimalign.Extensions.Logging
 {
     using Assimalign.Extensions.DependencyInjection;
-    using Assimalign.Extensions.DependencyInjection.Utilities;
     using Assimalign.Extensions.Logging.Abstractions;
-    using Assimalign.Extensions.Logging.Configuration;
     using Assimalign.Extensions.Logging.Console;
     using Assimalign.Extensions.Options;
     using Assimalign.Extensions.Options.Abstractions;

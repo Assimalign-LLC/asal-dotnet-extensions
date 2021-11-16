@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.Logging.Configuration
+namespace Assimalign.Extensions.Logging
 {
     using Assimalign.Extensions.Configuration;
     using Assimalign.Extensions.Configuration.Abstractions;

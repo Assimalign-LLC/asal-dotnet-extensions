@@ -1,12 +1,14 @@
 using System;
 using System.IO;
 using System.Text;
-using Assimalign.Extensions.Logging.Abstractions;
-using Assimalign.Extensions.Options;
-using Assimalign.Extensions.Options.Abstractions;
+
 
 namespace Assimalign.Extensions.Logging.Console
 {
+    using Assimalign.Extensions.Options;
+    using Assimalign.Extensions.Options.Abstractions;
+    using Assimalign.Extensions.Logging.Abstractions;
+
     internal sealed class SystemdConsoleFormatter : ConsoleFormatter, IDisposable
     {
         private IDisposable _optionsReloadToken;

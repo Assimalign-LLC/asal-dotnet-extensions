@@ -1,11 +1,13 @@
 using System;
 using System.IO;
-using Assimalign.Extensions.Logging.Abstractions;
-using Assimalign.Extensions.Options;
-using Assimalign.Extensions.Options.Abstractions;
+
 
 namespace Assimalign.Extensions.Logging.Console
 {
+    using Assimalign.Extensions.Options;
+    using Assimalign.Extensions.Options.Abstractions;
+    using Assimalign.Extensions.Logging.Abstractions;
+
     internal sealed class SimpleConsoleFormatter : ConsoleFormatter, IDisposable
     {
         private const string LoglevelPadding = ": ";
@@ -76,12 +78,11 @@ namespace Assimalign.Extensions.Logging.Console
             textWriter.Write(logEntry.Category);
             textWriter.Write('[');
 
-#if NETCOREAPP
+
             Span<char> span = stackalloc char[10];
             if (eventId.TryFormat(span, out int charsWritten))
                 textWriter.Write(span.Slice(0, charsWritten));
             else
-#endif
                 textWriter.Write(eventId.ToString());
 
             textWriter.Write(']');

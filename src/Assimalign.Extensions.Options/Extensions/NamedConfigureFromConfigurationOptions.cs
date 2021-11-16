@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Assimalign.Extensions.Options
 {
 
+    using Assimalign.Extensions.Configuration;
     using Assimalign.Extensions.Configuration.Abstractions;
-    using Assimalign.Extensions.Configuration.Binder;
 
 
     /// <summary>
@@ -32,7 +29,7 @@ namespace Assimalign.Extensions.Options
         /// </summary>
         /// <param name="name">The name of the options instance.</param>
         /// <param name="config">The <see cref="IConfiguration"/> instance.</param>
-        /// <param name="configureBinder">Used to configure the <see cref="BinderOptions"/>.</param>
+        /// <param name="configureBinder">Used to configure the <see cref="ConfigurationBinderOptions"/>.</param>
         public NamedConfigureFromConfigurationOptions(string name, IConfiguration config, Action<ConfigurationBinderOptions> configureBinder)
             : base(name, options => BindFromOptions(options, config, configureBinder))
         {

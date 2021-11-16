@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Options
 {
     using Assimalign.Extensions.Options;
     using Assimalign.Extensions.Options.Abstractions;
-    using Assimalign.Extensions.Configuration.Binder;
+    using Assimalign.Extensions.Configuration;
     using Assimalign.Extensions.Configuration.Abstractions;
     using Assimalign.Extensions.DependencyInjection;
     
@@ -59,7 +55,7 @@ namespace Assimalign.Extensions.Options
         /// <typeparam name="TOptions">The options type to be configured.</typeparam>
         /// <param name="optionsBuilder">The options builder to add the services to.</param>
         /// <param name="configSectionPath">The name of the configuration section to bind from.</param>
-        /// <param name="configureBinder">Optional. Used to configure the <see cref="BinderOptions"/>.</param>
+        /// <param name="configureBinder">Optional. Used to configure the <see cref="ConfigurationBinderOptions"/>.</param>
         /// <returns>The <see cref="OptionsBuilder{TOptions}"/> so that additional calls can be chained.</returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="optionsBuilder"/> or <paramref name="configSectionPath" /> is <see langword="null"/>.
