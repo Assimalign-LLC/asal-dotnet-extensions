@@ -56,13 +56,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Confi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Logging.Configuration", "Assimalign.Extensions.Logging.Configuration\Assimalign.Extensions.Logging.Configuration.csproj", "{7718B9CF-0983-4BBD-9A01-21C5A22A5817}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Configuration.Xml", "Assimalign.Extensions.Configuration.Xml\Assimalign.Extensions.Configuration.Xml.csproj", "{522388C2-D3D8-4564-A51F-DEAE2D205AFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Configuration.Xml", "Assimalign.Extensions.Configuration.Xml\Assimalign.Extensions.Configuration.Xml.csproj", "{522388C2-D3D8-4564-A51F-DEAE2D205AFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Logging.Console", "Assimalign.Extensions.Logging.Console\Assimalign.Extensions.Logging.Console.csproj", "{6009B449-2529-4242-ACC7-AC6B854CD299}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Logging.Console", "Assimalign.Extensions.Logging.Console\Assimalign.Extensions.Logging.Console.csproj", "{6009B449-2529-4242-ACC7-AC6B854CD299}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Logging.EventSource", "Assimalign.Extensions.Logging.EventSource\Assimalign.Extensions.Logging.EventSource.csproj", "{4D36E2C7-E5DB-4D77-88E6-0DD456588EF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Logging.EventSource", "Assimalign.Extensions.Logging.EventSource\Assimalign.Extensions.Logging.EventSource.csproj", "{4D36E2C7-E5DB-4D77-88E6-0DD456588EF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Logging.Debug", "Assimalign.Extensions.Logging.Debug\Assimalign.Extensions.Logging.Debug.csproj", "{92ED08DD-AA4B-4295-BEAF-76215ED09FB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Logging.Debug", "Assimalign.Extensions.Logging.Debug\Assimalign.Extensions.Logging.Debug.csproj", "{92ED08DD-AA4B-4295-BEAF-76215ED09FB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Logging.EventLog", "Assimalign.Extensions.Logging.EventLog\Assimalign.Extensions.Logging.EventLog.csproj", "{3F7DC83E-E959-4889-AABB-A60171352779}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -170,6 +172,10 @@ Global
 		{92ED08DD-AA4B-4295-BEAF-76215ED09FB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92ED08DD-AA4B-4295-BEAF-76215ED09FB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92ED08DD-AA4B-4295-BEAF-76215ED09FB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F7DC83E-E959-4889-AABB-A60171352779}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F7DC83E-E959-4889-AABB-A60171352779}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F7DC83E-E959-4889-AABB-A60171352779}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F7DC83E-E959-4889-AABB-A60171352779}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -200,6 +206,7 @@ Global
 		{6009B449-2529-4242-ACC7-AC6B854CD299} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
 		{4D36E2C7-E5DB-4D77-88E6-0DD456588EF8} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
 		{92ED08DD-AA4B-4295-BEAF-76215ED09FB9} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
+		{3F7DC83E-E959-4889-AABB-A60171352779} = {032D3ABD-068C-4167-BA3D-BEC95C5F0DA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0E48D3C9-706C-4079-9E6E-2D9C88CEB612}

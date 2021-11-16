@@ -2,6 +2,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Assimalign.Extensions.Configuration\Assimalign.Extensions.Configuration.csproj" />
+		<ProjectReference Include="..\Assimalign.Extensions.Configuration.FileExtensions\Assimalign.Extensions.Configuration.FileExtensions.csproj" />
 		<ProjectReference Include="..\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj" />
 		<ProjectReference Include="..\Assimalign.Extensions.Logging\Assimalign.Extensions.Logging.csproj" />
 		<ProjectReference Include="..\Assimalign.Extensions.Options\Assimalign.Extensions.Options.csproj" />
