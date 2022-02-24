@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.FileSystemGlobbing
 {
@@ -95,26 +92,26 @@ namespace Assimalign.Extensions.FileSystemGlobbing
     ///         </item>
     ///     </list>
     /// </remarks>
-    public class Matcher
+    public class FilePatternMatcher
     {
-        private readonly IList<IPattern> _includePatterns = new List<IPattern>();
-        private readonly IList<IPattern> _excludePatterns = new List<IPattern>();
+        private readonly IList<IFilePattern> _includePatterns = new List<IFilePattern>();
+        private readonly IList<IFilePattern> _excludePatterns = new List<IFilePattern>();
         private readonly PatternBuilder _builder;
         private readonly StringComparison _comparison;
 
         /// <summary>
-        /// Initializes an instance of <see cref="Matcher" /> using case-insensitive matching
+        /// Initializes an instance of <see cref="FilePatternMatcher" /> using case-insensitive matching
         /// </summary>
-        public Matcher()
+        public FilePatternMatcher()
             : this(StringComparison.OrdinalIgnoreCase)
         {
         }
 
         /// <summary>
-        /// Initializes an instance of <see cref="Matcher" /> using the string comparison method specified
+        /// Initializes an instance of <see cref="FilePatternMatcher" /> using the string comparison method specified
         /// </summary>
         /// <param name="comparisonType">The <see cref="StringComparison" /> to use</param>
-        public Matcher(StringComparison comparisonType)
+        public FilePatternMatcher(StringComparison comparisonType)
         {
             _comparison = comparisonType;
             _builder = new PatternBuilder(comparisonType);
@@ -132,7 +129,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing
         /// </summary>
         /// <param name="pattern">The globbing pattern</param>
         /// <returns>The matcher</returns>
-        public virtual Matcher AddInclude(string pattern)
+        public virtual FilePatternMatcher AddInclude(string pattern)
         {
             _includePatterns.Add(_builder.Build(pattern));
             return this;
@@ -150,20 +147,20 @@ namespace Assimalign.Extensions.FileSystemGlobbing
         /// </summary>
         /// <param name="pattern">The globbing pattern</param>
         /// <returns>The matcher</returns>
-        public virtual Matcher AddExclude(string pattern)
+        public virtual FilePatternMatcher AddExclude(string pattern)
         {
             _excludePatterns.Add(_builder.Build(pattern));
             return this;
         }
 
         /// <summary>
-        /// Searches the directory specified for all files matching patterns added to this instance of <see cref="Matcher" />
+        /// Searches the directory specified for all files matching patterns added to this instance of <see cref="FilePatternMatcher" />
         /// </summary>
         /// <param name="directoryInfo">The root directory for the search</param>
-        /// <returns>Always returns instance of <see cref="PatternMatchingResult" />, even if not files were matched</returns>
-        public virtual PatternMatchingResult Execute(DirectoryInfoBase directoryInfo)
+        /// <returns>Always returns instance of <see cref="FilePatternMatchingResult" />, even if not files were matched</returns>
+        public virtual FilePatternMatchingResult Execute(DirectoryInfoBase directoryInfo)
         {
-            var context = new MatcherContext(_includePatterns, _excludePatterns, directoryInfo, _comparison);
+            var context = new FileMatcherContext(_includePatterns, _excludePatterns, directoryInfo, _comparison);
             return context.Execute();
         }
     }

@@ -10,22 +10,22 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal
     /// This API supports infrastructure and is not intended to be used
     /// directly from your code. This API may change or be removed in future releases.
     /// </summary>
-    public struct PatternTestResult
+    public struct FilePatternTestResult
     {
-        public static readonly PatternTestResult Failed = new PatternTestResult(isSuccessful: false, stem: null);
+        public static readonly FilePatternTestResult Failed = new FilePatternTestResult(isSuccessful: false, stem: null);
 
         public bool IsSuccessful { get; }
         public string Stem { get; }
 
-        private PatternTestResult(bool isSuccessful, string stem)
+        private FilePatternTestResult(bool isSuccessful, string stem)
         {
             IsSuccessful = isSuccessful;
             Stem = stem;
         }
 
-        public static PatternTestResult Success(string stem)
+        public static FilePatternTestResult Success(string stem)
         {
-            return new PatternTestResult(isSuccessful: true, stem: stem);
+            return new FilePatternTestResult(isSuccessful: true, stem: stem);
         }
     }
 }

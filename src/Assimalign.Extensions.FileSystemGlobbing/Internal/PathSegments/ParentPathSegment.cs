@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PathSegments
 {
-    public class ParentPathSegment : IPathSegment
+    public class ParentPathSegment : IFilePathSegment
     {
         private const string LiteralParent = "..";
 

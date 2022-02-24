@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PathSegments
 {
-    public class WildcardPathSegment : IPathSegment
+    public class WildcardPathSegment : IFilePathSegment
     {
         // It doesn't matter which StringComparison type is used in this MatchAll segment because
         // all comparing are skipped since there is no content in the segment.

@@ -13,11 +13,11 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal
     /// This API supports infrastructure and is not intended to be used
     /// directly from your code. This API may change or be removed in future releases.
     /// </summary>
-    public class MatcherContext
+    public class FileMatcherContext
     {
         private readonly DirectoryInfoBase _root;
-        private readonly List<IPatternContext> _includePatternContexts;
-        private readonly List<IPatternContext> _excludePatternContexts;
+        private readonly List<IFilePatternContext> _includePatternContexts;
+        private readonly List<IFilePatternContext> _excludePatternContexts;
         private readonly List<FilePatternMatch> _files;
 
         private readonly HashSet<string> _declaredLiteralFolderSegmentInString;
@@ -29,9 +29,9 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal
 
         private readonly StringComparison _comparisonType;
 
-        public MatcherContext(
-            IEnumerable<IPattern> includePatterns,
-            IEnumerable<IPattern> excludePatterns,
+        public FileMatcherContext(
+            IEnumerable<IFilePattern> includePatterns,
+            IEnumerable<IFilePattern> excludePatterns,
             DirectoryInfoBase directoryInfo,
             StringComparison comparison)
         {
@@ -45,13 +45,13 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal
             _declaredLiteralFolderSegmentInString = new HashSet<string>(StringComparisonHelper.GetStringComparer(comparison));
         }
 
-        public PatternMatchingResult Execute()
+        public FilePatternMatchingResult Execute()
         {
             _files.Clear();
 
             Match(_root, parentRelativePath: null);
 
-            return new PatternMatchingResult(_files, _files.Count > 0);
+            return new FilePatternMatchingResult(_files, _files.Count > 0);
         }
 
         private void Match(DirectoryInfoBase directory, string parentRelativePath)
@@ -89,7 +89,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal
                 var fileInfo = entity as FileInfoBase;
                 if (fileInfo != null)
                 {
-                    PatternTestResult result = MatchPatternContexts(fileInfo, (pattern, file) => pattern.Test(file));
+                    FilePatternTestResult result = MatchPatternContexts(fileInfo, (pattern, file) => pattern.Test(file));
                     if (result.IsSuccessful)
                     {
                         _files.Add(new FilePatternMatch(
@@ -131,13 +131,13 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal
             _declaredParentPathSegment = false;
             _declaredWildcardPathSegment = false;
 
-            foreach (IPatternContext include in _includePatternContexts)
+            foreach (IFilePatternContext include in _includePatternContexts)
             {
                 include.Declare(DeclareInclude);
             }
         }
 
-        private void DeclareInclude(IPathSegment patternSegment, bool isLastSegment)
+        private void DeclareInclude(IFilePathSegment patternSegment, bool isLastSegment)
         {
             var literalSegment = patternSegment as LiteralPathSegment;
             if (literalSegment != null)
@@ -175,7 +175,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal
         }
 
         // Used to adapt Test(DirectoryInfoBase) for the below overload
-        private bool MatchPatternContexts<TFileInfoBase>(TFileInfoBase fileinfo, Func<IPatternContext, TFileInfoBase, bool> test)
+        private bool MatchPatternContexts<TFileInfoBase>(TFileInfoBase fileinfo, Func<IFilePatternContext, TFileInfoBase, bool> test)
         {
             return MatchPatternContexts(
                 fileinfo,
@@ -183,23 +183,23 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal
                 {
                     if (test(ctx, file))
                     {
-                        return PatternTestResult.Success(stem: string.Empty);
+                        return FilePatternTestResult.Success(stem: string.Empty);
                     }
                     else
                     {
-                        return PatternTestResult.Failed;
+                        return FilePatternTestResult.Failed;
                     }
                 }).IsSuccessful;
         }
 
-        private PatternTestResult MatchPatternContexts<TFileInfoBase>(TFileInfoBase fileinfo, Func<IPatternContext, TFileInfoBase, PatternTestResult> test)
+        private FilePatternTestResult MatchPatternContexts<TFileInfoBase>(TFileInfoBase fileinfo, Func<IFilePatternContext, TFileInfoBase, FilePatternTestResult> test)
         {
-            PatternTestResult result = PatternTestResult.Failed;
+            FilePatternTestResult result = FilePatternTestResult.Failed;
 
             // If the given file/directory matches any including pattern, continues to next step.
-            foreach (IPatternContext context in _includePatternContexts)
+            foreach (IFilePatternContext context in _includePatternContexts)
             {
-                PatternTestResult localResult = test(context, fileinfo);
+                FilePatternTestResult localResult = test(context, fileinfo);
                 if (localResult.IsSuccessful)
                 {
                     result = localResult;
@@ -210,15 +210,15 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal
             // If the given file/directory doesn't match any of the including pattern, returns false.
             if (!result.IsSuccessful)
             {
-                return PatternTestResult.Failed;
+                return FilePatternTestResult.Failed;
             }
 
             // If the given file/directory matches any excluding pattern, returns false.
-            foreach (IPatternContext context in _excludePatternContexts)
+            foreach (IFilePatternContext context in _excludePatternContexts)
             {
                 if (test(context, fileinfo).IsSuccessful)
                 {
-                    return PatternTestResult.Failed;
+                    return FilePatternTestResult.Failed;
                 }
             }
 
@@ -227,12 +227,12 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal
 
         private void PopDirectory()
         {
-            foreach (IPatternContext context in _excludePatternContexts)
+            foreach (IFilePatternContext context in _excludePatternContexts)
             {
                 context.PopDirectory();
             }
 
-            foreach (IPatternContext context in _includePatternContexts)
+            foreach (IFilePatternContext context in _includePatternContexts)
             {
                 context.PopDirectory();
             }
@@ -240,12 +240,12 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal
 
         private void PushDirectory(DirectoryInfoBase directory)
         {
-            foreach (IPatternContext context in _includePatternContexts)
+            foreach (IFilePatternContext context in _includePatternContexts)
             {
                 context.PushDirectory(directory);
             }
 
-            foreach (IPatternContext context in _excludePatternContexts)
+            foreach (IFilePatternContext context in _excludePatternContexts)
             {
                 context.PushDirectory(directory);
             }

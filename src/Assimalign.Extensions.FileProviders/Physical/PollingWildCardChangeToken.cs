@@ -23,7 +23,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
         private static readonly byte[] Separator = Encoding.Unicode.GetBytes("|");
         private readonly object _enumerationLock = new object();
         private readonly DirectoryInfoBase _directoryInfo;
-        private readonly Matcher _matcher;
+        private readonly FilePatternMatcher _matcher;
         private bool _changed;
         private DateTime? _lastScanTimeUtc;
         private byte[] _byteBuffer;
@@ -55,7 +55,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
             _directoryInfo = directoryInfo;
             Clock = clock;
 
-            _matcher = new Matcher(StringComparison.OrdinalIgnoreCase);
+            _matcher = new FilePatternMatcher(StringComparison.OrdinalIgnoreCase);
             _matcher.AddInclude(pattern);
             CalculateChanges();
         }
@@ -106,7 +106,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
 
         private bool CalculateChanges()
         {
-            PatternMatchingResult result = _matcher.Execute(_directoryInfo);
+            FilePatternMatchingResult result = _matcher.Execute(_directoryInfo);
 
             IOrderedEnumerable<FilePatternMatch> files = result.Files.OrderBy(f => f.Path, StringComparer.Ordinal);
             using (var sha256 = IncrementalHash.CreateHash(HashAlgorithmName.SHA256))

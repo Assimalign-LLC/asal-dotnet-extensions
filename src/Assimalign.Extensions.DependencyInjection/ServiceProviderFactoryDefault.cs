@@ -13,7 +13,7 @@ namespace Assimalign.Extensions.DependencyInjection
         private readonly ServiceProviderOptions _options;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DefaultServiceProviderFactory"/> class
+        /// Initializes a new instance of the <see cref="ServiceProviderFactoryDefault"/> class
         /// with default options.
         /// </summary>
         public ServiceProviderFactoryDefault() : this(ServiceProviderOptions.Default)
@@ -22,7 +22,7 @@ namespace Assimalign.Extensions.DependencyInjection
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DefaultServiceProviderFactory"/> class
+        /// Initializes a new instance of the <see cref="ServiceProviderFactoryDefault"/> class
         /// with the specified <paramref name="options"/>.
         /// </summary>
         /// <param name="options">The options to use for this instance.</param>

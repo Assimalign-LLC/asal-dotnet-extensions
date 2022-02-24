@@ -11,12 +11,12 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
 
     public abstract class PatternContextRagged : PatternContext<PatternContextRagged.FrameData>
     {
-        public PatternContextRagged(IRaggedPattern pattern)
+        public PatternContextRagged(IFileRaggedPattern pattern)
         {
             Pattern = pattern;
         }
 
-        public override PatternTestResult Test(FileInfoBase file)
+        public override FilePatternTestResult Test(FileInfoBase file)
         {
             if (IsStackEmpty())
             {
@@ -25,9 +25,9 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
 
             if (!Frame.IsNotApplicable && IsEndingGroup() && TestMatchingGroup(file))
             {
-                return PatternTestResult.Success(CalculateStem(file));
+                return FilePatternTestResult.Success(CalculateStem(file));
             }
-            return PatternTestResult.Failed;
+            return FilePatternTestResult.Failed;
         }
 
         public sealed override void PushDirectory(DirectoryInfoBase directory)
@@ -116,7 +116,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
 
             public int SegmentGroupIndex;
 
-            public IList<IPathSegment> SegmentGroup;
+            public IList<IFilePathSegment> SegmentGroup;
 
             public int BacktrackAvailable;
 
@@ -137,7 +137,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
             }
         }
 
-        protected IRaggedPattern Pattern { get; }
+        protected IFileRaggedPattern Pattern { get; }
 
         protected bool IsStartingGroup()
         {
@@ -170,7 +170,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
             FileSystemInfoBase scan = value;
             for (int index = 0; index != groupLength; ++index)
             {
-                IPathSegment segment = Frame.SegmentGroup[groupLength - index - 1];
+                IFilePathSegment segment = Frame.SegmentGroup[groupLength - index - 1];
                 if (!segment.Match(scan.Name))
                 {
                     return false;
@@ -182,7 +182,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
 
         protected string CalculateStem(FileInfoBase matchedFile)
         {
-            return MatcherContext.CombinePath(Frame.Stem, matchedFile.Name);
+            return FileMatcherContext.CombinePath(Frame.Stem, matchedFile.Name);
         }
     }
 }

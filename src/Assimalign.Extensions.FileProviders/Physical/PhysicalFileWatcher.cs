@@ -126,7 +126,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
         ///     <para>
         ///     Globbing patterns are relative to the root directory given in the constructor
         ///     <seealso cref="PhysicalFilesWatcher(string, FileSystemWatcher, bool)" />. Globbing patterns
-        ///     are interpreted by <seealso cref="Matcher" />.
+        ///     are interpreted by <seealso cref="FilePatternMatcher" />.
         ///     </para>
         /// </summary>
         /// <param name="filter">A globbing pattern for files and directories to watch</param>
@@ -218,7 +218,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
             {
                 var cancellationTokenSource = new CancellationTokenSource();
                 var cancellationChangeToken = new CancellationChangeToken(cancellationTokenSource.Token);
-                var matcher = new Matcher(StringComparison.OrdinalIgnoreCase);
+                var matcher = new FilePatternMatcher(StringComparison.OrdinalIgnoreCase);
                 matcher.AddInclude(pattern);
                 tokenInfo = new ChangeTokenInfo(cancellationTokenSource, cancellationChangeToken, matcher);
                 tokenInfo = _wildcardTokenLookup.GetOrAdd(pattern, tokenInfo);
@@ -384,7 +384,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
 
             foreach (System.Collections.Generic.KeyValuePair<string, ChangeTokenInfo> wildCardEntry in _wildcardTokenLookup)
             {
-                PatternMatchingResult matchResult = wildCardEntry.Value.Matcher.Match(path);
+                FilePatternMatchingResult matchResult = wildCardEntry.Value.Matcher.Match(path);
                 if (matchResult.HasMatches &&
                     _wildcardTokenLookup.TryRemove(wildCardEntry.Key, out matchInfo))
                 {
@@ -508,7 +508,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
             public ChangeTokenInfo(
                 CancellationTokenSource tokenSource,
                 CancellationChangeToken changeToken,
-                Matcher matcher)
+                FilePatternMatcher matcher)
             {
                 TokenSource = tokenSource;
                 ChangeToken = changeToken;
@@ -519,7 +519,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
 
             public CancellationChangeToken ChangeToken { get; }
 
-            public Matcher Matcher { get; }
+            public FilePatternMatcher Matcher { get; }
         }
     }
 }

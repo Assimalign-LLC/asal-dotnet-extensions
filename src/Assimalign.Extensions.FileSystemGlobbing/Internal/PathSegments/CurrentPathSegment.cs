@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PathSegments
 {
-    public class CurrentPathSegment : IPathSegment
+    public class CurrentPathSegment : IFilePathSegment
     {
         public bool CanProduceStem { get { return false; } }
 

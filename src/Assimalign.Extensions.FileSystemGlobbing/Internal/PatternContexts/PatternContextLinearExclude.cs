@@ -10,7 +10,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
 
     public class PatternContextLinearExclude : PatternContextLinear
     {
-        public PatternContextLinearExclude(ILinearPattern pattern)
+        public PatternContextLinearExclude(IFileLinearPattern pattern)
             : base(pattern)
         {
         }

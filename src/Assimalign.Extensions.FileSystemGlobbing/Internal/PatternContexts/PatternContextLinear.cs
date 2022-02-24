@@ -11,12 +11,12 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
     public abstract class PatternContextLinear
        : PatternContext<PatternContextLinear.FrameData>
     {
-        public PatternContextLinear(ILinearPattern pattern)
+        public PatternContextLinear(IFileLinearPattern pattern)
         {
             Pattern = pattern;
         }
 
-        public override PatternTestResult Test(FileInfoBase file)
+        public override FilePatternTestResult Test(FileInfoBase file)
         {
             if (IsStackEmpty())
             {
@@ -25,10 +25,10 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
 
             if (!Frame.IsNotApplicable && IsLastSegment() && TestMatchingSegment(file.Name))
             {
-                return PatternTestResult.Success(CalculateStem(file));
+                return FilePatternTestResult.Success(CalculateStem(file));
             }
 
-            return PatternTestResult.Failed;
+            return FilePatternTestResult.Failed;
         }
 
         public override void PushDirectory(DirectoryInfoBase directory)
@@ -49,7 +49,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
             else
             {
                 // Determine this frame's contribution to the stem (if any)
-                IPathSegment segment = Pattern.Segments[Frame.SegmentIndex];
+                IFilePathSegment segment = Pattern.Segments[Frame.SegmentIndex];
                 if (frame.InStem || segment.CanProduceStem)
                 {
                     frame.InStem = true;
@@ -81,7 +81,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
             }
         }
 
-        protected ILinearPattern Pattern { get; }
+        protected IFileLinearPattern Pattern { get; }
 
         protected bool IsLastSegment()
         {
@@ -100,7 +100,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
 
         protected string CalculateStem(FileInfoBase matchedFile)
         {
-            return MatcherContext.CombinePath(Frame.Stem, matchedFile.Name);
+            return FileMatcherContext.CombinePath(Frame.Stem, matchedFile.Name);
         }
     }
 }

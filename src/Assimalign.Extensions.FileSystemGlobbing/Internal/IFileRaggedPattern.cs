@@ -10,10 +10,14 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal
     /// This API supports infrastructure and is not intended to be used
     /// directly from your code. This API may change or be removed in future releases.
     /// </summary>
-    public interface IPathSegment
+    public interface IFileRaggedPattern : IFilePattern
     {
-        bool CanProduceStem { get; }
+        IList<IFilePathSegment> Segments { get; }
 
-        bool Match(string value);
+        IList<IFilePathSegment> StartsWith { get; }
+
+        IList<IList<IFilePathSegment>> Contains { get; }
+
+        IList<IFilePathSegment> EndsWith { get; }
     }
 }

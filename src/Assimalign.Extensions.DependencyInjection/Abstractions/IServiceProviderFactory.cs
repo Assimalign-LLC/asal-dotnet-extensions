@@ -6,7 +6,8 @@ namespace Assimalign.Extensions.DependencyInjection.Abstractions
     /// <summary>
     /// Provides an extension point for creating a container specific builder and an <see cref="IServiceProvider"/>.
     /// </summary>
-    public interface IServiceProviderFactory<TContainerBuilder> where TContainerBuilder : notnull
+    public interface IServiceProviderFactory<TContainerBuilder> 
+        where TContainerBuilder : notnull
     {
         /// <summary>
         /// Creates a container builder from an <see cref="IServiceCollection"/>.

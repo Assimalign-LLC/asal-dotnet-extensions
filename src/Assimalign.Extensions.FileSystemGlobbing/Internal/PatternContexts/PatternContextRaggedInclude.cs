@@ -11,12 +11,12 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
 
     public class PatternContextRaggedInclude : PatternContextRagged
     {
-        public PatternContextRaggedInclude(IRaggedPattern pattern)
+        public PatternContextRaggedInclude(IFileRaggedPattern pattern)
             : base(pattern)
         {
         }
 
-        public override void Declare(Action<IPathSegment, bool> onDeclare)
+        public override void Declare(Action<IFilePathSegment, bool> onDeclare)
         {
             if (IsStackEmpty())
             {

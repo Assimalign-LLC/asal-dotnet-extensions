@@ -8,14 +8,14 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
 {
     using Assimalign.Extensions.FileSystemGlobbing.Abstractions;
 
-    public abstract class PatternContext<TFrame> : IPatternContext
+    public abstract class PatternContext<TFrame> : IFilePatternContext
     {
         private Stack<TFrame> _stack = new Stack<TFrame>();
         protected TFrame Frame;
 
-        public virtual void Declare(Action<IPathSegment, bool> declare) { }
+        public virtual void Declare(Action<IFilePathSegment, bool> declare) { }
 
-        public abstract PatternTestResult Test(FileInfoBase file);
+        public abstract FilePatternTestResult Test(FileInfoBase file);
 
         public abstract bool Test(DirectoryInfoBase directory);
 

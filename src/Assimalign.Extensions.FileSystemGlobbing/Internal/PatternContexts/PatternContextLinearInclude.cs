@@ -10,12 +10,12 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
 
     public class PatternContextLinearInclude : PatternContextLinear
     {
-        public PatternContextLinearInclude(ILinearPattern pattern)
+        public PatternContextLinearInclude(IFileLinearPattern pattern)
             : base(pattern)
         {
         }
 
-        public override void Declare(Action<IPathSegment, bool> onDeclare)
+        public override void Declare(Action<IFilePathSegment, bool> onDeclare)
         {
             if (IsStackEmpty())
             {

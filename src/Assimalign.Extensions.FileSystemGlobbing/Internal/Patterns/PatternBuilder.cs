@@ -26,7 +26,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.Patterns
 
         public StringComparison ComparisonType { get; }
 
-        public IPattern Build(string pattern)
+        public IFilePattern Build(string pattern)
         {
             if (pattern == null)
             {
@@ -42,12 +42,12 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.Patterns
                 pattern = pattern.TrimEnd(_slashes) + "/**";
             }
 
-            var allSegments = new List<IPathSegment>();
+            var allSegments = new List<IFilePathSegment>();
             bool isParentSegmentLegal = true;
 
-            IList<IPathSegment> segmentsPatternStartsWith = null;
-            IList<IList<IPathSegment>> segmentsPatternContains = null;
-            IList<IPathSegment> segmentsPatternEndsWith = null;
+            IList<IFilePathSegment> segmentsPatternStartsWith = null;
+            IList<IList<IFilePathSegment>> segmentsPatternContains = null;
+            IList<IFilePathSegment> segmentsPatternEndsWith = null;
 
             int endPattern = pattern.Length;
             for (int scanPattern = 0; scanPattern < endPattern;)
@@ -55,7 +55,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.Patterns
                 int beginSegment = scanPattern;
                 int endSegment = NextIndex(pattern, _slashes, scanPattern, endPattern);
 
-                IPathSegment segment = null;
+                IFilePathSegment segment = null;
 
                 if (segment == null && endSegment - beginSegment == 3)
                 {
@@ -179,14 +179,14 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.Patterns
                     {
                         if (segmentsPatternStartsWith == null)
                         {
-                            segmentsPatternStartsWith = new List<IPathSegment>(allSegments);
-                            segmentsPatternEndsWith = new List<IPathSegment>();
-                            segmentsPatternContains = new List<IList<IPathSegment>>();
+                            segmentsPatternStartsWith = new List<IFilePathSegment>(allSegments);
+                            segmentsPatternEndsWith = new List<IFilePathSegment>();
+                            segmentsPatternContains = new List<IList<IFilePathSegment>>();
                         }
                         else if (segmentsPatternEndsWith.Count != 0)
                         {
                             segmentsPatternContains.Add(segmentsPatternEndsWith);
-                            segmentsPatternEndsWith = new List<IPathSegment>();
+                            segmentsPatternEndsWith = new List<IFilePathSegment>();
                         }
                     }
                     else if (segmentsPatternEndsWith != null)
@@ -221,29 +221,29 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.Patterns
             return pattern.Substring(beginIndex, endIndex - beginIndex);
         }
 
-        private sealed class LinearPattern : ILinearPattern
+        private sealed class LinearPattern : IFileLinearPattern
         {
-            public LinearPattern(List<IPathSegment> allSegments)
+            public LinearPattern(List<IFilePathSegment> allSegments)
             {
                 Segments = allSegments;
             }
 
-            public IList<IPathSegment> Segments { get; }
+            public IList<IFilePathSegment> Segments { get; }
 
-            public IPatternContext CreatePatternContextForInclude()
+            public IFilePatternContext CreatePatternContextForInclude()
             {
                 return new PatternContextLinearInclude(this);
             }
 
-            public IPatternContext CreatePatternContextForExclude()
+            public IFilePatternContext CreatePatternContextForExclude()
             {
                 return new PatternContextLinearExclude(this);
             }
         }
 
-        private sealed class RaggedPattern : IRaggedPattern
+        private sealed class RaggedPattern : IFileRaggedPattern
         {
-            public RaggedPattern(List<IPathSegment> allSegments, IList<IPathSegment> segmentsPatternStartsWith, IList<IPathSegment> segmentsPatternEndsWith, IList<IList<IPathSegment>> segmentsPatternContains)
+            public RaggedPattern(List<IFilePathSegment> allSegments, IList<IFilePathSegment> segmentsPatternStartsWith, IList<IFilePathSegment> segmentsPatternEndsWith, IList<IList<IFilePathSegment>> segmentsPatternContains)
             {
                 Segments = allSegments;
                 StartsWith = segmentsPatternStartsWith;
@@ -251,20 +251,20 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.Patterns
                 EndsWith = segmentsPatternEndsWith;
             }
 
-            public IList<IList<IPathSegment>> Contains { get; }
+            public IList<IList<IFilePathSegment>> Contains { get; }
 
-            public IList<IPathSegment> EndsWith { get; }
+            public IList<IFilePathSegment> EndsWith { get; }
 
-            public IList<IPathSegment> Segments { get; }
+            public IList<IFilePathSegment> Segments { get; }
 
-            public IList<IPathSegment> StartsWith { get; }
+            public IList<IFilePathSegment> StartsWith { get; }
 
-            public IPatternContext CreatePatternContextForInclude()
+            public IFilePatternContext CreatePatternContextForInclude()
             {
                 return new PatternContextRaggedInclude(this);
             }
 
-            public IPatternContext CreatePatternContextForExclude()
+            public IFilePatternContext CreatePatternContextForExclude()
             {
                 return new PatternContextRaggedExclude(this);
             }

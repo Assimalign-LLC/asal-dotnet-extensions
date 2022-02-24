@@ -10,7 +10,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
 
     public class PatternContextRaggedExclude : PatternContextRagged
     {
-        public PatternContextRaggedExclude(IRaggedPattern pattern)
+        public PatternContextRaggedExclude(IFileRaggedPattern pattern)
             : base(pattern)
         {
         }

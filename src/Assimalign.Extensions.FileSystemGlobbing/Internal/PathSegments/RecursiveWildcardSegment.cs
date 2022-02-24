@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PathSegments
 {
-    public class RecursiveWildcardSegment : IPathSegment
+    public class RecursiveWildcardSegment : IFilePathSegment
     {
         public bool CanProduceStem { get { return true; } }
 

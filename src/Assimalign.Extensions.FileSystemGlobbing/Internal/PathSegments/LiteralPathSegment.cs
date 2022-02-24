@@ -8,7 +8,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PathSegments
 {
     using Assimalign.Extensions.FileSystemGlobbing.Utilities;
 
-    public class LiteralPathSegment : IPathSegment
+    public class LiteralPathSegment : IFilePathSegment
     {
         private readonly StringComparison _comparisonType;
 
