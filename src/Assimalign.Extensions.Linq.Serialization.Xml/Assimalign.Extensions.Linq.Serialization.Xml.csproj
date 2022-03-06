@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>Assimalign.Extensions.Linq.Serialization</RootNamespace>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Assimalign.Extensions.Linq.Serialization.Text\Assimalign.Extensions.Linq.Serialization.Text.csproj" />
+	</ItemGroup>
+
+</Project>

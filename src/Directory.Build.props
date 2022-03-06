@@ -1,15 +1,15 @@
 <Project>
 	<PropertyGroup>
 		<Version>1.0.0-pre.1.0.3</Version>
-		<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+		<TargetFrameworks>net6.0</TargetFrameworks>
 		<GeneratePackageOnBuild Condition="$(RootNamespace) != 'Assimalign.Extensions.Scheduling' and $(RootNamespace) != 'Assimalign.Extensions.Diagnostics'">true</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Authors>Chase Crawford</Authors>
-		<Copyright>© Assimalign LLC 2021</Copyright>
+		<Copyright>© Assimalign LLC 2022</Copyright>
 		<PackageIcon>.assimalign.logo.png</PackageIcon>
-		<PackageReadmeFile>readme.md</PackageReadmeFile>
+		<!--<PackageReadmeFile>readme.md</PackageReadmeFile>-->
 		<PackageIconUrl>https://corporate.assets.assimalign.com/assets/logos/.assimalign.logo.png</PackageIconUrl>
 		<RepositoryUrl>https://github.com/Assimalign-LLC/asal-dotnet-extensions</RepositoryUrl>
 	</PropertyGroup>
