@@ -1,4 +1,4 @@
-﻿namespace Assimalign.ComponentModel.ValidationTests;
+﻿namespace  Assimalign.Extensions.ValidationTests;
 
 
 public abstract class RuleBaseTest 

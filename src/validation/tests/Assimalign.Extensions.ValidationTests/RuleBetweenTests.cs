@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 using Xunit;
 
 
-namespace Assimalign.ComponentModel.ValidationTests;
+namespace  Assimalign.Extensions.ValidationTests;
 
-using Assimalign.ComponentModel.Validation;
-using Assimalign.ComponentModel.Validation.Internal;
-using Assimalign.ComponentModel.Validation.Internal.Rules;
+using  Assimalign.Extensions.Validation;
+using  Assimalign.Extensions.Validation.Internal;
+using  Assimalign.Extensions.Validation.Internal.Rules;
 
 public class RuleBetweenTests : RuleBaseTest
 {

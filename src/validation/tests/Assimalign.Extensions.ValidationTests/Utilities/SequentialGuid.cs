@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.ComponentModel.Validation;
+namespace  Assimalign.Extensions.Validation;
 
 public class SequentialGuid
 {

@@ -5,10 +5,13 @@ on:
     branches:
     - main
     - development
-    - 'users/**'
-    - 'features/**'
+    - users/**
+    - features/**
     paths: 
-    - 'src/validation/**'
+    - 'src/validation/src/**'
+    - 'src/Directory.Build.props'                                     # When the Global Props File Changes
+    - 'src/validation/Directory.Build.props'
+    - '.github/workflows/assimalign.extensions.validation.yml'        # When Pipeline File Changes
 
 jobs:
   build:
@@ -20,6 +23,12 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '6.x'
+
+    - name: Setup .NET 7
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '7.x'
+        include-prerelease: true
     
     - name: Restore Project
       run: dotnet restore 
@@ -39,5 +48,5 @@ jobs:
     
     - name: Publish Nuget Package
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-      run: dotnet nuget push "*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      run: dotnet nuget push "*.nupkg" -k ${{ secrets.NUGET_PUBLISHING_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
       working-directory: './src/validation/src/Assimalign.Extensions.Validation/bin/Release/'
