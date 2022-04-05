@@ -1,4 +1,6 @@
-﻿using static System.Console;
+﻿
+using Assimalign.Extensions.Validation;
+using static System.Console;
 
 
 var validatorBenchmarkRunTime = DateTime.Now.AddSeconds(20);

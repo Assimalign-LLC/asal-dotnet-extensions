@@ -18,7 +18,7 @@ using Assimalign.Extensions.Validation.Configurable.Internal.Extensions;
 public sealed class ValidationConfigurableJsonConditionItem<T> : IValidationCondition
     where T : class
 {
-    IEnumerable<IValidationItem> IValidationCondition.ValidationItems => this.ValidationItems;
+    IValidationItemStack IValidationCondition.ValidationItems => new ValidationItemStack(this.ValidationItems);
 
 
     /// <summary>

@@ -19,22 +19,11 @@ public sealed class ValidationConfigurableJsonProfile<T> : IValidationProfile
 {
     private bool isConfigured;
     Type IValidationProfile.ValidationType => typeof(T);
-    IEnumerable<IValidationItem> IValidationProfile.ValidationItems
+    IValidationItemStack IValidationProfile.ValidationItems
     {
         get
         {
-            foreach (var item in this.ValidationItems)
-            {
-                yield return item;
-            }
-
-            foreach (var condition in this.ValidationConditions)
-            {
-                foreach (var item in condition.ValidationItems)
-                {
-                    yield return item;
-                }
-            }
+            return new ValidationItemStack(this.ValidationItems.Cast<IValidationItem>().Concat(this.ValidationConditions.Cast<IValidationItem>()));
         }
     }
 
@@ -76,7 +65,7 @@ public sealed class ValidationConfigurableJsonProfile<T> : IValidationProfile
     /// <summary>
     /// 
     /// </summary>
-    public void Configure()
+    public void Configure(IValidationRuleDescriptor descriptor)
     {
         if (isConfigured)
         {
