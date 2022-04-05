@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Primitives", "src\Assimalign.Extensions.Primitives\Assimalign.Extensions.Primitives.csproj", "{EDCDDB64-095B-4B9E-B313-3B6A71542DA9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{81CFAFEF-7B3A-48E9-9996-8F83F76F2CC4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{DC19A67E-7362-417C-98D9-4C2D878D42A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{788D7B8F-39A3-4E9A-8503-1BF8F6F23857}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.PrimitivesTests", "tests\Assimalign.Extensions.PrimitivesTests\Assimalign.Extensions.PrimitivesTests.csproj", "{CF89398A-5CED-4179-BF4D-521F08175709}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{D41A5992-C48F-4223-90E0-58CE0C6CAFC2}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\.github\workflows\common\assimalign.extensions.primitives.yml = ..\..\.github\workflows\common\assimalign.extensions.primitives.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDCDDB64-095B-4B9E-B313-3B6A71542DA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDCDDB64-095B-4B9E-B313-3B6A71542DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDCDDB64-095B-4B9E-B313-3B6A71542DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDCDDB64-095B-4B9E-B313-3B6A71542DA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF89398A-5CED-4179-BF4D-521F08175709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF89398A-5CED-4179-BF4D-521F08175709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF89398A-5CED-4179-BF4D-521F08175709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF89398A-5CED-4179-BF4D-521F08175709}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EDCDDB64-095B-4B9E-B313-3B6A71542DA9} = {81CFAFEF-7B3A-48E9-9996-8F83F76F2CC4}
+		{CF89398A-5CED-4179-BF4D-521F08175709} = {DC19A67E-7362-417C-98D9-4C2D878D42A9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1C811E87-6028-44DA-99F1-37BC60AC6115}
+	EndGlobalSection
+EndGlobal

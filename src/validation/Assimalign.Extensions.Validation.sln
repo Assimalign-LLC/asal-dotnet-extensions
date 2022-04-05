@@ -1,0 +1,103 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DBF32CC6-6000-45C0-A3A0-B5EBA91DF54F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{537F14F4-6878-4D4F-8C3E-5C5EB63B9AB4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{8D40E2F2-01EB-4F3E-889D-632926F687A7}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{085BD2BE-12C9-42C8-A100-5495DB106814}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\.github\workflows\validation\assimalign.extensions.validation.configurable.json.yml = ..\..\.github\workflows\validation\assimalign.extensions.validation.configurable.json.yml
+		..\..\.github\workflows\validation\assimalign.extensions.validation.configurable.xml.yml = ..\..\.github\workflows\validation\assimalign.extensions.validation.configurable.xml.yml
+		..\..\.github\workflows\validation\assimalign.extensions.validation.configurable.yml = ..\..\.github\workflows\validation\assimalign.extensions.validation.configurable.yml
+		..\..\.github\workflows\validation\assimalign.extensions.validation.yml = ..\..\.github\workflows\validation\assimalign.extensions.validation.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Validation", "src\Assimalign.Extensions.Validation\Assimalign.Extensions.Validation.csproj", "{03C124CB-BFCE-45A1-BC13-FEF337BAABE5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Validation.Configurable", "src\Assimalign.Extensions.Validation.Configurable\Assimalign.Extensions.Validation.Configurable.csproj", "{5D5C419D-D454-4602-9148-2BC514DB6A1A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Validation.Configurable.Json", "src\Assimalign.Extensions.Validation.Configurable.Json\Assimalign.Extensions.Validation.Configurable.Json.csproj", "{06A97BAC-34BD-4E2D-995C-68D1D91E5547}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Validation.Configurable.Xml", "src\Assimalign.Extensions.Validation.Configurable.Xml\Assimalign.Extensions.Validation.Configurable.Xml.csproj", "{08B2741E-CFFB-4F13-A73D-EFA30B0CBB7F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{4B5F38E2-B496-4E75-B616-D3FA2654F60F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.ComponentModel.ValidationBenchmarks", "benchmarks\Assimalign.Extensions.ValidationBenchmarks\Assimalign.ComponentModel.ValidationBenchmarks.csproj", "{07705DCF-BC02-4273-AB2A-46BC51753D9C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.ComponentModel.Validation.Configurable.JsonBenchmarks", "benchmarks\Assimalign.Extensions.Validation.Configurable.JsonBenchmarks\Assimalign.ComponentModel.Validation.Configurable.JsonBenchmarks.csproj", "{79F0B7AD-5EB4-4342-A9A3-99B6FE051EB2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Validation.Configurable.JsonTests", "tests\Assimalign.Extensions.Validation.Configurable.JsonTests\Assimalign.Extensions.Validation.Configurable.JsonTests.csproj", "{3B744E04-A7F7-4129-B760-839CC1ECF017}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Validation.Configurable.XmlTests", "tests\Assimalign.Extensions.Validation.Configurable.XmlTests\Assimalign.Extensions.Validation.Configurable.XmlTests.csproj", "{AD35FADF-CE87-48E0-ACE0-7C5A09D78EF7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.ValidationTests", "tests\Assimalign.Extensions.ValidationTests\Assimalign.Extensions.ValidationTests.csproj", "{9DA25DF7-9F7C-4C79-AF35-4BCA5EFFC80B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03C124CB-BFCE-45A1-BC13-FEF337BAABE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03C124CB-BFCE-45A1-BC13-FEF337BAABE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03C124CB-BFCE-45A1-BC13-FEF337BAABE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03C124CB-BFCE-45A1-BC13-FEF337BAABE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D5C419D-D454-4602-9148-2BC514DB6A1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D5C419D-D454-4602-9148-2BC514DB6A1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D5C419D-D454-4602-9148-2BC514DB6A1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D5C419D-D454-4602-9148-2BC514DB6A1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06A97BAC-34BD-4E2D-995C-68D1D91E5547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06A97BAC-34BD-4E2D-995C-68D1D91E5547}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06A97BAC-34BD-4E2D-995C-68D1D91E5547}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06A97BAC-34BD-4E2D-995C-68D1D91E5547}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08B2741E-CFFB-4F13-A73D-EFA30B0CBB7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08B2741E-CFFB-4F13-A73D-EFA30B0CBB7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08B2741E-CFFB-4F13-A73D-EFA30B0CBB7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08B2741E-CFFB-4F13-A73D-EFA30B0CBB7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07705DCF-BC02-4273-AB2A-46BC51753D9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07705DCF-BC02-4273-AB2A-46BC51753D9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07705DCF-BC02-4273-AB2A-46BC51753D9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07705DCF-BC02-4273-AB2A-46BC51753D9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79F0B7AD-5EB4-4342-A9A3-99B6FE051EB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79F0B7AD-5EB4-4342-A9A3-99B6FE051EB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79F0B7AD-5EB4-4342-A9A3-99B6FE051EB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79F0B7AD-5EB4-4342-A9A3-99B6FE051EB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B744E04-A7F7-4129-B760-839CC1ECF017}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B744E04-A7F7-4129-B760-839CC1ECF017}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B744E04-A7F7-4129-B760-839CC1ECF017}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B744E04-A7F7-4129-B760-839CC1ECF017}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD35FADF-CE87-48E0-ACE0-7C5A09D78EF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD35FADF-CE87-48E0-ACE0-7C5A09D78EF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD35FADF-CE87-48E0-ACE0-7C5A09D78EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD35FADF-CE87-48E0-ACE0-7C5A09D78EF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DA25DF7-9F7C-4C79-AF35-4BCA5EFFC80B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DA25DF7-9F7C-4C79-AF35-4BCA5EFFC80B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DA25DF7-9F7C-4C79-AF35-4BCA5EFFC80B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DA25DF7-9F7C-4C79-AF35-4BCA5EFFC80B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{03C124CB-BFCE-45A1-BC13-FEF337BAABE5} = {DBF32CC6-6000-45C0-A3A0-B5EBA91DF54F}
+		{5D5C419D-D454-4602-9148-2BC514DB6A1A} = {DBF32CC6-6000-45C0-A3A0-B5EBA91DF54F}
+		{06A97BAC-34BD-4E2D-995C-68D1D91E5547} = {DBF32CC6-6000-45C0-A3A0-B5EBA91DF54F}
+		{08B2741E-CFFB-4F13-A73D-EFA30B0CBB7F} = {DBF32CC6-6000-45C0-A3A0-B5EBA91DF54F}
+		{07705DCF-BC02-4273-AB2A-46BC51753D9C} = {4B5F38E2-B496-4E75-B616-D3FA2654F60F}
+		{79F0B7AD-5EB4-4342-A9A3-99B6FE051EB2} = {4B5F38E2-B496-4E75-B616-D3FA2654F60F}
+		{3B744E04-A7F7-4129-B760-839CC1ECF017} = {537F14F4-6878-4D4F-8C3E-5C5EB63B9AB4}
+		{AD35FADF-CE87-48E0-ACE0-7C5A09D78EF7} = {537F14F4-6878-4D4F-8C3E-5C5EB63B9AB4}
+		{9DA25DF7-9F7C-4C79-AF35-4BCA5EFFC80B} = {537F14F4-6878-4D4F-8C3E-5C5EB63B9AB4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D85AD5AB-3F30-44AB-95B8-8A9A7A23B4C7}
+	EndGlobalSection
+EndGlobal
