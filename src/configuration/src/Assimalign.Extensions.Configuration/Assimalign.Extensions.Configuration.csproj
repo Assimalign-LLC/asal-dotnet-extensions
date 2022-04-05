@@ -8,10 +8,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Assimalign.Extensions.Primitives\Assimalign.Extensions.Primitives.csproj" />
+        <ProjectReference Include="..\..\..\common\src\Assimalign.Extensions.Primitives\Assimalign.Extensions.Primitives.csproj" />
     </ItemGroup>
 	<ItemGroup>
-		<None Include="..\..\docs\.assimalign.extensions.configuration\readme.md">
+		<None Include="..\..\..\..\.assimalign.logo.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="README.md">
 			<Pack>true</Pack>
 			<PackagePath>\</PackagePath>
 		</None>

@@ -5,9 +5,15 @@
 		<LangVersion>Latest</LangVersion>
 	</PropertyGroup>
 	<ItemGroup>
-		<None Include="..\..\docs\.assimalign.extensions.dependencyinjection\readme.md">
-			<Pack>true</Pack>
+		<None Include="..\..\..\..\.assimalign.logo.png">
+			<Pack>True</Pack>
 			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="README.md">
+			<Pack>true</Pack>
+			<PackagePath>\</PackagePath>
 		</None>
 	</ItemGroup>
 </Project>

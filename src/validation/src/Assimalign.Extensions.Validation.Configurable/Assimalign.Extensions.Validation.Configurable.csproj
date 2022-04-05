@@ -13,7 +13,6 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageIcon>.assimalign.logo.png</PackageIcon>
 	</PropertyGroup>
-
 	<ItemGroup>
 		<ProjectReference Include="..\Assimalign.Extensions.Validation\Assimalign.Extensions.Validation.csproj" />
 	</ItemGroup>

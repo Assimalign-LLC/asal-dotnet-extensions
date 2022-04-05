@@ -4,8 +4,9 @@ on:
   push:
     branches:
     - main
-    - 'users/**'
-    - 'features/**'
+    - development
+    - users/**
+    - features/**
     paths: 
     - 'src/common/src/**'
 
