@@ -17,7 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		..\..\.github\workflows\validation\assimalign.extensions.validation.configurable.json.yml = ..\..\.github\workflows\validation\assimalign.extensions.validation.configurable.json.yml
 		..\..\.github\workflows\validation\assimalign.extensions.validation.configurable.xml.yml = ..\..\.github\workflows\validation\assimalign.extensions.validation.configurable.xml.yml
 		..\..\.github\workflows\validation\assimalign.extensions.validation.configurable.yml = ..\..\.github\workflows\validation\assimalign.extensions.validation.configurable.yml
-		..\..\.github\workflows\validation\assimalign.extensions.validation.yml = ..\..\.github\workflows\validation\assimalign.extensions.validation.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Validation", "src\Assimalign.Extensions.Validation\Assimalign.Extensions.Validation.csproj", "{03C124CB-BFCE-45A1-BC13-FEF337BAABE5}"
