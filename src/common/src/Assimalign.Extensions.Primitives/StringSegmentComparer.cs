@@ -2,38 +2,37 @@
 using System.Collections.Generic;
 
 
-namespace Assimalign.Extensions.Primitives
+namespace Assimalign.Extensions.Primitives;
+
+public class StringSegmentComparer : IComparer<StringSegment>, IEqualityComparer<StringSegment>
 {
-    public class StringSegmentComparer : IComparer<StringSegment>, IEqualityComparer<StringSegment>
+    public static StringSegmentComparer Ordinal { get; }
+        = new StringSegmentComparer(StringComparison.Ordinal, StringComparer.Ordinal);
+
+    public static StringSegmentComparer OrdinalIgnoreCase { get; }
+        = new StringSegmentComparer(StringComparison.OrdinalIgnoreCase, StringComparer.OrdinalIgnoreCase);
+
+    private StringSegmentComparer(StringComparison comparison, StringComparer comparer)
     {
-        public static StringSegmentComparer Ordinal { get; }
-            = new StringSegmentComparer(StringComparison.Ordinal, StringComparer.Ordinal);
+        Comparison = comparison;
+        Comparer = comparer;
+    }
 
-        public static StringSegmentComparer OrdinalIgnoreCase { get; }
-            = new StringSegmentComparer(StringComparison.OrdinalIgnoreCase, StringComparer.OrdinalIgnoreCase);
+    private StringComparison Comparison { get; }
+    private StringComparer Comparer { get; }
 
-        private StringSegmentComparer(StringComparison comparison, StringComparer comparer)
-        {
-            Comparison = comparison;
-            Comparer = comparer;
-        }
+    public int Compare(StringSegment x, StringSegment y)
+    {
+        return StringSegment.Compare(x, y, Comparison);
+    }
 
-        private StringComparison Comparison { get; }
-        private StringComparer Comparer { get; }
+    public bool Equals(StringSegment x, StringSegment y)
+    {
+        return StringSegment.Equals(x, y, Comparison);
+    }
 
-        public int Compare(StringSegment x, StringSegment y)
-        {
-            return StringSegment.Compare(x, y, Comparison);
-        }
-
-        public bool Equals(StringSegment x, StringSegment y)
-        {
-            return StringSegment.Equals(x, y, Comparison);
-        }
-
-        public int GetHashCode(StringSegment obj)
-        {
-            return string.GetHashCode(obj.AsSpan(), Comparison);
-        }
+    public int GetHashCode(StringSegment obj)
+    {
+        return string.GetHashCode(obj.AsSpan(), Comparison);
     }
 }

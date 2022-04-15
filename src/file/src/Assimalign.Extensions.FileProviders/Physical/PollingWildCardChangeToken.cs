@@ -29,7 +29,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
         private byte[] _byteBuffer;
         private byte[] _previousHash;
         private CancellationTokenSource _tokenSource;
-        private CancellationChangeToken _changeToken;
+        private ChangeTokenCancellation _changeToken;
 
         /// <summary>
         /// Initializes a new instance of <see cref="PollingWildCardChangeToken"/>.
@@ -74,7 +74,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
                 Debug.Assert(_tokenSource == null, "We expect CancellationTokenSource to be initialized exactly once.");
 
                 _tokenSource = value;
-                _changeToken = new CancellationChangeToken(_tokenSource.Token);
+                _changeToken = new ChangeTokenCancellation(_tokenSource.Token);
             }
         }
 

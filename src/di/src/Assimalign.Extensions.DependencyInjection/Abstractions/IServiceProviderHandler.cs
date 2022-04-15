@@ -1,18 +1,17 @@
 ﻿using System;
 
 
-namespace Assimalign.Extensions.DependencyInjection.Abstractions
+namespace Assimalign.Extensions.DependencyInjection;
+
+/// <summary>
+/// Optional service used to determine if the specified type is available from the <see cref="IServiceProvider"/>.
+/// </summary>
+public interface IServiceProviderHandler
 {
     /// <summary>
-    /// Optional service used to determine if the specified type is available from the <see cref="IServiceProvider"/>.
+    /// Determines if the specified service type is available from the <see cref="IServiceProvider"/>.
     /// </summary>
-    public interface IServiceProviderHandler
-    {
-        /// <summary>
-        /// Determines if the specified service type is available from the <see cref="IServiceProvider"/>.
-        /// </summary>
-        /// <param name="serviceType">An object that specifies the type of service object to test.</param>
-        /// <returns>true if the specified service is a available, false if it is not.</returns>
-        bool IsService(Type serviceType);
-    }
+    /// <param name="serviceType">An object that specifies the type of service object to test.</param>
+    /// <returns>true if the specified service is a available, false if it is not.</returns>
+    bool IsService(Type serviceType);
 }

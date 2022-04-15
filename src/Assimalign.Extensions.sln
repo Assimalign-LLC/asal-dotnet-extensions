@@ -316,6 +316,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.FileS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Hosting", "hosting\src\Assimalign.Extensions.Hosting\Assimalign.Extensions.Hosting.csproj", "{980C3E2F-3ADD-4274-98CB-D87BA3005B35}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{6B0C8BA2-B684-4317-AD21-358E2B082E84}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

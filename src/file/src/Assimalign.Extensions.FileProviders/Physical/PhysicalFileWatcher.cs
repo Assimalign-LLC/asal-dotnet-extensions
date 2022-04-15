@@ -182,7 +182,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
             if (!_filePathTokenLookup.TryGetValue(filePath, out ChangeTokenInfo tokenInfo))
             {
                 var cancellationTokenSource = new CancellationTokenSource();
-                var cancellationChangeToken = new CancellationChangeToken(cancellationTokenSource.Token);
+                var cancellationChangeToken = new ChangeTokenCancellation(cancellationTokenSource.Token);
                 tokenInfo = new ChangeTokenInfo(cancellationTokenSource, cancellationChangeToken);
                 tokenInfo = _filePathTokenLookup.GetOrAdd(filePath, tokenInfo);
             }
@@ -217,7 +217,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
             if (!_wildcardTokenLookup.TryGetValue(pattern, out ChangeTokenInfo tokenInfo))
             {
                 var cancellationTokenSource = new CancellationTokenSource();
-                var cancellationChangeToken = new CancellationChangeToken(cancellationTokenSource.Token);
+                var cancellationChangeToken = new ChangeTokenCancellation(cancellationTokenSource.Token);
                 var matcher = new FilePatternMatcher(StringComparison.OrdinalIgnoreCase);
                 matcher.AddInclude(pattern);
                 tokenInfo = new ChangeTokenInfo(cancellationTokenSource, cancellationChangeToken, matcher);
@@ -500,14 +500,14 @@ namespace Assimalign.Extensions.FileProviders.Physical
         {
             public ChangeTokenInfo(
                 CancellationTokenSource tokenSource,
-                CancellationChangeToken changeToken)
+                ChangeTokenCancellation changeToken)
                 : this(tokenSource, changeToken, matcher: null)
             {
             }
 
             public ChangeTokenInfo(
                 CancellationTokenSource tokenSource,
-                CancellationChangeToken changeToken,
+                ChangeTokenCancellation changeToken,
                 FilePatternMatcher matcher)
             {
                 TokenSource = tokenSource;
@@ -517,7 +517,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
 
             public CancellationTokenSource TokenSource { get; }
 
-            public CancellationChangeToken ChangeToken { get; }
+            public ChangeTokenCancellation ChangeToken { get; }
 
             public FilePatternMatcher Matcher { get; }
         }
