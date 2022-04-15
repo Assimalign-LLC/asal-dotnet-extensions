@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 
-namespace Assimalign.Extensions.Http
+namespace Assimalign.Extensions.Net.Http
 {
     internal sealed class HttpMessageHandlerBuilderDefault : HttpMessageHandlerBuilder
     {

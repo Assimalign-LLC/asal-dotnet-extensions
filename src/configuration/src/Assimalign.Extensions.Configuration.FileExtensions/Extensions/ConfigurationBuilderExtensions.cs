@@ -2,10 +2,10 @@
 
 namespace Assimalign.Extensions.Configuration
 {
-    using Assimalign.Extensions.Configuration.Abstractions;
+    using Assimalign.Extensions.Configuration;
     using Assimalign.Extensions.Configuration.Providers;
     using Assimalign.Extensions.FileProviders.Physical;
-    using Assimalign.Extensions.FileProviders.Abstractions;
+    using Assimalign.Extensions.FileProviders;
 
     public static partial class ConfigurationBuilderExtensions
     {

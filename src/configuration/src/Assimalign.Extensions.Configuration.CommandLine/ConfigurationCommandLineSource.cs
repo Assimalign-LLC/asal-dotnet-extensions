@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Assimalign.Extensions.Configuration.Providers
 {
-    using Assimalign.Extensions.Configuration.Abstractions;
+    using Assimalign.Extensions.Configuration;
 
     /// <summary>
     /// Represents command line arguments as an <see cref="IConfigurationSource"/>.

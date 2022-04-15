@@ -1,6 +1,6 @@
 ﻿namespace Assimalign.Extensions.Logging
 {
-    using Assimalign.Extensions.Configuration.Abstractions;
+    using Assimalign.Extensions.Configuration;
 
     /// <summary>
     /// Allows access to configuration section associated with logger provider

@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 
 namespace Assimalign.Extensions.DependencyInjection.ServiceLoopkup
 {
-    using Assimalign.Extensions.DependencyInjection.Abstractions;
+    using Assimalign.Extensions.DependencyInjection;
     using Assimalign.Extensions.DependencyInjection.ServiceLoopkup.Kind;
 
     internal sealed class CallSiteValidator : CallSiteVisitor<CallSiteValidator.CallSiteValidatorState, Type>

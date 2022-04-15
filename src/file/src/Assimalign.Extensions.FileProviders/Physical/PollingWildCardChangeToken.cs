@@ -9,27 +9,27 @@ using System.Threading;
 namespace Assimalign.Extensions.FileProviders.Physical
 {
     using Assimalign.Extensions.Primitives;
-    using Assimalign.Extensions.Primitives.Abstractions;
+    using Assimalign.Extensions.Primitives;
     using Assimalign.Extensions.FileSystemGlobbing;
-    using Assimalign.Extensions.FileSystemGlobbing.Abstractions;
+    using Assimalign.Extensions.FileSystemGlobbing;
     using Assimalign.Extensions.FileProviders.Internal;
-    using Assimalign.Extensions.FileProviders.Abstractions;
+    using Assimalign.Extensions.FileProviders;
 
     /// <summary>
-    /// A polling based <see cref="IChangeToken"/> for wildcard patterns.
+    /// A polling based <see cref="IStateToken"/> for wildcard patterns.
     /// </summary>
     public class PollingWildCardChangeToken : IPollingChangeToken
     {
         private static readonly byte[] Separator = Encoding.Unicode.GetBytes("|");
         private readonly object _enumerationLock = new object();
-        private readonly DirectoryInfoBase _directoryInfo;
+        private readonly FileDirectoryInfo _directoryInfo;
         private readonly FilePatternMatcher _matcher;
         private bool _changed;
         private DateTime? _lastScanTimeUtc;
         private byte[] _byteBuffer;
         private byte[] _previousHash;
         private CancellationTokenSource _tokenSource;
-        private ChangeTokenCancellation _changeToken;
+        private StateTokenCancellation _changeToken;
 
         /// <summary>
         /// Initializes a new instance of <see cref="PollingWildCardChangeToken"/>.
@@ -40,7 +40,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
             string root,
             string pattern)
             : this(
-                new DirectoryInfoWrapper(new DirectoryInfo(root)),
+                new FileDirectoryInfoWrapper(new DirectoryInfo(root)),
                 pattern,
                 Internal.Clock.Instance)
         {
@@ -48,7 +48,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
 
         // Internal for unit testing.
         internal PollingWildCardChangeToken(
-            DirectoryInfoBase directoryInfo,
+            FileDirectoryInfo directoryInfo,
             string pattern,
             IClock clock)
         {
@@ -74,7 +74,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
                 Debug.Assert(_tokenSource == null, "We expect CancellationTokenSource to be initialized exactly once.");
 
                 _tokenSource = value;
-                _changeToken = new ChangeTokenCancellation(_tokenSource.Token);
+                _changeToken = new StateTokenCancellation(_tokenSource.Token);
             }
         }
 
@@ -192,7 +192,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
             sha256.AppendData(Separator, 0, Separator.Length);
         }
 
-        IDisposable IChangeToken.RegisterChangeCallback(Action<object> callback, object state)
+        IDisposable IStateToken.RegisterChangeCallback(Action<object> callback, object state)
         {
             if (!ActiveChangeCallbacks)
             {

@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using Assimalign.Extensions.Logging.Abstractions;
+using Assimalign.Extensions.Logging;
 
 namespace Assimalign.Extensions.Logging.Console
 {

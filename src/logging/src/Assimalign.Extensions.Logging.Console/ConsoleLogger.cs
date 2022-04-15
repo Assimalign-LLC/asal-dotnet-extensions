@@ -4,7 +4,7 @@ using System.Runtime.Versioning;
 
 namespace Assimalign.Extensions.Logging.Console
 {
-    using Assimalign.Extensions.Logging.Abstractions;
+    using Assimalign.Extensions.Logging;
 
     [UnsupportedOSPlatform("browser")]
     internal sealed class ConsoleLogger : ILogger

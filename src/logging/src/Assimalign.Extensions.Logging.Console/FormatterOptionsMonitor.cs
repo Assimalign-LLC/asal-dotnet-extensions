@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Assimalign.Extensions.Logging.Console
 {
-    using Assimalign.Extensions.Options.Abstractions;
+    using Assimalign.Extensions.Options;
 
     internal sealed class FormatterOptionsMonitor<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)] TOptions> :
         IOptionsMonitor<TOptions>

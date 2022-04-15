@@ -3,10 +3,10 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.Http.Logging
+namespace Assimalign.Extensions.Net.Http.Logging
 {
     using Assimalign.Extensions.Logging;
-    using Assimalign.Extensions.Logging.Abstractions;
+    using Assimalign.Extensions.Logging;
 
     public class LoggingHttpMessageHandler : DelegatingHandler
     {

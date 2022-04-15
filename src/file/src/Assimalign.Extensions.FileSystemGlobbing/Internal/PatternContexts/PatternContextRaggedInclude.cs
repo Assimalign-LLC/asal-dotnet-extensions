@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
 {
-    using Assimalign.Extensions.FileSystemGlobbing.Abstractions;
+    using Assimalign.Extensions.FileSystemGlobbing;
     using Assimalign.Extensions.FileSystemGlobbing.Internal.PathSegments;
 
     public class PatternContextRaggedInclude : PatternContextRagged
@@ -38,7 +38,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
             }
         }
 
-        public override bool Test(DirectoryInfoBase directory)
+        public override bool Test(IFileComponentContainer directory)
         {
             if (IsStackEmpty())
             {

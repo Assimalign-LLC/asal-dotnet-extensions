@@ -9,7 +9,7 @@ using System.Threading;
 namespace Assimalign.Extensions.Logging.EventSource
 {
     using Assimalign.Extensions.Primitives;
-    using Assimalign.Extensions.Primitives.Abstractions;
+    using Assimalign.Extensions.Primitives;
 
     /// <summary>
     /// The LoggingEventSource is the bridge from all ILogger based logging to EventSource/EventListener logging.
@@ -325,10 +325,10 @@ namespace Assimalign.Extensions.Logging.EventSource
         }
 
         [NonEvent]
-        internal IChangeToken GetFilterChangeToken()
+        internal IStateToken GetFilterChangeToken()
         {
             CancellationTokenSource cts = LazyInitializer.EnsureInitialized(ref _cancellationTokenSource, () => new CancellationTokenSource());
-            return new ChangeTokenCancellation(cts.Token);
+            return new StateTokenCancellation(cts.Token);
         }
 
         [NonEvent]

@@ -8,7 +8,7 @@ using System.Threading;
 namespace Assimalign.Extensions.Configuration.Providers
 {
     using Assimalign.Extensions.Primitives;
-    using Assimalign.Extensions.FileProviders.Abstractions;
+    using Assimalign.Extensions.FileProviders;
 
     /// <summary>
     /// Base class for file based <see cref="ConfigurationProvider"/>.
@@ -27,7 +27,7 @@ namespace Assimalign.Extensions.Configuration.Providers
 
             if (Source.ReloadOnChange && Source.FileProvider != null)
             {
-                _changeTokenRegistration = ChangeToken.OnChange(
+                _changeTokenRegistration = StateToken.OnChange(
                     () => Source.FileProvider.Watch(Source.Path),
                     () =>
                     {

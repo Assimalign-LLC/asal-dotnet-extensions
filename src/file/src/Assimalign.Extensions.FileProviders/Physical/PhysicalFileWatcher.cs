@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.FileProviders.Physical
 {
-    using Assimalign.Extensions.FileProviders.Abstractions;
+    using Assimalign.Extensions.FileProviders;
     using Assimalign.Extensions.FileProviders.Internal;
     using Assimalign.Extensions.FileProviders.Utilities;
     using Assimalign.Extensions.FileSystemGlobbing;
     using Assimalign.Extensions.Primitives;
-    using Assimalign.Extensions.Primitives.Abstractions;
+    using Assimalign.Extensions.Primitives;
 
     /// <summary>
     ///     <para>
     ///     A file watcher that watches a physical filesystem for changes.
     ///     </para>
     ///     <para>
-    ///     Triggers events on <see cref="IChangeToken" /> when files are created, change, renamed, or deleted.
+    ///     Triggers events on <see cref="IStateToken" /> when files are created, change, renamed, or deleted.
     ///     </para>
     /// </summary>
     public class PhysicalFilesWatcher : IDisposable
@@ -53,7 +53,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
         /// <param name="fileSystemWatcher">The wrapped watcher that is watching <paramref name="root" /></param>
         /// <param name="pollForChanges">
         /// True when the watcher should use polling to trigger instances of
-        /// <see cref="IChangeToken" /> created by <see cref="CreateFileChangeToken(string)" />
+        /// <see cref="IStateToken" /> created by <see cref="CreateFileChangeToken(string)" />
         /// </param>
         public PhysicalFilesWatcher(
             string root,
@@ -71,7 +71,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
         /// <param name="fileSystemWatcher">The wrapped watcher that is watching <paramref name="root" /></param>
         /// <param name="pollForChanges">
         /// True when the watcher should use polling to trigger instances of
-        /// <see cref="IChangeToken" /> created by <see cref="CreateFileChangeToken(string)" />
+        /// <see cref="IStateToken" /> created by <see cref="CreateFileChangeToken(string)" />
         /// </param>
         /// <param name="filters">Specifies which files or directories are excluded. Notifications of changes to are not raised to these.</param>
         public PhysicalFilesWatcher(
@@ -120,7 +120,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
 
         /// <summary>
         ///     <para>
-        ///     Creates an instance of <see cref="IChangeToken" /> for all files and directories that match the
+        ///     Creates an instance of <see cref="IStateToken" /> for all files and directories that match the
         ///     <paramref name="filter" />
         ///     </para>
         ///     <para>
@@ -132,7 +132,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
         /// <param name="filter">A globbing pattern for files and directories to watch</param>
         /// <returns>A change token for all files that match the filter</returns>
         /// <exception cref="ArgumentNullException">When <paramref name="filter" /> is null</exception>
-        public IChangeToken CreateFileChangeToken(string filter)
+        public IStateToken CreateFileChangeToken(string filter)
         {
             if (filter == null)
             {
@@ -147,7 +147,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
                 return NullChangeToken.Singleton;
             }
 
-            IChangeToken changeToken = GetOrAddChangeToken(filter);
+            IStateToken changeToken = GetOrAddChangeToken(filter);
             // We made sure that browser/iOS/tvOS never uses FileSystemWatcher.
 #pragma warning disable CA1416 // Validate platform compatibility
             TryEnableFileSystemWatcher();
@@ -156,14 +156,14 @@ namespace Assimalign.Extensions.FileProviders.Physical
             return changeToken;
         }
 
-        private IChangeToken GetOrAddChangeToken(string pattern)
+        private IStateToken GetOrAddChangeToken(string pattern)
         {
             if (UseActivePolling)
             {
                 LazyInitializer.EnsureInitialized(ref _timer, ref _timerInitialzed, ref _timerLock, _timerFactory);
             }
 
-            IChangeToken changeToken;
+            IStateToken changeToken;
             bool isWildCard = pattern.IndexOf('*') != -1;
             if (isWildCard || IsDirectoryPath(pattern))
             {
@@ -177,22 +177,22 @@ namespace Assimalign.Extensions.FileProviders.Physical
             return changeToken;
         }
 
-        internal IChangeToken GetOrAddFilePathChangeToken(string filePath)
+        internal IStateToken GetOrAddFilePathChangeToken(string filePath)
         {
             if (!_filePathTokenLookup.TryGetValue(filePath, out ChangeTokenInfo tokenInfo))
             {
                 var cancellationTokenSource = new CancellationTokenSource();
-                var cancellationChangeToken = new ChangeTokenCancellation(cancellationTokenSource.Token);
+                var cancellationChangeToken = new StateTokenCancellation(cancellationTokenSource.Token);
                 tokenInfo = new ChangeTokenInfo(cancellationTokenSource, cancellationChangeToken);
                 tokenInfo = _filePathTokenLookup.GetOrAdd(filePath, tokenInfo);
             }
 
-            IChangeToken changeToken = tokenInfo.ChangeToken;
+            IStateToken changeToken = tokenInfo.ChangeToken;
             if (PollForChanges)
             {
                 // The expiry of CancellationChangeToken is controlled by this type and consequently we can cache it.
                 // PollingFileChangeToken on the other hand manages its own lifetime and consequently we cannot cache it.
-                var pollingChangeToken = new PollingFileChangeToken(new FileInfo(Path.Combine(_root, filePath)));
+                var pollingChangeToken = new PollingFileChangeToken(new System.IO.FileInfo(Path.Combine(_root, filePath)));
 
                 if (UseActivePolling)
                 {
@@ -212,19 +212,19 @@ namespace Assimalign.Extensions.FileProviders.Physical
             return changeToken;
         }
 
-        internal IChangeToken GetOrAddWildcardChangeToken(string pattern)
+        internal IStateToken GetOrAddWildcardChangeToken(string pattern)
         {
             if (!_wildcardTokenLookup.TryGetValue(pattern, out ChangeTokenInfo tokenInfo))
             {
                 var cancellationTokenSource = new CancellationTokenSource();
-                var cancellationChangeToken = new ChangeTokenCancellation(cancellationTokenSource.Token);
+                var cancellationChangeToken = new StateTokenCancellation(cancellationTokenSource.Token);
                 var matcher = new FilePatternMatcher(StringComparison.OrdinalIgnoreCase);
                 matcher.AddInclude(pattern);
                 tokenInfo = new ChangeTokenInfo(cancellationTokenSource, cancellationChangeToken, matcher);
                 tokenInfo = _wildcardTokenLookup.GetOrAdd(pattern, tokenInfo);
             }
 
-            IChangeToken changeToken = tokenInfo.ChangeToken;
+            IStateToken changeToken = tokenInfo.ChangeToken;
             if (PollForChanges)
             {
                 // The expiry of CancellationChangeToken is controlled by this type and consequently we can cache it.
@@ -341,7 +341,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
         {
             try
             {
-                var fileSystemInfo = new FileInfo(fullPath);
+                var fileSystemInfo = new System.IO.FileInfo(fullPath);
                 if (FileSystemInfoHelper.IsExcluded(fileSystemInfo, _filters))
                 {
                     return;
@@ -500,14 +500,14 @@ namespace Assimalign.Extensions.FileProviders.Physical
         {
             public ChangeTokenInfo(
                 CancellationTokenSource tokenSource,
-                ChangeTokenCancellation changeToken)
+                StateTokenCancellation changeToken)
                 : this(tokenSource, changeToken, matcher: null)
             {
             }
 
             public ChangeTokenInfo(
                 CancellationTokenSource tokenSource,
-                ChangeTokenCancellation changeToken,
+                StateTokenCancellation changeToken,
                 FilePatternMatcher matcher)
             {
                 TokenSource = tokenSource;
@@ -517,7 +517,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
 
             public CancellationTokenSource TokenSource { get; }
 
-            public ChangeTokenCancellation ChangeToken { get; }
+            public StateTokenCancellation ChangeToken { get; }
 
             public FilePatternMatcher Matcher { get; }
         }

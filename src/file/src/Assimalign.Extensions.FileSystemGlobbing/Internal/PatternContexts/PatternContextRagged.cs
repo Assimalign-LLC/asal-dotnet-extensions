@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
 {
-    using Assimalign.Extensions.FileSystemGlobbing.Abstractions;
+    using Assimalign.Extensions.FileSystemGlobbing;
 
 
     public abstract class PatternContextRagged : PatternContext<PatternContextRagged.FrameData>
@@ -16,7 +16,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
             Pattern = pattern;
         }
 
-        public override FilePatternTestResult Test(FileInfoBase file)
+        public override FilePatternTestResult Test(IFileComponent file)
         {
             if (IsStackEmpty())
             {
@@ -30,7 +30,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
             return FilePatternTestResult.Failed;
         }
 
-        public sealed override void PushDirectory(DirectoryInfoBase directory)
+        public sealed override void PushDirectory(IFileComponentContainer directory)
         {
             // copy the current frame
             FrameData frame = Frame;
@@ -158,7 +158,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
             return Frame.SegmentGroup[Frame.SegmentIndex].Match(value);
         }
 
-        protected bool TestMatchingGroup(FileSystemInfoBase value)
+        protected bool TestMatchingGroup(IFileComponent value)
         {
             int groupLength = Frame.SegmentGroup.Count;
             int backtrackLength = Frame.BacktrackAvailable + 1;
@@ -167,7 +167,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
                 return false;
             }
 
-            FileSystemInfoBase scan = value;
+            var scan = value;
             for (int index = 0; index != groupLength; ++index)
             {
                 IFilePathSegment segment = Frame.SegmentGroup[groupLength - index - 1];
@@ -175,12 +175,12 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
                 {
                     return false;
                 }
-                scan = scan.ParentDirectory;
+                scan = scan.ParentComponent;
             }
             return true;
         }
 
-        protected string CalculateStem(FileInfoBase matchedFile)
+        protected string CalculateStem(IFileComponent matchedFile)
         {
             return FileMatcherContext.CombinePath(Frame.Stem, matchedFile.Name);
         }

@@ -2,10 +2,10 @@
 using System.Net.Http;
 
 
-namespace Assimalign.Extensions.Http
+namespace Assimalign.Extensions.Net.Http
 {
     using Assimalign.Extensions.Options;
-    using Assimalign.Extensions.Http.Abstractions;
+    using Assimalign.Extensions.Net.Http;
 
     /// <summary>
     /// Extensions methods for <see cref="IHttpClientFactory"/>.

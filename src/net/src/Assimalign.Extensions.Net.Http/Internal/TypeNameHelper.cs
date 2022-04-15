@@ -3,7 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Assimalign.Extensions.Http
+namespace Assimalign.Extensions.Net.Http
 {
     internal static class TypeNameHelper
     {

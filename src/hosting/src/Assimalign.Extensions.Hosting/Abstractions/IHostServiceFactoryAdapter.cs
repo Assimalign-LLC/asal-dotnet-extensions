@@ -2,7 +2,7 @@
 
 namespace Assimalign.Extensions.Hosting.Abstractions
 {
-    using Assimalign.Extensions.DependencyInjection.Abstractions;
+    using Assimalign.Extensions.DependencyInjection;
 
     internal interface IHostServiceFactoryAdapter
     {

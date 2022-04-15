@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
 {
-    using Assimalign.Extensions.FileSystemGlobbing.Abstractions;
+    using Assimalign.Extensions.FileSystemGlobbing;
 
     public class PatternContextLinearInclude : PatternContextLinear
     {
@@ -33,7 +33,7 @@ namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
             }
         }
 
-        public override bool Test(DirectoryInfoBase directory)
+        public override bool Test(IFileComponentContainer directory)
         {
             if (IsStackEmpty())
             {

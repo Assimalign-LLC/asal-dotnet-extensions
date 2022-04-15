@@ -5,11 +5,11 @@ using System.Threading;
 
 namespace Assimalign.Extensions.FileProviders.Physical
 {
-    using Assimalign.Extensions.FileProviders.Abstractions;
+    using Assimalign.Extensions.FileProviders;
     using Assimalign.Extensions.FileProviders.Internal;
     using Assimalign.Extensions.FileProviders.Physical;
     using Assimalign.Extensions.FileProviders.Utilities;
-    using Assimalign.Extensions.Primitives.Abstractions;
+    using Assimalign.Extensions.Primitives;
 
 
     /// <summary>
@@ -111,8 +111,8 @@ namespace Assimalign.Extensions.FileProviders.Physical
         /// Gets or sets a value that determines if this instance of <see cref="PhysicalFileProvider"/>
         /// actively polls for file changes.
         /// <para>
-        /// When <see langword="true"/>, <see cref="IChangeToken"/> returned by <see cref="Watch(string)"/> will actively poll for file changes
-        /// (<see cref="IChangeToken.ActiveChangeCallbacks"/> will be <see langword="true"/>) instead of being passive.
+        /// When <see langword="true"/>, <see cref="IStateToken"/> returned by <see cref="Watch(string)"/> will actively poll for file changes
+        /// (<see cref="IStateToken.ActiveChangeCallbacks"/> will be <see langword="true"/>) instead of being passive.
         /// </para>
         /// <para>
         /// This property is only effective when <see cref="UsePollingFileWatcher"/> is set.
@@ -293,11 +293,11 @@ namespace Assimalign.Extensions.FileProviders.Physical
         /// </summary>
         /// <param name="subpath">A path under the root directory. Leading slashes are ignored.</param>
         /// <returns>
-        /// Contents of the directory. Caller must check <see cref="IDirectoryContents.Exists"/> property. <see cref="NotFoundDirectoryContents" /> if
+        /// Contents of the directory. Caller must check <see cref="IFileDirectoryContent.Exists"/> property. <see cref="NotFoundDirectoryContents" /> if
         /// <paramref name="subpath" /> is absolute, if the directory does not exist, or <paramref name="subpath" /> has invalid
         /// characters.
         /// </returns>
-        public IDirectoryContents GetDirectoryContents(string subpath)
+        public IFileDirectoryContent GetDirectoryContents(string subpath)
         {
             try
             {
@@ -333,7 +333,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
         }
 
         /// <summary>
-        ///     <para>Creates a <see cref="IChangeToken" /> for the specified <paramref name="filter" />.</para>
+        ///     <para>Creates a <see cref="IStateToken" /> for the specified <paramref name="filter" />.</para>
         ///     <para>Globbing patterns are interpreted by <seealso cref="Assimalign.Extensions.FileSystemGlobbing.FilePatternMatcher" />.</para>
         /// </summary>
         /// <param name="filter">
@@ -341,12 +341,12 @@ namespace Assimalign.Extensions.FileProviders.Physical
         /// subFolder/**/*.cshtml.
         /// </param>
         /// <returns>
-        /// An <see cref="IChangeToken" /> that is notified when a file matching <paramref name="filter" /> is added,
+        /// An <see cref="IStateToken" /> that is notified when a file matching <paramref name="filter" /> is added,
         /// modified or deleted. Returns a <see cref="NullChangeToken" /> if <paramref name="filter" /> has invalid filter
         /// characters or if <paramref name="filter" /> is an absolute path or outside the root directory specified in the
         /// constructor <seealso cref="PhysicalFileProvider(string)" />.
         /// </returns>
-        public IChangeToken Watch(string filter)
+        public IStateToken Watch(string filter)
         {
             if (filter == null || PathUtilities.HasInvalidFilterChars(filter))
             {

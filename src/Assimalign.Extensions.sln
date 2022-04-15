@@ -140,13 +140,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{C725EA3D
 		text\Directory.Build.props = text\Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Text.XmlTests", "text\tests\Assimalign.Extensions.Text.XmlTests\Assimalign.Extensions.Text.XmlTests.csproj", "{0D9EB500-F65B-440E-A1CD-3EFF1CAFEB0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Text.XmlTests", "text\tests\Assimalign.Extensions.Text.XmlTests\Assimalign.Extensions.Text.XmlTests.csproj", "{0D9EB500-F65B-440E-A1CD-3EFF1CAFEB0E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Text.Xml", "text\src\Assimalign.Extensions.Text.Xml\Assimalign.Extensions.Text.Xml.csproj", "{497D2766-3718-4E96-A9CB-950B3457396B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Scheduling", "scheduling\src\Assimalign.Extensions.Scheduling\Assimalign.Extensions.Scheduling.csproj", "{687C9231-09CE-496A-A29F-FE0DACED5E89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.SchedulingTests", "scheduling\tests\Assimalign.Extensions.SchedulingTests\Assimalign.Extensions.SchedulingTests.csproj", "{64E19F53-1F86-4E6A-9B3B-F023D1E7FE12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.SchedulingTests", "scheduling\tests\Assimalign.Extensions.SchedulingTests\Assimalign.Extensions.SchedulingTests.csproj", "{64E19F53-1F86-4E6A-9B3B-F023D1E7FE12}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{90737B3C-B712-487C-8377-920F6A97847E}"
 EndProject
@@ -212,16 +212,19 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EC26D9A0-0DDE-4C2D-9907-674FBF4CDC15}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{6E3F8AEA-6196-4E7D-B330-785B20C5000E}"
+	ProjectSection(SolutionItems) = preProject
+		linq\Directory.Build.props = linq\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{4BFEF8F0-2F02-4EAE-AE10-35FDDC4665B9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{41D66E26-035B-4F19-9557-99A23D5549BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.OptionsTests", "options\tests\Assimalign.Extensions.OptionsTests\Assimalign.Extensions.OptionsTests.csproj", "{164772AA-CB5C-4F3D-9C47-9F41B85886AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.OptionsTests", "options\tests\Assimalign.Extensions.OptionsTests\Assimalign.Extensions.OptionsTests.csproj", "{164772AA-CB5C-4F3D-9C47-9F41B85886AE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Net.Http", "net\src\Assimalign.Extensions.Net.Http\Assimalign.Extensions.Net.Http.csproj", "{16ED7846-1EDF-48D3-9C34-7F5F8D18E02E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Net.HttpTests", "net\tests\Assimalign.Extensions.Net.HttpTests\Assimalign.Extensions.Net.HttpTests.csproj", "{97D500A8-5998-4C1F-9915-18DD2D02CFE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Net.HttpTests", "net\tests\Assimalign.Extensions.Net.HttpTests\Assimalign.Extensions.Net.HttpTests.csproj", "{97D500A8-5998-4C1F-9915-18DD2D02CFE9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{CA52A049-2345-4F2E-9204-205E357F4FA6}"
 	ProjectSection(SolutionItems) = preProject
@@ -306,7 +309,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Confi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.DependencyInjection", "di\src\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj", "{8F9A3102-0653-4A5A-B1F9-C25576D06C54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.DependencyInjectionTests", "di\tests\Assimalign.Extensions.DependencyInjectionTests\Assimalign.Extensions.DependencyInjectionTests.csproj", "{CCD9B929-6879-4044-82C5-3A8C6413E629}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.DependencyInjectionTests", "di\tests\Assimalign.Extensions.DependencyInjectionTests\Assimalign.Extensions.DependencyInjectionTests.csproj", "{CCD9B929-6879-4044-82C5-3A8C6413E629}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Diagnostics", "diagnostics\src\Assimalign.Extensions.Diagnostics\Assimalign.Extensions.Diagnostics.csproj", "{A67D818F-3315-41E0-B555-A871617D8F5A}"
 EndProject
@@ -317,6 +320,22 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Hosting", "hosting\src\Assimalign.Extensions.Hosting\Assimalign.Extensions.Hosting.csproj", "{980C3E2F-3ADD-4274-98CB-D87BA3005B35}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{6B0C8BA2-B684-4317-AD21-358E2B082E84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.LifeCycle", "common\src\Assimalign.Extensions.LifeCycle\Assimalign.Extensions.LifeCycle.csproj", "{807ECC6A-8B32-4F1D-BD4C-FFE6E86CAE9B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Linq.Serialization", "linq\src\Assimalign.Extensions.Linq.Serialization\Assimalign.Extensions.Linq.Serialization.csproj", "{0362A885-3272-4030-A47C-C1B0D3217501}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Linq.Serialization.Binary", "linq\src\Assimalign.Extensions.Linq.Serialization.Binary\Assimalign.Extensions.Linq.Serialization.Binary.csproj", "{77B9192E-4517-4049-8CCE-B7F1B8C91F18}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Linq.Serialization.Json", "linq\src\Assimalign.Extensions.Linq.Serialization.Json\Assimalign.Extensions.Linq.Serialization.Json.csproj", "{7E3FAE83-7F62-48B8-B016-7AAA8BC01BAA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Linq.Serialization.Text", "linq\src\Assimalign.Extensions.Linq.Serialization.Text\Assimalign.Extensions.Linq.Serialization.Text.csproj", "{23FDB668-2BB2-44D9-9264-A7E700F219AF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Linq.Serialization.Xml", "linq\src\Assimalign.Extensions.Linq.Serialization.Xml\Assimalign.Extensions.Linq.Serialization.Xml.csproj", "{3EE1DCDC-656A-45C4-94D2-7D5BADB8B840}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.DependencyInjection.Options", "di\src\Assimalign.Extensions.DependencyInjection.Options\Assimalign.Extensions.DependencyInjection.Options.csproj", "{DE5B4249-9CBD-421D-B827-202AF661EE79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.DependencyInjection.Http", "di\src\Assimalign.Extensions.DependencyInjection.Http\Assimalign.Extensions.DependencyInjection.Http.csproj", "{2033D439-4985-485F-8AEB-86B3E0E8AAD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -488,6 +507,38 @@ Global
 		{980C3E2F-3ADD-4274-98CB-D87BA3005B35}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{980C3E2F-3ADD-4274-98CB-D87BA3005B35}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{980C3E2F-3ADD-4274-98CB-D87BA3005B35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{807ECC6A-8B32-4F1D-BD4C-FFE6E86CAE9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{807ECC6A-8B32-4F1D-BD4C-FFE6E86CAE9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{807ECC6A-8B32-4F1D-BD4C-FFE6E86CAE9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{807ECC6A-8B32-4F1D-BD4C-FFE6E86CAE9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0362A885-3272-4030-A47C-C1B0D3217501}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0362A885-3272-4030-A47C-C1B0D3217501}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0362A885-3272-4030-A47C-C1B0D3217501}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0362A885-3272-4030-A47C-C1B0D3217501}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77B9192E-4517-4049-8CCE-B7F1B8C91F18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77B9192E-4517-4049-8CCE-B7F1B8C91F18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77B9192E-4517-4049-8CCE-B7F1B8C91F18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77B9192E-4517-4049-8CCE-B7F1B8C91F18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E3FAE83-7F62-48B8-B016-7AAA8BC01BAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E3FAE83-7F62-48B8-B016-7AAA8BC01BAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E3FAE83-7F62-48B8-B016-7AAA8BC01BAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E3FAE83-7F62-48B8-B016-7AAA8BC01BAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23FDB668-2BB2-44D9-9264-A7E700F219AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23FDB668-2BB2-44D9-9264-A7E700F219AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23FDB668-2BB2-44D9-9264-A7E700F219AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23FDB668-2BB2-44D9-9264-A7E700F219AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EE1DCDC-656A-45C4-94D2-7D5BADB8B840}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EE1DCDC-656A-45C4-94D2-7D5BADB8B840}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EE1DCDC-656A-45C4-94D2-7D5BADB8B840}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EE1DCDC-656A-45C4-94D2-7D5BADB8B840}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE5B4249-9CBD-421D-B827-202AF661EE79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE5B4249-9CBD-421D-B827-202AF661EE79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE5B4249-9CBD-421D-B827-202AF661EE79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE5B4249-9CBD-421D-B827-202AF661EE79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2033D439-4985-485F-8AEB-86B3E0E8AAD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2033D439-4985-485F-8AEB-86B3E0E8AAD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2033D439-4985-485F-8AEB-86B3E0E8AAD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2033D439-4985-485F-8AEB-86B3E0E8AAD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -610,6 +661,14 @@ Global
 		{67C7E836-F500-494D-AC84-9C54195E2B49} = {62FAEAE4-250A-41D6-BF11-74B67387798E}
 		{5D6918ED-8020-4364-A360-295E95DEB0C5} = {62FAEAE4-250A-41D6-BF11-74B67387798E}
 		{980C3E2F-3ADD-4274-98CB-D87BA3005B35} = {545C55AB-C4B2-4DC5-B5BF-7F0D2F0B9D59}
+		{807ECC6A-8B32-4F1D-BD4C-FFE6E86CAE9B} = {F25953EA-8813-42C6-BDAF-3A8E014B24EA}
+		{0362A885-3272-4030-A47C-C1B0D3217501} = {EC26D9A0-0DDE-4C2D-9907-674FBF4CDC15}
+		{77B9192E-4517-4049-8CCE-B7F1B8C91F18} = {EC26D9A0-0DDE-4C2D-9907-674FBF4CDC15}
+		{7E3FAE83-7F62-48B8-B016-7AAA8BC01BAA} = {EC26D9A0-0DDE-4C2D-9907-674FBF4CDC15}
+		{23FDB668-2BB2-44D9-9264-A7E700F219AF} = {EC26D9A0-0DDE-4C2D-9907-674FBF4CDC15}
+		{3EE1DCDC-656A-45C4-94D2-7D5BADB8B840} = {EC26D9A0-0DDE-4C2D-9907-674FBF4CDC15}
+		{DE5B4249-9CBD-421D-B827-202AF661EE79} = {6BEDBF5B-9C60-4E1A-ACD8-F409B86C3009}
+		{2033D439-4985-485F-8AEB-86B3E0E8AAD0} = {6BEDBF5B-9C60-4E1A-ACD8-F409B86C3009}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FCCF2D81-2E3A-4508-918E-048D800EABE8}

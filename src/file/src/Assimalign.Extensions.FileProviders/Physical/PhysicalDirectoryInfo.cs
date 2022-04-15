@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Assimalign.Extensions.FileProviders.Physical
 {
-    using Assimalign.Extensions.FileProviders.Abstractions;
+    using Assimalign.Extensions.FileProviders;
 
 
     /// <summary>

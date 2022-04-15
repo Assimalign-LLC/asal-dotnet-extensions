@@ -4,7 +4,6 @@ using System.Collections.Generic;
 namespace Assimalign.Extensions.Configuration;
 
 using Assimalign.Extensions.Configuration.Providers;
-using Assimalign.Extensions.Configuration.Abstractions;
 
 public static partial class ConfigurationBuilderExtensions
 {
@@ -82,11 +81,4 @@ public static partial class ConfigurationBuilderExtensions
     }
     #endregion
 
-   
-
-    
-
-    
-
-    
 }

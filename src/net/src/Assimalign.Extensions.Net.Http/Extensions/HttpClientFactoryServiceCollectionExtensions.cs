@@ -2,14 +2,14 @@
 using System.Net.Http;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Assimalign.Extensions.Http
+namespace Assimalign.Extensions.Net.Http
 {
-    using Assimalign.Extensions.Http.Logging;
-    using Assimalign.Extensions.Http.Abstractions;
+    using Assimalign.Extensions.Net.Http.Logging;
+    using Assimalign.Extensions.Net.Http;
     using Assimalign.Extensions.Logging;
     using Assimalign.Extensions.Options;
     using Assimalign.Extensions.DependencyInjection;
-    using Assimalign.Extensions.DependencyInjection.Abstractions;
+    using Assimalign.Extensions.DependencyInjection;
 
 
     /// <summary>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Assimalign.Extensions.Logging
 {
     using Assimalign.Extensions.DependencyInjection;
-    using Assimalign.Extensions.Logging.Abstractions;
+    using Assimalign.Extensions.Logging;
 
     /// <summary>
     /// Extension methods for setting up logging services in an <see cref="ILoggingBuilder" />.

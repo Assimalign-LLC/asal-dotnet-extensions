@@ -5,10 +5,10 @@ using System.Runtime.Versioning;
 namespace Assimalign.Extensions.Logging
 {
     using Assimalign.Extensions.DependencyInjection;
-    using Assimalign.Extensions.Logging.Abstractions;
+    using Assimalign.Extensions.Logging;
     using Assimalign.Extensions.Logging.Console;
     using Assimalign.Extensions.Options;
-    using Assimalign.Extensions.Options.Abstractions;
+    using Assimalign.Extensions.Options;
 
     [UnsupportedOSPlatform("browser")]
     public static class ConsoleLoggerExtensions

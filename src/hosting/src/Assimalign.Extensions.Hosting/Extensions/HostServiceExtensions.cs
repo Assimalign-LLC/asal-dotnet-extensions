@@ -2,9 +2,9 @@
 
 namespace Assimalign.Extensions.Hosting
 {
-    using Assimalign.Extensions.Hosting.Abstractions;
+    using Assimalign.Extensions.Hosting;
     using Assimalign.Extensions.DependencyInjection;
-    using Assimalign.Extensions.DependencyInjection.Abstractions;
+    using Assimalign.Extensions.DependencyInjection;
 
     public static class HostServiceExtensions
     {

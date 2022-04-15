@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Assimalign.Extensions.Logging
 {
     using Assimalign.Extensions.Configuration;
-    using Assimalign.Extensions.Configuration.Abstractions;
+    using Assimalign.Extensions.Configuration;
 
     internal sealed class LoggerProviderConfigurationFactory : ILoggerProviderConfigurationFactory
     {

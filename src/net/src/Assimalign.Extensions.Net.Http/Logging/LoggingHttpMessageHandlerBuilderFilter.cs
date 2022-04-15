@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.Http.Logging
+namespace Assimalign.Extensions.Net.Http.Logging
 {
 
     using Assimalign.Extensions.Logging;
-    using Assimalign.Extensions.Logging.Abstractions;
-    using Assimalign.Extensions.Options.Abstractions;
-    using Assimalign.Extensions.Http.Abstractions;
+    using Assimalign.Extensions.Logging;
+    using Assimalign.Extensions.Options;
+    using Assimalign.Extensions.Net.Http;
 
     // Internal so we can change the requirements without breaking changes.
     internal sealed class LoggingHttpMessageHandlerBuilderFilter : IHttpMessageHandlerBuilderFilter

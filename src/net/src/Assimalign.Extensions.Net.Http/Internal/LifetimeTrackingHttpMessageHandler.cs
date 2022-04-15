@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace Assimalign.Extensions.Http
+namespace Assimalign.Extensions.Net.Http
 {
     // This a marker used to check if the underlying handler should be disposed. HttpClients
     // share a reference to an instance of this class, and when it goes out of scope the inner handler

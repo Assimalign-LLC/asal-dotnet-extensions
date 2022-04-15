@@ -4,12 +4,12 @@ using System.Linq;
 
 namespace Assimalign.Extensions.FileProviders
 {
-    using Assimalign.Extensions.FileProviders.Abstractions;
+    using Assimalign.Extensions.FileProviders;
 
     /// <summary>
     /// Represents a non-existing directory
     /// </summary>
-    public class NotFoundDirectoryContents : IDirectoryContents
+    public class NotFoundDirectoryContents : IFileDirectoryContent
     {
         /// <summary>
         /// A shared instance of <see cref="NotFoundDirectoryContents"/>

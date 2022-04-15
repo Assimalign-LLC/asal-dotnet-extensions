@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Assimalign.Extensions.Logging.EventLog
 {
-    using Assimalign.Extensions.Logging.Abstractions;
+    using Assimalign.Extensions.Logging;
 
     /// <summary>
     /// A logger that writes messages to Windows Event Log.

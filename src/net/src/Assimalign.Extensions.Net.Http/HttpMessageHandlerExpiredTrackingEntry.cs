@@ -2,9 +2,9 @@
 using System.Net.Http;
 
 
-namespace Assimalign.Extensions.Http
+namespace Assimalign.Extensions.Net.Http
 {
-    using Assimalign.Extensions.DependencyInjection.Abstractions;
+    using Assimalign.Extensions.DependencyInjection;
 
     // Thread-safety: This class is immutable
     internal sealed class HttpMessageHandlerExpiredTrackingEntry

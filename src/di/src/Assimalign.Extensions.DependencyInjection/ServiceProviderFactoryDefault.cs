@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.DependencyInjection
 {
-    using Assimalign.Extensions.DependencyInjection.Abstractions;
+    using Assimalign.Extensions.DependencyInjection;
 
     public class ServiceProviderFactoryDefault : IServiceProviderFactory<IServiceCollection>
     {

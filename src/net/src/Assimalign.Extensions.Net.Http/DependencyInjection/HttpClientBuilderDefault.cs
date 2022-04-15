@@ -1,9 +1,9 @@
 ﻿
 
-namespace Assimalign.Extensions.Http
+namespace Assimalign.Extensions.Net.Http
 {
-    using Assimalign.Extensions.Http.Abstractions;
-    using Assimalign.Extensions.DependencyInjection.Abstractions;
+    using Assimalign.Extensions.Net.Http;
+    using Assimalign.Extensions.DependencyInjection;
 
     internal sealed class HttpClientBuilderDefault : IHttpClientBuilder
     {

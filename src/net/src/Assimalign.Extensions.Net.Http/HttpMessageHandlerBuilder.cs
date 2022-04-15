@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 
-namespace Assimalign.Extensions.Http
+namespace Assimalign.Extensions.Net.Http
 {
-    using Assimalign.Extensions.Http.Abstractions;
+    using Assimalign.Extensions.Net.Http;
 
     /// <summary>
     /// A builder abstraction for configuring <see cref="HttpMessageHandler"/> instances.

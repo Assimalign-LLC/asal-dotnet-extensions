@@ -1,6 +1,6 @@
 ﻿namespace Assimalign.Extensions.Configuration.Providers
 {
-    using Assimalign.Extensions.Configuration.Abstractions;
+    using Assimalign.Extensions.Configuration;
 
     /// <summary>
     /// Represents a JSON file as an <see cref="IConfigurationSource"/>.

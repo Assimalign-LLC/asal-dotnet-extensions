@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 namespace Assimalign.Extensions.Hosting.Internal
 {
-    using Assimalign.Extensions.Hosting.Abstractions;
+    using Assimalign.Extensions.Hosting;
     using Assimalign.Extensions.DependencyInjection;
-    using Assimalign.Extensions.Logging.Abstractions;
-    using Assimalign.Extensions.Options.Abstractions;
-    using Assimalign.Extensions.FileProviders.Abstractions;
+    using Assimalign.Extensions.Logging;
+    using Assimalign.Extensions.Options;
+    using Assimalign.Extensions.FileProviders;
 
     /// <summary>
     /// The default IHost implementation for IHostBackgroundService's

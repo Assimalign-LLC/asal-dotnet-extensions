@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.Configuration.Abstractions;
+namespace Assimalign.Extensions.Configuration;
 
-using Assimalign.Extensions.Primitives.Abstractions;
+using Assimalign.Extensions.Primitives;
 
 public interface IConfiguration
 {
@@ -35,8 +35,8 @@ public interface IConfiguration
     IEnumerable<IConfigurationSection> GetChildren();
 
     /// <summary>
-    /// Returns a <see cref="IChangeToken"/> that can be used to observe when this configuration is reloaded.
+    /// Returns a <see cref="IStateToken"/> that can be used to observe when this configuration is reloaded.
     /// </summary>
-    /// <returns>A <see cref="IChangeToken"/>.</returns>
-    IChangeToken GetReloadToken();
+    /// <returns>A <see cref="IStateToken"/>.</returns>
+    IStateToken GetReloadToken();
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Logging
 {
-    using Assimalign.Extensions.Options.Abstractions;
+    using Assimalign.Extensions.Options;
 
     internal sealed class StaticFilterOptionsMonitor : IOptionsMonitor<LoggerFilterOptions>
     {

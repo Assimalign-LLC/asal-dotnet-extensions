@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace Assimalign.Extensions.Hosting.Abstractions
 {
-    using Assimalign.Extensions.Configuration.Abstractions;
-    using Assimalign.Extensions.DependencyInjection.Abstractions;
+    using Assimalign.Extensions.Configuration;
+    using Assimalign.Extensions.DependencyInjection;
 
     /// <summary>
     /// A program initialization abstraction.

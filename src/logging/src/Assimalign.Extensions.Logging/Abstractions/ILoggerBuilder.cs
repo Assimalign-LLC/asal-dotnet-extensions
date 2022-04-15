@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Logging;
 
-using Assimalign.Extensions.DependencyInjection.Abstractions;
+using Assimalign.Extensions.DependencyInjection;
 
 /// <summary>
 /// An interface for configuring logging providers.

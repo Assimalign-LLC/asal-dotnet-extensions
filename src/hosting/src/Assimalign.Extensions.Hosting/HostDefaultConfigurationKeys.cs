@@ -1,7 +1,7 @@
 ﻿
 namespace Assimalign.Extensions.Hosting
 {
-    using Assimalign.Extensions.Hosting.Abstractions;
+    using Assimalign.Extensions.Hosting;
 
     /// <summary>
     /// Constants for HostBuilder configuration keys.

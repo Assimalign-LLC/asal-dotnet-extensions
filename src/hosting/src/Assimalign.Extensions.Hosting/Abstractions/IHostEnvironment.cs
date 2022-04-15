@@ -1,6 +1,6 @@
 ﻿namespace Assimalign.Extensions.Hosting.Abstractions
 {
-    using Assimalign.Extensions.FileProviders.Abstractions;
+    using Assimalign.Extensions.FileProviders;
 
     /// <summary>
     /// Provides information about the hosting environment an application is running in.

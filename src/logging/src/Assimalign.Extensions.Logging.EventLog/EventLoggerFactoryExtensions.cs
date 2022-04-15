@@ -4,9 +4,9 @@ using System;
 namespace Assimalign.Extensions.Logging
 {
     using Assimalign.Extensions.Options;
-    using Assimalign.Extensions.Logging.Abstractions;
+    using Assimalign.Extensions.Logging;
     using Assimalign.Extensions.DependencyInjection;
-    using Assimalign.Extensions.DependencyInjection.Abstractions;
+    using Assimalign.Extensions.DependencyInjection;
     using Assimalign.Extensions.Logging.EventLog;
 
     /// <summary>

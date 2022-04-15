@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Assimalign.Extensions.DependencyInjection.ServiceLoopkup
 {
     using Assimalign.Extensions.DependencyInjection.Internal;
-    using Assimalign.Extensions.DependencyInjection.Abstractions;
+    using Assimalign.Extensions.DependencyInjection;
 
     internal sealed class ServiceProviderEngineScope : IServiceScope, IServiceProvider, IServiceScopeFactory, IAsyncDisposable
     {

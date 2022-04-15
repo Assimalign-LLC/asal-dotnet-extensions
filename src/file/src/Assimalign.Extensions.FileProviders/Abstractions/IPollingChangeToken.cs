@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Threading;
 
-namespace Assimalign.Extensions.FileProviders.Abstractions
-{
-    using Assimalign.Extensions.Primitives.Abstractions;
+namespace Assimalign.Extensions.FileProviders;
 
-    internal interface IPollingChangeToken : IChangeToken
-    {
-        CancellationTokenSource CancellationTokenSource { get; }
-    }
+using Assimalign.Extensions.Primitives;
+
+internal interface IPollingChangeToken : IStateToken
+{
+    CancellationTokenSource CancellationTokenSource { get; }
 }

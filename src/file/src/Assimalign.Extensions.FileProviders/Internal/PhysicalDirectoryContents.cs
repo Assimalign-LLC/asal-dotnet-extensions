@@ -7,12 +7,12 @@ using System.Linq;
 namespace Assimalign.Extensions.FileProviders.Internal
 {
     using Assimalign.Extensions.FileProviders.Physical;
-    using Assimalign.Extensions.FileProviders.Abstractions;
+    using Assimalign.Extensions.FileProviders;
 
     /// <summary>
     /// Represents the contents of a physical file directory
     /// </summary>
-    public class PhysicalDirectoryContents : IDirectoryContents
+    public class PhysicalDirectoryContents : IFileDirectoryContent
     {
         private IEnumerable<IFileInfo> _entries;
         private readonly string _directory;

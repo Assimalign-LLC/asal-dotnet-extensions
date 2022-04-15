@@ -6,12 +6,12 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading;
 
-namespace Assimalign.Extensions.Http
+namespace Assimalign.Extensions.Net.Http
 {
 
-    using Assimalign.Extensions.Http.Abstractions;
+    using Assimalign.Extensions.Net.Http;
     using Assimalign.Extensions.Options;
-    using Assimalign.Extensions.Options.Abstractions;
+    using Assimalign.Extensions.Options;
     using Assimalign.Extensions.DependencyInjection;
 
     /// <summary>

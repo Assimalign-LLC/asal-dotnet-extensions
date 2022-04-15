@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.FileProviders
 {
-    using Assimalign.Extensions.Primitives.Abstractions;
+    using Assimalign.Extensions.Primitives;
 
 
     /// <summary>
     /// An empty change token that doesn't raise any change callbacks.
     /// </summary>
-    public class NullChangeToken : IChangeToken
+    public class NullChangeToken : IStateToken
     {
         /// <summary>
         /// A singleton instance of <see cref="NullChangeToken"/>

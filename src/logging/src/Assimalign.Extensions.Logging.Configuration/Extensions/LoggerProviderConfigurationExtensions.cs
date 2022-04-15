@@ -5,8 +5,8 @@ namespace Assimalign.Extensions.Logging
 {
 
     using Assimalign.Extensions.DependencyInjection;
-    using Assimalign.Extensions.DependencyInjection.Abstractions;
-    using Assimalign.Extensions.Options.Abstractions;
+    using Assimalign.Extensions.DependencyInjection;
+    using Assimalign.Extensions.Options;
 
     /// <summary>
     /// Provides a set of helpers to initialize options objects from logger provider configuration.

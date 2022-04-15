@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.FileProviders.Internal
+namespace Assimalign.Extensions.FileProviders.Internal;
+
+internal interface IClock
 {
-    internal interface IClock
-    {
-        DateTime UtcNow { get; }
-    }
+    DateTime UtcNow { get; }
 }

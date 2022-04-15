@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Assimalign.Extensions.DependencyInjection
 {
-    using Assimalign.Extensions.DependencyInjection.Abstractions;
+    using Assimalign.Extensions.DependencyInjection;
 
 
     public static class ServiceProviderExtensions

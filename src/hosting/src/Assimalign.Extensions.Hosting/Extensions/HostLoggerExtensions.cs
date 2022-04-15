@@ -5,7 +5,7 @@ using System.Reflection;
 namespace Assimalign.Extensions.Hosting
 {
     using Assimalign.Extensions.Logging;
-    using Assimalign.Extensions.Logging.Abstractions;
+    using Assimalign.Extensions.Logging;
     using Assimalign.Extensions.Hosting.Internal;
 
     internal static class HostLoggerExtensions

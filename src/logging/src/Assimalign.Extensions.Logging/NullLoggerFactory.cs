@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Logging
 {
-    using Assimalign.Extensions.Logging.Abstractions;
+    using Assimalign.Extensions.Logging;
 
     /// <summary>
     /// An <see cref="ILoggerFactory"/> used to create instance of

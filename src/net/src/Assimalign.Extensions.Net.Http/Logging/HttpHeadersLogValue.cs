@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace Assimalign.Extensions.Http.Logging
+namespace Assimalign.Extensions.Net.Http.Logging
 {
     internal sealed class HttpHeadersLogValue : IReadOnlyList<KeyValuePair<string, object>>
     {

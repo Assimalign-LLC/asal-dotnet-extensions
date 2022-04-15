@@ -1,6 +1,6 @@
 using Assimalign.Extensions.Logging.EventSource;
-using Assimalign.Extensions.Options.Abstractions;
-using Assimalign.Extensions.Primitives.Abstractions;
+using Assimalign.Extensions.Options;
+using Assimalign.Extensions.Primitives;
 
 namespace Assimalign.Extensions.Logging
 {
@@ -13,7 +13,7 @@ namespace Assimalign.Extensions.Logging
             _eventSource = eventSource;
         }
 
-        public IChangeToken GetChangeToken() => _eventSource.GetFilterChangeToken();
+        public IStateToken GetChangeToken() => _eventSource.GetFilterChangeToken();
 
         public string Name { get; }
     }

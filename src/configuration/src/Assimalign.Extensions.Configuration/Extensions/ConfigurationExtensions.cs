@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Configuration;
 
-using Assimalign.Extensions.Configuration.Abstractions;
+using Assimalign.Extensions.Configuration;
 
 /// <summary>
 /// Extension methods for configuration classes./>.
@@ -106,6 +106,6 @@ public static class ConfigurationExtensions
             return section;
         }
 
-        throw new InvalidOperationException(SR.Format(SR.InvalidSectionName, key));
+        throw new InvalidOperationException($"The section does not exist in {key}");
     }
 }

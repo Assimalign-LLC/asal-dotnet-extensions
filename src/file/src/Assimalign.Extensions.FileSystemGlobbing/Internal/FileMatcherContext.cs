@@ -4,251 +4,251 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.FileSystemGlobbing.Internal
+namespace Assimalign.Extensions.FileSystemGlobbing.Internal;
+
+using Assimalign.Extensions.FileSystemGlobbing;
+using Assimalign.Extensions.FileSystemGlobbing.Internal.PathSegments;
+using Assimalign.Extensions.FileSystemGlobbing.Internal.Utilities;
+
+/// <summary>
+/// This API supports infrastructure and is not intended to be used
+/// directly from your code. This API may change or be removed in future releases.
+/// </summary>
+public class FileMatcherContext
 {
-    using Assimalign.Extensions.FileSystemGlobbing.Abstractions;
-    using Assimalign.Extensions.FileSystemGlobbing.Internal.PathSegments;
-    using Assimalign.Extensions.FileSystemGlobbing.Utilities;
-    /// <summary>
-    /// This API supports infrastructure and is not intended to be used
-    /// directly from your code. This API may change or be removed in future releases.
-    /// </summary>
-    public class FileMatcherContext
+    private readonly IFileComponentContainer _root;
+    private readonly List<IFilePatternContext> _includePatternContexts;
+    private readonly List<IFilePatternContext> _excludePatternContexts;
+    private readonly List<FilePatternMatch> _files;
+
+    private readonly HashSet<string> _declaredLiteralFolderSegmentInString;
+    private readonly HashSet<LiteralPathSegment> _declaredLiteralFolderSegments = new HashSet<LiteralPathSegment>();
+    private readonly HashSet<LiteralPathSegment> _declaredLiteralFileSegments = new HashSet<LiteralPathSegment>();
+
+    private bool _declaredParentPathSegment;
+    private bool _declaredWildcardPathSegment;
+
+    private readonly StringComparison _comparisonType;
+
+    public FileMatcherContext(
+        IEnumerable<IFilePattern> includePatterns,
+        IEnumerable<IFilePattern> excludePatterns,
+        IFileComponentContainer container,
+        StringComparison comparison)
     {
-        private readonly DirectoryInfoBase _root;
-        private readonly List<IFilePatternContext> _includePatternContexts;
-        private readonly List<IFilePatternContext> _excludePatternContexts;
-        private readonly List<FilePatternMatch> _files;
+        _root = container;
+        _files = new List<FilePatternMatch>();
+        _comparisonType = comparison;
 
-        private readonly HashSet<string> _declaredLiteralFolderSegmentInString;
-        private readonly HashSet<LiteralPathSegment> _declaredLiteralFolderSegments = new HashSet<LiteralPathSegment>();
-        private readonly HashSet<LiteralPathSegment> _declaredLiteralFileSegments = new HashSet<LiteralPathSegment>();
+        _includePatternContexts = includePatterns.Select(pattern => pattern.CreatePatternContextForInclude()).ToList();
+        _excludePatternContexts = excludePatterns.Select(pattern => pattern.CreatePatternContextForExclude()).ToList();
 
-        private bool _declaredParentPathSegment;
-        private bool _declaredWildcardPathSegment;
+        _declaredLiteralFolderSegmentInString = new HashSet<string>(StringComparisonHelper.GetStringComparer(comparison));
+    }
 
-        private readonly StringComparison _comparisonType;
+    public FilePatternMatchingResult Execute()
+    {
+        _files.Clear();
 
-        public FileMatcherContext(
-            IEnumerable<IFilePattern> includePatterns,
-            IEnumerable<IFilePattern> excludePatterns,
-            DirectoryInfoBase directoryInfo,
-            StringComparison comparison)
+        Match(_root, parentRelativePath: null);
+
+        return new FilePatternMatchingResult(_files, _files.Count > 0);
+    }
+
+    private void Match(IFileComponentContainer directory, string parentRelativePath)
+    {
+        // Request all the including and excluding patterns to push current directory onto their status stack.
+        PushDirectory(directory);
+        Declare();
+
+        var entities = new List<IFileComponent>();
+        if (_declaredWildcardPathSegment || _declaredLiteralFileSegments.Any())
         {
-            _root = directoryInfo;
-            _files = new List<FilePatternMatch>();
-            _comparisonType = comparison;
-
-            _includePatternContexts = includePatterns.Select(pattern => pattern.CreatePatternContextForInclude()).ToList();
-            _excludePatternContexts = excludePatterns.Select(pattern => pattern.CreatePatternContextForExclude()).ToList();
-
-            _declaredLiteralFolderSegmentInString = new HashSet<string>(StringComparisonHelper.GetStringComparer(comparison));
+            entities.AddRange(directory.EnumerateFileComponents());
         }
-
-        public FilePatternMatchingResult Execute()
+        else
         {
-            _files.Clear();
-
-            Match(_root, parentRelativePath: null);
-
-            return new FilePatternMatchingResult(_files, _files.Count > 0);
-        }
-
-        private void Match(DirectoryInfoBase directory, string parentRelativePath)
-        {
-            // Request all the including and excluding patterns to push current directory onto their status stack.
-            PushDirectory(directory);
-            Declare();
-
-            var entities = new List<FileSystemInfoBase>();
-            if (_declaredWildcardPathSegment || _declaredLiteralFileSegments.Any())
+            IEnumerable<FileDirectoryInfo> candidates = directory.EnumerateFileComponents().OfType<FileDirectoryInfo>();
+            foreach (FileDirectoryInfo candidate in candidates)
             {
-                entities.AddRange(directory.EnumerateFileSystemInfos());
+                if (_declaredLiteralFolderSegmentInString.Contains(candidate.Name))
+                {
+                    entities.Add(candidate);
+                }
+            }
+        }
+
+        if (_declaredParentPathSegment)
+        {
+            entities.Add(directory.GetContainer(".."));
+        }
+
+        // collect files and sub directories
+        var subDirectories = new List<IFileComponentContainer>();
+        foreach (var entity in entities)
+        {
+            var fileInfo = entity as FileInfo;
+            if (fileInfo != null)
+            {
+                FilePatternTestResult result = MatchPatternContexts(fileInfo, (pattern, file) => pattern.Test(file));
+                if (result.IsSuccessful)
+                {
+                    _files.Add(new FilePatternMatch(
+                        path: CombinePath(parentRelativePath, fileInfo.Name),
+                        stem: result.Stem));
+                }
+
+                continue;
+            }
+
+            var directoryInfo = entity as FileDirectoryInfo;
+            if (directoryInfo != null)
+            {
+                if (MatchPatternContexts(directoryInfo, (pattern, dir) => pattern.Test(dir)))
+                {
+                    subDirectories.Add(directoryInfo);
+                }
+
+                continue;
+            }
+        }
+
+        // Matches the sub directories recursively
+        foreach (FileDirectoryInfo subDir in subDirectories)
+        {
+            string relativePath = CombinePath(parentRelativePath, subDir.Name);
+
+            Match(subDir, relativePath);
+        }
+
+        // Request all the including and excluding patterns to pop their status stack.
+        PopDirectory();
+    }
+
+    private void Declare()
+    {
+        _declaredLiteralFileSegments.Clear();
+        _declaredLiteralFolderSegments.Clear();
+        _declaredParentPathSegment = false;
+        _declaredWildcardPathSegment = false;
+
+        foreach (IFilePatternContext include in _includePatternContexts)
+        {
+            include.Declare(DeclareInclude);
+        }
+    }
+
+    private void DeclareInclude(IFilePathSegment patternSegment, bool isLastSegment)
+    {
+        var literalSegment = patternSegment as LiteralPathSegment;
+        if (literalSegment != null)
+        {
+            if (isLastSegment)
+            {
+                _declaredLiteralFileSegments.Add(literalSegment);
             }
             else
             {
-                IEnumerable<DirectoryInfoBase> candidates = directory.EnumerateFileSystemInfos().OfType<DirectoryInfoBase>();
-                foreach (DirectoryInfoBase candidate in candidates)
-                {
-                    if (_declaredLiteralFolderSegmentInString.Contains(candidate.Name))
-                    {
-                        entities.Add(candidate);
-                    }
-                }
-            }
-
-            if (_declaredParentPathSegment)
-            {
-                entities.Add(directory.GetDirectory(".."));
-            }
-
-            // collect files and sub directories
-            var subDirectories = new List<DirectoryInfoBase>();
-            foreach (FileSystemInfoBase entity in entities)
-            {
-                var fileInfo = entity as FileInfoBase;
-                if (fileInfo != null)
-                {
-                    FilePatternTestResult result = MatchPatternContexts(fileInfo, (pattern, file) => pattern.Test(file));
-                    if (result.IsSuccessful)
-                    {
-                        _files.Add(new FilePatternMatch(
-                            path: CombinePath(parentRelativePath, fileInfo.Name),
-                            stem: result.Stem));
-                    }
-
-                    continue;
-                }
-
-                var directoryInfo = entity as DirectoryInfoBase;
-                if (directoryInfo != null)
-                {
-                    if (MatchPatternContexts(directoryInfo, (pattern, dir) => pattern.Test(dir)))
-                    {
-                        subDirectories.Add(directoryInfo);
-                    }
-
-                    continue;
-                }
-            }
-
-            // Matches the sub directories recursively
-            foreach (DirectoryInfoBase subDir in subDirectories)
-            {
-                string relativePath = CombinePath(parentRelativePath, subDir.Name);
-
-                Match(subDir, relativePath);
-            }
-
-            // Request all the including and excluding patterns to pop their status stack.
-            PopDirectory();
-        }
-
-        private void Declare()
-        {
-            _declaredLiteralFileSegments.Clear();
-            _declaredLiteralFolderSegments.Clear();
-            _declaredParentPathSegment = false;
-            _declaredWildcardPathSegment = false;
-
-            foreach (IFilePatternContext include in _includePatternContexts)
-            {
-                include.Declare(DeclareInclude);
+                _declaredLiteralFolderSegments.Add(literalSegment);
+                _declaredLiteralFolderSegmentInString.Add(literalSegment.Value);
             }
         }
-
-        private void DeclareInclude(IFilePathSegment patternSegment, bool isLastSegment)
+        else if (patternSegment is ParentPathSegment)
         {
-            var literalSegment = patternSegment as LiteralPathSegment;
-            if (literalSegment != null)
+            _declaredParentPathSegment = true;
+        }
+        else if (patternSegment is WildcardPathSegment)
+        {
+            _declaredWildcardPathSegment = true;
+        }
+    }
+
+    internal static string CombinePath(string left, string right)
+    {
+        if (string.IsNullOrEmpty(left))
+        {
+            return right;
+        }
+        else
+        {
+            return $"{left}/{right}";
+        }
+    }
+
+    // Used to adapt Test(DirectoryInfoBase) for the below overload
+    private bool MatchPatternContexts<TFileInfoBase>(TFileInfoBase fileinfo, Func<IFilePatternContext, TFileInfoBase, bool> test)
+    {
+        return MatchPatternContexts(
+            fileinfo,
+            (ctx, file) =>
             {
-                if (isLastSegment)
+                if (test(ctx, file))
                 {
-                    _declaredLiteralFileSegments.Add(literalSegment);
+                    return FilePatternTestResult.Success(stem: string.Empty);
                 }
                 else
                 {
-                    _declaredLiteralFolderSegments.Add(literalSegment);
-                    _declaredLiteralFolderSegmentInString.Add(literalSegment.Value);
+                    return FilePatternTestResult.Failed;
                 }
-            }
-            else if (patternSegment is ParentPathSegment)
+            }).IsSuccessful;
+    }
+
+    private FilePatternTestResult MatchPatternContexts<TFileInfoBase>(TFileInfoBase fileinfo, Func<IFilePatternContext, TFileInfoBase, FilePatternTestResult> test)
+    {
+        FilePatternTestResult result = FilePatternTestResult.Failed;
+
+        // If the given file/directory matches any including pattern, continues to next step.
+        foreach (IFilePatternContext context in _includePatternContexts)
+        {
+            FilePatternTestResult localResult = test(context, fileinfo);
+            if (localResult.IsSuccessful)
             {
-                _declaredParentPathSegment = true;
-            }
-            else if (patternSegment is WildcardPathSegment)
-            {
-                _declaredWildcardPathSegment = true;
+                result = localResult;
+                break;
             }
         }
 
-        internal static string CombinePath(string left, string right)
+        // If the given file/directory doesn't match any of the including pattern, returns false.
+        if (!result.IsSuccessful)
         {
-            if (string.IsNullOrEmpty(left))
-            {
-                return right;
-            }
-            else
-            {
-                return $"{left}/{right}";
-            }
+            return FilePatternTestResult.Failed;
         }
 
-        // Used to adapt Test(DirectoryInfoBase) for the below overload
-        private bool MatchPatternContexts<TFileInfoBase>(TFileInfoBase fileinfo, Func<IFilePatternContext, TFileInfoBase, bool> test)
+        // If the given file/directory matches any excluding pattern, returns false.
+        foreach (IFilePatternContext context in _excludePatternContexts)
         {
-            return MatchPatternContexts(
-                fileinfo,
-                (ctx, file) =>
-                {
-                    if (test(ctx, file))
-                    {
-                        return FilePatternTestResult.Success(stem: string.Empty);
-                    }
-                    else
-                    {
-                        return FilePatternTestResult.Failed;
-                    }
-                }).IsSuccessful;
-        }
-
-        private FilePatternTestResult MatchPatternContexts<TFileInfoBase>(TFileInfoBase fileinfo, Func<IFilePatternContext, TFileInfoBase, FilePatternTestResult> test)
-        {
-            FilePatternTestResult result = FilePatternTestResult.Failed;
-
-            // If the given file/directory matches any including pattern, continues to next step.
-            foreach (IFilePatternContext context in _includePatternContexts)
-            {
-                FilePatternTestResult localResult = test(context, fileinfo);
-                if (localResult.IsSuccessful)
-                {
-                    result = localResult;
-                    break;
-                }
-            }
-
-            // If the given file/directory doesn't match any of the including pattern, returns false.
-            if (!result.IsSuccessful)
+            if (test(context, fileinfo).IsSuccessful)
             {
                 return FilePatternTestResult.Failed;
             }
-
-            // If the given file/directory matches any excluding pattern, returns false.
-            foreach (IFilePatternContext context in _excludePatternContexts)
-            {
-                if (test(context, fileinfo).IsSuccessful)
-                {
-                    return FilePatternTestResult.Failed;
-                }
-            }
-
-            return result;
         }
 
-        private void PopDirectory()
-        {
-            foreach (IFilePatternContext context in _excludePatternContexts)
-            {
-                context.PopDirectory();
-            }
+        return result;
+    }
 
-            foreach (IFilePatternContext context in _includePatternContexts)
-            {
-                context.PopDirectory();
-            }
+    private void PopDirectory()
+    {
+        foreach (IFilePatternContext context in _excludePatternContexts)
+        {
+            context.PopDirectory();
         }
 
-        private void PushDirectory(DirectoryInfoBase directory)
+        foreach (IFilePatternContext context in _includePatternContexts)
         {
-            foreach (IFilePatternContext context in _includePatternContexts)
-            {
-                context.PushDirectory(directory);
-            }
+            context.PopDirectory();
+        }
+    }
 
-            foreach (IFilePatternContext context in _excludePatternContexts)
-            {
-                context.PushDirectory(directory);
-            }
+    private void PushDirectory(IFileComponentContainer directory)
+    {
+        foreach (IFilePatternContext context in _includePatternContexts)
+        {
+            context.PushDirectory(directory);
+        }
+
+        foreach (IFilePatternContext context in _excludePatternContexts)
+        {
+            context.PushDirectory(directory);
         }
     }
 }

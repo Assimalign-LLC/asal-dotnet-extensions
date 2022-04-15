@@ -1,7 +1,7 @@
 namespace Assimalign.Extensions.Logging.EventSource
 {
     using Assimalign.Extensions.Logging.EventSource;
-    using Assimalign.Extensions.Options.Abstractions;
+    using Assimalign.Extensions.Options;
 
     internal sealed class EventLogFiltersConfigureOptions : IConfigureOptions<LoggerFilterOptions>
     {

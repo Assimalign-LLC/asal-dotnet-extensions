@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Logging
 {
-    using Assimalign.Extensions.Logging.Abstractions;
+    using Assimalign.Extensions.Logging;
 
     /// <summary>
     /// Scope provider that does nothing.

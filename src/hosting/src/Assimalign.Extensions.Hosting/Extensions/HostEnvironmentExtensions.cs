@@ -3,7 +3,7 @@
 namespace Assimalign.Extensions.Hosting
 {
     using Assimalign.Extensions.Hosting.Environments;
-    using Assimalign.Extensions.Hosting.Abstractions;
+    using Assimalign.Extensions.Hosting;
 
     /// <summary>
     /// Extension methods for <see cref="IHostEnvironment"/>.

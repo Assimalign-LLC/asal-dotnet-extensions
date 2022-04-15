@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace Assimalign.Extensions.Hosting
 {
-    using Assimalign.Extensions.Hosting.Abstractions;
-    using Assimalign.Extensions.Configuration.Abstractions;
+    using Assimalign.Extensions.Hosting;
+    using Assimalign.Extensions.Configuration;
 
     public class HostBuilderContext
     {

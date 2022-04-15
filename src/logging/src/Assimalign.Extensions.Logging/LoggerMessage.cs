@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Assimalign.Extensions.Logging
 {
-    using Assimalign.Extensions.Logging.Abstractions;
+    using Assimalign.Extensions.Logging;
 
     /// <summary>
     /// Creates delegates which can be later cached to log messages in a performant way.

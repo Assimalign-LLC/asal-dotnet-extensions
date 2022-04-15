@@ -3,12 +3,12 @@ using System.IO;
 
 namespace Assimalign.Extensions.FileProviders
 {
-    using Assimalign.Extensions.FileProviders.Abstractions;
+    using Assimalign.Extensions.FileProviders;
 
     /// <summary>
     /// Represents a non-existing file.
     /// </summary>
-    public class NotFoundFileInfo : IFileInfo
+    public class NotFoundFileInfo : IFileComponent
     {
         /// <summary>
         /// Initializes an instance of <see cref="NotFoundFileInfo"/>.

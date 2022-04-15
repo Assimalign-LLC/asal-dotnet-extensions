@@ -4,10 +4,10 @@ using System;
 namespace Assimalign.Extensions.Logging.EventSource
 {
     using Assimalign.Extensions.DependencyInjection;
-    using Assimalign.Extensions.DependencyInjection.Abstractions;
+    using Assimalign.Extensions.DependencyInjection;
     using Assimalign.Extensions.Logging.EventSource;
-    using Assimalign.Extensions.Options.Abstractions;
-    using Assimalign.Extensions.Logging.Abstractions;
+    using Assimalign.Extensions.Options;
+    using Assimalign.Extensions.Logging;
 
     /// <summary>
     /// Extension methods for the <see cref="ILoggerFactory"/> class.

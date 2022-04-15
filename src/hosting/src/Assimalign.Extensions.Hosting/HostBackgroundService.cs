@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Hosting
 {
-    using Assimalign.Extensions.Hosting.Abstractions;
+    using Assimalign.Extensions.Hosting;
 
     /// <summary>
     /// Base class for implementing a long running <see cref="IHostService"/>.

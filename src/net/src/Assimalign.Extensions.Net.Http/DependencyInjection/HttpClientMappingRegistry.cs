@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace Assimalign.Extensions.Http
+namespace Assimalign.Extensions.Net.Http
 {
     // Internal tracking for HTTP Client configuration. This is used to prevent some common mistakes
     // that are easy to make with HTTP Client registration.

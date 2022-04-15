@@ -5,8 +5,8 @@ using System.IO;
 namespace Assimalign.Extensions.Logging.Console
 {
     using Assimalign.Extensions.Options;
-    using Assimalign.Extensions.Options.Abstractions;
-    using Assimalign.Extensions.Logging.Abstractions;
+    using Assimalign.Extensions.Options;
+    using Assimalign.Extensions.Logging;
 
     internal sealed class SimpleConsoleFormatter : ConsoleFormatter, IDisposable
     {

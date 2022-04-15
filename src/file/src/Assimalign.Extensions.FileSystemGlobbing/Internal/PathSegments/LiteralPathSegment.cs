@@ -1,50 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PathSegments
+namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PathSegments;
+
+using Assimalign.Extensions.FileSystemGlobbing.Internal.Utilities;
+
+public class LiteralPathSegment : IFilePathSegment
 {
-    using Assimalign.Extensions.FileSystemGlobbing.Utilities;
+    private readonly StringComparison _comparisonType;
 
-    public class LiteralPathSegment : IFilePathSegment
+    public bool CanProduceStem { get { return false; } }
+
+    public LiteralPathSegment(string value, StringComparison comparisonType)
     {
-        private readonly StringComparison _comparisonType;
-
-        public bool CanProduceStem { get { return false; } }
-
-        public LiteralPathSegment(string value, StringComparison comparisonType)
+        if (value == null)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            Value = value;
-
-            _comparisonType = comparisonType;
+            throw new ArgumentNullException(nameof(value));
         }
 
-        public string Value { get; }
+        Value = value;
 
-        public bool Match(string value)
-        {
-            return string.Equals(Value, value, _comparisonType);
-        }
+        _comparisonType = comparisonType;
+    }
 
-        public override bool Equals(object obj)
-        {
-            var other = obj as LiteralPathSegment;
+    public string Value { get; }
 
-            return other != null &&
-                _comparisonType == other._comparisonType &&
-                string.Equals(other.Value, Value, _comparisonType);
-        }
+    public bool Match(string value)
+    {
+        return string.Equals(Value, value, _comparisonType);
+    }
 
-        public override int GetHashCode()
-        {
-            return StringComparisonHelper.GetStringComparer(_comparisonType).GetHashCode(Value);
-        }
+    public override bool Equals(object obj)
+    {
+        var other = obj as LiteralPathSegment;
+
+        return other != null &&
+            _comparisonType == other._comparisonType &&
+            string.Equals(other.Value, Value, _comparisonType);
+    }
+
+    public override int GetHashCode()
+    {
+        return StringComparisonHelper.GetStringComparer(_comparisonType).GetHashCode(Value);
     }
 }

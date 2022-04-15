@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 
 namespace Assimalign.Extensions.Logging.EventLog
 {
-    using Assimalign.Extensions.Options.Abstractions;
-    using Assimalign.Extensions.Logging.Abstractions;
+    using Assimalign.Extensions.Options;
+    using Assimalign.Extensions.Logging;
 
     /// <summary>
     /// The provider for the <see cref="EventLogLogger"/>.

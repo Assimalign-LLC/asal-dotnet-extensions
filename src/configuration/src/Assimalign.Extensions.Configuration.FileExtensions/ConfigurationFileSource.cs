@@ -5,8 +5,8 @@ using System.IO;
 namespace Assimalign.Extensions.Configuration.Providers
 {
     using Assimalign.Extensions.FileProviders.Physical;
-    using Assimalign.Extensions.FileProviders.Abstractions;
-    using Assimalign.Extensions.Configuration.Abstractions;
+    using Assimalign.Extensions.FileProviders;
+    using Assimalign.Extensions.Configuration;
 
 
     /// <summary>

@@ -12,10 +12,10 @@ namespace Assimalign.Extensions.Hosting.Internal
 {
 
     using Assimalign.Extensions.Logging;
-    using Assimalign.Extensions.Logging.Abstractions;
+    using Assimalign.Extensions.Logging;
     using Assimalign.Extensions.Options;
-    using Assimalign.Extensions.Options.Abstractions;
-    using Assimalign.Extensions.Hosting.Abstractions;
+    using Assimalign.Extensions.Options;
+    using Assimalign.Extensions.Hosting;
 
 
     /// <summary>

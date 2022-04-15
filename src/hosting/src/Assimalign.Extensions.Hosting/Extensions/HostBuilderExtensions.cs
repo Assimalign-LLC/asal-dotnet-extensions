@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Hosting
 {
-    using Assimalign.Extensions.Hosting.Abstractions;
+    using Assimalign.Extensions.Hosting;
 
     public static class HostBuilderExtensions
     {

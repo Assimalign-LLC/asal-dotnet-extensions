@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace Assimalign.Extensions.Logging.EventSource
 {
-    using Assimalign.Extensions.Logging.Abstractions;
+    using Assimalign.Extensions.Logging;
 
     /// <summary>
     /// A logger that writes messages to EventSource instance.

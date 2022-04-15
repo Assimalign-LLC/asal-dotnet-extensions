@@ -4,26 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.FileSystemGlobbing.Internal
+namespace Assimalign.Extensions.FileSystemGlobbing.Internal;
+
+
+/// <summary>
+/// This API supports infrastructure and is not intended to be used
+/// directly from your code. This API may change or be removed in future releases.
+/// </summary>
+public interface IFilePatternContext
 {
-    using Assimalign.Extensions.FileSystemGlobbing.Abstractions;
+    void Declare(Action<IFilePathSegment, bool> onDeclare);
 
+    bool Test(IFileComponentContainer directory);
 
+    FilePatternTestResult Test(IFileComponent file);
 
-    /// <summary>
-    /// This API supports infrastructure and is not intended to be used
-    /// directly from your code. This API may change or be removed in future releases.
-    /// </summary>
-    public interface IFilePatternContext
-    {
-        void Declare(Action<IFilePathSegment, bool> onDeclare);
+    void PushDirectory(IFileComponentContainer directory);
 
-        bool Test(DirectoryInfoBase directory);
-
-        FilePatternTestResult Test(FileInfoBase file);
-
-        void PushDirectory(DirectoryInfoBase directory);
-
-        void PopDirectory();
-    }
+    void PopDirectory();
 }

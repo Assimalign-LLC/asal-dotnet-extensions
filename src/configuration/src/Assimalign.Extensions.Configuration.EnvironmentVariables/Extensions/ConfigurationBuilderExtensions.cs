@@ -2,7 +2,7 @@
 
 namespace Assimalign.Extensions.Configuration
 {
-    using Assimalign.Extensions.Configuration.Abstractions;
+    using Assimalign.Extensions.Configuration;
     using Assimalign.Extensions.Configuration.Providers;
 
     public static partial class ConfigurationBuilderExtensions

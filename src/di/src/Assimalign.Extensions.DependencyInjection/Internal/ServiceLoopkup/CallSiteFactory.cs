@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Assimalign.Extensions.DependencyInjection.ServiceLoopkup
 {
     using Assimalign.Extensions.DependencyInjection.Internal;
-    using Assimalign.Extensions.DependencyInjection.Abstractions;
+    using Assimalign.Extensions.DependencyInjection;
     using Assimalign.Extensions.DependencyInjection.ServiceLoopkup.Kind;
 
 

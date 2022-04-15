@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Hosting.Internal
 {
-    using Assimalign.Extensions.Hosting.Abstractions;
+    using Assimalign.Extensions.Hosting;
 
     /// <summary>
     /// Minimalistic lifetime that does nothing.

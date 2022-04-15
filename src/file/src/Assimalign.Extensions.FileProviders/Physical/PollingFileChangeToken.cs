@@ -7,7 +7,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
 {
     using Assimalign.Extensions.Primitives;
     using Assimalign.Extensions.FileProviders.Internal;
-    using Assimalign.Extensions.FileProviders.Abstractions;
+    using Assimalign.Extensions.FileProviders;
 
     /// <summary>
     ///     <para>
@@ -29,7 +29,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
         private DateTime _lastCheckedTimeUtc;
         private bool _hasChanged;
         private CancellationTokenSource _tokenSource;
-        private ChangeTokenCancellation _changeToken;
+        private StateTokenCancellation _changeToken;
 
         /// <summary>
         /// Initializes a new instance of <see cref="PollingFileChangeToken" /> that polls the specified file for changes as
@@ -70,7 +70,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
                 Debug.Assert(_tokenSource == null, "We expect CancellationTokenSource to be initialized exactly once.");
 
                 _tokenSource = value;
-                _changeToken = new ChangeTokenCancellation(_tokenSource.Token);
+                _changeToken = new StateTokenCancellation(_tokenSource.Token);
             }
         }
 

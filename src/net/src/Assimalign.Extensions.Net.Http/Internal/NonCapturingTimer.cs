@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Assimalign.Extensions.Http
+namespace Assimalign.Extensions.Net.Http
 {
     // A convenience API for interacting with System.Threading.Timer in a way
     // that doesn't capture the ExecutionContext. We should be using this (or equivalent)

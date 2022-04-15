@@ -5,8 +5,8 @@ using System.Diagnostics.CodeAnalysis;
 namespace Assimalign.Extensions.Logging
 {
     using Assimalign.Extensions.Configuration;
-    using Assimalign.Extensions.Configuration.Abstractions;
-    using Assimalign.Extensions.Options.Abstractions;
+    using Assimalign.Extensions.Configuration;
+    using Assimalign.Extensions.Options;
 
     internal sealed class LoggerFilterConfigureOptions : IConfigureOptions<LoggerFilterOptions>
     {

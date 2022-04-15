@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.DependencyInjection
 {
-    using Assimalign.Extensions.DependencyInjection.Abstractions;
+    using Assimalign.Extensions.DependencyInjection;
 
     /// <summary>
     /// An <see cref="IServiceScope" /> implementation that implements <see cref="IAsyncDisposable" />.

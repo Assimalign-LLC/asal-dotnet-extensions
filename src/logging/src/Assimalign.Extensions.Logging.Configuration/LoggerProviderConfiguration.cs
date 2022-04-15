@@ -1,6 +1,6 @@
 ﻿namespace Assimalign.Extensions.Logging
 {
-    using Assimalign.Extensions.Configuration.Abstractions;
+    using Assimalign.Extensions.Configuration;
 
     internal sealed class LoggerProviderConfiguration<T> : ILoggerProviderConfiguration<T>
     {

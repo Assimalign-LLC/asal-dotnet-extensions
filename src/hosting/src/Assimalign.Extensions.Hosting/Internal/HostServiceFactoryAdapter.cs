@@ -2,8 +2,8 @@
 
 namespace Assimalign.Extensions.Hosting.Internal
 {
-    using Assimalign.Extensions.Hosting.Abstractions;
-    using Assimalign.Extensions.DependencyInjection.Abstractions;
+    using Assimalign.Extensions.Hosting;
+    using Assimalign.Extensions.DependencyInjection;
 
     internal sealed class HostServiceFactoryAdapter<TContainerBuilder> : IHostServiceFactoryAdapter
     {

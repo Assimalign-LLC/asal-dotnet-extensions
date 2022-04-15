@@ -2,7 +2,7 @@
 
 namespace Assimalign.Extensions.Hosting.Internal
 {
-    using Assimalign.Extensions.Hosting.Abstractions;
+    using Assimalign.Extensions.Hosting;
 
     internal sealed class HostConfigureContainerAdapter<TContainerBuilder> : IHostConfigureContainerAdapter
     {

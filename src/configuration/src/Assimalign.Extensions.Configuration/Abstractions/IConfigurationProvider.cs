@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.Configuration.Abstractions;
+namespace Assimalign.Extensions.Configuration;
 
-using Assimalign.Extensions.Primitives.Abstractions;
+using Assimalign.Extensions.Primitives;
 
 /// <summary>
 /// Provides configuration key/values for an application.
@@ -32,7 +32,7 @@ public interface IConfigurationProvider
     /// Returns a change token if this provider supports change tracking, null otherwise.
     /// </summary>
     /// <returns>The change token.</returns>
-    IChangeToken GetReloadToken();
+    IStateToken GetReloadToken();
 
     /// <summary>
     /// Loads configuration values from the source represented by this <see cref="IConfigurationProvider"/>.

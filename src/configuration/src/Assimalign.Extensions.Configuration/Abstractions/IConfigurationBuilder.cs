@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.Configuration.Abstractions;
+namespace Assimalign.Extensions.Configuration;
 
 /// <summary>
 /// Represents a type used to build application configuration.
@@ -20,7 +20,7 @@ public interface IConfigurationBuilder
     /// <summary>
     /// Gets the sources used to obtain configuration values
     /// </summary>
-    IList<IConfigurationSource> Sources { get; }
+    IEnumerable<IConfigurationSource> Sources { get; }
 
     /// <summary>
     /// Adds a new configuration source.

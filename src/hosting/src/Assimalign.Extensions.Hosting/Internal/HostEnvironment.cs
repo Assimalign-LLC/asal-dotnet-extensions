@@ -1,7 +1,7 @@
 ﻿namespace Assimalign.Extensions.Hosting.Internal
 {
-    using Assimalign.Extensions.Hosting.Abstractions;
-    using Assimalign.Extensions.FileProviders.Abstractions;
+    using Assimalign.Extensions.Hosting;
+    using Assimalign.Extensions.FileProviders;
 
     /// <summary>
     /// This API supports infrastructure and is not intended to be used

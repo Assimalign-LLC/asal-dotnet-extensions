@@ -5,8 +5,6 @@ using System.Collections.Generic;
 
 namespace Assimalign.Extensions.Configuration;
 
-using Assimalign.Extensions.Configuration.Abstractions;
-
 
 /// <summary>
 /// Extension methods for <see cref="IConfigurationRoot"/>.

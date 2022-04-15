@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.Configuration.Abstractions;
+namespace Assimalign.Extensions.Configuration;
 
 public interface IConfigurationSource
 {

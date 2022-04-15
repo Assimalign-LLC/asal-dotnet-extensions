@@ -4,8 +4,8 @@ using System.Collections.Generic;
 namespace Assimalign.Extensions.Logging
 {
     using Assimalign.Extensions.Primitives;
-    using Assimalign.Extensions.Options.Abstractions;
-    using Assimalign.Extensions.Logging.Abstractions;
+    using Assimalign.Extensions.Options;
+    using Assimalign.Extensions.Logging;
     using Assimalign.Extensions.DependencyInjection;
     using Assimalign.Extensions.Options;
 

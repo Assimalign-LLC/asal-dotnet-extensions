@@ -4,37 +4,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts
+namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PatternContexts;
+
+using Assimalign.Extensions.FileSystemGlobbing;
+
+public abstract class PatternContext<TFrame> : IFilePatternContext
 {
-    using Assimalign.Extensions.FileSystemGlobbing.Abstractions;
+    private Stack<TFrame> _stack = new Stack<TFrame>();
+    protected TFrame Frame;
 
-    public abstract class PatternContext<TFrame> : IFilePatternContext
+    public virtual void Declare(Action<IFilePathSegment, bool> declare) { }
+
+    public abstract FilePatternTestResult Test(IFileComponent file);
+
+    public abstract bool Test(IFileComponentContainer directory);
+
+    public abstract void PushDirectory(IFileComponentContainer directory);
+
+    public virtual void PopDirectory()
     {
-        private Stack<TFrame> _stack = new Stack<TFrame>();
-        protected TFrame Frame;
+        Frame = _stack.Pop();
+    }
 
-        public virtual void Declare(Action<IFilePathSegment, bool> declare) { }
+    protected void PushDataFrame(TFrame frame)
+    {
+        _stack.Push(Frame);
+        Frame = frame;
+    }
 
-        public abstract FilePatternTestResult Test(FileInfoBase file);
-
-        public abstract bool Test(DirectoryInfoBase directory);
-
-        public abstract void PushDirectory(DirectoryInfoBase directory);
-
-        public virtual void PopDirectory()
-        {
-            Frame = _stack.Pop();
-        }
-
-        protected void PushDataFrame(TFrame frame)
-        {
-            _stack.Push(Frame);
-            Frame = frame;
-        }
-
-        protected bool IsStackEmpty()
-        {
-            return _stack.Count == 0;
-        }
+    protected bool IsStackEmpty()
+    {
+        return _stack.Count == 0;
     }
 }

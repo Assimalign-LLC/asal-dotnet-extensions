@@ -5,9 +5,9 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
-using Assimalign.Extensions.Logging.Abstractions;
+using Assimalign.Extensions.Logging;
 using Assimalign.Extensions.Options;
-using Assimalign.Extensions.Options.Abstractions;
+using Assimalign.Extensions.Options;
 
 namespace Assimalign.Extensions.Logging.Console
 {

@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PathSegments
-{
-    public class RecursiveWildcardSegment : IFilePathSegment
-    {
-        public bool CanProduceStem { get { return true; } }
+namespace Assimalign.Extensions.FileSystemGlobbing.Internal.PathSegments;
 
-        public bool Match(string value)
-        {
-            return false;
-        }
+public class RecursiveWildcardSegment : IFilePathSegment
+{
+    public bool CanProduceStem { get { return true; } }
+
+    public bool Match(string value)
+    {
+        return false;
     }
 }
