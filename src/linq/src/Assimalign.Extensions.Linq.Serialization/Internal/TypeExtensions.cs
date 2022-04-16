@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Assimalign.Extensions.Linq.Serialization.Internals;
+namespace Assimalign.Extensions.Linq.Serialization.Internal;
 
 internal static class TypeExtensions
 {

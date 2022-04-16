@@ -3,7 +3,7 @@
 //using System.Linq.Expressions;
 //using Assimalign.Extensions.Linq.Serialization.Factories;
 
-//using Assimalign.Extensions.Linq.Serialization.Internals;
+//using Assimalign.Extensions.Linq.Serialization.Internal;
 //using Assimalign.Extensions.Linq.Serialization.Nodes;
 
 //namespace Assimalign.Extensions.Linq.Serialization.Serializers;

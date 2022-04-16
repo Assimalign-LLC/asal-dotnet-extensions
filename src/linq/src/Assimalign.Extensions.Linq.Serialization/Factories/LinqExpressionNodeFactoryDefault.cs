@@ -10,7 +10,7 @@ using System.Reflection;
 namespace Assimalign.Extensions.Linq.Serialization.Factories;
 
 using Assimalign.Extensions.Linq.Serialization.Nodes;
-using Assimalign.Extensions.Linq.Serialization.Internals;
+using Assimalign.Extensions.Linq.Serialization.Internal;
 
 public class LinqExpressionNodeFactoryDefault : ILinqExpressionNodeFactory
 {

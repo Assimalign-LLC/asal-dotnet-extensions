@@ -1,0 +1,52 @@
+name: assimalign.extensions.linq.serialization.xml.ci
+
+on:
+  push:
+    branches:
+    - main
+    - development
+    - users/**
+    - features/**
+    paths: 
+    - 'src/linq/src/**'
+    - 'src/Directory.Build.props'                                     # When the Global Props File Changes
+    - 'src/linq/Directory.Build.props'
+    - '.github/workflows/assimalign.extensions.linq.serialization.xml.yml'        # When Pipeline File Changes
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2    
+    
+    - name: Setup .NET 6
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.x'
+
+    - name: Setup .NET 7
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '7.x'
+        include-prerelease: true
+    
+    - name: Restore Project
+      run: dotnet restore 
+      working-directory: './src/linq/src/Assimalign.Extensions.Linq.Serialization.Xml'
+    
+    - name: Build Project
+      run: dotnet build --configuration Release --no-restore
+      working-directory: './src/linq/src/Assimalign.Extensions.Linq.Serialization.Xml'
+
+    # - name: Restore Unit Tests Project
+    #   run: dotnet restore 
+    #   working-directory: './src/linq/tests/Assimalign.Extensions.Linq.SerializationTests'
+
+    # - name: Run Unit Tests
+    #   run: dotnet test --no-restore --verbosity normal
+    #   working-directory: './src/linq/tests/Assimalign.Extensions.Linq.SerializationTests'
+    
+    - name: Publish Nuget Package
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      run: dotnet nuget push "*.nupkg" -k ${{ secrets.NUGET_PUBLISHING_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      working-directory: './src/linq/src/Assimalign.Extensions.Linq.Serialization.Xml/bin/Release/'

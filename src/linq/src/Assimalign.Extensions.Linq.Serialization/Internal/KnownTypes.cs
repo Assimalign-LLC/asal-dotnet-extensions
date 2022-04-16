@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.Linq.Serialization.Internals;
+namespace Assimalign.Extensions.Linq.Serialization.Internal;
 
 internal static class KnownTypes
 {

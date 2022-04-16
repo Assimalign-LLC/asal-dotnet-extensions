@@ -3,7 +3,7 @@ using System;
 using System.Reflection;
 using System.Collections.Generic;
 
-namespace Assimalign.Extensions.Linq.Serialization.Internals;
+namespace Assimalign.Extensions.Linq.Serialization.Internal;
 
 internal class PropertyMemberTypeEnumerator : MemberTypeEnumerator
 {

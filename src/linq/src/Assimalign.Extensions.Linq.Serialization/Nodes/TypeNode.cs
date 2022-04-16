@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
-using Assimalign.Extensions.Linq.Serialization.Internals;
+using Assimalign.Extensions.Linq.Serialization.Internal;
 
 namespace Assimalign.Extensions.Linq.Serialization.Nodes;
 

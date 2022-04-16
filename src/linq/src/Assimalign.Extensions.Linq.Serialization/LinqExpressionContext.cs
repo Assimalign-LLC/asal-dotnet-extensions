@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace Assimalign.Extensions.Linq.Serialization;
 
-using Assimalign.Extensions.Linq.Serialization.Internals;
+using Assimalign.Extensions.Linq.Serialization.Internal;
 
 public class LinqExpressionContext : LinqExpressionContextBase
 {

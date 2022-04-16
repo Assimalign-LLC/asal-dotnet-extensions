@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using Assimalign.Extensions.Linq.Serialization.Extensions;
 
-namespace Assimalign.Extensions.Linq.Serialization.Internals;
+namespace Assimalign.Extensions.Linq.Serialization.Internal;
 
 internal class ExpressionCompressor
 {

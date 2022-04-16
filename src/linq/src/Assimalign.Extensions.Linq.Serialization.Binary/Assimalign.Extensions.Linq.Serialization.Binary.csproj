@@ -2,6 +2,11 @@
 
 	<PropertyGroup>
 		<RootNamespace>Assimalign.Extensions.Linq.Serialization</RootNamespace>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<Description>
+			This library offers the base abstraction for
+		</Description>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Assimalign.Extensions.Linq.Serialization\Assimalign.Extensions.Linq.Serialization.csproj" />

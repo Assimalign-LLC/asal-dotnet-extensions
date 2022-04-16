@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 namespace Assimalign.Extensions.Linq.Serialization;
 
 using Assimalign.Extensions.Linq.Serialization.Nodes;
-using Assimalign.Extensions.Linq.Serialization.Internals;
+using Assimalign.Extensions.Linq.Serialization.Internal;
 
 
 public abstract class LinqExpressionSerializer : ILinqExpressionSerializer

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Assimalign.Extensions.Linq.Serialization.Extensions;
 
-namespace Assimalign.Extensions.Linq.Serialization.Internals;
+namespace Assimalign.Extensions.Linq.Serialization.Internal;
 
 internal class MemberTypeEnumerator : IEnumerator<Type>
 {

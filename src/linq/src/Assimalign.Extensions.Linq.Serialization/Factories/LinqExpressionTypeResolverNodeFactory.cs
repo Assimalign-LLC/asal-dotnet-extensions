@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Assimalign.Extensions.Linq.Serialization.Internals;
+using Assimalign.Extensions.Linq.Serialization.Internal;
 using Assimalign.Extensions.Linq.Serialization.Nodes;
 
 namespace Assimalign.Extensions.Linq.Serialization.Factories

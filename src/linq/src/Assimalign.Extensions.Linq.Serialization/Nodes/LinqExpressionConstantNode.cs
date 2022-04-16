@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace Assimalign.Extensions.Linq.Serialization.Nodes;
 
 using Assimalign.Extensions.Linq.Serialization.Exceptions;
-using Assimalign.Extensions.Linq.Serialization.Internals;
+using Assimalign.Extensions.Linq.Serialization.Internal;
 
 [Serializable]
 [DataContract(Name = "C")]   
