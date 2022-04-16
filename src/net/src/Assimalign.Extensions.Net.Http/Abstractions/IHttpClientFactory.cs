@@ -1,10 +1,8 @@
-﻿
+﻿using System;
 using System.Net.Http;
 
 
 namespace Assimalign.Extensions.Net.Http;
-
-using Assimalign.Extensions.DependencyInjection;
 
 /// <summary>
 /// A factory abstraction for a component that can create <see cref="HttpClient"/> instances with custom

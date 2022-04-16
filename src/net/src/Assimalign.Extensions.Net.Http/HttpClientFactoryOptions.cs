@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading;
+using System.Collections.Generic;
 
 
 namespace Assimalign.Extensions.Net.Http;
@@ -9,24 +9,33 @@ namespace Assimalign.Extensions.Net.Http;
 /// <summary>
 /// An options class for configuring the default <see cref="IHttpClientFactory"/>.
 /// </summary>
-public class HttpClientFactoryOptions
+public sealed class HttpClientFactoryOptions
 {
     // Establishing a minimum lifetime helps us avoid some possible destructive cases.
     //
     // IMPORTANT: This is used in a resource string. Update the resource if this changes.
     internal static readonly TimeSpan MinimumHandlerLifetime = TimeSpan.FromSeconds(1);
 
-    private TimeSpan _handlerLifetime = TimeSpan.FromMinutes(2);
+    private TimeSpan httpMessageHandlerLifetime = TimeSpan.FromMinutes(2);
+
+    private readonly IList<Action<HttpClient>> httpClientActions;
+    private readonly IList<Action<HttpMessageHandlerBuilder>> httpMessageHandlerBuilderActions;
+
+    public HttpClientFactoryOptions()
+    {
+        this.httpClientActions = new List<Action<HttpClient>>();
+        this.httpMessageHandlerBuilderActions = new List<Action<HttpMessageHandlerBuilder>>();
+    }
 
     /// <summary>
     /// Gets a list of operations used to configure an <see cref="HttpMessageHandlerBuilder"/>.
     /// </summary>
-    public IList<Action<HttpMessageHandlerBuilder>> HttpMessageHandlerBuilderActions { get; } = new List<Action<HttpMessageHandlerBuilder>>();
+    public IEnumerable<Action<HttpMessageHandlerBuilder>> HttpMessageHandlerBuilderActions => this.httpMessageHandlerBuilderActions;
 
     /// <summary>
     /// Gets a list of operations used to configure an <see cref="HttpClient"/>.
     /// </summary>
-    public IList<Action<HttpClient>> HttpClientActions { get; } = new List<Action<HttpClient>>();
+    public IEnumerable<Action<HttpClient>> HttpClientActions => this.httpClientActions;
 
     /// <summary>
     /// Gets or sets the length of time that a <see cref="HttpMessageHandler"/> instance can be reused. Each named
@@ -54,7 +63,7 @@ public class HttpClientFactoryOptions
     /// </remarks>
     public TimeSpan HandlerLifetime
     {
-        get => _handlerLifetime;
+        get => httpMessageHandlerLifetime;
         set
         {
             if (value != Timeout.InfiniteTimeSpan && value < MinimumHandlerLifetime)
@@ -62,39 +71,19 @@ public class HttpClientFactoryOptions
                 throw new ArgumentException();// SR.HandlerLifetime_InvalidValue, nameof(value));
             }
 
-            _handlerLifetime = value;
+            httpMessageHandlerLifetime = value;
         }
     }
 
-    /// <summary>
-    /// The <see cref="Func{T, R}"/> which determines whether to redact the HTTP header value before logging.
-    /// </summary>
-    public Func<string, bool> ShouldRedactHeaderValue { get; set; } = (header) => false;
 
-    /// <summary>
-    /// <para>
-    /// Gets or sets a value that determines whether the <see cref="IHttpClientFactory"/> will
-    /// create a dependency injection scope when building an <see cref="HttpMessageHandler"/>.
-    /// If <c>false</c> (default), a scope will be created, otherwise a scope will not be created.
-    /// </para>
-    /// <para>
-    /// This option is provided for compatibility with existing applications. It is recommended
-    /// to use the default setting for new applications.
-    /// </para>
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// The <see cref="IHttpClientFactory"/> will (by default) create a dependency injection scope
-    /// each time it creates an <see cref="HttpMessageHandler"/>. The created scope has the same
-    /// lifetime as the message handler, and will be disposed when the message handler is disposed.
-    /// </para>
-    /// <para>
-    /// When operations that are part of <see cref="HttpMessageHandlerBuilderActions"/> are executed
-    /// they will be provided with the scoped <see cref="IServiceProvider"/> via
-    /// <see cref="HttpMessageHandlerBuilder.Services"/>. This includes retrieving a message handler
-    /// from dependency injection, such as one registered using
-    /// <see cref="HttpClientBuilderExtensions.AddHttpMessageHandler{THandler}(IHttpClientBuilder)"/>.
-    /// </para>
-    /// </remarks>
-    public bool SuppressHandlerScope { get; set; }
+    public HttpClientFactoryOptions AddHttpClientAction(Action<HttpClient> action)
+    {
+        this.httpClientActions.Add(action);
+        return this;
+    } 
+    public HttpClientFactoryOptions AddHttpHandlerBuilderAction(Action<HttpMessageHandlerBuilder> action)
+    {
+        this.httpMessageHandlerBuilderActions.Add(action);
+        return this;
+    }
 }

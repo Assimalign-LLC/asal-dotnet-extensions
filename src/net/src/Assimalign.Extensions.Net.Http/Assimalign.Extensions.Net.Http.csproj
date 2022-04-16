@@ -1,8 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
-	<ItemGroup>
-		<ProjectReference Include="..\..\..\di\src\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj" />
-		<ProjectReference Include="..\..\..\logging\src\Assimalign.Extensions.Logging\Assimalign.Extensions.Logging.csproj" />
-	</ItemGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
 		<None Include="..\..\..\..\.assimalign.logo.png">
 			<Pack>True</Pack>
