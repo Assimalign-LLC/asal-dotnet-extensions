@@ -1,9 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<PackageId>Assimalign.Extensions.Validation.Configurable.Xml</PackageId>
 		<RootNamespace>Assimalign.Extensions.Validation.Configurable</RootNamespace>
-		<AssemblyName>Assimalign.Extensions.Validation.Configurable.Xml</AssemblyName>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<Description>

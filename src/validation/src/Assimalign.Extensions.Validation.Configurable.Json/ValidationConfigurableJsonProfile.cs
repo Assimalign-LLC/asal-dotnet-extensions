@@ -18,14 +18,9 @@ public sealed class ValidationConfigurableJsonProfile<T> : IValidationProfile
     where T : class
 {
     private bool isConfigured;
+    private readonly ValidationItemStack validationItems = new();
     Type IValidationProfile.ValidationType => typeof(T);
-    IValidationItemStack IValidationProfile.ValidationItems
-    {
-        get
-        {
-            return new ValidationItemStack(this.ValidationItems.Cast<IValidationItem>().Concat(this.ValidationConditions.Cast<IValidationItem>()));
-        }
-    }
+    IValidationItemStack IValidationProfile.ValidationItems => this.validationItems;
 
     /// <summary>
     /// The default constructor for Validation Configurable JSON.
@@ -73,6 +68,7 @@ public sealed class ValidationConfigurableJsonProfile<T> : IValidationProfile
         }
         try
         {
+            
             foreach (var validationCondition in this.ValidationConditions)
             {
                 var condition = validationCondition.GetCondition();
@@ -80,12 +76,16 @@ public sealed class ValidationConfigurableJsonProfile<T> : IValidationProfile
                 foreach (var validationItem in validationCondition.ValidationItems)
                 {
                     validationItem.Configure(condition, this.ValidationMode);
+
+                    descriptor.RuleFor(validationItem);
                 }
             }
 
             foreach (var validationItem in this.ValidationItems)
             {
                 validationItem.Configure(this.ValidationMode);
+                
+                descriptor.RuleFor(validationItem);
             }
 
             isConfigured = true; // Let's set this so some idiot doesn't try to call this more than once

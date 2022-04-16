@@ -1,11 +1,11 @@
 ﻿using Xunit;
 using System;
-using Assimalign.ComponentModel.Validation;
-using Assimalign.ComponentModel.Validation.Configurable;
+using Assimalign.Extensions.Validation;
+using Assimalign.Extensions.Validation.Configurable;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Assimalign.ComponentModel.Validation.Configurable.JsonTests
+namespace Assimalign.Extensions.Validation.Configurable.JsonTests
 {
     public class Class1
     {

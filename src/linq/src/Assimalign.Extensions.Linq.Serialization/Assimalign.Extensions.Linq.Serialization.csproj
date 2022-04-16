@@ -6,6 +6,8 @@
 		<Description>
 			This library rpresenting the abstraction for linq expression serialization.
 		</Description>
+		<PackageIcon>.assimalign.logo.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
     <ItemGroup>

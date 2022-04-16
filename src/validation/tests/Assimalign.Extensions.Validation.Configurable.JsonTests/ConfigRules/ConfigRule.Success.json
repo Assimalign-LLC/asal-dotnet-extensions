@@ -1,5 +1,5 @@
 {
-	"$schema":  "../../../assets/schemas/validation/configurable.validation.schema.json",
+	"$schema": "C:\\source\\repos\\assimalign\\asal.1.0\\github\\asal-dotnet-extensions\\src\\validation\\schemas\\v1.0\\validation.configurable.json",
 	"$description": "",
 	"$validationMode": "cascade",
 	"$validationItems": [
@@ -8,6 +8,7 @@
 			"$itemType": "inline",
 			"$itemRules": [
 				{
+					"$sort": 1,
 					"$rule": "GreaterThan",
 					"$value": -26
 				},

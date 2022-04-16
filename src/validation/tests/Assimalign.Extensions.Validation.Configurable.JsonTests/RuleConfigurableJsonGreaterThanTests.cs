@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Assimalign.ComponentModel.Validation.Configurable.JsonTests;
+namespace Assimalign.Extensions.Validation.Configurable.JsonTests;
 
-using Assimalign.ComponentModel.Validation;
-using Assimalign.ComponentModel.Validation.Configurable;
+using Assimalign.Extensions.Validation;
+using Assimalign.Extensions.Validation.Configurable;
 
 
 
@@ -25,6 +25,7 @@ public class RuleConfigurableJsonGreaterThanTests : RuleConfigurableJsonBaseTest
 
         success = ValidationConfigurableBuilder.Create()
            .AddJsonSource<TestObject>(configSuccess)
+           .
            .Build()
            .ToValidator();
 

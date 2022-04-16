@@ -1,13 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<PackageId>Assimalign.Extensions.Validation.Configurable.Json</PackageId>
 		<RootNamespace>Assimalign.Extensions.Validation.Configurable</RootNamespace>
-		<AssemblyName>Assimalign.Extensions.Validation.Configurable.Json</AssemblyName>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<Description>
-
+			This library implements a default 
 		</Description>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageIcon>.assimalign.logo.png</PackageIcon>

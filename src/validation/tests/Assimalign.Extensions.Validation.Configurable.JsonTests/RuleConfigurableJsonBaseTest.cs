@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assimalign.ComponentModel.Validation.Configurable.JsonTests;
+namespace Assimalign.Extensions.Validation.Configurable.JsonTests;
 
 
 public abstract class RuleConfigurableJsonBaseTest

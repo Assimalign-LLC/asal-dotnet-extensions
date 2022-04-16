@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<PackageTags>validation;fluent</PackageTags>
-		<PackageId>Assimalign.Extensions.Validation</PackageId>
-		<AssemblyName>Assimalign.Extensions.Validation</AssemblyName>
+		<PackageTags>validation;fluent validation;fluent</PackageTags>
 		<RootNamespace>Assimalign.Extensions.Validation</RootNamespace>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>

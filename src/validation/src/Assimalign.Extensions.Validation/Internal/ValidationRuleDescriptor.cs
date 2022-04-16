@@ -7,16 +7,16 @@ namespace Assimalign.Extensions.Validation.Internal;
 
 using Assimalign.Extensions.Validation.Internal.Exceptions;
 
-//internal sealed class ValidationRuleDescriptor : IValidationRuleDescriptor
-//{
-//    public IValidationItemStack ValidationItems => throw new NotImplementedException();
+internal sealed class ValidationRuleDescriptor : IValidationRuleDescriptor
+{
+    public IValidationItemStack ValidationItems { get; set; }
 
-//    public IValidationRuleDescriptor RuleFor(IValidationItem item)
-//    {
-//        item.ItemRuleStack.Push
-//        throw new NotImplementedException();
-//    }
-//}
+    public IValidationRuleDescriptor RuleFor(IValidationItem item)
+    {
+        this.ValidationItems.Push(item);
+        return this;
+    }
+}
 
 internal sealed class ValidationRuleDescriptor<T> : IValidationRuleDescriptor<T>
 {

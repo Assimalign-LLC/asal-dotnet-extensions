@@ -31,7 +31,7 @@ public sealed class ValidatorFactory : IValidatorFactory
         }
         else
         {
-            throw new Exception();
+            throw new ArgumentException();
         }
     }
 

@@ -1,15 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<PackageTags>validation;configurable</PackageTags>
-		<PackageId>Assimalign.Extensions.Validation.Configurable</PackageId>
-		<AssemblyName>Assimalign.Extensions.Validation.Configurable</AssemblyName>
+		<PackageTags>validation;configurable;configurable validation</PackageTags>
 		<RootNamespace>Assimalign.Extensions.Validation.Configurable</RootNamespace>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<Description>
-			A library 
+			This library is an abstraction for implementing a configurable validator which extends off the Assimalign.Extensions.Validation 
+			library.
 		</Description>
-
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageIcon>.assimalign.logo.png</PackageIcon>
 	</PropertyGroup>

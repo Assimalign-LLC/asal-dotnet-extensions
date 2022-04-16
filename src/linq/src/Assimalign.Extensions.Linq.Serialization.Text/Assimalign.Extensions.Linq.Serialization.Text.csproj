@@ -5,8 +5,10 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<Description>
-			This library offers the base abstraction for
+			This text implmentation for linq serialization.
 		</Description>
+		<PackageIcon>.assimalign.logo.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Assimalign.Extensions.Linq.Serialization\Assimalign.Extensions.Linq.Serialization.csproj" />

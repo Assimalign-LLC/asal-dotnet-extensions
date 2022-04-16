@@ -1,0 +1,14 @@
+{
+    "$schema": "https://json.schemastore.org/schema-catalog.json",
+    "version": 1.0,
+    "schemas": [
+        {
+            "name": "Assimalign Extensions Validation Configurable JSON Schema",
+            "description": "Schema validation for the ",
+            "url": "https://asalschemastore.blob.core.windows.net/json/validation/v1.0/validation.configurable.json",
+            "versions": {
+                "1.0": "https://asalschemastore.blob.core.windows.net/json/validation/v1.0/validation.configurable.json"
+            }
+        }
+    ]
+}

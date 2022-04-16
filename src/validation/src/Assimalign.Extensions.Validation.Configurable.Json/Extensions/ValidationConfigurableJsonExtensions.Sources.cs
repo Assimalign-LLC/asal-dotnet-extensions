@@ -7,11 +7,19 @@ namespace Assimalign.Extensions.Validation.Configurable;
 using Assimalign.Extensions.Validation;
 using Assimalign.Extensions.Validation.Configurable.Serialization;
 
+/// <summary>
+/// A set of extensions for converting <see cref="IValidationConfigurableBuilder"/> into 
+/// a <see cref="IValidator"/>.
+/// </summary>
 public static class ValidationConfigurableJsonExtensions
 {
     /// <summary>
     /// 
     /// </summary>
+    /// <typeparam name="T">
+    /// Represents the type in which the JSOM rules that are being 
+    /// DeSerialized from <paramref name="json"/> will be applied to.
+    /// </typeparam>
     /// <param name="builder"></param>
     /// <param name="json"></param>
     /// <param name="options"></param>
@@ -28,10 +36,14 @@ public static class ValidationConfigurableJsonExtensions
             return JsonSerializer.Deserialize<ValidationConfigurableJsonProfile<T>>(json, options);
         }));
     }
-
+  
     /// <summary>
     /// 
     /// </summary>
+    /// <typeparam name="T">
+    /// Represents the type in which the JSOM rules that are being 
+    /// DeSerialized from <paramref name="stream"/> will be applied to.
+    /// </typeparam>
     /// <param name="builder"></param>
     /// <param name="stream"></param>
     /// <param name="options"></param>

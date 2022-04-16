@@ -2,13 +2,10 @@
 
 	<PropertyGroup>
 		<!--Package Build Configurations-->
-		<Version>1.0.0-pre.0.1</Version>
-		<PackageId>Assimalign.ComponentModel.Mapping</PackageId>
-		<AssemblyName>Assimalign.ComponentModel.Mapping</AssemblyName>
 		<RootNamespace>Assimalign.ComponentModel.Mapping</RootNamespace>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<PackageTags>Validation</PackageTags>
+		<PackageTags>Mapping</PackageTags>
 		<!--Company Branding Information-->
 		<PackageIcon>.assimalign.logo.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -17,14 +14,6 @@
 			conditions.
 		</Description>
 	</PropertyGroup>
-
-
-	<ItemGroup>
-		<None Include="..\..\..\..\.assimalign.logo.png">
-			<Pack>True</Pack>
-			<PackagePath></PackagePath>
-		</None>
-	</ItemGroup>
 
 	<ItemGroup>
 	  <Compile Update="Properties\Resources.Designer.cs">
@@ -41,10 +30,15 @@
 	  </EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup>
+		<None Include="..\..\..\..\.assimalign.logo.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
 		<None Include="README.md">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
 	</ItemGroup>
-
 </Project>

@@ -1,11 +1,12 @@
 {
-	"$schema": "../../../assets/schemas/validation/configurable.validation.schema.json",
+
+	"$schema": "https://schemas.assimalign.com/json/validation/v1.0/validation.configurable.json",
 	"$description": "",
 	"$validationMode": "cascade",
 	"$validationItems": [
 		{
 			"$itemMember": "UIntProp",
-			"$itemType": "inline",
+			"$itemType": "",
 			"$itemRules": [
 				{
 					"$rule": "GreaterThan",
@@ -13,9 +14,14 @@
 						"$code": "uint.gt.failure",
 						"$message": "Test error msg"
 					},
+					
 					"$value": 5
 				}
 			]
+		},
+		{
+			"$itemMember": "",
+			"$itemType": "inline"
 		},
 		{
 			"$itemMember": "UShortProp",
@@ -39,9 +45,11 @@
 					"$rule": "GreaterThan",
 					"$error": {
 						"$code": "ulong.gt.failure",
-						"$message": "Test error msg"
+						"$message": "Test error msg",
+						"$source": ""
 					},
-					"$value": 500000000
+					"$value": 500000000,
+					"$valueType": ""
 				}
 			]
 		},
@@ -86,7 +94,7 @@
 		},
 		{
 			"$itemMember": "ShortProp",
-			"$itemType": "inline",
+			"$itemType": "Inline",
 			"$itemRules": [
 				{
 					"$rule": "GreaterThan",

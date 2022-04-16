@@ -78,6 +78,12 @@ public sealed class ValidationOptions
         {
             throw new InvalidOperationException($"A Validation Profile for type: {profile.GetType().Name} has already been registered.");
         }
+        var descriptor = new ValidationRuleDescriptor()
+        {
+            ValidationItems = profile.ValidationItems
+        };
+
+        profile.Configure(descriptor);
 
         this.profiles[index] = profile;
 

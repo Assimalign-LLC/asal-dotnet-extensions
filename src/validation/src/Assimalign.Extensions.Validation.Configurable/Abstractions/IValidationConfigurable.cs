@@ -9,7 +9,7 @@ namespace Assimalign.Extensions.Validation.Configurable;
 public interface IValidationConfigurable
 {
     /// <summary>
-    /// 
+    /// A collection of configurable provider which are responsible for 
     /// </summary>
     IEnumerable<IValidationConfigurableProvider> Providers { get; }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 
 namespace Assimalign.Extensions.Validation;
@@ -10,11 +11,11 @@ namespace Assimalign.Extensions.Validation;
 /// </summary>
 public sealed class ValidatorFactoryBuilder
 {
-    internal readonly IDictionary<string, IValidator> validators;
+    internal readonly ConcurrentDictionary<string, IValidator> validators;
 
     internal ValidatorFactoryBuilder()
     {
-        this.validators = new Dictionary<string, IValidator>();
+        this.validators = new ConcurrentDictionary<string, IValidator>();
     }
 
     /// <summary>
@@ -30,9 +31,14 @@ public sealed class ValidatorFactoryBuilder
     /// <returns></returns>
     public ValidatorFactoryBuilder AddValidator(string validatorName, Action<ValidationOptions> configure)
     {
+        if (string.IsNullOrEmpty(validatorName))
+        {
+            throw new ArgumentNullException(nameof(validatorName));
+        }
+
         var validator = Validator.Create(configure);
 
-        this.validators.Add(validatorName.ToLower(), validator);
+        this.validators.GetOrAdd(validatorName, validator);
 
         return this;
     }

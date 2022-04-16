@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Assimalign.ComponentModel.Validation.Configurable.JsonTests;
+namespace Assimalign.Extensions.Validation.Configurable.JsonTests;
 
 public class SequentialGuid
 {

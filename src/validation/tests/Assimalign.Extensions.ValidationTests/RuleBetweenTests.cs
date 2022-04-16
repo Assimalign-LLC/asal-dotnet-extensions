@@ -50,20 +50,15 @@ public class RuleBetweenTests : RuleBaseTest
     [Fact]
     public override void DateOnlyFailureTest()
     {
-    #if NET6_0_OR_GREATER
-
         var context = this.RunBetweenTest(new DateOnly(2022, 1, 1), new DateOnly(2022, 1, 1), new DateOnly(2022, 1, 3));
         Assert.Single(context.Errors);
-    #endif
     }
 
     [Fact]
     public override void DateOnlySuccessTest()
     {
-    #if NET6_0_OR_GREATER
         var context = this.RunBetweenTest(new DateOnly(2022, 1, 1), new DateOnly(2021, 1, 1), new DateOnly(2022, 1, 3));
         Assert.Empty(context.Errors);
-    #endif
     }
 
     [Fact]
