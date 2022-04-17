@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Assimalign.ComponentModel.Mapping.Internal;
+namespace Assimalign.Extensions.Mapping.Internal;
 
 internal sealed class MapperProfileDefault<TTarget, TSource> : MapperProfile<TTarget, TSource>
 {

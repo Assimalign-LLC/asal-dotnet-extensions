@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 
-namespace Assimalign.ComponentModel.Mapping.Internal;
+namespace Assimalign.Extensions.Mapping.Internal;
 
 public sealed class MapperActionStack : IMapperActionStack
 {

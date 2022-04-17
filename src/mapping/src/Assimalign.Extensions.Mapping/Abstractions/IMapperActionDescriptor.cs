@@ -2,12 +2,12 @@
 using System.Linq.Expressions;
 using System.Collections.Generic;
 
-namespace Assimalign.ComponentModel.Mapping;
+namespace Assimalign.Extensions.Mapping;
 
 /// <summary>
 /// The <see cref="IMapperActionDescriptor"/> represents a builder interface for pushing 
-/// <see cref="IMapperAction"/>'s into the <see cref="IMapperActionStack"/> which lives on 
-/// and <see cref="IMapperProfile"/>. 
+/// <see cref="IMapperAction"/>'s into the <see cref="IMapperActionStack"/> which is referenced from the 
+/// <see cref="IMapperProfile"/>. 
 /// </summary>
 public interface IMapperActionDescriptor
 {

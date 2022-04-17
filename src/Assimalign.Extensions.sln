@@ -78,7 +78,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		..\.github\workflows\assimalign.extensions.mapping.yml = ..\.github\workflows\assimalign.extensions.mapping.yml
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.ComponentModel.Mapping", "mapping\src\Assimalign.Extensions.Mapping\Assimalign.ComponentModel.Mapping.csproj", "{9E9F99FD-F762-4D00-8B7D-0B185DE96DF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Mapping", "mapping\src\Assimalign.Extensions.Mapping\Assimalign.Extensions.Mapping.csproj", "{9E9F99FD-F762-4D00-8B7D-0B185DE96DF8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{2275CB51-E377-48C9-9561-6720CA1DC797}"
 EndProject

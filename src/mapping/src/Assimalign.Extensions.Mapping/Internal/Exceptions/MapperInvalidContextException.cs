@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.ComponentModel.Mapping.Internal.Exceptions;
+namespace Assimalign.Extensions.Mapping.Internal.Exceptions;
 
 internal sealed class MapperInvalidContextException : MapperException
 {

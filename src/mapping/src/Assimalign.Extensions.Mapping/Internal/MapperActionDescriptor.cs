@@ -6,9 +6,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.ComponentModel.Mapping.Internal;
+namespace Assimalign.Extensions.Mapping.Internal;
 
-using Assimalign.ComponentModel.Mapping.Internal.Exceptions;
+using Assimalign.Extensions.Mapping.Internal.Exceptions;
+
+
+internal class MapperActionDescriptor : IMapperActionDescriptor
+{
+    public IMapperActionStack MapActions { get; init; }
+
+    public IMapperActionDescriptor MapAction(IMapperAction action)
+    {
+        throw new NotImplementedException();
+    }
+}
 
 
 internal class MapperActionDescriptor<TTarget, TSource> : IMapperActionDescriptor<TTarget, TSource>
@@ -35,7 +46,7 @@ internal class MapperActionDescriptor<TTarget, TSource> : IMapperActionDescripto
 
     public IMapperActionDescriptor<TTarget, TSource> MapMember<TTargetMember, TSourceMember>(Expression<Func<TTarget, TTargetMember>> target, Expression<Func<TSource, TSourceMember>> source)
     {
-        var mapperAction = new MapperAction<TTarget, TTargetMember, TSource, TSourceMember>(target, source);
+        var mapperAction = new MapperActionMember<TTarget, TTargetMember, TSource, TSourceMember>(target, source);
 
         // Let's ensure we are not adding an already mapped action 
         if (MapActions.Contains(mapperAction))

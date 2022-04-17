@@ -1,10 +1,10 @@
-using Assimalign.ComponentModel.Mapping;
+using Assimalign.Extensions.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Xunit;
 
-namespace Assimalign.ComponentModel.MappingTests;
+namespace Assimalign.Extensions.MappingTests;
 
 public partial class MapperTests
 {
@@ -17,6 +17,8 @@ public partial class MapperTests
         public DateTime Birthdate { get; set; }
         public IDictionary<string, Person1> Following { get; set; } // id:  person
         public Person1Address PrimaryAddress { get; set; }
+
+        public IEnumerable<Person1Address> OtherAddresses { get; set; }
     }
 
     public class Person1Address
@@ -41,6 +43,8 @@ public partial class MapperTests
         public DateTime? Birthdate { get; set; }
         public Person2Address PrimaryAddress { get; set; }
         public IEnumerable<Person2Following> Following { get; set; }
+
+        public IEnumerable<Person2Address> OtherAddresses { get; set; }
     }
 
     public class Person2Address
@@ -73,10 +77,7 @@ public partial class MapperTests
     [Fact]
     public void MappingTest()
     {
-        var mapper = Mapper.Create(configure =>
-        {
-            configure.AddProfile(new MapperProfileTest());
-        });
+        
 
        
 

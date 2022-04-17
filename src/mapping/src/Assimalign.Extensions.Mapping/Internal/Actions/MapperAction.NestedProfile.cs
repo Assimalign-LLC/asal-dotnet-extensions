@@ -4,14 +4,14 @@ using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Assimalign.ComponentModel.Mapping.Internal;
+namespace Assimalign.Extensions.Mapping.Internal;
 
-using Assimalign.ComponentModel.Mapping.Properties;
-using Assimalign.ComponentModel.Mapping.Internal.Exceptions;
+using Assimalign.Extensions.Mapping.Properties;
+using Assimalign.Extensions.Mapping.Internal.Exceptions;
 
 internal sealed class MapperActionNestedProfile<TTarget, TTargetMember, TSource, TSourceMember> : IMapperAction
-    where TTargetMember : class
-    where TSourceMember : class
+    where TTargetMember : class, new()
+    where TSourceMember : class, new()
 {
 
     public MapperActionNestedProfile(Expression<Func<TTarget, TTargetMember>> target, Expression<Func<TSource, TSourceMember>> source)
@@ -48,11 +48,13 @@ internal sealed class MapperActionNestedProfile<TTarget, TTargetMember, TSource,
     {
         if (context.Source is not TSource source)
         {
-            throw new MapperInvalidContextException(context.Source.GetType(), context.Target.GetType(), typeof(TSource), typeof(TTarget));
+            return;
+            //throw new MapperInvalidContextException(context.Source.GetType(), context.Target.GetType(), typeof(TSource), typeof(TTarget));
         }
         if (context.Target is not TTarget target)
         {
-            throw new MapperInvalidContextException(context.Source.GetType(), context.Target.GetType(), typeof(TSource), typeof(TTarget));
+            return;
+            //throw new MapperInvalidContextException(context.Source.GetType(), context.Target.GetType(), typeof(TSource), typeof(TTarget));
         }
 
         var targetValue = GetTargetValue(target);
@@ -60,24 +62,24 @@ internal sealed class MapperActionNestedProfile<TTarget, TTargetMember, TSource,
 
         if (context is MapperContext ictx)
         {
-            if (ictx.MapOptions.IgnoreHandling == MapperIgnoreHandling.Never && sourceValue is null)
-            {
-                SetValue(target, null);
-            }
-            if (ictx.MapOptions.IgnoreHandling == MapperIgnoreHandling.Always && sourceValue is not null)
-            {
-                var ncontext = new MapperContext(targetValue, sourceValue)
-                {
-                    MapOptions = ictx.MapOptions
-                };
+            //if (context.IgnoreHandling == MapperIgnoreHandling.Never && sourceValue is null)
+            //{
+            //    SetValue(target, null);
+            //}
+            //if (context.IgnoreHandling == MapperIgnoreHandling.Always && sourceValue is not null)
+            //{
+            //    var ncontext = new MapperContext(targetValue, sourceValue)
+            //    {
+            //        MapOptions = ictx.MapOptions
+            //    };
 
-                foreach (var action in Profile.MapActions)
-                {
-                    action.Invoke(ncontext);
-                }
+            //    foreach (var action in Profile.MapActions)
+            //    {
+            //        action.Invoke(ncontext);
+            //    }
 
-                SetValue(target, targetValue);
-            }
+            //    SetValue(target, targetValue);
+            //}
         }
     }
 
@@ -96,12 +98,12 @@ internal sealed class MapperActionNestedProfile<TTarget, TTargetMember, TSource,
     {
         try
         {
-            return TargetGetter.Invoke(target) ?? Activator.CreateInstance<TTargetMember>();
+            return TargetGetter.Invoke(target) ?? new TTargetMember();
         }
         // Let's catch the exception for Null References only. This occurs when the Source Member Expression is chained and possibly null.
         catch (Exception exception) when (exception is NullReferenceException)
         {
-            return default(TTargetMember);
+            return new TTargetMember();
         }
     }
     private void SetValue(object targetInstance, object targetValue)

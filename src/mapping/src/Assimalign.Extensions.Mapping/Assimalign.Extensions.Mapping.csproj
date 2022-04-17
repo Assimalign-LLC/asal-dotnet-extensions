@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<!--Package Build Configurations-->
-		<RootNamespace>Assimalign.ComponentModel.Mapping</RootNamespace>
+		<RootNamespace>Assimalign.Extensions.Mapping</RootNamespace>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<PackageTags>Mapping</PackageTags>

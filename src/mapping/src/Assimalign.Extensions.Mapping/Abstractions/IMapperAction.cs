@@ -1,4 +1,4 @@
-﻿namespace Assimalign.ComponentModel.Mapping;
+﻿namespace Assimalign.Extensions.Mapping;
 
 /// <summary>
 /// Represents a single mapping 

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Assimalign.ComponentModel.Mapping;
+namespace Assimalign.Extensions.Mapping.Internal;
 
 
 internal static class MapperMemoise<TIn, TOut>
@@ -14,7 +12,7 @@ internal static class MapperMemoise<TIn, TOut>
 
     static MapperMemoise()
     {
-        cache ??= new Dictionary<TIn, TOut>();
+        cache ??= new ConcurrentDictionary<TIn, TOut>();
     }
 
     /// <summary>
@@ -27,7 +25,7 @@ internal static class MapperMemoise<TIn, TOut>
     {
         return input => cache.TryGetValue(input, out var results) ?
             results :
-            cache[input] = method(input);
+            cache[input] = method.Invoke(input);
     }
 }
 

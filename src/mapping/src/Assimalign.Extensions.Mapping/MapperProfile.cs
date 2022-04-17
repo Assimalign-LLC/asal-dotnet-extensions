@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Assimalign.ComponentModel.Mapping;
+namespace Assimalign.Extensions.Mapping;
 
 
-using Assimalign.ComponentModel.Mapping.Internal;
+using Assimalign.Extensions.Mapping.Internal;
 
 /// <summary>
 /// 
@@ -29,15 +29,11 @@ public abstract class MapperProfile<TTarget, TSource> : IMapperProfile<TTarget, 
     public IMapperActionStack MapActions => this.mapActions;
 
     /// <inheritdoc cref="IMapperProfile.Configure(IMapperActionDescriptor)"/>
-    public void Configure(IMapperActionDescriptor descriptor)
+    public virtual void Configure(IMapperActionDescriptor descriptor)
     {
-        if (descriptor is MapperActionDescriptor<TTarget, TSource> ds1)
+        if (descriptor is IMapperActionDescriptor<TTarget, TSource>)
         {
-            this.Configure(ds1);
-        }
-        else if (descriptor is IMapperActionDescriptor<TTarget, TSource> ds2)
-        {
-            this.Configure(ds2);
+            this.Configure((IMapperActionDescriptor<TTarget, TSource>)descriptor);
         }
         else
         {

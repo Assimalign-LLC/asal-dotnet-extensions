@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace Assimalign.ComponentModel.Mapping.Internal.Exceptions;
+namespace Assimalign.Extensions.Mapping.Internal.Exceptions;
 
 internal sealed class MapperInvalidMappingException : MapperException
 {

@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.ComponentModel.Mapping;
+namespace Assimalign.Extensions.Mapping;
 
-using Assimalign.ComponentModel.Mapping.Internal.Exceptions;
+using Assimalign.Extensions.Mapping.Internal.Exceptions;
 
 /// <summary>
 /// 
@@ -15,19 +16,20 @@ using Assimalign.ComponentModel.Mapping.Internal.Exceptions;
 public sealed class Mapper : IMapper
 {
     private readonly MapperOptions options;
-
+    private readonly IList<IMapperProfile> profiles;
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="options"></param>
-    public Mapper(MapperOptions options)
+    public Mapper(IEnumerable<IMapperProfile> profiles, MapperOptions options)
     {
+        this.profiles = profiles.ToList();
         this.options = options;
     }
 
     /// <inheritdoc cref="IMapper.Profiles"/>
-    public IEnumerable<IMapperProfile> Profiles => this.options.Profiles;
+    public IEnumerable<IMapperProfile> Profiles => this.profiles;
 
     public TTarget Map<TTarget, TSource>(TSource source)
         where TTarget : new()
@@ -58,6 +60,7 @@ public sealed class Mapper : IMapper
         {
             throw new ArgumentNullException("source");
         }
+
         if (this.Map(target, source, typeof(TTarget), typeof(TSource)) is TTarget instance)
         {
             return instance;
@@ -97,10 +100,12 @@ public sealed class Mapper : IMapper
 
         var context = new MapperContext(target, source)
         {
-            MapOptions = this.options
+            Profiles = this.Profiles,
+            IgnoreHandling = options.IgnoreHandling,
+            CollectionHandling = options.CollectionHandling
         };
 
-        foreach (var profile in options.Profiles)
+        foreach (var profile in profiles)
         {
             if (profile.SourceType == sourceType && profile.TargetType == targetType)
             {
@@ -116,17 +121,26 @@ public sealed class Mapper : IMapper
         return target;
     }
 
+
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="configure"></param>
+    /// <param name="profiles"></param>
     /// <returns></returns>
-    public static IMapper Create(Action<MapperOptions> configure)
+    public static IMapper Create(IEnumerable<IMapperProfile> profiles)
     {
-        var options = new MapperOptions();
+        return new Mapper(profiles, new MapperOptions());
+    }
+
+    public static IMapper Create(IEnumerable<IMapperProfile> profiles, Action<MapperOptions> configure)
+    {
+        var options = new MapperOptions()
+        {
+            Profiles = profiles.ToList()
+        };
 
         configure.Invoke(options);
 
-        return new Mapper(options);
+        return new Mapper(profiles, options);
     }
 }

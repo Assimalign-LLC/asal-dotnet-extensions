@@ -1,4 +1,4 @@
-﻿namespace Assimalign.ComponentModel.Mapping;
+﻿namespace Assimalign.Extensions.Mapping;
 
 /// <summary>
 /// Determines the default behavior for handling Default and Null values when mapping.

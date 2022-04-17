@@ -1,4 +1,6 @@
-﻿namespace Assimalign.ComponentModel.Mapping;
+﻿using System.Collections.Generic;
+
+namespace Assimalign.Extensions.Mapping;
 
 /// <summary>
 /// 
@@ -13,16 +15,19 @@ public sealed class MapperContext : IMapperContext
 		this.target = target;
 		this.source = source;
 	}
-	/// <summary>
-	/// 
-	/// </summary>
+
+	/// <inheritdoc cref="IMapperContext.Source"/>
 	public object Target => this.target;
-	/// <summary>
-	/// 
-	/// </summary>
+
+	/// <inheritdoc cref="IMapperContext.Source"/>
 	public object Source => this.source;
-	/// <summary>
-	/// 
-	/// </summary>
-    public MapperOptions MapOptions { get; init; }
+
+	/// <inheritdoc cref="IMapperContext.CollectionHandling"/>
+	public MapperIgnoreHandling IgnoreHandling { get; init; }
+
+	/// <inheritdoc cref="IMapperContext.CollectionHandling"/>
+    public MapperCollectionHandling CollectionHandling { get; init; }
+
+	/// <inheritdoc cref="IMapperContext.Profiles"/>
+	public IEnumerable<IMapperProfile> Profiles { get; init; }
 }

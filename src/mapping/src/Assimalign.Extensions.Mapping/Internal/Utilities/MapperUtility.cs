@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Assimalign.ComponentModel.Mapping;
+namespace Assimalign.Extensions.Mapping;
 
-using Assimalign.ComponentModel.Mapping.Internal;
+using Assimalign.Extensions.Mapping.Internal;
 
 internal static class MapperUtility
 {

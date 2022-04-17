@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Assimalign.ComponentModel.Mapping;
+namespace Assimalign.Extensions.Mapping;
 
 ///<summary>
 ///
@@ -11,15 +11,24 @@ public interface IMapperFactory
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="strategyName"></param>
+    /// <param name="mapperName"></param>
     /// <param name="builder"></param>
     /// <returns></returns>
-    void Configure(string strategyName, Action<IMapperFactoryBuilder> builder);
+    IMapper Create(string mapperName, IMapperProfileBuilder builder);
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="strategyName"></param>
+    /// <param name="mapperName"></param>
+    /// <param name="builder"></param>
     /// <returns></returns>
-    IMapper Create(string strategyName);
+    IMapper Create(string mapperName, Action<IMapperProfileBuilder> configure);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="mapperName"></param>
+    /// <param name="profiles"></param>
+    /// <returns></returns>
+    IMapper Create(string mapperName, IEnumerable<IMapperProfile> profiles);
 }
