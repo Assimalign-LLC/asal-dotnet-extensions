@@ -18,6 +18,8 @@ public sealed class Mapper : IMapper
     private readonly MapperOptions options;
     private readonly IList<IMapperProfile> profiles;
 
+    private static ConcurrentBag<int> references = new();
+
     /// <summary>
     /// 
     /// </summary>
@@ -125,11 +127,15 @@ public sealed class Mapper : IMapper
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="profiles"></param>
+    /// <param name="configure"></param>
     /// <returns></returns>
-    public static IMapper Create(IEnumerable<IMapperProfile> profiles)
+    public static IMapper Create(Action<MapperBuilder> configure)
     {
-        return new Mapper(profiles, new MapperOptions());
+        var builder = new MapperBuilder();
+
+        configure.Invoke(builder);
+
+        return new Mapper(builder.Profiles, builder.Options);
     }
 
     public static IMapper Create(IEnumerable<IMapperProfile> profiles, Action<MapperOptions> configure)

@@ -20,15 +20,15 @@ internal sealed class MapperActionMember<TTarget, TTargetMember, TSource, TSourc
         {
             throw new ArgumentException($"The target expression body: '{target}' must be a MemberExpression.");
         }
+        // Ensure that the member is of type TTarget (Target Members cannot be nested.)
+        if (memberExpression.Member.DeclaringType != typeof(TTarget))
+        {
+            throw new ArgumentException(string.Format(Resources.MapperExceptionInvalidChaining, target, typeof(TTarget).Name));
+        }
         // Check if the source type can be assigned to the target type, if not throw an exception
         if (!typeof(TSourceMember).IsAssignableTo(typeof(TTargetMember)))
         {
             throw new InvalidCastException($"The source expression '{source}' cannot be assigned to the target expression '{target}'.");
-        }
-        // Ensure that the member is of type TTarget (Target Members cannot be nested.)
-        if (memberExpression.Member.DeclaringType != typeof(TTarget))
-        {
-            throw new Exception(string.Format(Resources.MapperExceptionInvalidChaining, target, typeof(TTarget).Name));
         }
 
         SourceExpression = source;

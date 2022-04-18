@@ -10,7 +10,7 @@ public static partial class MapperExtensions
 {
 
     /// <summary>
-    /// 
+    /// Sets the target maps by passing in multiple source types at once.
     /// </summary>
     /// <typeparam name="TTarget"></typeparam>
     /// <param name="mapper"></param>

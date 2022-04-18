@@ -24,7 +24,7 @@ public sealed class MapperFactory : IMapperFactory
 
     public IMapper Create(string mapperName, IMapperProfileBuilder builder)
     {
-        return mappers.GetOrAdd(mapperName, Mapper.Create(builder.Build()));
+        return mappers.GetOrAdd(mapperName, new Mapper(builder.Build(), new MapperOptions()));
     }
 
     public IMapper Create(string mapperName, IMapperProfileBuilder builder, Action<MapperOptions> configure)
@@ -47,7 +47,7 @@ public sealed class MapperFactory : IMapperFactory
 
             configure.Invoke(builder);
 
-            return Mapper.Create(builder.Build());
+            return new Mapper(builder.Build(), new MapperOptions());
         });
     }
 
@@ -66,6 +66,6 @@ public sealed class MapperFactory : IMapperFactory
 
     public IMapper Create(string mapperName, IEnumerable<IMapperProfile> profiles)
     {
-        return mappers.GetOrAdd(mapperName, Mapper.Create(profiles));
+        return mappers.GetOrAdd(mapperName, new Mapper(profiles, new MapperOptions()));
     }
 }

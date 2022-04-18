@@ -49,11 +49,14 @@ public class PersonProfile2 : MapperProfile<Person, Person2>
 
 public static void Main()
 {
-    var mapper = Mapper.Create(configure=>
+    var mapper = Mapper.Create(builder =>
     {
-        configure
-            .AddProfile(new PersonProfile1())
-            .AddProfile(new PersonProfile2());
+        builder.AddOptions(configure =>
+        {
+            
+        });
+        builder.AddProfile(new PersonProfile1());
+        builder.AddProfile(new PersonProfile2());
     });
 
     var p1 = new Person1() { FirstName = "John", LastName = "Doe" };

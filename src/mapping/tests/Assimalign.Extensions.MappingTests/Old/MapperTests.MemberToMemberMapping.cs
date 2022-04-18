@@ -30,8 +30,8 @@ public partial class MapperTests
                 .CreateProfile<Person2, Person1>(descriptor =>
                 {
                     descriptor
+                        // Points Nested type to a corresponding type to use
                         .MapMemberTypes(target => target.Details, source => source);
-
                 })
                 .CreateProfile<Person2Details, Person1>(descriptor =>
                 {
@@ -160,12 +160,12 @@ public partial class MapperTests
             }
         };
 
-        var person = mapper.Map(person1, person2);
-        var pswitch = mapper.Map(person2, person1);
+        var person = mapper.Map<Person1>(person2);
+        var pswitch = mapper.Map<Person2>(person1);
 
-        Assert.Equal("Chase", person1.FirstName);
-        Assert.Equal("Crawford", person1.LastName);
-        Assert.Equal("Ryan", person1.MiddleName);
+        Assert.Equal("Chase", person.FirstName);
+        Assert.Equal("Crawford", person.LastName);
+        Assert.Equal("Ryan", person.MiddleName);
 
     }
 }

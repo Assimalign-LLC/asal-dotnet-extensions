@@ -20,4 +20,8 @@
 		<ProjectReference Include="..\..\src\Assimalign.Extensions.Mapping\Assimalign.Extensions.Mapping.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="TestData\" />
+	</ItemGroup>
+
 </Project>

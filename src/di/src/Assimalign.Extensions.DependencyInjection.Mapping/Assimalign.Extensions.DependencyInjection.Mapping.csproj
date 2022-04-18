@@ -1,7 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
 	<PropertyGroup>
+		<RootNamespace>Assimalign.Extensions.DependencyInjection</RootNamespace>
 		<PackageIcon>.assimalign.logo.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+	<PropertyGroup>
+		<Nullable>enable</Nullable>
+		<EnableDefaultItems>true</EnableDefaultItems>
+		<LangVersion>Latest</LangVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Include="..\..\..\..\.assimalign.logo.png">
@@ -14,5 +21,8 @@
 			<Pack>true</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\mapping\src\Assimalign.Extensions.Mapping\Assimalign.Extensions.Mapping.csproj" />
 	</ItemGroup>
 </Project>

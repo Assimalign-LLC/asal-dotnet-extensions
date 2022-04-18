@@ -29,7 +29,7 @@ public interface IMapperProfile
 }
 
 /// <summary>
-/// 
+/// A generic typed mapper profile
 /// </summary>
 /// <typeparam name="TTarget"></typeparam>
 /// <typeparam name="TSource"></typeparam>

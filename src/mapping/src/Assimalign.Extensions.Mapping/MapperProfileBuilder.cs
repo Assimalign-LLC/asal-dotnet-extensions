@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Mapping;
 
@@ -17,7 +14,11 @@ public abstract class MapperProfileBuilder : IMapperProfileBuilder
     {
         this.profiles = new List<IMapperProfile>();
     }
-
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
     protected abstract void OnBuild(IMapperProfileBuilder builder);
 
 

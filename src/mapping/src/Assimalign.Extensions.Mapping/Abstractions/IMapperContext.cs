@@ -32,6 +32,12 @@ public interface IMapperContext
     /// merged together
     /// </summary>
     MapperCollectionHandling CollectionHandling { get; }
-
+    /// <summary>
+    /// The collection of profiles encapsulated by the mapper.
+    /// </summary>
+    /// <remarks>
+    /// This should be passed by reference from the mapper when 
+    /// the <see cref="IMapper.Map(object, object, Type, Type)"/> is called
+    /// </remarks>
     IEnumerable<IMapperProfile> Profiles { get; }
 }
