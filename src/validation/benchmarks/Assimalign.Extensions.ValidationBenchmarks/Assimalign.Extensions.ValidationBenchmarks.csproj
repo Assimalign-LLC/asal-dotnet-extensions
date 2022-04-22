@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 	<ItemGroup>
-		<Using Include="Assimalign.ComponentModel.Validation" />
+		<Using Include="Assimalign.Extensions.Validation" />
 	</ItemGroup>
 
   <ItemGroup>

@@ -5,7 +5,7 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<Description>
-			The following library offers an extensive set of fluent APIs for object validation built on
+			The following library offers an extensive set of fluent APIs for object validation built 
 			the unified .NET. NOTE: Any .NET framework below version 5 is NOT supported.
 		</Description>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -24,10 +24,6 @@
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 	</ItemGroup>
-	<PropertyGroup>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-	</PropertyGroup>
 	<ItemGroup>
 		<None Include="..\..\..\..\.assimalign.logo.png">
 			<Pack>True</Pack>

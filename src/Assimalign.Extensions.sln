@@ -350,11 +350,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Core"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Linq.SerializationTests", "linq\tests\Assimalign.Extensions.Linq.SerializationTests\Assimalign.Extensions.Linq.SerializationTests.csproj", "{14B0CF34-649A-4E4B-9F3D-CDC408E1E1CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.DependencyInjection.Mapping", "di\src\Assimalign.Extensions.DependencyInjection.Mapping\Assimalign.Extensions.DependencyInjection.Mapping.csproj", "{69DFC51D-8AA4-439F-958D-A495114A11BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.DependencyInjection.Mapping", "di\src\Assimalign.Extensions.DependencyInjection.Mapping\Assimalign.Extensions.DependencyInjection.Mapping.csproj", "{69DFC51D-8AA4-439F-958D-A495114A11BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.DependencyInjection.Validation", "di\src\Assimalign.Extensions.DependencyInjection.Validation\Assimalign.Extensions.DependencyInjection.Validation.csproj", "{C20A249B-68D6-44AE-B1A7-6A4B32882F11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.DependencyInjection.Validation", "di\src\Assimalign.Extensions.DependencyInjection.Validation\Assimalign.Extensions.DependencyInjection.Validation.csproj", "{C20A249B-68D6-44AE-B1A7-6A4B32882F11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Text.Json", "text\src\Assimalign.Extensions.Text.Json\Assimalign.Extensions.Text.Json.csproj", "{089D084E-A535-48DF-BB39-B2E691F2166C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Text.Json", "text\src\Assimalign.Extensions.Text.Json\Assimalign.Extensions.Text.Json.csproj", "{089D084E-A535-48DF-BB39-B2E691F2166C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{0CFCC4B2-5DC7-49EF-A995-4D458403874F}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{1D6645A0-2632-4AE3-B9D7-0073AE626882}"
+	ProjectSection(SolutionItems) = preProject
+		validation\README.md = validation\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -718,6 +728,7 @@ Global
 		{69DFC51D-8AA4-439F-958D-A495114A11BC} = {6BEDBF5B-9C60-4E1A-ACD8-F409B86C3009}
 		{C20A249B-68D6-44AE-B1A7-6A4B32882F11} = {6BEDBF5B-9C60-4E1A-ACD8-F409B86C3009}
 		{089D084E-A535-48DF-BB39-B2E691F2166C} = {6D8BE87E-1825-42C1-95DF-E3073C444226}
+		{1D6645A0-2632-4AE3-B9D7-0073AE626882} = {60F770D9-148F-40CD-928A-A9EE0E9DF0CF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FCCF2D81-2E3A-4508-918E-048D800EABE8}

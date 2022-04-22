@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Assimalign.Extensions.ValidationTests.RuleTests;
+namespace Assimalign.Extensions.ValidationTests;
 
 
 using Assimalign.Extensions.Validation;
@@ -86,7 +86,7 @@ public class RuleNestedProfileTest
         {
             Addresses = new PersonAddress[]
             {
-                new PersonAddress()
+                new PersonAddress(),
                 new PersonAddress()
             },
             PrimaryAddress = new PersonAddress()

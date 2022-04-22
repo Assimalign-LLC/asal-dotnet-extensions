@@ -103,8 +103,8 @@ public sealed class HttpClientFactory : IHttpClientFactory, IHttpMessageHandlerF
 
         return entry.Handler;
     }
-
-    public static IHttpClientFactory CreateClientFactory(Action<HttpClientFactoryOptions> configure)
+    public static IHttpClientFactory CreateHttpClientFactory() => new HttpClientFactory();
+    public static IHttpClientFactory CreateHttpClientFactory(Action<HttpClientFactoryOptions> configure)
     {
         var options = new HttpClientFactoryOptions();
 
@@ -112,7 +112,7 @@ public sealed class HttpClientFactory : IHttpClientFactory, IHttpMessageHandlerF
 
         return new HttpClientFactory(options);
     }
-    public static IHttpMessageHandlerFactory CreateHandlerFactory(Action<HttpMessageHandlerBuilder> configure)
+    public static IHttpMessageHandlerFactory CreateHttpMessageHandlerFactory(Action<HttpMessageHandlerBuilder> configure)
     {
         var options = new HttpClientFactoryOptions();
 
@@ -270,7 +270,4 @@ public sealed class HttpClientFactory : IHttpClientFactory, IHttpMessageHandlerF
             StartCleanupTimer();
         }
     }
-
-
 }
-
