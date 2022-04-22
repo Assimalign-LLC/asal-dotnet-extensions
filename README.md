@@ -14,78 +14,95 @@ The intent behind this repository is to create a standard ecosystem of commonly 
 that live within [dotnet/runtime](https://github.com/dotnet/runtime) and are being used, modified, and added to for experimental projects under Assimalign.
 
 - [Assimalign .NET Extensions](#assimalign-net-extensions)
+- [Coding Guidelines](#coding-guidelines)
+  - [Pull-Request](#pull-request)
+  - [Documentation](#documentation)
+  - [Folder Structure](#folder-structure)
 - [Available Extensions](#available-extensions)
-- [Build Status](#build-status)
-  - [Mapping](#mapping)
+  - [Object Validation](#object-validation)
+  - [Object-to-Object Mapping](#object-to-object-mapping)
+  - [Configuration](#configuration)
+  - [LINQ Serialization](#linq-serialization)
+  - [JSON Object](#json-object)
+  - [HTTP Factory](#http-factory)
+  - [CRONS Scheduling](#crons-scheduling)
+  - [Dependency Injection](#dependency-injection)
+
+
+# Coding Guidelines
+
+1. Framework Target: Unified .NET and Above
+
+## Pull-Request 
+- All libraries should inlcude a `README`
+- All libraries should use standard design patterns.
+- 
+&#10003; **Allowed**
+
+&#10007; **Disallowed**
+
+## Documentation
+## Folder Structure
+All projects within the library should mimic the same folder structure
+```
+Project.csproj
+
+    /Abstractions 
+    /Extensions -> 
+    /Internal
+
+```
+
+
+
 
 
 # Available Extensions 
 
-|  Package ID														|  Latest Version  | Downloads |
-| ------------------------------------------------------------------|----------------- | --------- |
-| `Assimalign.Extensions `                              |[![core.nuget.version]][core.nuget.url]                                                       |[![core.nuget.downloads]][core.nuget.url]                                                        |
-| `Assimalign.Extensions.Mapping`									      |[![mapping.nuget.version]][mapping.nuget.url]                                                 |[![mapping.nuget.downloads]][mapping.nuget.url]                                                  |
-| `Assimalign.Extensions.Validation`								    |[![validation.nuget.version]][validation.nuget.url]                                           |[![validation.nuget.downloads]][validation.nuget.url]                                            |
-| `Assimalign.Extensions.Validation.Configurable`			  |[![validation.configurable.nuget.version]][validation.configurable.nuget.url]                 |[![validation.configurable.nuget.downloads]][validation.configurable.nuget.url]                  |
-| `Assimalign.Extensions.Validation.Configurable.Json`  |[![validation.configurable.json.nuget.version]][validation.configurable.json.nuget.url]       |[![validation.configurable.json.nuget.downloads]][validation.configurable.json.nuget.url]        |
-| `Assimalign.Extensions.Validation.Configurable.Xml`   |[![validation.configurable.xml.nuget.version]][validation.configurable.xml.nuget.url]         |[![validation.configurable.xml.nuget.downloads]][validation.configurable.xml.nuget.url]          |
-| `Assimalign.Extensions.Linq.Serialization`						|[![linq.serialization.nuget.version]][linq.serialization.nuget.url]                           |[![linq.serialization.nuget.downloads]][linq.serialization.nuget.url]                            |
-| `Assimalign.Extensions.Linq.Serialization.Binary`	    |[![linq.serialization.binary.nuget.version]][linq.serialization.binary.nuget.url]             |[![linq.serialization.binary.nuget.downloads]][linq.serialization.binary.nuget.url]              |
-| `Assimalign.Extensions.Linq.Serialization.Text`	      |[![linq.serialization.text.nuget.version]][linq.serialization.text.nuget.url]                 |[![linq.serialization.text.nuget.downloads]][linq.serialization.text.nuget.url]                  |
-| `Assimalign.Extensions.Linq.Serialization.Json`	      |[![NuGet](https://img.shields.io/nuget/v/Assimalign.Extensions.Linq.Serialization.Json)](https://nuget.org/packages/Assimalign.Extensions.Linq.Serialization.Json) | [![Nuget](https://img.shields.io/nuget/dt/Assimalign.Extensions.Linq.Serialization.Json)](https://nuget.org/packages/Assimalign.Extensions.Linq.Serialization.Json) |
-| `Assimalign.Extensions.Linq.Serialization.Xml`        |[![NuGet](https://img.shields.io/nuget/v/Assimalign.Extensions.Linq.Serialization.Xml)](https://nuget.org/packages/Assimalign.Extensions.Linq.Serialization.Xml) | [![Nuget](https://img.shields.io/nuget/dt/Assimalign.Extensions.Linq.Serialization.Xml)](https://nuget.org/packages/Assimalign.Extensions.Linq.Serialization.Xml) |
-																	
-# Build Status
+## Object Validation
+[Go to Extensions](/src/validation/README.md)
 
-## Mapping
-| Package       |Build Status (By Branch) | Build Status                |
-|---------------|-------------------------|-----------------------------|
-|**Mapping**    |                         |                             |
-|               |*origin/main*            |![mapping.ci.main]           |
-|               |*origin/development*     |![mapping.ci.development]    |
-|**Validation** |                         |                             |
-|               |*origin/main*            |![validation.ci.main]        |
-|               |*origin/development*     |![validation.ci.development] |
+A flexible set of extensions for validating objects either via fluent interfaces and/or configuration interfaces. Write Validation rules in either JSON or XML without having to re-compile your application.
 
+---
 
+## Object-to-Object Mapping
+[Go to Extensions](/src/mapping/README.md)
 
-[core.nuget.url]:                                   https://www.nuget.org/packages/Assimalign.Extensions.Configuration
-[core.nuget.version]:                               https://img.shields.io/nuget/v/Assimalign.Extensions.Configuration
-[core.nuget.downloads]:                             https://img.shields.io/nuget/dt/Assimalign.Extensions.Configuration
+Object-to-Object mapping is the 
 
-[mapping.nuget.url]:                                https://www.nuget.org/packages/Assimalign.Extensions.Mapping
-[mapping.nuget.version]:                            https://img.shields.io/nuget/v/Assimalign.Extensions.Mapping
-[mapping.nuget.downloads]:                          https://img.shields.io/nuget/dt/Assimalign.Extensions.Mapping
-[mapping.ci.main]:                                  https://img.shields.io/github/workflow/status/assimalign/asal-dotnet-extensions/assimalign.extensions.mapping.ci/main
-[mapping.ci.development]:                           https://img.shields.io/github/workflow/status/assimalign/asal-dotnet-extensions/assimalign.extensions.mapping.ci/development
+---
 
-[validation.nuget.url]:                             https://www.nuget.org/packages/Assimalign.Extensions.Validation
-[validation.nuget.version]:                         https://img.shields.io/nuget/v/Assimalign.Extensions.Validation
-[validation.nuget.downloads]:                       https://img.shields.io/nuget/dt/Assimalign.Extensions.Validation
-[validation.ci.main]:                                  https://img.shields.io/github/workflow/status/assimalign/asal-dotnet-extensions/assimalign.extensions.validation.ci/main
-[validation.ci.development]:                           https://img.shields.io/github/workflow/status/assimalign/asal-dotnet-extensions/assimalign.extensions.validation.ci/development
+## Configuration 
+[Go to Extensions](/src/configuration/README.md)
 
+The configuration extensions offer a set of standard
 
-[validation.configurable.nuget.url]:                https://www.nuget.org/packages/Assimalign.Extensions.Validation.Configurable
-[validation.configurable.nuget.version]:            https://img.shields.io/nuget/v/Assimalign.Extensions.Validation.Configurable
-[validation.configurable.nuget.downloads]:          https://img.shields.io/nuget/dt/Assimalign.Extensions.Validation.Configurable
+---
 
-[validation.configurable.json.nuget.url]:           https://www.nuget.org/packages/Assimalign.Extensions.Validation.Configurable.Json
-[validation.configurable.json.nuget.version]:       https://img.shields.io/nuget/v/Assimalign.Extensions.Validation.Configurable.Json
-[validation.configurable.json.nuget.downloads]:     https://img.shields.io/nuget/dt/Assimalign.Extensions.Validation.Configurable.Json
+## LINQ Serialization
+[Go to Extensions](/src/linq/README.md)
 
-[validation.configurable.xml.nuget.url]:            https://www.nuget.org/packages/Assimalign.Extensions.Validation.Configurable.Xml
-[validation.configurable.xml.nuget.version]:        https://img.shields.io/nuget/v/Assimalign.Extensions.Validation.Configurable.Xml
-[validation.configurable.xml.nuget.downloads]:      https://img.shields.io/nuget/dt/Assimalign.Extensions.Validation.Configurable.Xml
+---
 
-[linq.serialization.nuget.url]:                     https://www.nuget.org/packages/Assimalign.Extensions.Linq.Serialization
-[linq.serialization.nuget.version]:                 https://img.shields.io/nuget/v/Assimalign.Extensions.Linq.Serialization
-[linq.serialization.nuget.downloads]:               https://img.shields.io/nuget/dt/Assimalign.Extensions.Linq.Serialization
+## JSON Object
+[Go to Extensions](/src/text/README.md)
 
-[linq.serialization.binary.nuget.url]:              https://www.nuget.org/packages/Assimalign.Extensions.Linq.Serialization.Binary
-[linq.serialization.binary.nuget.version]:          https://img.shields.io/nuget/v/Assimalign.Extensions.Linq.Serialization.Binary
-[linq.serialization.binary.nuget.downloads]:        https://img.shields.io/nuget/dt/Assimalign.Extensions.Linq.Serialization.Binary
+Newtonsoft.Json is a very popular library that offers the ability to query JSON via LINQ. Within the 
 
-[linq.serialization.text.nuget.url]:                https://www.nuget.org/packages/Assimalign.Extensions.Linq.Serialization.Text
-[linq.serialization.text.nuget.version]:            https://img.shields.io/nuget/v/Assimalign.Extensions.Linq.Serialization.Text
-[linq.serialization.text.nuget.downloads]:          https://img.shields.io/nuget/dt/Assimalign.Extensions.Linq.Serialization.Text
+---
+
+## HTTP Factory
+[Go to Extensions](/src/net/README.md)
+
+---
+
+## CRONS Scheduling
+[Go to Extensions](/src/scheduling/README.md)
+
+---
+
+## Dependency Injection
+[Go to Extensions](/src/di/README.md)
+
+The dependency injection extensions is a mirror to Microsoft Dependency Injection. However it is important to note that some internal enhancements were made and may not operate the same as expected.
