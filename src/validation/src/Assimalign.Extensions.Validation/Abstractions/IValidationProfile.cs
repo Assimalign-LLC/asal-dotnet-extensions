@@ -12,11 +12,6 @@ public interface IValidationProfile
     /// </summary>
     Type ValidationType { get; }
     /// <summary>
-    /// Specifies whether the validator should continue 
-    /// or stop after the first validation failure.
-    /// </summary>
-    ValidationMode ValidationMode { get; }
-    /// <summary>
     /// A collection of validation rules to apply 
     /// to the context being validated.
     /// </summary>

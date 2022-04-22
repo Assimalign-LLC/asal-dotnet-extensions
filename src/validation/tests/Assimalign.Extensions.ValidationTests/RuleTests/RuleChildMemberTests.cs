@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace  Assimalign.Extensions.ValidationTests;
+namespace Assimalign.Extensions.ValidationTests;
 
-using  Assimalign.Extensions.Validation;
-using  Assimalign.Extensions.Validation.Internal;
-using  Assimalign.Extensions.Validation.Internal.Rules;
+using Assimalign.Extensions.Validation;
+using Assimalign.Extensions.Validation.Internal;
+using Assimalign.Extensions.Validation.Internal.Rules;
 
 public class RuleChildMemberTests
 {
@@ -19,7 +19,10 @@ public class RuleChildMemberTests
     {
         this.validator = Validator.Create(configure =>
         {
-            configure.ContinueThroughValidationChain = true;
+            configure.AddOptions(options =>
+            {
+                options.ContinueThroughValidationChain = true;
+            });
             configure.AddProfile(new PersonValidationProfile());
         });
     }
@@ -31,7 +34,7 @@ public class RuleChildMemberTests
         {
 
             descriptor.RuleFor(p => p.PrimaryAddress)
-                
+
                  .ChildRules(configure =>
                  {
                      configure.RuleFor(p => p.StreetOne)
@@ -67,7 +70,7 @@ public class RuleChildMemberTests
                  });
 
 
-           
+
         }
 
         bool Test(string t)
@@ -103,7 +106,7 @@ public class RuleChildMemberTests
         {
             PrimaryAddress = new PersonAddresses()
             {
-                
+
             }
         };
 
@@ -164,7 +167,7 @@ public class RuleChildMemberTests
     {
         var person = new Person()
         {
-            
+
         };
 
         var results = this.validator.Validate(person);

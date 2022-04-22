@@ -13,10 +13,6 @@ public sealed class ValidationError : IValidationError
     /// </summary>
     public ValidationError() { }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="error"></param>
     internal ValidationError(IValidationError error)
     {
         this.Code = error.Code;
@@ -25,19 +21,13 @@ public sealed class ValidationError : IValidationError
     }
 
 
-    /// <summary>
-    /// A unique error code for the validation error.
-    /// </summary>
+    /// <inheritdoc cref="IValidationError.Code"/>
     public string Code { get; set; } = "400";
 
-    /// <summary>
-    /// A unique error message for the validation error.
-    /// </summary>
+    /// <inheritdoc cref="IValidationError.Message"/>
     public string Message { get; set; }
 
-    /// <summary>
-    /// The source of the validation error such as a member of method.
-    /// </summary>
+    /// <inheritdoc cref="IValidationError.Source"/>
     public string Source { get; set; }
 
     public override string ToString()

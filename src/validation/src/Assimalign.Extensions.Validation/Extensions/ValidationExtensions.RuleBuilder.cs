@@ -11,7 +11,6 @@ namespace Assimalign.Extensions.Validation;
 using Assimalign.Extensions.Validation.Properties;
 using Assimalign.Extensions.Validation.Internal;
 using Assimalign.Extensions.Validation.Internal.Rules;
-using Assimalign.Extensions.Validation.Internal.Exceptions;
 
 
 /// <summary>
@@ -19,9 +18,37 @@ using Assimalign.Extensions.Validation.Internal.Exceptions;
 /// </summary>
 public static partial class ValidationExtensions
 {
+    /// <summary>
+    /// Adds a nested validation profile to be used to validate <typeparamref name="TValue"/>.
+    /// </summary>
+    /// <typeparam name="TValue"></typeparam>
+    /// <param name="builder"></param>
+    /// <param name="profile"></param>
+    /// <returns></returns>
+    public static IValidationRuleBuilder<TValue> UseProfile<TValue>(this IValidationRuleBuilder<TValue> builder, ValidationProfile<TValue> profile)
+        where TValue : class
+    {
+        var descriptor = new ValidationRuleDescriptor<TValue>()
+        {
+            ValidationItems = profile.ValidationItems
+        };
+
+        profile.Configure(descriptor);
+
+        var rule = new ChildValidationRule<TValue>()
+        {
+            Profile = profile,
+            Name = $"Validate member with Profile for {builder.ValidationItem}",
+            Error = new ValidationError() { }
+        };
+
+        builder.ValidationItem.ItemRuleStack.Push(rule);
+
+        return builder;
+    }
 
     /// <summary>
-    /// 
+    /// Creates a nested validation profile with the described rules in the <paramref name="configure"/> parameter.
     /// </summary>
     /// <typeparam name="TValue"></typeparam>
     /// <param name="builder"></param>
@@ -30,22 +57,21 @@ public static partial class ValidationExtensions
     public static IValidationRuleBuilder<TValue> ChildRules<TValue>(this IValidationRuleBuilder<TValue> builder, Action<IValidationRuleDescriptor<TValue>> configure)
         where TValue : class
     {
-        var rule = new ChildValidationRule<TValue>()
-        {
-            ValidationItems = new ValidationItemStack(),
-            Name = $"Validate child members of {builder.ValidationItem}",
-            Error = new ValidationError()
-            {
 
-            }
-        };
-
+        var profile = new ValidationProfileDefault<TValue>(configure);
         var descriptor = new ValidationRuleDescriptor<TValue>()
         {
-            ValidationItems = rule.ValidationItems
+            ValidationItems = profile.ValidationItems
         };
 
-        configure.Invoke(descriptor);
+        profile.Configure(descriptor);
+
+        var rule = new ChildValidationRule<TValue>()
+        {
+            Profile = profile,
+            Name = $"Validate child members of {builder.ValidationItem}",
+            Error = new ValidationError() { }
+        };
 
         builder.ValidationItem.ItemRuleStack.Push(rule);
 

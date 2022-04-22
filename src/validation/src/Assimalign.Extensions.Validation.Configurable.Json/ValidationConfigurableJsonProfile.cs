@@ -37,12 +37,6 @@ public sealed class ValidationConfigurableJsonProfile<T> : IValidationProfile
     /// </summary>
     [JsonPropertyName("$description")]
     public string Description { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    [JsonPropertyName("$validationMode")]
-    public ValidationMode ValidationMode { get; set; }
     
     /// <summary>
     /// 
@@ -68,7 +62,6 @@ public sealed class ValidationConfigurableJsonProfile<T> : IValidationProfile
         }
         try
         {
-            
             foreach (var validationCondition in this.ValidationConditions)
             {
                 var condition = validationCondition.GetCondition();

@@ -137,16 +137,4 @@ public sealed class Mapper : IMapper
 
         return new Mapper(builder.Profiles, builder.Options);
     }
-
-    public static IMapper Create(IEnumerable<IMapperProfile> profiles, Action<MapperOptions> configure)
-    {
-        var options = new MapperOptions()
-        {
-            Profiles = profiles.ToList()
-        };
-
-        configure.Invoke(options);
-
-        return new Mapper(profiles, options);
-    }
 }

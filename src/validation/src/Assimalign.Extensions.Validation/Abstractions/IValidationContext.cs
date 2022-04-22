@@ -29,9 +29,33 @@ public interface IValidationContext
     IEnumerable<IValidationError> Errors { get; }
 
     /// <summary>
-    /// Validation Options passed as a dictionary.
+    /// Specifies whether the validator should continue 
+    /// or stop after the first validation item failure.
     /// </summary>
-    IDictionary<string, object> Options { get; set; }
+    ValidationMode ValidationMode { get; }
+
+    /// <summary>
+    /// Will throw a <see cref="ValidationFailureException"/> rather 
+    /// than return <see cref="ValidationResult"/>.
+    /// </summary>
+    bool ThrowExceptionOnFailure { get; }
+
+    /// <summary>
+    /// By default, when more then one rule is chained to a validation item
+    /// the first failure will exit the chain. Set this property to true if 
+    /// the desired behavior is to iterate through all rules in the validation chain.
+    /// <br/>
+    /// <br/>
+    /// <example>
+    /// <b>An example of default behavior:</b>
+    /// <code>
+    /// RuleFor(p => p.Property)
+    ///       .NotNull()     // If this Rule Fails
+    ///       .NotEmpty()    // Then this one will not run  
+    /// </code>
+    /// </example>
+    /// </summary>
+    bool ContinueThroughValidationChain { get; }
 
     /// <summary>
     /// Adds a generic validation failure to <see cref="IValidationContext.Errors"/>

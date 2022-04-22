@@ -29,12 +29,13 @@ public static class ValidationConfigurableExtensions
     /// <returns></returns>
     public static IValidator ToValidator(this IValidationConfigurable configurable, Action<ValidationOptions> configure)
     {
-        return Validator.Create(options =>
+        return Validator.Create(builder =>
         {
-            configure.Invoke(options);
+            builder.AddOptions(configure);
+
             foreach (var profile in configurable.GetProfiles())
             {
-                options.AddProfile(profile);
+                builder.AddProfile(profile);
             }
         });
     }

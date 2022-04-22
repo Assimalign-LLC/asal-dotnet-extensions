@@ -11,68 +11,62 @@ namespace Assimalign.Extensions.Validation;
 /// <summary>
 /// 
 /// </summary>
-public partial class Validator : IValidator
+public sealed class Validator : IValidator
 {
     private readonly ValidationOptions options;
-    private readonly IDictionary<string, object> contextOptions;
-
-    private Validator() { }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="options">Required for setup</param>
-    public Validator(ValidationOptions options)
+    /// <param name="profiles"></param>
+    /// <param name="options"></param>
+    public Validator(IEnumerable<IValidationProfile> profiles, ValidationOptions options)
     {
+        this.Profiles = profiles;
         this.options = options;
-        this.contextOptions = new Dictionary<string, object>()
+
+        var duplicates = Profiles
+            .GroupBy(x => x.ValidationType)
+            .Select(group => new
+            {
+                Type = group,
+                Count = group.Count()
+            })
+            .FirstOrDefault(x => x.Count > 1);
+
+        if (duplicates is not null && duplicates.Count > 1)
         {
-            { "ThrowExceptionOnFailure", options.ThrowExceptionOnFailure },
-            { "ContinueThroughValidationChain", options.ContinueThroughValidationChain }
-        };
+            throw new InvalidOperationException($"A Validation Profile for type: {duplicates.Type.Key.Name} has already been registered.");
+        }
     }
 
-    /// <summary>
-    /// A fluent constructor for configuring the validator options.
-    /// </summary>
-    /// <param name="configure"></param>
-    public Validator(Action<ValidationOptions> configure)
-    {
-        var options = new ValidationOptions();
+    /// <inheritdoc cref="IValidator.Profiles"/>
+    public IEnumerable<IValidationProfile> Profiles { get; }
 
-        configure.Invoke(options);
-
-        this.options = options;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="instance"></param>
-    /// <returns></returns>
+    /// <inheritdoc cref="IValidator.Validate{T}(T)"/>
     public ValidationResult Validate<T>(T instance)
     {
-        return Validate(new ValidationContext<T>(instance, true) 
-        { 
-            Options = this.contextOptions
+        return Validate(new ValidationContext<T>(instance, true)
+        {
+            ContinueThroughValidationChain = options.ContinueThroughValidationChain,
+            ThrowExceptionOnFailure = options.ThrowExceptionOnFailure,
+            ValidationMode = options.ValidationMode
+
         } as IValidationContext);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="context"></param>
-    /// <returns></returns>
+    /// <inheritdoc cref="IValidator.Validate(IValidationContext)"/>
     public ValidationResult Validate(IValidationContext context)
     {
         var stopwatch = new Stopwatch();
 
         stopwatch.Start();
-        foreach (var profile in this.options.Profiles)
+
+        foreach (var profile in this.Profiles)
         {
             if (profile.ValidationType == context.InstanceType)
             {
-                var isModeStop = profile.ValidationMode == ValidationMode.Stop;
+                var isModeStop = context.ValidationMode == ValidationMode.Stop;
 
                 foreach (var item in profile.ValidationItems)
                 {
@@ -86,6 +80,8 @@ public partial class Validator : IValidator
             }
         }
 
+        stopwatch.Stop();
+
         // Let's throw exception for any validation failure if requested.
         if (this.options.ThrowExceptionOnFailure && context.Errors.Any())
         {
@@ -95,28 +91,19 @@ public partial class Validator : IValidator
         return new ValidationResult(context, stopwatch.ElapsedTicks);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="instance"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <inheritdoc cref="IValidator.ValidateAsync{T}(T, CancellationToken)"/>
     public Task<ValidationResult> ValidateAsync<T>(T instance, CancellationToken cancellationToken = default)
     {
         return ValidateAsync(new ValidationContext<T>(instance, true)
         {
-            Options = this.contextOptions
+            ContinueThroughValidationChain = options.ContinueThroughValidationChain,
+            ThrowExceptionOnFailure = options.ThrowExceptionOnFailure,
+            ValidationMode = options.ValidationMode
+
         } as IValidationContext, cancellationToken);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="context"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    /// <exception cref="ValidationFailureException"></exception>
+    /// <inheritdoc cref="IValidator.ValidateAsync(IValidationContext, CancellationToken)"/>
     public Task<ValidationResult> ValidateAsync(IValidationContext context, CancellationToken cancellationToken = default)
     {
         return Task.Run<ValidationResult>(() =>
@@ -125,16 +112,16 @@ public partial class Validator : IValidator
 
             stopwatch.Start();
 
-            foreach (var profile in this.options.Profiles)
+            foreach (var profile in this.Profiles)
             {
                 if (profile.ValidationType == context.InstanceType)
                 {
-                    var isModeStop = profile.ValidationMode == ValidationMode.Stop;
+                    var isModeStop = context.ValidationMode == ValidationMode.Stop;
                     var tokenSource = cancellationToken == default ?
                         new CancellationTokenSource() :
                         CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
-                    foreach(var item in profile.ValidationItems)
+                    foreach (var item in profile.ValidationItems)
                     {
                         if (tokenSource.IsCancellationRequested)
                         {
@@ -150,29 +137,28 @@ public partial class Validator : IValidator
                 }
             }
 
+            stopwatch.Stop();
+
             if (this.options.ThrowExceptionOnFailure && context.Errors.Any())
             {
                 throw new ValidationFailureException(context);
             }
 
-            stopwatch.Stop();
-
             return new ValidationResult(context, stopwatch.ElapsedTicks);
         });
     }
-    
 
     /// <summary>
-    /// 
+    /// A fluent API for creating and configuring a new Validator instance.
     /// </summary>
     /// <param name="configure"></param>
     /// <returns></returns>
-    public static IValidator Create(Action<ValidationOptions> configure)
+    public static IValidator Create(Action<ValidatorBuilder> configure)
     {
-        var options = new ValidationOptions();
+        var builder = new ValidatorBuilder();
 
-        configure.Invoke(options);
+        configure.Invoke(builder);
 
-        return new Validator(options);
+        return new Validator(builder.Profiles, builder.Options);
     }
 }

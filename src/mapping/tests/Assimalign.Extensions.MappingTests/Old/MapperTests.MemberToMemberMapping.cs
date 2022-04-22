@@ -8,6 +8,7 @@ using Xunit;
 namespace Assimalign.Extensions.MappingTests;
 
 using Assimalign.Extensions.Mapping;
+using System.Diagnostics;
 
 public partial class MapperTests
 {
@@ -91,6 +92,7 @@ public partial class MapperTests
     [Fact]
     public void RunMemberToMemberTest()
     {
+        var stopwatch = new Stopwatch();
         var factory = new MapperFactory();
 
         var mapper = factory.Create("default", new MapperProfileBuilderTest(), options =>
@@ -103,6 +105,8 @@ public partial class MapperTests
         //    configure.CollectionHandling = MapperCollectionHandling.Merge;
         //    configure.AddProfile(new MapperMemberToMemberProfile());
         //});
+
+
 
         
 
@@ -160,7 +164,10 @@ public partial class MapperTests
             }
         };
 
-        var person = mapper.Map<Person1>(person2);
+        stopwatch.Start();
+        var person = mapper.Map(person1, person2);
+        stopwatch.Stop();
+
         var pswitch = mapper.Map<Person2>(person1);
 
         Assert.Equal("Chase", person.FirstName);

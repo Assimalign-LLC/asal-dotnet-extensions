@@ -17,22 +17,19 @@ public sealed class ValidatorFactory : IValidatorFactory
         this.validators = validators;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="validatorName"></param>
-    /// <returns></returns>
-    /// <exception cref="Exception"></exception>
-    public IValidator Create(string validatorName)
+    /// <inheritdoc cref="IValidatorFactory.CreateValidator(string)"/>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="validatorName"/> is null or empty.</exception>
+    /// <exception cref="ArgumentException">Thrown when <paramref name="validatorName"/> does not exist.</exception>
+    IValidator IValidatorFactory.CreateValidator(string validatorName)
     {
-        if (validators.TryGetValue(validatorName.ToLower(), out var validator)) 
+        if (string.IsNullOrEmpty(validatorName))
         {
-            return validator;
+            throw new ArgumentNullException(nameof(validatorName), $"The parameter 'validatorName' cannot be null or empty.");
         }
-        else
-        {
-            throw new ArgumentException();
-        }
+        
+        return validators.TryGetValue(validatorName, out var validator) ? 
+            validator:
+            throw new ArgumentException($"The requested validator: '{validatorName}' does not exist.");   
     }
 
     /// <summary>

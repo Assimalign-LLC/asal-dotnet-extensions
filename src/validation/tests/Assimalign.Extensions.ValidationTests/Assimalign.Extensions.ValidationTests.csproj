@@ -22,4 +22,8 @@
 		<ProjectReference Include="..\..\src\Assimalign.Extensions.Validation\Assimalign.Extensions.Validation.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="BuilderTests\" />
+	</ItemGroup>
+
 </Project>

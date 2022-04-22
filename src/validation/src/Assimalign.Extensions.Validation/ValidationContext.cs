@@ -69,10 +69,15 @@ public sealed class ValidationContext<T> : IValidationContext
     /// </summary>
     public IEnumerable<ValidationInvocation> Invocations => this.invocations;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public IDictionary<string, object> Options { get; set; }
+   
+    /// <inheritdoc cref="IValidationContext.ThrowExceptionOnFailure"/>
+    public bool ThrowExceptionOnFailure { get; init; }
+
+    /// <inheritdoc cref="IValidationContext.ContinueThroughValidationChain"/>
+    public bool ContinueThroughValidationChain { get; init; }
+
+    /// <inheritdoc cref="IValidationContext.ValidationMode"/>
+    public ValidationMode ValidationMode { get; init; }
 
     /// <summary>
     /// 

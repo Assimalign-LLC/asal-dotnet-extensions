@@ -40,7 +40,11 @@ public class ValidatorFailureTests
     {
         var validator = Validator.Create(configure =>
         {
-            configure.ThrowExceptionOnFailure = true;
+            configure.AddOptions(options =>
+            {
+                options.ThrowExceptionOnFailure = true;
+            });
+
 
             configure.AddProfile(new TestObjectValidationProfile(descriptor =>
             {
@@ -56,9 +60,13 @@ public class ValidatorFailureTests
     [Fact]
     public void SuccessValidationFailureExceptionNotThrownTest()
     {
+       
         var validator = Validator.Create(configure =>
         {
-            configure.ThrowExceptionOnFailure = true;
+            configure.AddOptions(options =>
+            {
+                options.ThrowExceptionOnFailure = true;
+            });
 
             configure.AddProfile(new TestObjectValidationProfile(descriptor =>
             {

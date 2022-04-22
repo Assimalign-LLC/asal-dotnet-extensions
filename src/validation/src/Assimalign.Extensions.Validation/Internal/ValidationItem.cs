@@ -11,10 +11,6 @@ internal sealed class ValidationItem<T, TValue> : ValidationItemBase<T, TValue>
 
     public override void Evaluate(IValidationContext context)
     {
-        var isUseEntireChain = context.Options.TryGetValue("ContinueThroughValidationChain", out var results) ? 
-            (bool)results : 
-            false;
-
         if (context.Instance is T instance)
         {
             if (this.ValidationCondition is not null && !this.ValidationCondition.Invoke(instance))
@@ -27,9 +23,13 @@ internal sealed class ValidationItem<T, TValue> : ValidationItemBase<T, TValue>
 
             foreach (var rule in this.ItemRuleStack)
             {
-                if (!isUseEntireChain && context.Errors.Any())
+                if (!context.ContinueThroughValidationChain && context.Errors.Any())
                 {
                     break;
+                }
+                if (rule is ValidationRuleBase<TValue> ruleBase)
+                {
+                    ruleBase.ParentContext = context;
                 }
 
                 stopwatch.Restart();
