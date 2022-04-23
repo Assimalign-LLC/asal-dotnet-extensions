@@ -1,4 +1,4 @@
-<validation>
+<validation-profile>
     <validation-conditions>
         <validation-condition>
 
@@ -21,4 +21,4 @@
         </validation-item>
     </validation-items>
 
-</validation>
+</validation-profile>
