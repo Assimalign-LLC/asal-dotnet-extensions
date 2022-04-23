@@ -1,27 +1,29 @@
 ﻿using System;
-using System.Xml;
-using System.Xml.Serialization;
+using System.Text.Json.Serialization;
 
-namespace Assimalign.ComponentModel.Validation.Configurable;
+namespace Assimalign.Extensions.Validation.Configurable;
 
-public sealed class ValidationConfigurableXmlError : IValidationError
+/// <summary>
+/// Represents a configurable JSON validation error.
+/// </summary>
+public sealed class JsonConfigValidationError : IValidationError
 {
     /// <summary>
     /// 
     /// </summary>
-    [XmlElement("$code")]
+    [JsonPropertyName("$code")]
     public string Code { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
-    [XmlElement("$message")]
+    [JsonPropertyName("$message")]
     public string Message { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
-    [XmlElement("$source")]
+    [JsonPropertyName("$source")]
     public string Source { get; set; }
 
     /// <summary>

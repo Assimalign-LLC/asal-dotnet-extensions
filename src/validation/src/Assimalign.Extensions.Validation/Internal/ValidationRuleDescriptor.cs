@@ -30,12 +30,6 @@ internal sealed class ValidationRuleDescriptor<T> : IValidationRuleDescriptor<T>
         return this;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="TValue"></typeparam>
-    /// <param name="expression"></param>
-    /// <returns></returns>
     public IValidationRuleBuilder<TValue> RuleFor<TValue>(Expression<Func<T, TValue>> expression)
     {
         if (expression is null)
@@ -59,13 +53,6 @@ internal sealed class ValidationRuleDescriptor<T> : IValidationRuleDescriptor<T>
 
         return new ValidationRuleBuilder<T, TValue>(item);
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="TValue"></typeparam>
-    /// <param name="expression"></param>
-    /// <returns></returns>
     public IValidationRuleBuilder<TValue> RuleForEach<TValue>(Expression<Func<T, IEnumerable<TValue>>> expression)
     {
         if (expression is null)
@@ -89,14 +76,6 @@ internal sealed class ValidationRuleDescriptor<T> : IValidationRuleDescriptor<T>
 
         return new ValidationRuleBuilder<T, TValue>(item);
     }
-
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="condition">What condition is required</param>
-    /// <param name="configure">The validation to </param>
-    /// <returns></returns>
     public IValidationCondition<T> When(Expression<Func<T, bool>> condition, Action<IValidationRuleDescriptor<T>> configure)
     {
         var validationCondition = new ValidationCondition<T>()

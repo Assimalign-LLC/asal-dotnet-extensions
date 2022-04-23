@@ -1,6 +1,6 @@
 ﻿namespace Assimalign.Extensions.Validation.Configurable;
 
-public enum OperatorType 
+public enum JsonConfigOperatorType 
 {
     None = 0,
     EQ = 1,

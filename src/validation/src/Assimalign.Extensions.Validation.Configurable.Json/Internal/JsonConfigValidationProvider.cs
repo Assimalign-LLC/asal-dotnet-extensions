@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Validation.Configurable;
 
-internal sealed class ValidationConfigurableJsonProvider<T> : IValidationConfigurableProvider
+internal sealed class JsonConfigValidationProvider<T> : IValidationConfigurableProvider
     where T : class
 {
-    private readonly ValidationConfigurableJsonProfile<T> profile;
+    private readonly JsonConfigValidationProfile<T> profile;
 
-    private ValidationConfigurableJsonProvider() { }
+    private JsonConfigValidationProvider() { }
 
-    internal ValidationConfigurableJsonProvider(ValidationConfigurableJsonProfile<T> profile)
+    internal JsonConfigValidationProvider(JsonConfigValidationProfile<T> profile)
     {
         this.profile = profile;
     }

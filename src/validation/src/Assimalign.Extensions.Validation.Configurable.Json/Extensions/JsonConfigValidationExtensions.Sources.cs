@@ -11,7 +11,7 @@ using Assimalign.Extensions.Validation.Configurable.Serialization;
 /// A set of extensions for converting <see cref="IValidationConfigurableBuilder"/> into 
 /// a <see cref="IValidator"/>.
 /// </summary>
-public static class ValidationConfigurableJsonExtensions
+public static class JsonConfigValidationExtensions
 {
     /// <summary>
     /// 
@@ -27,13 +27,13 @@ public static class ValidationConfigurableJsonExtensions
     public static IValidationConfigurableBuilder AddJsonSource<T>(this IValidationConfigurableBuilder builder, string json, JsonSerializerOptions options = null)
         where T : class
     {
-        return builder.Add(new ValidationConfigurableJsonSource<T>(() =>
+        return builder.Add(new JsonConfigValidationSource<T>(() =>
         {
             options ??= GetDefaultJsonSerializationOptions();
-            options.Converters.Add(new EnumConverter<OperatorType>());
+            options.Converters.Add(new EnumConverter<JsonConfigOperatorType>());
             options.Converters.Add(new EnumConverter<ValidationConfigurableItemType>());
             options.Converters.Add(new EnumConverter<ValidationMode>());
-            return JsonSerializer.Deserialize<ValidationConfigurableJsonProfile<T>>(json, options);
+            return JsonSerializer.Deserialize<JsonConfigValidationProfile<T>>(json, options);
         }));
     }
   
@@ -51,13 +51,13 @@ public static class ValidationConfigurableJsonExtensions
     public static IValidationConfigurableBuilder AddJsonSource<T>(this IValidationConfigurableBuilder builder, Stream stream, JsonSerializerOptions options = null)
         where T : class
     {
-        return builder.Add(new ValidationConfigurableJsonSource<T>(() =>
+        return builder.Add(new JsonConfigValidationSource<T>(() =>
         {
             options ??= GetDefaultJsonSerializationOptions();
-            options.Converters.Add(new EnumConverter<OperatorType>());
+            options.Converters.Add(new EnumConverter<JsonConfigOperatorType>());
             options.Converters.Add(new EnumConverter<ValidationConfigurableItemType>());
             options.Converters.Add(new EnumConverter<ValidationMode>());
-            return JsonSerializer.DeserializeAsync<ValidationConfigurableJsonProfile<T>>(stream, options)
+            return JsonSerializer.DeserializeAsync<JsonConfigValidationProfile<T>>(stream, options)
                 .GetAwaiter()
                 .GetResult();
         }));

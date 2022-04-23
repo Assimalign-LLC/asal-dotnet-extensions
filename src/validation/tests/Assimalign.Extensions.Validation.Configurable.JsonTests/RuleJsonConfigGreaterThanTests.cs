@@ -12,20 +12,18 @@ using Assimalign.Extensions.Validation;
 using Assimalign.Extensions.Validation.Configurable;
 
 
-
-public class RuleConfigurableJsonGreaterThanTests : RuleConfigurableJsonBaseTest
+public class RuleJsonConfigGreaterThanTests : RuleJsonConfigBaseTest
 {
     private readonly IValidator failure;
     private readonly IValidator success;
 
-    public RuleConfigurableJsonGreaterThanTests()
-    {
+    public RuleJsonConfigGreaterThanTests()
+    {      
         var configSuccess = File.ReadAllText("ConfigRules/ConfigRule.Success.json");
         var configFailure = File.ReadAllText("ConfigRules/ConfigRule.Failures.json");
 
         success = ValidationConfigurableBuilder.Create()
            .AddJsonSource<TestObject>(configSuccess)
-           .
            .Build()
            .ToValidator();
 
@@ -35,26 +33,10 @@ public class RuleConfigurableJsonGreaterThanTests : RuleConfigurableJsonBaseTest
            .ToValidator();
     }
 
-    public override void BooleanFailureTest()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void BooleanSuccessTest()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void DateOnlyFailureTest()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void DateOnlySuccessTest()
-    {
-        throw new NotImplementedException();
-    }
-
+    public override void BooleanFailureTest() => throw new NotImplementedException();
+    public override void BooleanSuccessTest() => throw new NotImplementedException();
+    public override void DateOnlyFailureTest() => throw new NotImplementedException();
+    public override void DateOnlySuccessTest() => throw new NotImplementedException();
     public override void DateTimeFailureTest()
     {
         throw new NotImplementedException();
@@ -97,14 +79,16 @@ public class RuleConfigurableJsonGreaterThanTests : RuleConfigurableJsonBaseTest
     {
         var results = failure.Validate(new TestObject()
         {
-            GuidProp = new Guid("557bf15a-1d82-ec11-b77c-000d3a19155f")
+            GuidProp = new Guid("d1d41b9b-3ec3-ec11-baab-3448edbf947e")
         });
         Assert.Contains(results.Errors, x => x.Code == "guid.gt.failure");
     }
 
+    [Fact]
     public override void GuidSuccessTest()
     {
-        throw new NotImplementedException();
+        var results = success.Validate(this.TestProp);
+        Assert.Empty(results.Errors);
     }
 
     [Fact]

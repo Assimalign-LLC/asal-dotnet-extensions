@@ -28,7 +28,7 @@ internal delegate bool ValidateCallback(object value, out IValidationContext con
 /// 
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
+public sealed class JsonConfigValidationRule<T> : IValidationRule
     where T : class
 {
     private ValidateCallback Validate;
@@ -45,7 +45,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
     /// 
     /// </summary>
     [JsonPropertyName("$error")]
-    public ValidationConfigurableJsonError Error { get; set; }
+    public JsonConfigValidationError Error { get; set; }
 
     /// <summary>
     /// This will store the parameter values used to run the validation rules.
@@ -634,7 +634,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
     {
         context = new ValidationContext<object>(value)
         {
-            Options = new Dictionary<string, object>()
+            
         };
 
         if (value is null)
@@ -649,7 +649,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
             {
                 var childContext = new ValidationContext<object>(value)
                 {
-                    Options = new Dictionary<string, object>()
+                    
                 };
 
                 item.Evaluate(childContext);
@@ -696,7 +696,6 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
     {
         var itemType = (ValidationConfigurableItemType)parameters.FirstOrDefault(x => x is ValidationConfigurableItemType);
         var itemExpression = parameters.FirstOrDefault(x => x is Expression<Func<T, object>>) as Expression<Func<T, object>>;
-        var itemValidationMode = (ValidationMode)parameters.FirstOrDefault(x => x is ValidationMode);
 
         this.Parameters ??= new Dictionary<string, object>();
 
@@ -729,13 +728,13 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                         throw new ValidationConfigurableJsonMissingParameterException("EqualTo", "$value", itemExpression);
                     }
                     this.Parameters["$value"] = this.GetJsonElementValue((JsonElement)this.Parameters["$value"], type);
-                    this.Error ??= new ValidationConfigurableJsonError()
+                    this.Error ??= new JsonConfigValidationError()
                     {
                         Code = Resources.DefaultValidationErrorCode,
                         Message = string.Format(Resources.DefaultValidationMessageEqualToRule, itemExpression, this.Parameters["$value"]),
                         Source = itemExpression.Body.ToString()
                     };
-                    this.Validate = TryValidateEqualTo;
+                    this.Validate = new ValidateCallback(TryValidateEqualTo);
                     break;
 
                 }
@@ -746,7 +745,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                         throw new ValidationConfigurableJsonMissingParameterException("NotEqualTo", $"value", itemExpression);
                     }
                     this.Parameters["$value"] = this.GetJsonElementValue((JsonElement)this.Parameters["$value"], type);
-                    this.Error ??= new ValidationConfigurableJsonError()
+                    this.Error ??= new JsonConfigValidationError()
                     {
                         Code = Resources.DefaultValidationErrorCode,
                         Message = string.Format(Resources.DefaultValidationMessageNotEqualToRule, itemExpression, this.Parameters["$value"]),
@@ -762,7 +761,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                     {
                         throw new ValidationConfigurableJsonInvalidEvaluationException(itemExpression, "Empty");
                     }
-                    this.Error ??= new ValidationConfigurableJsonError()
+                    this.Error ??= new JsonConfigValidationError()
                     {
                         Code = Resources.DefaultValidationErrorCode,
                         Message = string.Format(Resources.DefaultValidationMessageEmptyRule, itemExpression),
@@ -777,7 +776,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                     {
                         throw new ValidationConfigurableJsonInvalidEvaluationException(itemExpression, "NotEmpty");
                     }
-                    this.Error ??= new ValidationConfigurableJsonError()
+                    this.Error ??= new JsonConfigValidationError()
                     {
                         Code = Resources.DefaultValidationErrorCode,
                         Message = string.Format(Resources.DefaultValidationMessageNotEmptyRule, itemExpression),
@@ -798,7 +797,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                     }
                     this.Parameters["$lower"] = this.GetJsonElementValue((JsonElement)this.Parameters["$lower"], type);
                     this.Parameters["$upper"] = this.GetJsonElementValue((JsonElement)this.Parameters["$upper"], type);
-                    this.Error ??= new ValidationConfigurableJsonError()
+                    this.Error ??= new JsonConfigValidationError()
                     {
                         Code = Resources.DefaultValidationErrorCode,
                         Message = string.Format(Resources.DefaultValidationMessageBetweenRule, itemExpression, this.Parameters["$lower"], this.Parameters["$upper"]),
@@ -819,7 +818,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                     }
                     this.Parameters["$lower"] = this.GetJsonElementValue((JsonElement)this.Parameters["$lower"], type);
                     this.Parameters["$upper"] = this.GetJsonElementValue((JsonElement)this.Parameters["$upper"], type);
-                    this.Error ??= new ValidationConfigurableJsonError()
+                    this.Error ??= new JsonConfigValidationError()
                     {
                         Code = Resources.DefaultValidationErrorCode,
                         Message = string.Format(Resources.DefaultValidationMessageBetweenOrEqualToRule, itemExpression, this.Parameters["$lower"], this.Parameters["$upper"]),
@@ -839,7 +838,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                         throw new ValidationConfigurableJsonMissingParameterException("GreaterThan", "$value", itemExpression);
                     }
                     this.Parameters["$value"] = this.GetJsonElementValue((JsonElement)this.Parameters["$value"], type);
-                    this.Error ??= new ValidationConfigurableJsonError()
+                    this.Error ??= new JsonConfigValidationError()
                     {
                         Code = Resources.DefaultValidationErrorCode,
                         Message = string.Format(Resources.DefaultValidationMessageGreaterThanRule, itemExpression, this.Parameters["$value"]),
@@ -859,7 +858,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                         throw new ValidationConfigurableJsonMissingParameterException("GreaterThanOrEqualTo", "$value", itemExpression);
                     }
                     this.Parameters["$value"] = this.GetJsonElementValue((JsonElement)this.Parameters["$value"], type);
-                    this.Error ??= new ValidationConfigurableJsonError()
+                    this.Error ??= new JsonConfigValidationError()
                     {
                         Code = Resources.DefaultValidationErrorCode,
                         Message = string.Format(Resources.DefaultValidationMessageGreaterThanOrEqualToRule, itemExpression, this.Parameters["$value"]),
@@ -879,7 +878,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                         throw new ValidationConfigurableJsonMissingParameterException("LessThan", "$value", itemExpression);
                     }
                     this.Parameters["$value"] = this.GetJsonElementValue((JsonElement)this.Parameters["$value"], type);
-                    this.Error ??= new ValidationConfigurableJsonError()
+                    this.Error ??= new JsonConfigValidationError()
                     {
                         Code = Resources.DefaultValidationErrorCode,
                         Message = string.Format(Resources.DefaultValidationMessageLessThanRule, itemExpression, this.Parameters["$value"]),
@@ -899,7 +898,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                         throw new ValidationConfigurableJsonMissingParameterException("LessThanOrEqualTo", "$value", itemExpression);
                     }
                     this.Parameters["$value"] = this.GetJsonElementValue((JsonElement)this.Parameters["$value"], type);
-                    this.Error ??= new ValidationConfigurableJsonError()
+                    this.Error ??= new JsonConfigValidationError()
                     {
                         Code = Resources.DefaultValidationErrorCode,
                         Message = string.Format(Resources.DefaultValidationMessageLessThanOrEqualToRule, itemExpression, this.Parameters["$value"]),
@@ -918,7 +917,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                     {
                         throw new ValidationConfigurableJsonMissingParameterException("EmailAddress", "$value", itemExpression);
                     }
-                    this.Error ??= new ValidationConfigurableJsonError()
+                    this.Error ??= new JsonConfigValidationError()
                     {
                         Code = Resources.DefaultValidationErrorCode,
                         Message = string.Format(Resources.DefaultValidationMessageEmailAddressRule, itemExpression),
@@ -929,7 +928,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                 }
             case "Null":
                 {
-                    this.Error ??= new ValidationConfigurableJsonError()
+                    this.Error ??= new JsonConfigValidationError()
                     {
                         Code = Resources.DefaultValidationErrorCode,
                         Message = string.Format(Resources.DefaultValidationMessageNullRule, itemExpression),
@@ -940,7 +939,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                 }
             case "NotNull":
                 {
-                    this.Error ??= new ValidationConfigurableJsonError()
+                    this.Error ??= new JsonConfigValidationError()
                     {
                         Code = Resources.DefaultValidationErrorCode,
                         Message = string.Format(Resources.DefaultValidationMessageNotNullRule, itemExpression),
@@ -959,7 +958,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                     {
                         throw new ValidationConfigurableJsonMissingParameterException("Length", "$exact", itemExpression);
                     }
-                    this.Error ??= new ValidationConfigurableJsonError()
+                    this.Error ??= new JsonConfigValidationError()
                     {
                         Code = Resources.DefaultValidationErrorCode,
                         Message = string.Format(Resources.DefaultValidationMessageLengthRule, itemExpression),
@@ -995,7 +994,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                         throw new ValidationConfigurableJsonMissingParameterException("LengthMax", "$max", itemExpression);
                     }
                     this.Parameters["$max"] = this.GetJsonElementValue((JsonElement)this.Parameters["$max"], typeof(int));
-                    this.Error ??= new ValidationConfigurableJsonError()
+                    this.Error ??= new JsonConfigValidationError()
                     {
                         Code = Resources.DefaultValidationErrorCode,
                         Message = string.Format(Resources.DefaultValidationMessageMaxLengthRule, itemExpression, this.Parameters["$max"]),
@@ -1015,7 +1014,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                         throw new ValidationConfigurableJsonMissingParameterException("LengthMin", "$min", itemExpression);
                     }
                     this.Parameters["$min"] = this.GetJsonElementValue((JsonElement)this.Parameters["$min"], typeof(int));
-                    this.Error ??= new ValidationConfigurableJsonError()
+                    this.Error ??= new JsonConfigValidationError()
                     {
                         Code = Resources.DefaultValidationErrorCode,
                         Message = string.Format(Resources.DefaultValidationMessageMinLengthRule, itemExpression, this.Parameters["$min"]),
@@ -1032,7 +1031,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                     }
                     var element = (JsonElement)this.Parameters["$validationItems"];
                     var generic = typeof(IEnumerable<>).MakeGenericType(
-                        typeof(ValidationConfigurableJsonItem<>
+                        typeof(JsonConfigValidationItem<>
                     ).MakeGenericType(type));
                     var content = element.GetRawText();
                     var options = new JsonSerializerOptions();
@@ -1050,7 +1049,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                             {
                                 new object[]
                                 {
-                                    itemValidationMode
+                                    //itemValidationMode
                                 }
                             });
                     }
@@ -1066,7 +1065,7 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
                         throw new ValidationConfigurableJsonInvalidEvaluationException(itemExpression, "Matches");
                     }
                     this.Parameters["$pattern"] = this.GetJsonElementValue((JsonElement)this.Parameters["$pattern"], type);
-                    this.Error ??= new ValidationConfigurableJsonError()
+                    this.Error ??= new JsonConfigValidationError()
                     {
                         Code = Resources.DefaultValidationErrorCode,
                         Message = string.Format(Resources.DefaultValidationMessageMatchesRule, itemExpression, this.Parameters["$pattern"]),
@@ -1100,11 +1099,10 @@ public sealed class ValidationConfigurableJsonRule<T> : IValidationRule
             "DateTimeOffset" => element.GetDateTimeOffset(),
             "TimeSpan" => TimeSpan.Parse(element.GetString()),
             //"Char" => element.GetByte(),
-#if NET6_0_OR_GREATER
+
             "DateOnly" => DateOnly.Parse(element.GetString()),
             "TimeOnly" => DateOnly.Parse(element.GetString()),
             "Half" => Half.Parse(element.GetString()),
-#endif
             "Guid" => element.GetGuid(),
             "String" => element.GetString(),
             _ => null

@@ -1,0 +1,15 @@
+{
+    "$schema": "../schemas/v1.0/validation.configurable.json",
+    "$validationItems": [
+        {
+            "$itemMember": "",
+            "$itemType": "recursive",
+            "$itemRules": [
+                {
+                    "$rule": "EqualTo",
+                    "$value": true
+                }
+            ]
+        }
+    ]
+}

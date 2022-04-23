@@ -3,7 +3,7 @@
 namespace Assimalign.Extensions.Validation.Configurable.JsonTests;
 
 
-public abstract class RuleConfigurableJsonBaseTest
+public abstract class RuleJsonConfigBaseTest
 {
     public TestObject TestProp => new TestObject();
     public partial class TestObject
@@ -25,7 +25,7 @@ public abstract class RuleConfigurableJsonBaseTest
         public TimeOnly TimeProp { get; set; }
 #endif
         public string StringProp { get; set; }
-        public Guid GuidProp { get; set; }
+        public Guid GuidProp { get; set; } = new Guid("d3d41b9b-3ec3-ec11-baab-3448edbf947e");
         public bool BooleanProp { get; set; }
 
     }

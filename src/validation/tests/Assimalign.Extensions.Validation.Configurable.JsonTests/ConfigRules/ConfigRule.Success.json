@@ -1,7 +1,5 @@
 {
-	"$schema": "C:\\source\\repos\\assimalign\\asal.1.0\\github\\asal-dotnet-extensions\\src\\validation\\schemas\\v1.0\\validation.configurable.json",
-	"$description": "",
-	"$validationMode": "cascade",
+	"$schema": "..\\..\\..\\schemas\\v1.0\\validation.configurable.json",
 	"$validationItems": [
 		{
 			"$itemMember": "IntProp",
@@ -64,7 +62,7 @@
 			"$itemRules": [
 				{
 					"$rule": "GreaterThan",
-					"$value": "557bf15a-1d82-ec11-b77c-000d3a19155f"
+					"$value": "d2d41b9b-3ec3-ec11-baab-3448edbf947e"
 				}
 			]
 		}

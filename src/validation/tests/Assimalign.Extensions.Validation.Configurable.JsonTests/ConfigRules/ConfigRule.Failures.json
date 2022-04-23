@@ -1,12 +1,10 @@
 {
 
 	"$schema": "https://schemas.assimalign.com/json/validation/v1.0/validation.configurable.json",
-	"$description": "",
-	"$validationMode": "cascade",
 	"$validationItems": [
 		{
 			"$itemMember": "UIntProp",
-			"$itemType": "",
+			"$itemType": "inline",
 			"$itemRules": [
 				{
 					"$rule": "GreaterThan",
@@ -18,10 +16,6 @@
 					"$value": 5
 				}
 			]
-		},
-		{
-			"$itemMember": "",
-			"$itemType": "inline"
 		},
 		{
 			"$itemMember": "UShortProp",
@@ -116,7 +110,7 @@
 						"$code": "guid.gt.failure",
 						"$message": "Test error msg"
 					},
-					"$value": "567bf15a-1d82-ec11-b77c-000d3a19155f"
+					"$value": "d2d41b9b-3ec3-ec11-baab-3448edbf947e"
 				}
 			]
 		}

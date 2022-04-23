@@ -38,6 +38,6 @@
 		<ProjectReference Include="..\..\src\Assimalign.Extensions.Validation.Configurable.Json\Assimalign.Extensions.Validation.Configurable.Json.csproj" />
 	</ItemGroup>
 
-	<ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+	<ProjectExtensions><VisualStudio><UserProperties configrules_4configrule_1success_1json__JsonSchema="..\\schemas\\v1.0\\validation.configurable.json" /></VisualStudio></ProjectExtensions>
 
 </Project>

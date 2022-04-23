@@ -14,35 +14,29 @@ namespace Assimalign.Extensions.Validation.Configurable;
 /// 
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public sealed class ValidationConfigurableJsonItem<T> : IValidationItem
+public sealed class JsonConfigValidationItem<T> : IValidationItem
     where T : class
 {
-    private ValidationMode validationMode;
     private Func<T, bool> itemCondition;
     private Func<T, object> itemMember;
     private Expression<Func<T, object>> itemMemberExpression;
-    IValidationRuleStack IValidationItem.ItemRuleStack => new ValidationRuleStack(this.ItemRuleStack);
-
-
+   
     /// <summary>
     /// 
     /// </summary>
     [JsonPropertyName("$itemMember")]
     public string ItemMember { get; set; }
-
     /// <summary>
     /// 
     /// </summary>
     [JsonPropertyName("$itemType")]
     public ValidationConfigurableItemType ItemType { get; set; }
-
     /// <summary>
     /// 
     /// </summary>
     [JsonPropertyName("$itemRules")]
-    public Stack<ValidationConfigurableJsonRule<T>> ItemRuleStack { get; set; }
-   
-
+    public Stack<JsonConfigValidationRule<T>> ItemRuleStack { get; set; }
+    IValidationRuleStack IValidationItem.ItemRuleStack => new ValidationRuleStack(this.ItemRuleStack);
 
     /// <summary>
     /// 
@@ -77,7 +71,7 @@ public sealed class ValidationConfigurableJsonItem<T> : IValidationItem
 
         foreach (var rule in ItemRuleStack)
         {
-            if (this.validationMode == ValidationMode.Stop && context.Errors.Any())
+            if (context.ValidationMode == ValidationMode.Stop && context.Errors.Any())
             {
                 return;
             }
@@ -115,7 +109,7 @@ public sealed class ValidationConfigurableJsonItem<T> : IValidationItem
 
                 foreach (var rule in ItemRuleStack)
                 {
-                    if (this.validationMode == ValidationMode.Stop && context.Errors.Any())
+                    if (context.ValidationMode == ValidationMode.Stop && context.Errors.Any())
                     {
                         return;
                     }
@@ -158,16 +152,11 @@ public sealed class ValidationConfigurableJsonItem<T> : IValidationItem
     {
         foreach (var parameter in parameters)
         {
-            if (parameter is ValidationMode validationMode)
-            {
-                this.validationMode = validationMode;
-            }
             if (parameter is Expression<Func<T, bool>> itemCondition)
             {
                 this.itemCondition = itemCondition.Compile();
             }
         }
-
         if (this.itemMemberExpression is null)
         {
             var parameterExpression = Expression.Parameter(typeof(T));
@@ -191,7 +180,7 @@ public sealed class ValidationConfigurableJsonItem<T> : IValidationItem
 
             foreach (var rule in this.ItemRuleStack)
             {
-                rule.Configure(itemMemberExpression, ItemType, validationMode);
+                rule.Configure(itemMemberExpression, ItemType);
             }
         }
     }

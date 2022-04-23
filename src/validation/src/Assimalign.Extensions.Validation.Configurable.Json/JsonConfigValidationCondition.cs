@@ -15,23 +15,21 @@ using Assimalign.Extensions.Validation.Configurable.Internal.Extensions;
 /// 
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public sealed class ValidationConfigurableJsonConditionItem<T> : IValidationCondition
+public sealed class JsonConfigValidationCondition<T> : IValidationCondition
     where T : class
 {
-    IValidationItemStack IValidationCondition.ValidationItems => new ValidationItemStack(this.ValidationItems);
-
-
     /// <summary>
     /// Represents a set of Conditions to run against <typeparamref name="T"/>.
     /// </summary>
-    [JsonPropertyName("$predicate")]
-    public ValidationConfigurableJsonPredicate<T> Predicate { get; set; }
+    [JsonPropertyName("$validationPredicate")]
+    public JsonConfigValidationConditionPredicate<T> Predicate { get; set; }
 
     /// <summary>
     /// The items to be validated if the condition is true.
     /// </summary>
     [JsonPropertyName("$validationItems")]
-    public IEnumerable<ValidationConfigurableJsonItem<T>> ValidationItems { get; set; }
+    public IEnumerable<JsonConfigValidationItem<T>> ValidationItems { get; set; }
+    IValidationItemStack IValidationCondition.ValidationItems => new ValidationItemStack(this.ValidationItems);
 
 
     /// <summary>
@@ -53,10 +51,10 @@ public sealed class ValidationConfigurableJsonConditionItem<T> : IValidationCond
     /// <param name="conditionItem"></param>
     /// <param name="parameter"></param>
     /// <returns></returns>
-    private Expression GetLambdaExpressionBody(ValidationConfigurableJsonConditionItem<T> conditionItem, Expression parameter)
+    private Expression GetLambdaExpressionBody(JsonConfigValidationCondition<T> conditionItem, Expression parameter)
     {
-        conditionItem.Predicate.And ??= new List<ValidationConfigurableJsonConditionItem<T>>();
-        conditionItem.Predicate.Or ??= new List<ValidationConfigurableJsonConditionItem<T>>();
+        conditionItem.Predicate.And ??= new List<JsonConfigValidationCondition<T>>();
+        conditionItem.Predicate.Or ??= new List<JsonConfigValidationCondition<T>>();
 
         // Represent a Parent expression to reference for any child expression
         Expression parent = null;
@@ -118,15 +116,13 @@ public sealed class ValidationConfigurableJsonConditionItem<T> : IValidationCond
         return BuildLambdaExpressionBody(conditionItem, parameter);
     }
 
-
-
     /// <summary>
     /// Builds a chained or member expression evaluation.
     /// </summary>
     /// <param name="condition"></param>
     /// <param name="expression"></param>
     /// <returns></returns>
-    private Expression BuildLambdaExpressionBody(ValidationConfigurableJsonConditionItem<T> condition, Expression expression)
+    private Expression BuildLambdaExpressionBody(JsonConfigValidationCondition<T> condition, Expression expression)
     {
         // Check if Expression is ParameterExpression (Only Parameter Expressions should be passed at this point)
         if (expression is ParameterExpression parameter)
@@ -204,17 +200,17 @@ public sealed class ValidationConfigurableJsonConditionItem<T> : IValidationCond
 
             switch (condition.Predicate.Operator)
             {
-                case OperatorType.EQ:
+                case JsonConfigOperatorType.EQ:
                     return Expression.Equal(expression, constant);
-                case OperatorType.NE:
+                case JsonConfigOperatorType.NE:
                     return Expression.NotEqual(expression, constant);
-                case OperatorType.GT:
+                case JsonConfigOperatorType.GT:
                     return Expression.GreaterThan(expression, constant);
-                case OperatorType.GTE:
+                case JsonConfigOperatorType.GTE:
                     return Expression.GreaterThanOrEqual(expression, constant);
-                case OperatorType.LT:
+                case JsonConfigOperatorType.LT:
                     return Expression.LessThan(expression, constant);
-                case OperatorType.LTE:
+                case JsonConfigOperatorType.LTE:
                     return Expression.LessThanOrEqual(expression, constant);
                 default:
                     return null;
@@ -305,17 +301,17 @@ public sealed class ValidationConfigurableJsonConditionItem<T> : IValidationCond
             // Return an operator expression
             switch (condition.Predicate.Operator)
             {
-                case OperatorType.EQ:
+                case JsonConfigOperatorType.EQ:
                     return Expression.Equal(expression, constant);
-                case OperatorType.NE:
+                case JsonConfigOperatorType.NE:
                     return Expression.NotEqual(expression, constant);
-                case OperatorType.GT:
+                case JsonConfigOperatorType.GT:
                     return Expression.GreaterThan(expression, constant);
-                case OperatorType.GTE:
+                case JsonConfigOperatorType.GTE:
                     return Expression.GreaterThanOrEqual(expression, constant);
-                case OperatorType.LT:
+                case JsonConfigOperatorType.LT:
                     return Expression.LessThan(expression, constant);
-                case OperatorType.LTE:
+                case JsonConfigOperatorType.LTE:
                     return Expression.LessThanOrEqual(expression, constant);
                 default:
                     return null;

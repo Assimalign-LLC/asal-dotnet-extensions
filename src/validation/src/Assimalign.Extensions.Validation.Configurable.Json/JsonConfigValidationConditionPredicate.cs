@@ -10,20 +10,20 @@ using Assimalign.Extensions.Validation.Configurable.Serialization;
 /// 
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public sealed class ValidationConfigurableJsonPredicate<T>
+public sealed class JsonConfigValidationConditionPredicate<T>
     where T : class
 {
     /// <summary>
     /// 
     /// </summary>
     [JsonPropertyName("$and")]
-    public IEnumerable<ValidationConfigurableJsonConditionItem<T>> And { get; set; }
+    public IEnumerable<JsonConfigValidationCondition<T>> And { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
     [JsonPropertyName("$or")]
-    public IEnumerable<ValidationConfigurableJsonConditionItem<T>> Or { get; set; }
+    public IEnumerable<JsonConfigValidationCondition<T>> Or { get; set; }
 
     /// <summary>
     /// 
@@ -35,7 +35,7 @@ public sealed class ValidationConfigurableJsonPredicate<T>
     /// 
     /// </summary>
     [JsonPropertyName("$operator")]
-    public OperatorType Operator { get; set; }
+    public JsonConfigOperatorType Operator { get; set; }
 
     /// <summary>
     /// 

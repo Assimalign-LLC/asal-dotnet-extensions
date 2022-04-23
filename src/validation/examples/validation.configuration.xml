@@ -1,0 +1,24 @@
+<validation>
+    <validation-conditions>
+        <validation-condition>
+
+            <validation-items>
+                <validation-item>
+                    <item-member>FirstName</item-member>
+                    <item-type></item-type>
+                    <item-rules>
+                        <item-rule>
+
+                        </item-rule>
+                    </item-rules>
+                </validation-item>
+            </validation-items>
+        </validation-condition>
+    </validation-conditions>
+    <validation-items>
+        <validation-item>
+
+        </validation-item>
+    </validation-items>
+
+</validation>

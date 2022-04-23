@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 //namespace Assimalign.Extensions.Validation.Configurable.Builder
 //{
-//    public class ValidationJsonBuilder
+//    public class JsonConfigValidationBuilder
 //    {
 
 //    }

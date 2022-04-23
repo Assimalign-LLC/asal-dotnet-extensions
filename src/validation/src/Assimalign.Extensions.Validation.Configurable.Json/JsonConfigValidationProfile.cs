@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
@@ -14,46 +11,54 @@ using Assimalign.Extensions.Validation.Configurable.Internal.Exceptions;
 /// 
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public sealed class ValidationConfigurableJsonProfile<T> : IValidationProfile
+public sealed class JsonConfigValidationProfile<T> : IValidationProfile
     where T : class
 {
     private bool isConfigured;
-    private readonly ValidationItemStack validationItems = new();
-    Type IValidationProfile.ValidationType => typeof(T);
-    IValidationItemStack IValidationProfile.ValidationItems => this.validationItems;
 
     /// <summary>
     /// The default constructor for Validation Configurable JSON.
     /// </summary>
     [JsonConstructor]
-    public ValidationConfigurableJsonProfile()
+    public JsonConfigValidationProfile()
     {
-        this.ValidationItems ??= new List<ValidationConfigurableJsonItem<T>>();
-        this.ValidationConditions ??= new List<ValidationConfigurableJsonConditionItem<T>>();
+        this.ValidationItems ??= new List<JsonConfigValidationItem<T>>();
+        this.ValidationConditions ??= new List<JsonConfigValidationCondition<T>>();
     }
+
+    /// <summary>
+    /// A user friendly description for documentation purposes.
+    /// </summary>
+    [JsonPropertyName("$description")]
+    public string Description { get; set; }
 
     /// <summary>
     /// 
     /// </summary>
-    [JsonPropertyName("$description")]
-    public string Description { get; set; }
-    
+    /// <remarks>
+    /// This property is ignored on deserialization.
+    /// </remarks>
+    [JsonIgnore]
+    public Type ValidationType => typeof(T);
+
     /// <summary>
-    /// 
+    /// A collection of items to 
     /// </summary>
     [JsonPropertyName("$validationItems")]
-    public IEnumerable<ValidationConfigurableJsonItem<T>> ValidationItems { get; set; }
+    public IEnumerable<JsonConfigValidationItem<T>> ValidationItems { get; set; }
+    IValidationItemStack IValidationProfile.ValidationItems { get; } = new ValidationItemStack();
 
     /// <summary>
     /// 
     /// </summary>
     [JsonPropertyName("$validationConditions")]
-    public IEnumerable<ValidationConfigurableJsonConditionItem<T>> ValidationConditions { get; set; }
+    public IEnumerable<JsonConfigValidationCondition<T>> ValidationConditions { get; set; }
 
 
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="descriptor"></param>
     public void Configure(IValidationRuleDescriptor descriptor)
     {
         if (isConfigured)
@@ -68,25 +73,22 @@ public sealed class ValidationConfigurableJsonProfile<T> : IValidationProfile
 
                 foreach (var validationItem in validationCondition.ValidationItems)
                 {
-                    validationItem.Configure(condition, this.ValidationMode);
-
+                    validationItem.Configure(condition);
                     descriptor.RuleFor(validationItem);
                 }
             }
-
             foreach (var validationItem in this.ValidationItems)
             {
-                validationItem.Configure(this.ValidationMode);
-                
+                validationItem.Configure();
                 descriptor.RuleFor(validationItem);
             }
 
-            isConfigured = true; // Let's set this so some idiot doesn't try to call this more than once
+            isConfigured = true; // Let's set this so someone doesn't try to call this more than once
         }
         catch (Exception exception) when (exception is not ValidationConfigurableException)
         {
             throw ValidationConfigurableJsonInternalException.FromException(
-                message: $"An un-handled exception was thrown while configuring {nameof(ValidationConfigurableJsonProfile<T>)}.", 
+                message: $"An unhandled exception was thrown while configuring {nameof(JsonConfigValidationProfile<T>)}.", 
                 exception: exception);
         }        
     }
