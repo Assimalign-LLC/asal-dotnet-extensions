@@ -3,7 +3,6 @@
 		<EnableDefaultItems>true</EnableDefaultItems>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\options\src\Assimalign.Extensions.Options\Assimalign.Extensions.Options.csproj" />
 		<ProjectReference Include="..\..\..\logging\src\Assimalign.Extensions.Logging\Assimalign.Extensions.Logging.csproj" />
 		<ProjectReference Include="..\..\..\logging\src\Assimalign.Extensions.Logging.Configuration\Assimalign.Extensions.Logging.Configuration.csproj" />
 		<ProjectReference Include="..\..\..\di\src\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj" />

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Assimalign.Extensions.Options
+namespace Assimalign.Extensions.DependencyInjection
 {
-    using Assimalign.Extensions.Options;
-    using Assimalign.Extensions.Options;
+    using Assimalign.Extensions.DependencyInjection;
+    using Assimalign.Extensions.DependencyInjection;
     using Assimalign.Extensions.Configuration;
     using Assimalign.Extensions.Configuration;
     using Assimalign.Extensions.DependencyInjection;

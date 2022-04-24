@@ -44,18 +44,17 @@ namespace Assimalign.Extensions.DependencyInjection
 
 		public static void TryAdd(this IServiceCollection collection, ServiceDescriptor descriptor)
 		{
-			ServiceDescriptor descriptor2 = descriptor;
-			if (collection == null)
+			if (collection is null)
 			{
 				throw new ArgumentNullException("collection");
 			}
-			if (descriptor2 == null)
+			if (descriptor is null)
 			{
 				throw new ArgumentNullException("descriptor");
 			}
-			if (!collection.Any((ServiceDescriptor d) => d.ServiceType == descriptor2.ServiceType))
+			if (!collection.Any((ServiceDescriptor serviceDescriptor) => serviceDescriptor.ServiceType == descriptor.ServiceType))
 			{
-				collection.Add(descriptor2);
+				collection.Add(descriptor);
 			}
 		}
 

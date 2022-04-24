@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace Assimalign.Extensions.DependencyInjection;
 
 /// <summary>

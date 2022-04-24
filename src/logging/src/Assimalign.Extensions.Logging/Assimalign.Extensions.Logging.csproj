@@ -3,7 +3,6 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\..\..\options\src\Assimalign.Extensions.Options\Assimalign.Extensions.Options.csproj" />
         <ProjectReference Include="..\..\..\configuration\src\Assimalign.Extensions.Configuration\Assimalign.Extensions.Configuration.csproj" />
         <ProjectReference Include="..\..\..\di\src\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj" />
     </ItemGroup>

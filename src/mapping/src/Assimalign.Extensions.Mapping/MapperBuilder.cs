@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Assimalign.Extensions.Mapping;
 
@@ -8,7 +8,6 @@ using Assimalign.Extensions.Mapping.Internal;
 
 public sealed class MapperBuilder
 {
-
     public MapperBuilder()
     {
         this.Options = new MapperOptions();

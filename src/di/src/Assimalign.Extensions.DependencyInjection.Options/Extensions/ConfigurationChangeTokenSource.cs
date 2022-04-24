@@ -4,56 +4,54 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.Options
+namespace Assimalign.Extensions.DependencyInjection;
+
+using Assimalign.Extensions.Configuration;
+using Assimalign.Extensions.Primitives;
+
+/// <summary>
+/// Creates <see cref="IStateToken"/>s so that <see cref="IOptionsMonitor{TOptions}"/> gets
+/// notified when <see cref="IConfiguration"/> changes.
+/// </summary>
+/// <typeparam name="TOptions"></typeparam>
+public class ConfigurationChangeTokenSource<TOptions> : IOptionsChangeTokenSource<TOptions>
+    where TOptions : class
 {
-    using Assimalign.Extensions.Configuration;
-    using Assimalign.Extensions.Primitives;
-    using Assimalign.Extensions.Options;
+    private IConfiguration _config;
 
     /// <summary>
-    /// Creates <see cref="IStateToken"/>s so that <see cref="IOptionsMonitor{TOptions}"/> gets
-    /// notified when <see cref="IConfiguration"/> changes.
+    /// Constructor taking the <see cref="IConfiguration"/> instance to watch.
     /// </summary>
-    /// <typeparam name="TOptions"></typeparam>
-    public class ConfigurationChangeTokenSource<TOptions> : IOptionsChangeTokenSource<TOptions>
-        where TOptions : class
+    /// <param name="config">The configuration instance.</param>
+    public ConfigurationChangeTokenSource(IConfiguration config) : this(Options<TOptions>.DefaultName, config)
+    { }
+
+    /// <summary>
+    /// Constructor taking the <see cref="IConfiguration"/> instance to watch.
+    /// </summary>
+    /// <param name="name">The name of the options instance being watched.</param>
+    /// <param name="config">The configuration instance.</param>
+    public ConfigurationChangeTokenSource(string name, IConfiguration config)
     {
-        private IConfiguration _config;
-
-        /// <summary>
-        /// Constructor taking the <see cref="IConfiguration"/> instance to watch.
-        /// </summary>
-        /// <param name="config">The configuration instance.</param>
-        public ConfigurationChangeTokenSource(IConfiguration config) : this(Options<TOptions>.DefaultName, config)
-        { }
-
-        /// <summary>
-        /// Constructor taking the <see cref="IConfiguration"/> instance to watch.
-        /// </summary>
-        /// <param name="name">The name of the options instance being watched.</param>
-        /// <param name="config">The configuration instance.</param>
-        public ConfigurationChangeTokenSource(string name, IConfiguration config)
+        if (config == null)
         {
-            if (config == null)
-            {
-                throw new ArgumentNullException(nameof(config));
-            }
-            _config = config;
-            Name = name ?? Options<TOptions>.DefaultName;
+            throw new ArgumentNullException(nameof(config));
         }
+        _config = config;
+        Name = name ?? Options<TOptions>.DefaultName;
+    }
 
-        /// <summary>
-        /// The name of the option instance being changed.
-        /// </summary>
-        public string Name { get; }
+    /// <summary>
+    /// The name of the option instance being changed.
+    /// </summary>
+    public string Name { get; }
 
-        /// <summary>
-        /// Returns the reloadToken from the <see cref="IConfiguration"/>.
-        /// </summary>
-        /// <returns></returns>
-        public IStateToken GetChangeToken()
-        {
-            return _config.GetReloadToken();
-        }
+    /// <summary>
+    /// Returns the reloadToken from the <see cref="IConfiguration"/>.
+    /// </summary>
+    /// <returns></returns>
+    public IStateToken GetChangeToken()
+    {
+        return _config.GetReloadToken();
     }
 }

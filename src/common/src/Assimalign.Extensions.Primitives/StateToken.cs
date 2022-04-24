@@ -19,7 +19,7 @@ public static class StateToken
     /// <returns></returns>
     public static IDisposable OnChange(Func<IStateToken> changeTokenProducer, Action changeTokenConsumer)
     {
-        System.
+     
         if (changeTokenProducer == null)
         {
             throw new ArgumentNullException(nameof(changeTokenProducer));

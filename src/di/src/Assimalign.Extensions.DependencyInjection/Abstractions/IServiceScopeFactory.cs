@@ -1,6 +1,4 @@
-﻿
-
-namespace Assimalign.Extensions.DependencyInjection;
+﻿namespace Assimalign.Extensions.DependencyInjection;
 
 /// <summary>
 /// A factory for creating instances of <see cref="IServiceScope"/>, which is used to create

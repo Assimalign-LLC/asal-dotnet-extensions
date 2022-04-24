@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\net\src\Assimalign.Extensions.Net.Http\Assimalign.Extensions.Net.Http.csproj" />
+    <ProjectReference Include="..\Assimalign.Extensions.DependencyInjection.Options\Assimalign.Extensions.DependencyInjection.Options.csproj" />
     <ProjectReference Include="..\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj" />
   </ItemGroup>
 	<PropertyGroup>

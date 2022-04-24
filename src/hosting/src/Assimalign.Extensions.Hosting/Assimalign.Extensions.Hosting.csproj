@@ -4,7 +4,6 @@
 		<ProjectReference Include="..\..\..\configuration\src\Assimalign.Extensions.Configuration.FileExtensions\Assimalign.Extensions.Configuration.FileExtensions.csproj" />
 		<ProjectReference Include="..\..\..\di\src\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj" />
 		<ProjectReference Include="..\..\..\logging\src\Assimalign.Extensions.Logging\Assimalign.Extensions.Logging.csproj" />
-		<ProjectReference Include="..\..\..\options\src\Assimalign.Extensions.Options\Assimalign.Extensions.Options.csproj" />
 		<ProjectReference Include="..\..\..\file\src\Assimalign.Extensions.FileProviders\Assimalign.Extensions.FileProviders.csproj" />
 	</ItemGroup>
 	<ItemGroup>

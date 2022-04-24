@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.Options
+namespace Assimalign.Extensions.DependencyInjection
 {
-    using Assimalign.Extensions.Options;
+    using Assimalign.Extensions.DependencyInjection;
 
     internal sealed class UnnamedOptionsManager<TOptions> :
        IOptions<TOptions>
@@ -18,6 +18,9 @@ namespace Assimalign.Extensions.Options
         private volatile TOptions _value;
 
         public UnnamedOptionsManager(IOptionsFactory<TOptions> factory) => _factory = factory;
+
+
+        public string Name { get; }
 
         public TOptions Value
         {

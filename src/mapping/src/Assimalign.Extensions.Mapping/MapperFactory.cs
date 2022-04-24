@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Mapping;
 
@@ -22,6 +19,7 @@ public sealed class MapperFactory : IMapperFactory
     }
 
 
+    /// <inheritdoc />
     public IMapper Create(string mapperName, IMapperProfileBuilder builder)
     {
         return mappers.GetOrAdd(mapperName, new Mapper(builder.Build(), new MapperOptions()));
@@ -38,7 +36,8 @@ public sealed class MapperFactory : IMapperFactory
             return new Mapper(builder.Build(), options);
         });
     }
-
+    
+    /// <inheritdoc />
     public IMapper Create(string mapperName, Action<IMapperProfileBuilder> configure)
     {
         return mappers.GetOrAdd(mapperName, name =>
@@ -63,7 +62,8 @@ public sealed class MapperFactory : IMapperFactory
             return new Mapper(builder.Build(), options);
         });
     }
-
+    /
+    // <inheritdoc />
     public IMapper Create(string mapperName, IEnumerable<IMapperProfile> profiles)
     {
         return mappers.GetOrAdd(mapperName, new Mapper(profiles, new MapperOptions()));

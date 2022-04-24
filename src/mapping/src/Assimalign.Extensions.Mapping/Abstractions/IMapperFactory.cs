@@ -9,7 +9,7 @@ namespace Assimalign.Extensions.Mapping;
 public interface IMapperFactory
 {
     /// <summary>
-    /// 
+    /// Creates a mapper
     /// </summary>
     /// <param name="mapperName"></param>
     /// <param name="builder"></param>
@@ -20,7 +20,7 @@ public interface IMapperFactory
     /// 
     /// </summary>
     /// <param name="mapperName"></param>
-    /// <param name="builder"></param>
+    /// <param name="configure"></param>
     /// <returns></returns>
     IMapper Create(string mapperName, Action<IMapperProfileBuilder> configure);
 

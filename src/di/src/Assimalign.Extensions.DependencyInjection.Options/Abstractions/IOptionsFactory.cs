@@ -1,17 +1,16 @@
 ﻿
 
-namespace Assimalign.Extensions.Options.Abstractions
+namespace Assimalign.Extensions.DependencyInjection;
+
+/// <summary>
+/// Used to create <typeparamref name="TOptions"/> instances.
+/// </summary>
+/// <typeparam name="TOptions">The type of options being requested.</typeparam>
+public interface IOptionsFactory<TOptions>
+    where TOptions : class
 {
     /// <summary>
-    /// Used to create <typeparamref name="TOptions"/> instances.
+    /// Returns a configured <typeparamref name="TOptions"/> instance with the given name.
     /// </summary>
-    /// <typeparam name="TOptions">The type of options being requested.</typeparam>
-    public interface IOptionsFactory<TOptions>
-        where TOptions : class
-    {
-        /// <summary>
-        /// Returns a configured <typeparamref name="TOptions"/> instance with the given name.
-        /// </summary>
-        TOptions Create(string name);
-    }
+    TOptions Create(string name);
 }

@@ -4,19 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.Options
+namespace Assimalign.Extensions.DependencyInjection
 {
-    using Assimalign.Extensions.Options;
+    using Assimalign.Extensions.DependencyInjection;
 
     /// <summary>
-    /// Implementation of <see cref="IPostConfigureOptions{TOptions}"/>.
+    /// Implementation of <see cref="IOptionsPostConfiguration{TOptions}"/>.
     /// </summary>
     /// <typeparam name="TOptions">Options type being configured.</typeparam>
     /// <typeparam name="TDep1">First dependency type.</typeparam>
     /// <typeparam name="TDep2">Second dependency type.</typeparam>
     /// <typeparam name="TDep3">Third dependency type.</typeparam>
     /// <typeparam name="TDep4">Fourth dependency type.</typeparam>
-    public class PostConfigureOptions<TOptions, TDep1, TDep2, TDep3, TDep4> : IPostConfigureOptions<TOptions>
+    public class PostConfigureOptions<TOptions, TDep1, TDep2, TDep3, TDep4> : IOptionsPostConfiguration<TOptions>
         where TOptions : class
         where TDep1 : class
         where TDep2 : class
