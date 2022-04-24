@@ -53,7 +53,7 @@ public class ConfigurationChainedProvider : IConfigurationProvider, IDisposable
     /// Returns a change token if this provider supports change tracking, null otherwise.
     /// </summary>
     /// <returns>The change token.</returns>
-    public IStateToken GetReloadToken() => configuration.GetReloadToken();
+    public IChangeToken GetReloadToken() => configuration.GetReloadToken();
 
     /// <summary>
     /// Loads configuration values from the source represented by this <see cref="IConfigurationProvider"/>.

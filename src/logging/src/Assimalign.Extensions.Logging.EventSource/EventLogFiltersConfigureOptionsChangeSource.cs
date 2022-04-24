@@ -13,7 +13,7 @@ namespace Assimalign.Extensions.Logging
             _eventSource = eventSource;
         }
 
-        public IStateToken GetChangeToken() => _eventSource.GetFilterChangeToken();
+        public IChangeToken GetChangeToken() => _eventSource.GetFilterChangeToken();
 
         public string Name { get; }
     }

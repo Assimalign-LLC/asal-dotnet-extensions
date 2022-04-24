@@ -2,10 +2,14 @@
 	<PropertyGroup>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<Description>
 			
 		</Description>
 	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="SequenceGuid.cs" />
+	</ItemGroup>
 	<ItemGroup>
 		<None Include="..\..\..\..\.assimalign.logo.png">
 			<Pack>True</Pack>

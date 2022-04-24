@@ -35,7 +35,7 @@ public class OptionsMonitor<TOptions> :
 
         void RegisterSource(IOptionsChangeTokenSource<TOptions> source)
         {
-            IDisposable registration = StateToken.OnChange(
+            IDisposable registration = ChangeToken.OnChange(
                       () => source.GetChangeToken(),
                       (name) => InvokeChanged(name),
                       source.Name);

@@ -99,10 +99,10 @@ public abstract class ConfigurationProvider : IConfigurationProvider
     }
 
     /// <summary>
-    /// Returns a <see cref="IStateToken"/> that can be used to listen when this provider is reloaded.
+    /// Returns a <see cref="IChangeToken"/> that can be used to listen when this provider is reloaded.
     /// </summary>
-    /// <returns>The <see cref="IStateToken"/>.</returns>
-    public IStateToken GetReloadToken()
+    /// <returns>The <see cref="IChangeToken"/>.</returns>
+    public IChangeToken GetReloadToken()
     {
         return _reloadToken;
     }

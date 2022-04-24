@@ -29,7 +29,7 @@ public class ConfigurationRoot : IConfigurationRoot, IDisposable
         foreach (IConfigurationProvider provider in providers)
         {
             provider.Load();
-            changeTokenRegistrations.Add(StateToken.OnChange(() => provider.GetReloadToken(), () => RaiseChanged()));
+            changeTokenRegistrations.Add(ChangeToken.OnChange(() => provider.GetReloadToken(), () => RaiseChanged()));
         }
     }
 
@@ -56,10 +56,10 @@ public class ConfigurationRoot : IConfigurationRoot, IDisposable
     public IEnumerable<IConfigurationSection> GetChildren() => this.GetChildrenImplementation(null);
 
     /// <summary>
-    /// Returns a <see cref="IStateToken"/> that can be used to observe when this configuration is reloaded.
+    /// Returns a <see cref="IChangeToken"/> that can be used to observe when this configuration is reloaded.
     /// </summary>
-    /// <returns>The <see cref="IStateToken"/>.</returns>
-    public IStateToken GetReloadToken() => changeToken;
+    /// <returns>The <see cref="IChangeToken"/>.</returns>
+    public IChangeToken GetReloadToken() => changeToken;
 
     /// <summary>
     /// Gets a configuration sub-section with the specified key.

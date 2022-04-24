@@ -47,13 +47,13 @@ public static class FileMatcherExtensions
     /// <param name="matcher">The matcher</param>
     /// <param name="directoryPath">The root directory for the search</param>
     /// <returns>Absolute file paths of all files matched. Empty enumerable if no files matched given patterns.</returns>
-    public static IEnumerable<string> GetResultsInFullPath(this FilePatternMatcher matcher, string directoryPath)
-    {
-        IEnumerable<FilePatternMatch> matches = matcher.Execute(new FileDirectoryInfo(new DirectoryInfo(directoryPath))).Files;
-        string[] result = matches.Select(match => Path.GetFullPath(Path.Combine(directoryPath, match.Path))).ToArray();
+    //public static IEnumerable<string> GetResultsInFullPath(this FilePatternMatcher matcher, string directoryPath)
+    //{
+    //    IEnumerable<FilePatternMatch> matches = matcher.Execute(new FileDirectoryInfo(new DirectoryInfo(directoryPath))).Files;
+    //    string[] result = matches.Select(match => Path.GetFullPath(Path.Combine(directoryPath, match.Path))).ToArray();
 
-        return result;
-    }
+    //    return result;
+    //}
 
     /// <summary>
     /// Matches the file passed in with the patterns in the matcher without going to disk.
@@ -61,10 +61,10 @@ public static class FileMatcherExtensions
     /// <param name="matcher">The matcher that holds the patterns and pattern matching type.</param>
     /// <param name="file">The file to run the matcher against.</param>
     /// <returns>The match results.</returns>
-    public static FilePatternMatchingResult Match(this FilePatternMatcher matcher, string file)
-    {
-        return Match(matcher, Directory.GetCurrentDirectory(), new List<string> { file });
-    }
+    //public static FilePatternMatchingResult Match(this FilePatternMatcher matcher, string file)
+    //{
+    //    return Match(matcher, Directory.GetCurrentDirectory(), new List<string> { file });
+    //}
 
     /// <summary>
     /// Matches the file passed in with the patterns in the matcher without going to disk.
@@ -73,10 +73,10 @@ public static class FileMatcherExtensions
     /// <param name="rootDir">The root directory for the matcher to match the file from.</param>
     /// <param name="file">The file to run the matcher against.</param>
     /// <returns>The match results.</returns>
-    public static FilePatternMatchingResult Match(this FilePatternMatcher matcher, string rootDir, string file)
-    {
-        return Match(matcher, rootDir, new List<string> { file });
-    }
+    //public static FilePatternMatchingResult Match(this FilePatternMatcher matcher, string rootDir, string file)
+    //{
+    //    return Match(matcher, rootDir, new List<string> { file });
+    //}
 
     /// <summary>
     /// Matches the files passed in with the patterns in the matcher without going to disk.
@@ -84,10 +84,10 @@ public static class FileMatcherExtensions
     /// <param name="matcher">The matcher that holds the patterns and pattern matching type.</param>
     /// <param name="files">The files to run the matcher against.</param>
     /// <returns>The match results.</returns>
-    public static FilePatternMatchingResult Match(this FilePatternMatcher matcher, IEnumerable<string> files)
-    {
-        return Match(matcher, Directory.GetCurrentDirectory(), files);
-    }
+    //public static FilePatternMatchingResult Match(this FilePatternMatcher matcher, IEnumerable<string> files)
+    //{
+    //    return Match(matcher, Directory.GetCurrentDirectory(), files);
+    //}
 
     /// <summary>
     /// Matches the files passed in with the patterns in the matcher without going to disk.
@@ -96,13 +96,13 @@ public static class FileMatcherExtensions
     /// <param name="rootDir">The root directory for the matcher to match the files from.</param>
     /// <param name="files">The files to run the matcher against.</param>
     /// <returns>The match results.</returns>
-    public static FilePatternMatchingResult Match(this FilePatternMatcher matcher, string rootDir, IEnumerable<string> files)
-    {
-        if (matcher == null)
-        {
-            throw new ArgumentNullException(nameof(matcher));
-        }
+    //public static FilePatternMatchingResult Match(this FilePatternMatcher matcher, string rootDir, IEnumerable<string> files)
+    //{
+    //    if (matcher == null)
+    //    {
+    //        throw new ArgumentNullException(nameof(matcher));
+    //    }
 
-        return matcher.Execute(new InMemoryFileDirectoryInfo(rootDir, files));
-    }
+    //    return matcher.Execute(new InMemoryFileDirectoryInfo(rootDir, files));
+    //}
 }

@@ -1,60 +1,65 @@
-﻿using System;
+﻿
+using System;
 using System.IO;
 
-namespace Assimalign.Extensions.FileProviders
+namespace Assimalign.Extensions.FileProviders;
+
+using Assimalign.Extensions.FileSystemGlobbing;
+
+
+/// <summary>
+/// Represents a non-existing file.
+/// </summary>
+public class NotFoundFileInfo : IFileSystemInfo
 {
-    using Assimalign.Extensions.FileProviders;
+    /// <summary>
+    /// Initializes an instance of <see cref="NotFoundFileInfo"/>.
+    /// </summary>
+    /// <param name="name">The name of the file that could not be found</param>
+    public NotFoundFileInfo(string name) : base()
+    {
+        Name = name;
+    }
 
     /// <summary>
-    /// Represents a non-existing file.
+    /// Always false.
     /// </summary>
-    public class NotFoundFileInfo : IFileComponent
+    public bool Exists => false;
+
+    /// <summary>
+    /// Always false.
+    /// </summary>
+    public bool IsDirectory => false;
+
+    /// <summary>
+    /// Returns <see cref="DateTimeOffset.MinValue"/>.
+    /// </summary>
+    public DateTimeOffset LastModified => DateTimeOffset.MinValue;
+
+    /// <summary>
+    /// Always equals -1.
+    /// </summary>
+    public long Length => -1;
+
+    /// <inheritdoc />
+    public string Name { get; }
+
+    /// <summary>
+    /// Always null.
+    /// </summary>
+    public string PhysicalPath => null;
+
+    public string FullName { get; }
+
+    public IFileSystemDirectoryInfo ParentDirectory => null;
+
+    /// <summary>
+    /// Always throws. A stream cannot be created for non-existing file.
+    /// </summary>
+    /// <exception cref="FileNotFoundException">Always thrown.</exception>
+    /// <returns>Does not return</returns>
+    public Stream CreateReadStream()
     {
-        /// <summary>
-        /// Initializes an instance of <see cref="NotFoundFileInfo"/>.
-        /// </summary>
-        /// <param name="name">The name of the file that could not be found</param>
-        public NotFoundFileInfo(string name)
-        {
-            Name = name;
-        }
-
-        /// <summary>
-        /// Always false.
-        /// </summary>
-        public bool Exists => false;
-
-        /// <summary>
-        /// Always false.
-        /// </summary>
-        public bool IsDirectory => false;
-
-        /// <summary>
-        /// Returns <see cref="DateTimeOffset.MinValue"/>.
-        /// </summary>
-        public DateTimeOffset LastModified => DateTimeOffset.MinValue;
-
-        /// <summary>
-        /// Always equals -1.
-        /// </summary>
-        public long Length => -1;
-
-        /// <inheritdoc />
-        public string Name { get; }
-
-        /// <summary>
-        /// Always null.
-        /// </summary>
-        public string PhysicalPath => null;
-
-        /// <summary>
-        /// Always throws. A stream cannot be created for non-existing file.
-        /// </summary>
-        /// <exception cref="FileNotFoundException">Always thrown.</exception>
-        /// <returns>Does not return</returns>
-        public Stream CreateReadStream()
-        {
-            throw new FileNotFoundException();// SR.Format(SR.FileNotExists, Name));
-        }
+        throw new FileNotFoundException();// SR.Format(SR.FileNotExists, Name));
     }
 }

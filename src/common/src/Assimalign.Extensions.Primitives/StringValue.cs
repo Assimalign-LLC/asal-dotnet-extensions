@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Numerics.Hashing;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -743,7 +742,12 @@ public readonly struct StringValues :
             int hashCode = 0;
             for (int i = 0; i < values.Length; i++)
             {
-                hashCode = HashHelpers.Combine(hashCode, values[i]?.GetHashCode() ?? 0);
+                // RyuJIT optimizes this to use the ROL instruction
+                // Related GitHub pull request: https://github.com/dotnet/coreclr/pull/1830
+
+
+                var rol5 = ((uint)hashCode << 5) | ((uint)hashCode >> 27);
+                hashCode =((int)rol5 + hashCode) ^ values[i]?.GetHashCode() ?? 0;
             }
             return hashCode;
         }

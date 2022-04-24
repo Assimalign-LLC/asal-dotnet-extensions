@@ -104,7 +104,7 @@ public sealed class ConfigurationManager : IConfigurationBuilder, IConfiguration
 
     IConfigurationRoot IConfigurationBuilder.Build() => this;
 
-    IStateToken IConfiguration.GetReloadToken() => changeToken;
+    IChangeToken IConfiguration.GetReloadToken() => changeToken;
 
     void IConfigurationRoot.Reload()
     {
@@ -134,7 +134,7 @@ public sealed class ConfigurationManager : IConfigurationBuilder, IConfiguration
             providers.Add(provider);
 
             provider.Load();
-            changeTokenRegistrations.Add(StateToken.OnChange(() => provider.GetReloadToken(), () => RaiseChanged()));
+            changeTokenRegistrations.Add(ChangeToken.OnChange(() => provider.GetReloadToken(), () => RaiseChanged()));
         }
 
         RaiseChanged();
@@ -158,7 +158,7 @@ public sealed class ConfigurationManager : IConfigurationBuilder, IConfiguration
             foreach (var p in providers)
             {
                 p.Load();
-                changeTokenRegistrations.Add(StateToken.OnChange(() => p.GetReloadToken(), () => RaiseChanged()));
+                changeTokenRegistrations.Add(ChangeToken.OnChange(() => p.GetReloadToken(), () => RaiseChanged()));
             }
         }
 

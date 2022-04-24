@@ -155,11 +155,11 @@ public class FilePatternMatcher
     /// <summary>
     /// Searches the directory specified for all files matching patterns added to this instance of <see cref="FilePatternMatcher" />
     /// </summary>
-    /// <param name="directoryInfo">The root directory for the search</param>
+    /// <param name="directory">The root directory for the search</param>
     /// <returns>Always returns instance of <see cref="FilePatternMatchingResult" />, even if not files were matched</returns>
-    public virtual FilePatternMatchingResult Execute(IFileComponentContainer container)
+    public virtual FilePatternMatchingResult Execute(IFileSystemDirectoryInfo directory)
     {
-        var context = new FileMatcherContext(_includePatterns, _excludePatterns, container, _comparison);
+        var context = new FileMatcherContext(_includePatterns, _excludePatterns, directory, _comparison);
         return context.Execute();
     }
 }

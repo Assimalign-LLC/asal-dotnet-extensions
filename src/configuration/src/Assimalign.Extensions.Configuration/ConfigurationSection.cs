@@ -110,8 +110,8 @@ public class ConfigurationSection : IConfigurationSection
     public IEnumerable<IConfigurationSection> GetChildren() => root.GetChildrenImplementation(Path);
 
     /// <summary>
-    /// Returns a <see cref="IStateToken"/> that can be used to observe when this configuration is reloaded.
+    /// Returns a <see cref="IChangeToken"/> that can be used to observe when this configuration is reloaded.
     /// </summary>
-    /// <returns>The <see cref="IStateToken"/>.</returns>
-    public IStateToken GetReloadToken() => root.GetReloadToken();
+    /// <returns>The <see cref="IChangeToken"/>.</returns>
+    public IChangeToken GetReloadToken() => root.GetReloadToken();
 }

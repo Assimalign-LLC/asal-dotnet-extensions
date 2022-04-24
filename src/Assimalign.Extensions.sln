@@ -344,7 +344,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{1D6645A0-2
 		validation\README.md = validation\README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Text.Json.Schema", "text\src\Assimalign.Extensions.Text.Json.Schema\Assimalign.Extensions.Text.Json.Schema.csproj", "{0E7B187F-E07A-42AB-BAF3-5219042FDEDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Text.Json.Schema", "text\src\Assimalign.Extensions.Text.Json.Schema\Assimalign.Extensions.Text.Json.Schema.csproj", "{0E7B187F-E07A-42AB-BAF3-5219042FDEDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.FileProviders.Physical", "file\src\Assimalign.Extensions.FileProviders.Physical\Assimalign.Extensions.FileProviders.Physical.csproj", "{77A745F8-F683-494C-94AF-CD31969CDD01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.FileProviders.Composite", "file\src\Assimalign.Extensions.FileProviders.Composite\Assimalign.Extensions.FileProviders.Composite.csproj", "{09FF8353-264E-4E15-A04A-C311715B9034}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.FileProviders.InMemory", "file\src\Assimalign.Extensions.FileProviders.InMemory\Assimalign.Extensions.FileProviders.InMemory.csproj", "{C5AC5D90-0686-4336-A88B-D22C8BF55290}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -564,6 +570,18 @@ Global
 		{0E7B187F-E07A-42AB-BAF3-5219042FDEDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E7B187F-E07A-42AB-BAF3-5219042FDEDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E7B187F-E07A-42AB-BAF3-5219042FDEDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77A745F8-F683-494C-94AF-CD31969CDD01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77A745F8-F683-494C-94AF-CD31969CDD01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77A745F8-F683-494C-94AF-CD31969CDD01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77A745F8-F683-494C-94AF-CD31969CDD01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09FF8353-264E-4E15-A04A-C311715B9034}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09FF8353-264E-4E15-A04A-C311715B9034}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09FF8353-264E-4E15-A04A-C311715B9034}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09FF8353-264E-4E15-A04A-C311715B9034}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5AC5D90-0686-4336-A88B-D22C8BF55290}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5AC5D90-0686-4336-A88B-D22C8BF55290}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5AC5D90-0686-4336-A88B-D22C8BF55290}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5AC5D90-0686-4336-A88B-D22C8BF55290}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -694,6 +712,9 @@ Global
 		{C20A249B-68D6-44AE-B1A7-6A4B32882F11} = {6BEDBF5B-9C60-4E1A-ACD8-F409B86C3009}
 		{1D6645A0-2632-4AE3-B9D7-0073AE626882} = {60F770D9-148F-40CD-928A-A9EE0E9DF0CF}
 		{0E7B187F-E07A-42AB-BAF3-5219042FDEDC} = {6D8BE87E-1825-42C1-95DF-E3073C444226}
+		{77A745F8-F683-494C-94AF-CD31969CDD01} = {62FAEAE4-250A-41D6-BF11-74B67387798E}
+		{09FF8353-264E-4E15-A04A-C311715B9034} = {62FAEAE4-250A-41D6-BF11-74B67387798E}
+		{C5AC5D90-0686-4336-A88B-D22C8BF55290} = {62FAEAE4-250A-41D6-BF11-74B67387798E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FCCF2D81-2E3A-4508-918E-048D800EABE8}

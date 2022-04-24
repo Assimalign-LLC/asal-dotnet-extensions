@@ -6,9 +6,9 @@ namespace Assimalign.Extensions.Configuration;
 using Assimalign.Extensions.Primitives;
 
 /// <summary>
-/// Implements <see cref="IStateToken"/>
+/// Implements <see cref="IChangeToken"/>
 /// </summary>
-public class ConfigurationReloadToken : IStateToken
+public class ConfigurationReloadToken : IChangeToken
 {
     private CancellationTokenSource cts = new CancellationTokenSource();
 
@@ -25,7 +25,7 @@ public class ConfigurationReloadToken : IStateToken
     public bool HasChanged => cts.IsCancellationRequested;
 
     /// <summary>
-    /// Registers for a callback that will be invoked when the entry has changed. <see cref="IStateToken.HasChanged"/>
+    /// Registers for a callback that will be invoked when the entry has changed. <see cref="IChangeToken.HasChanged"/>
     /// MUST be set before the callback is invoked.
     /// </summary>
     /// <param name="callback">The callback to invoke.</param>

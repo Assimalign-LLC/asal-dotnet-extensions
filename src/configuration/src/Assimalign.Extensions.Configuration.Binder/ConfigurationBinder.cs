@@ -618,7 +618,7 @@ public static class ConfigurationBinder
 
     private static Type FindOpenGenericInterface(
         Type expected,
-        //[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.Interfaces)]
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.Interfaces)]
         Type actual)
     {
         if (actual.IsGenericType &&

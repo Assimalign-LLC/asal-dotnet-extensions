@@ -9,6 +9,7 @@ namespace Assimalign.Extensions.Configuration.Providers
 {
     using Assimalign.Extensions.Primitives;
     using Assimalign.Extensions.FileProviders;
+    using Assimalign.Extensions.FileSystemGlobbing;
 
     /// <summary>
     /// Base class for file based <see cref="ConfigurationProvider"/>.
@@ -27,7 +28,7 @@ namespace Assimalign.Extensions.Configuration.Providers
 
             if (Source.ReloadOnChange && Source.FileProvider != null)
             {
-                _changeTokenRegistration = StateToken.OnChange(
+                _changeTokenRegistration = ChangeToken.OnChange(
                     () => Source.FileProvider.Watch(Source.Path),
                     () =>
                     {
@@ -51,7 +52,7 @@ namespace Assimalign.Extensions.Configuration.Providers
 
         private void Load(bool reload)
         {
-            IFileInfo file = Source.FileProvider?.GetFileInfo(Source.Path);
+            var file = Source.FileProvider?.GetFileInfo(Source.Path);
             if (file == null || !file.Exists)
             {
                 if (Source.Optional || reload) // Always optional on reload
@@ -61,7 +62,7 @@ namespace Assimalign.Extensions.Configuration.Providers
                 else
                 {
                     var error = new StringBuilder("");// SR.Format(SR.Error_FileNotFound, Source.Path));
-                    if (!string.IsNullOrEmpty(file?.PhysicalPath))
+                    if (!string.IsNullOrEmpty(file?.FullName))
                     {
                         error.Append("not currently in the works");// SR.Format(SR.Error_ExpectedPhysicalPath, file.PhysicalPath));
                     }
@@ -70,15 +71,15 @@ namespace Assimalign.Extensions.Configuration.Providers
             }
             else
             {
-                static Stream OpenRead(IFileInfo fileInfo)
+                static Stream OpenRead(IFileSystemInfo fileInfo)
                 {
-                    if (fileInfo.PhysicalPath != null)
+                    if (fileInfo.FullName != null)
                     {
                         // The default physical file info assumes asynchronous IO which results in unnecessary overhead
                         // especially since the configuration system is synchronous. This uses the same settings
                         // and disables async IO.
                         return new FileStream(
-                            fileInfo.PhysicalPath,
+                            fileInfo.FullName,
                             FileMode.Open,
                             FileAccess.Read,
                             FileShare.ReadWrite,

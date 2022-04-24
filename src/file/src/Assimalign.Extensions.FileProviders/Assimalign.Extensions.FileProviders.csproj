@@ -3,6 +3,9 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<ItemGroup>
+	  <Compile Remove="NotFoundDirectoryContents.cs" />
+	</ItemGroup>
+	<ItemGroup>
 		<ProjectReference Include="..\Assimalign.Extensions.FileSystemGlobbing\Assimalign.Extensions.FileSystemGlobbing.csproj" />
 		<ProjectReference Include="..\..\..\common\src\Assimalign.Extensions.Primitives\Assimalign.Extensions.Primitives.csproj" />
 	</ItemGroup>

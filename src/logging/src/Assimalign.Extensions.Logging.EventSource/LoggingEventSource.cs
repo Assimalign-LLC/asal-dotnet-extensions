@@ -325,10 +325,10 @@ namespace Assimalign.Extensions.Logging.EventSource
         }
 
         [NonEvent]
-        internal IStateToken GetFilterChangeToken()
+        internal IChangeToken GetFilterChangeToken()
         {
             CancellationTokenSource cts = LazyInitializer.EnsureInitialized(ref _cancellationTokenSource, () => new CancellationTokenSource());
-            return new StateTokenCancellation(cts.Token);
+            return new ChangeTokenCancellation(cts.Token);
         }
 
         [NonEvent]

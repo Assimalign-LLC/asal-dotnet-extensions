@@ -4,7 +4,7 @@
 		<Description>Extension methods for configuring file-based configuration providers for Assimalign.Extensions.Configuration.</Description>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\file\src\Assimalign.Extensions.FileProviders\Assimalign.Extensions.FileProviders.csproj" />
+		<ProjectReference Include="..\..\..\file\src\Assimalign.Extensions.FileProviders.Physical\Assimalign.Extensions.FileProviders.Physical.csproj" />
 		<ProjectReference Include="..\Assimalign.Extensions.Configuration\Assimalign.Extensions.Configuration.csproj" />
 	</ItemGroup>
 	<ItemGroup>

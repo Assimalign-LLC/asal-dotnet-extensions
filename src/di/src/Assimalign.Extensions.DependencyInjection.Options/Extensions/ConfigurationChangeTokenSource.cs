@@ -10,7 +10,7 @@ using Assimalign.Extensions.Configuration;
 using Assimalign.Extensions.Primitives;
 
 /// <summary>
-/// Creates <see cref="IStateToken"/>s so that <see cref="IOptionsMonitor{TOptions}"/> gets
+/// Creates <see cref="IChangeToken"/>s so that <see cref="IOptionsMonitor{TOptions}"/> gets
 /// notified when <see cref="IConfiguration"/> changes.
 /// </summary>
 /// <typeparam name="TOptions"></typeparam>
@@ -50,7 +50,7 @@ public class ConfigurationChangeTokenSource<TOptions> : IOptionsChangeTokenSourc
     /// Returns the reloadToken from the <see cref="IConfiguration"/>.
     /// </summary>
     /// <returns></returns>
-    public IStateToken GetChangeToken()
+    public IChangeToken GetChangeToken()
     {
         return _config.GetReloadToken();
     }
