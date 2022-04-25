@@ -8,8 +8,8 @@ using Assimalign.Extensions.FileSystemGlobbing.PatternContexts;
 
 public class FilePatternBuilder
 {
-    private static readonly char[] _slashes = new[] { '/', '\\' };
-    private static readonly char[] _star = new[] { '*' };
+    private static readonly char[] slashes = new[] { '/', '\\' };
+    private static readonly char[] star = new[] { '*' };
 
     public FilePatternBuilder()
     {
@@ -30,27 +30,28 @@ public class FilePatternBuilder
             throw new ArgumentNullException(nameof(pattern));
         }
 
-        pattern = pattern.TrimStart(_slashes);
+        pattern = pattern.TrimStart(slashes);
 
-        if (pattern.TrimEnd(_slashes).Length < pattern.Length)
+        if (pattern.TrimEnd(slashes).Length < pattern.Length)
         {
-            // If the pattern end with a slash, it is considered as
+            // If the pattern end with a slash, it is considered a
             // a directory.
-            pattern = pattern.TrimEnd(_slashes) + "/**";
+            pattern = pattern.TrimEnd(slashes) + "/**";
         }
 
         var allSegments = new List<IFilePathSegment>();
-        bool isParentSegmentLegal = true;
+        var isParentSegmentLegal = true;
 
         IList<IFilePathSegment> segmentsPatternStartsWith = null;
         IList<IList<IFilePathSegment>> segmentsPatternContains = null;
         IList<IFilePathSegment> segmentsPatternEndsWith = null;
 
-        int endPattern = pattern.Length;
-        for (int scanPattern = 0; scanPattern < endPattern;)
+        var endPattern = pattern.Length;
+        
+        for (var scanPattern = 0; scanPattern < endPattern;)
         {
-            int beginSegment = scanPattern;
-            int endSegment = NextIndex(pattern, _slashes, scanPattern, endPattern);
+            var beginSegment = scanPattern;
+            var endSegment = NextIndex(pattern, slashes, scanPattern, endPattern);
 
             IFilePathSegment segment = null;
 
@@ -118,7 +119,7 @@ public class FilePatternBuilder
                 for (int scanSegment = beginSegment; scanSegment < endSegment;)
                 {
                     int beginLiteral = scanSegment;
-                    int endLiteral = NextIndex(pattern, _star, scanSegment, endSegment);
+                    int endLiteral = NextIndex(pattern, star, scanSegment, endSegment);
 
                     if (beginLiteral == beginSegment)
                     {
@@ -161,11 +162,10 @@ public class FilePatternBuilder
                 }
             }
 
-            if (!(segment is FilePathParentSegment))
+            if (segment is not FilePathParentSegment)
             {
                 isParentSegmentLegal = false;
             }
-
             if (segment is FilePathCurrentSegment)
             {
                 // ignore ".\"
@@ -237,7 +237,6 @@ public class FilePatternBuilder
             return new FilePatternContextLinearExclude(this);
         }
     }
-
     private sealed class RaggedPattern : IFileRaggedPattern
     {
         public RaggedPattern(List<IFilePathSegment> allSegments, IList<IFilePathSegment> segmentsPatternStartsWith, IList<IFilePathSegment> segmentsPatternEndsWith, IList<IList<IFilePathSegment>> segmentsPatternContains)
@@ -267,4 +266,3 @@ public class FilePatternBuilder
         }
     }
 }
-

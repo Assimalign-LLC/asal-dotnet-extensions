@@ -12,38 +12,39 @@ using Assimalign.Extensions.FileSystemGlobbing;
 /// </summary>
 public class PhysicalFileInfo : IFileSystemInfo
 {
-    private readonly FileInfo _info;
+    private readonly FileInfo fileInfo;
 
     /// <summary>
     /// Initializes an instance of <see cref="PhysicalFileInfo"/> that wraps an instance of <see cref="System.IO.FileInfo"/>
     /// </summary>
-    /// <param name="info">The <see cref="System.IO.FileInfo"/></param>
-    public PhysicalFileInfo(FileInfo info)
+    /// <param name="fileInfo">The <see cref="System.IO.FileInfo"/></param>
+    public PhysicalFileInfo(FileInfo fileInfo)
     {
-        _info = info;
+        this.fileInfo = fileInfo;
     }
 
     /// <inheritdoc />
-    public bool Exists => _info.Exists;
+    public bool Exists => fileInfo.Exists;
 
     /// <inheritdoc />
-    public long Length => _info.Length;
+    public long Length => fileInfo.Length;
 
 
     /// <inheritdoc />
-    public string Name => _info.Name;
+    public string Name => fileInfo.Name;
 
     /// <inheritdoc />
-    public DateTimeOffset LastModified => _info.LastWriteTimeUtc;
+    public DateTimeOffset LastModified => fileInfo.LastWriteTimeUtc;
 
     /// <summary>
     /// Always false.
     /// </summary>
     public bool IsDirectory => false;
 
-    public string FullName => _info.FullName;
+    /// <inheritdoc />
+    public string FullName => fileInfo.FullName;
 
-    public IFileSystemDirectoryInfo? ParentDirectory => _info.Directory is null ? null : new PhysicalDirectoryInfo(_info.Directory);
+    public IFileSystemDirectoryInfo? ParentDirectory => fileInfo.Directory is null ? null : new PhysicalDirectoryInfo(fileInfo.Directory);
 
     /// <inheritdoc />
     public Stream CreateReadStream()

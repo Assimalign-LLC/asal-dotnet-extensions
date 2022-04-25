@@ -21,14 +21,14 @@ public interface IFileProvider
     /// </summary>
     /// <param name="subpath">Relative path that identifies the file.</param>
     /// <returns>The file information. Caller must check Exists property.</returns>
-    IFileSystemInfo GetFileInfo(string subpath);
+    IFileSystemInfo GetFile(string subpath);
 
     /// <summary>
     /// Enumerate a directory at the given path, if any.
     /// </summary>
     /// <param name="subpath">Relative path that identifies the directory.</param>
     /// <returns>Returns the contents of the directory.</returns>
-    IEnumerable<IFileSystemInfo> GetDirectoryContents(string subpath);
+    IFileSystemDirectoryInfo GetDirectory(string subpath);
 
     /// <summary>
     /// Creates a <see cref="IChangeToken"/> for the specified <paramref name="filter"/>.

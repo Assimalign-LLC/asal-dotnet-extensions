@@ -59,11 +59,11 @@ public class FileMatcherContext
         var entities = new List<IFileSystemInfo>();
         if (_declaredWildcardPathSegment || _declaredLiteralFileSegments.Any())
         {
-            entities.AddRange(directory.EnumerateFilesystemInfos());
+            entities.AddRange(directory.EnumerateFileSystem());
         }
         else
         {
-            foreach (var candidate in directory.EnumerateFilesystemInfos())
+            foreach (var candidate in directory.EnumerateFileSystem())
             {
                 if (_declaredLiteralFolderSegmentInString.Contains(candidate.Name))
                 {

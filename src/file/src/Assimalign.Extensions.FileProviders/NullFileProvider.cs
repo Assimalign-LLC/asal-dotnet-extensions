@@ -26,7 +26,7 @@ public class NullFileProvider : IFileProvider
     /// </summary>
     /// <param name="subpath">A path under the root directory.</param>
     /// <returns>A <see cref="IFileInfo"/> representing a non-existent file at the given path.</returns>
-    public IFileSystemInfo GetFileInfo(string subpath) => new NotFoundFileInfo(subpath);
+    public IFileSystemInfo GetFileInfo(string subpath) => new NotFoundFileSystem(subpath);
 
     /// <summary>
     /// Returns a <see cref="IChangeToken"/> that monitors nothing.

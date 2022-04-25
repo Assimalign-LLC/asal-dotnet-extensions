@@ -8,10 +8,13 @@ namespace Assimalign.Extensions.FileProviders;
 /// Specifies filtering behavior for files or directories.
 /// </summary>
 [Flags]
-public enum ExclusionFilters
+public enum ExclusionFilterType
 {
     /// <summary>
-    /// Equivalent to <c>DotPrefixed | Hidden | System</c>. Exclude files and directories when the name begins with a period, or has either <see cref="FileAttributes.Hidden"/> or <see cref="FileAttributes.System"/> is set on <see cref="FileSystemInfo.Attributes"/>.
+    /// Equivalent to <c>DotPrefixed | Hidden | System</c>. Exclude files 
+    /// and directories when the name begins with a period, or has 
+    /// either <see cref="FileAttributes.Hidden"/> or <see cref="FileAttributes.System"/> 
+    /// is set on <see cref="FileSystemInfo.Attributes"/>.
     /// </summary>
     Sensitive = DotPrefixed | Hidden | System,
 
@@ -21,12 +24,14 @@ public enum ExclusionFilters
     DotPrefixed = 0x0001,
 
     /// <summary>
-    /// Exclude files and directories when <see cref="FileAttributes.Hidden"/> is set on <see cref="FileSystemInfo.Attributes"/>.
+    /// Exclude files and directories when <see cref="FileAttributes.Hidden"/> 
+    /// is set on <see cref="FileSystemInfo.Attributes"/>.
     /// </summary>
     Hidden = 0x0002,
 
     /// <summary>
-    /// Exclude files and directories when <see cref="FileAttributes.System"/> is set on <see cref="FileSystemInfo.Attributes"/>.
+    /// Exclude files and directories when <see cref="FileAttributes.System"/> 
+    /// is set on <see cref="FileSystemInfo.Attributes"/>.
     /// </summary>
     System = 0x0004,
 

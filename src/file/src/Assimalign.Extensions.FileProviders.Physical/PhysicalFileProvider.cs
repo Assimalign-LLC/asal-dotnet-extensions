@@ -25,7 +25,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
         private static readonly char[] _pathSeparators = new[]
             {Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar};
 
-        private readonly ExclusionFilters _filters;
+        private readonly ExclusionFilterType _filters;
 
         private readonly Func<PhysicalFilesWatcher> _fileWatcherFactory;
         private PhysicalFilesWatcher _fileWatcher;
@@ -41,7 +41,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
         /// </summary>
         /// <param name="root">The root directory. This should be an absolute path.</param>
         public PhysicalFileProvider(string root)
-            : this(root, ExclusionFilters.Sensitive)
+            : this(root, ExclusionFilterType.Sensitive)
         {
         }
 
@@ -50,7 +50,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
         /// </summary>
         /// <param name="root">The root directory. This should be an absolute path.</param>
         /// <param name="filters">Specifies which files or directories are excluded.</param>
-        public PhysicalFileProvider(string root, ExclusionFilters filters)
+        public PhysicalFileProvider(string root, ExclusionFilterType filters)
         {
             if (!Path.IsPathRooted(root))
             {
@@ -257,11 +257,11 @@ namespace Assimalign.Extensions.FileProviders.Physical
         /// </summary>
         /// <param name="subpath">A path under the root directory</param>
         /// <returns>The file information. Caller must check <see cref="IFileInfo.Exists"/> property. </returns>
-        public IFileSystemInfo GetFileInfo(string subpath)
+        public IFileSystemInfo GetFile(string subpath)
         {
             if (string.IsNullOrEmpty(subpath) || PathUtilities.HasInvalidPathChars(subpath))
             {
-                return new NotFoundFileInfo(subpath);
+                return new NotFoundFileSystem(subpath);
             }
 
             // Relative paths starting with leading slashes are okay
@@ -270,19 +270,19 @@ namespace Assimalign.Extensions.FileProviders.Physical
             // Absolute paths not permitted.
             if (Path.IsPathRooted(subpath))
             {
-                return new NotFoundFileInfo(subpath);
+                return new NotFoundFileSystem(subpath);
             }
 
             string fullPath = GetFullPath(subpath);
             if (fullPath == null)
             {
-                return new NotFoundFileInfo(subpath);
+                return new NotFoundFileSystem(subpath);
             }
 
             var fileInfo = new FileInfo(fullPath);
             if (FileSystemInfoHelper.IsExcluded(fileInfo, _filters))
             {
-                return new NotFoundFileInfo(subpath);
+                return new NotFoundFileSystem(subpath);
             }
 
             return new PhysicalFileInfo(fileInfo);
@@ -297,13 +297,13 @@ namespace Assimalign.Extensions.FileProviders.Physical
         /// <paramref name="subpath" /> is absolute, if the directory does not exist, or <paramref name="subpath" /> has invalid
         /// characters.
         /// </returns>
-        public IEnumerable<IFileSystemInfo> GetDirectoryContents(string subpath)
+        public IFileSystemDirectoryInfo GetDirectory(string subpath)
         {
             try
             {
                 if (subpath == null || PathUtilities.HasInvalidPathChars(subpath))
                 {
-                    return NotFoundDirectoryContents.Singleton;
+                    return NotFoundFileSystemDirectory.Singleton;
                 }
 
                 // Relative paths starting with leading slashes are okay
@@ -312,16 +312,16 @@ namespace Assimalign.Extensions.FileProviders.Physical
                 // Absolute paths not permitted.
                 if (Path.IsPathRooted(subpath))
                 {
-                    return NotFoundDirectoryContents.Singleton;
+                    return NotFoundFileSystemDirectory.Singleton;
                 }
 
                 string fullPath = GetFullPath(subpath);
                 if (fullPath == null || !Directory.Exists(fullPath))
                 {
-                    return NotFoundDirectoryContents.Singleton;
+                    return NotFoundFileSystemDirectory.Singleton;
                 }
 
-                return new PhysicalDirectoryContents(fullPath, _filters);
+                return new PhysicalDirectoryInfo(fullPath, _filters);
             }
             catch (DirectoryNotFoundException)
             {
@@ -329,7 +329,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
             catch (IOException)
             {
             }
-            return NotFoundDirectoryContents.Singleton;
+            return NotFoundFileSystemDirectory.Singleton;
         }
 
         /// <summary>

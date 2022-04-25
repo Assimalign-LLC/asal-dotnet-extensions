@@ -2,24 +2,24 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace Assimalign.Extensions.FileProviders.Internal;
+namespace Assimalign.Extensions.FileProviders.Physical.Internal;
 
 
 internal static class FileSystemInfoHelper
 {
-    public static bool IsExcluded(FileSystemInfo fileSystemInfo, ExclusionFilters filters)
+    public static bool IsExcluded(FileSystemInfo fileSystemInfo, ExclusionFilterType filters)
     {
-        if (filters == ExclusionFilters.None)
+        if (filters == ExclusionFilterType.None)
         {
             return false;
         }
-        else if (fileSystemInfo.Name.StartsWith(".", StringComparison.Ordinal) && (filters & ExclusionFilters.DotPrefixed) != 0)
+        else if (fileSystemInfo.Name.StartsWith(".", StringComparison.Ordinal) && (filters & ExclusionFilterType.DotPrefixed) != 0)
         {
             return true;
         }
         else if (fileSystemInfo.Exists &&
-            (((fileSystemInfo.Attributes & FileAttributes.Hidden) != 0 && (filters & ExclusionFilters.Hidden) != 0) ||
-             ((fileSystemInfo.Attributes & FileAttributes.System) != 0 && (filters & ExclusionFilters.System) != 0)))
+            (((fileSystemInfo.Attributes & FileAttributes.Hidden) != 0 && (filters & ExclusionFilterType.Hidden) != 0) ||
+             ((fileSystemInfo.Attributes & FileAttributes.System) != 0 && (filters & ExclusionFilterType.System) != 0)))
         {
             return true;
         }

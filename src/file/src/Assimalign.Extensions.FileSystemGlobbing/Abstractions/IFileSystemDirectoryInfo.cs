@@ -9,7 +9,7 @@ public interface IFileSystemDirectoryInfo : IFileSystemInfo
     /// 
     /// </summary>
     /// <returns></returns>
-    IEnumerable<IFileSystemInfo> EnumerateFilesystemInfos();
+    IEnumerable<IFileSystemInfo> EnumerateFileSystem();
     /// <summary>
     /// 
     /// </summary>

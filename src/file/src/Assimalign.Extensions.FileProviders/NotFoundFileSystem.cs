@@ -10,13 +10,13 @@ using Assimalign.Extensions.FileSystemGlobbing;
 /// <summary>
 /// Represents a non-existing file.
 /// </summary>
-public class NotFoundFileInfo : IFileSystemInfo
+public class NotFoundFileSystem : IFileSystemInfo
 {
     /// <summary>
-    /// Initializes an instance of <see cref="NotFoundFileInfo"/>.
+    /// Initializes an instance of <see cref="NotFoundFileSystem"/>.
     /// </summary>
     /// <param name="name">The name of the file that could not be found</param>
-    public NotFoundFileInfo(string name) : base()
+    public NotFoundFileSystem(string name) : base()
     {
         Name = name;
     }
@@ -44,13 +44,10 @@ public class NotFoundFileInfo : IFileSystemInfo
     /// <inheritdoc />
     public string Name { get; }
 
-    /// <summary>
-    /// Always null.
-    /// </summary>
-    public string PhysicalPath => null;
-
+    /// <inheritdoc />
     public string FullName { get; }
 
+    /// <inheritdoc />
     public IFileSystemDirectoryInfo ParentDirectory => null;
 
     /// <summary>
