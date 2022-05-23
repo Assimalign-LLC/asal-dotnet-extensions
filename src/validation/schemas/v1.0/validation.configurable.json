@@ -1,0 +1,648 @@
+﻿{
+	"$schema": "http://json-schema.org/draft-04/schema",
+	"properties": {
+		"$description": {
+			"type": "string"
+		},
+		"$validationConditions": {
+			"type": "array",
+			"description": "An array of conditional validation items. If the condition is met then the nested validation items are evaluated.",
+			"items": {
+				"$ref": "#/definitions/$validationCondition"
+			}
+		},
+		"$validationItems": {
+			"type": "array",
+			"items": {
+				"$ref": "#/definitions/$validationItem"
+			}
+		}
+	},
+	"definitions": {
+		"$validationMemberCondition": {
+			"type": "object",
+			"properties": {
+				"$member": {
+					"type": "string"
+				},
+				"$operator": {
+					"type": "string",
+					"oneOf": [
+						{
+							"const": "eq"
+						},
+						{
+							"const": "neq"
+						},
+						{
+							"const": "lt"
+						},
+						{
+							"const": "lte"
+						},
+						{
+							"const": "gt"
+						},
+						{
+							"const": "gte"
+						}
+					]
+				},
+				"$value": {}
+			},
+			"required": [
+				"$member",
+				"$operator",
+				"$value"
+			],
+			"minProperties": 3,
+			"maxProperties": 3
+		},
+		"$validationAndCondition": {
+			"type": "object",
+			"properties": {
+				"$and": {
+					"type": "array",
+					"items": {
+						"oneOf": [
+							{
+								"$ref": "#/definitions/$validationMemberCondition"
+							},
+							{
+								"$ref": "#/definitions/$validationOrCondition"
+							},
+							{
+								"$ref": "#/definitions/$validationAndCondition"
+							}
+						]
+					},
+					"minItems": 2
+				}
+			},
+			"maxProperties": 1,
+			"required": [
+				"$and"
+			]
+		},
+		"$validationOrCondition": {
+			"type": "object",
+			"properties": {
+				"$or": {
+					"type": "array",
+					"items": {
+						"oneOf": [
+							{
+								"$ref": "#/definitions/$validationMemberCondition"
+							},
+							{
+								"$ref": "#/definitions/$validationOrCondition"
+							},
+							{
+								"$ref": "#/definitions/$validationAndCondition"
+							}
+						]
+					},
+					"minItems": 2
+				}
+			},
+			"maxProperties": 1,
+			"required": [
+				"$or"
+			]
+		},
+		"$validationCondition": {
+			"type": "object",
+			"properties": {
+				"$validationPredicate": {
+					"description": "Represents the condition in which to validation the set '$validationItem'.",
+					"oneOf": [
+						{
+							"$ref": "#/definitions/$validationMemberCondition"
+						},
+						{
+							"$ref": "#/definitions/$validationOrCondition"
+						},
+						{
+							"$ref": "#/definitions/$validationAndCondition"
+						}
+					]
+				},
+				"$validationItems": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/$validationItem"
+					},
+					"minItems": 1
+				}
+			},
+			"required": [
+				"$validationPredicate",
+				"$validationItems"
+			]
+		},
+		"$validationItem": {
+			"type": "object",
+			"properties": {
+				"$itemMember": {
+					"type": "string"
+				},
+				"$itemType": {
+					"type": "string",
+					"description": "A 'recursive' item type represents a 'RuleForEach' and a 'inline' item type represents a 'RuleFor'.",
+					"enum":[
+						"inline",
+						"recursive"
+					]
+				},
+				"$itemRules": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/$validationRule"
+					},
+					"minItems": 1
+				}
+			},
+			"required": [
+				"$itemMember",
+				"$itemType",
+				"$itemRules"
+			]
+		},
+		"$validationRule": {
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"EqualTo"
+							]
+						},
+						"$value": {
+							"anyOf": [
+								{
+									"type": "integer"
+								},
+								{
+									"type": "boolean"
+								},
+								{
+									"type": "number"
+								},
+								{
+									"type": "string"
+								}
+							]
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						}
+					},
+					"required": [
+						"$rule",
+						"$value"
+					]
+				},
+				{
+					"type": "object",
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"NotEqualTo"
+							]
+						},
+						"$value": {
+							"anyOf": [
+								{
+									"type": "integer"
+								},
+								{
+									"type": "boolean"
+								},
+								{
+									"type": "number"
+								},
+								{
+									"type": "string"
+								}
+							]
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						}
+					},
+					"required": [
+						"$rule",
+						"$value"
+					]
+				},
+				{
+					"type": "object",
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"Between"
+							]
+						},
+						"$lower": {
+							"type": "number"
+						},
+						"$upper": {
+							"type": "number"
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						}
+					},
+					"required": [
+						"$rule",
+						"$lower",
+						"$upper"
+					]
+				},
+				{
+					"type": "object",
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"BetweenOrEqualTo"
+							]
+						},
+						"$lower": {
+							"type": "number"
+						},
+						"$upper": {
+							"type": "number"
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						}
+					},
+					"required": [
+						"$rule",
+						"$lower",
+						"$upper"
+					]
+				},
+				{
+					"type": "object",
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"GreaterThan"
+							]
+						},
+						"$value": {
+							"anyOf":[
+								{
+									"type": "number"
+								},
+								{
+									"type": "string"
+								}
+							]
+							
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						}
+					},
+					"required": [
+						"$rule",
+						"$value"
+					]
+				},
+				{
+					"type": "object",
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"GreaterThanOrEqualTo"
+							]
+						},
+						"$value": {
+							"anyOf":[
+								{
+									"type": "number"
+								},
+								{
+									"type": "string"
+								}
+							]
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						}
+					},
+					"required": [
+						"$rule",
+						"$value"
+					]
+				},
+				{
+					"type": "object",
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"LessThan"
+							]
+						},
+						"$value": {
+							"anyOf":[
+								{
+									"type": "number"
+								},
+								{
+									"type": "string"
+								}
+							]
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						}
+					},
+					"required": [
+						"$rule",
+						"$value"
+					]
+				},
+				{
+					"type": "object",
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"LessThanOrEqualTo"
+							]
+						},
+						"$value": {
+							"anyOf":[
+								{
+									"type": "number"
+								},
+								{
+									"type": "string"
+								}
+							]
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						}
+					},
+					"required": [
+						"$rule",
+						"$value"
+					]
+				},
+				{
+					"type": "object",
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"Empty"
+							]
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						}
+					},
+					"required": [
+						"$rule"
+					]
+				},
+				{
+					"type": "object",
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"NotEmpty"
+							]
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						}
+					},
+					"required": [
+						"$rule"
+					]
+				},
+				{
+					"type": "object",
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"EmailAddress"
+							]
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						}
+					},
+					"required": [
+						"$rule"
+					]
+				},
+				{
+					"type": "object",
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"Child"
+							]
+						},
+						"$validationItems": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/$validationItem"
+							},
+							"minItems": 1
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						}
+					},
+					"required": [
+						"$rule",
+						"$validationItems"
+					]
+				},
+				{
+					"type": "object",
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"Null"
+							]
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						}
+					},
+					"required": [
+						"$rule"
+					]
+				},
+				{
+					"type": "object",
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"NotNull"
+							]
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						}
+					},
+					"required": [
+						"$rule"
+					]
+				},
+				{
+					"type": "object",
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"Length"
+							]
+						},
+						"$exact": {
+							"type": "number",
+							"minimum": 0
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						}
+					},
+					"required": [
+						"$rule",
+						"$exact"
+					]
+				},
+				{
+					"type": "object",
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"Length"
+							]
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						},
+						"$min": {
+							"type": "number",
+							"minimum": 0
+						},
+						"$max": {
+							"type": "number",
+							"minimum": 1
+						}
+					},
+					"required": [
+						"$rule",
+						"$min",
+						"$max"
+					]
+				},
+				{
+					"type": "object",
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"Length"
+							]
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						},
+						"$max": {
+							"type": "number",
+							"minimum": 1
+						}
+					},
+					"required": [
+						"$rule",
+						"$max"
+					]
+				},
+				{
+					"type": "object",
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"Length"
+							]
+						},
+						"$min": {
+							"type": "number",
+							"minimum": 0
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						}
+					},
+					"required": [
+						"$rule",
+						"$min"
+					]
+				},
+				{
+					"properties": {
+						"$rule": {
+							"type": "string",
+							"enum": [
+								"Length"
+							]
+						},
+						"$pattern": {
+							"type": "string",
+							"minLength": 1
+						},
+						"$error": {
+							"$ref": "#/definitions/$validationError"
+						}
+					},
+					"required": [
+						"$rule",
+						"$pattern"
+					]
+				}
+			]
+		},
+		"$validationError": {
+			"type": "object",
+			"properties": {
+				"$code": {
+					"type": "string"
+				},
+				"$message": {
+					"type": "string"
+				},
+				"$source": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"$message"
+			]
+		}
+	}
+}

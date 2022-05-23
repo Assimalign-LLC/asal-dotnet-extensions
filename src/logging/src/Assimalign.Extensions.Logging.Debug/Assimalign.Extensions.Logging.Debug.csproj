@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<ProjectReference Include="..\Assimalign.Extensions.Logging\Assimalign.Extensions.Logging.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\Assimalign.Extensions.Logging\Internal\NullExternalScopeProvider.cs" Link="Internal\NullExternalScopeProvider.cs" />
+		<Compile Include="..\Assimalign.Extensions.Logging\Internal\NullScope.cs" Link="Internal\NullScope.cs" />
+		<Compile Include="..\Assimalign.Extensions.Logging\Internal\PooledByteBufferWriter.cs" Link="Internal\PooledByteBufferWriter.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\..\..\.assimalign.logo.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="README.md">
+			<Pack>true</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+</Project>

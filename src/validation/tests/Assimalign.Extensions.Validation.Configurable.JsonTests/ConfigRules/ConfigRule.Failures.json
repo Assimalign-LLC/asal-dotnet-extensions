@@ -1,0 +1,118 @@
+{
+
+	"$schema": "https://schemas.assimalign.com/json/validation/v1.0/validation.configurable.json",
+	"$validationItems": [
+		{
+			"$itemMember": "UIntProp",
+			"$itemType": "inline",
+			"$itemRules": [
+				{
+					"$rule": "GreaterThan",
+					"$error": {
+						"$code": "uint.gt.failure",
+						"$message": "Test error msg"
+					},
+					
+					"$value": 5
+				}
+			]
+		},
+		{
+			"$itemMember": "UShortProp",
+			"$itemType": "inline",
+			"$itemRules": [
+				{
+					"$rule": "GreaterThan",
+					"$error": {
+						"$code": "ushort.gt.failure",
+						"$message": "Test error msg"
+					},
+					"$value": 5
+				}
+			]
+		},
+		{
+			"$itemMember": "ULongProp",
+			"$itemType": "inline",
+			"$itemRules": [
+				{
+					"$rule": "GreaterThan",
+					"$error": {
+						"$code": "ulong.gt.failure",
+						"$message": "Test error msg",
+						"$source": ""
+					},
+					"$value": 500000000,
+					"$valueType": ""
+				}
+			]
+		},
+		{
+			"$itemMember": "IntProp",
+			"$itemType": "inline",
+			"$itemRules": [
+				{
+					"$rule": "GreaterThan",
+					"$error": {
+						"$code": "int.gt.failure",
+						"$message": "Test error msg"
+					},
+					"$value": -24
+				},
+				{
+					"$rule": "GreaterThanOrEqualTo",
+					"$error": {
+						"$code": "int.gte.failure",
+						"$message": "Test error msg"
+					},
+					"$value": -23
+				},
+				{
+					"$rule": "LessThan",
+					"$value": 0
+				},
+				{
+					"$rule": "LessThanOrEqualTo",
+					"$value": -25
+				},
+				{
+					"$rule": "Between",
+					"$lower": -26,
+					"$upper": 0
+				},
+				{
+					"$rule": "EqualTo",
+					"$value": -25
+				}
+			]
+		},
+		{
+			"$itemMember": "ShortProp",
+			"$itemType": "Inline",
+			"$itemRules": [
+				{
+					"$rule": "GreaterThan",
+					"$error": {
+						"$code": "short.gt.failure",
+						"$message": "Test error msg"
+					},
+					"$value": -5
+				}
+			]
+		},
+		{
+			"$itemMember": "GuidProp",
+			"$itemType": "inline",
+			"$itemRules": [
+				{
+					"$rule": "GreaterThan",
+					"$error": {
+						"$code": "guid.gt.failure",
+						"$message": "Test error msg"
+					},
+					"$value": "d2d41b9b-3ec3-ec11-baab-3448edbf947e"
+				}
+			]
+		}
+	]
+}

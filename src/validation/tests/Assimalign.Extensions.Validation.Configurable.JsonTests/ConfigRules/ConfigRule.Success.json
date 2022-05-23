@@ -1,0 +1,70 @@
+{
+	"$schema": "..\\..\\..\\schemas\\v1.0\\validation.configurable.json",
+	"$validationItems": [
+		{
+			"$itemMember": "IntProp",
+			"$itemType": "inline",
+			"$itemRules": [
+				{
+					"$sort": 1,
+					"$rule": "GreaterThan",
+					"$value": -26
+				},
+				{
+					"$rule": "GreaterThanOrEqualTo",
+					"$value": -25
+				},
+				{
+					"$rule": "LessThan",
+					"$value": 0
+				},
+				{
+					"$rule": "LessThanOrEqualTo",
+					"$value": -25
+				},
+				{
+					"$rule": "Between",
+					"$lower": -26,
+					"$upper": 0
+				},
+				{
+					"$rule": "EqualTo",
+					"$value": -25
+				}
+			]
+		},
+		{
+			"$itemMember": "ShortProp",
+			"$itemType": "inline",
+			"$itemRules": [
+				{
+					"$rule": "GreaterThan",
+					"$value": -26
+				},
+				{
+					"$rule": "LessThan",
+					"$value": 0
+				},
+				{
+					"$rule": "Between",
+					"$lower": -26,
+					"$upper": 0
+				},
+				{
+					"$rule": "EqualTo",
+					"$value": -5
+				}
+			]
+		},
+		{
+			"$itemMember": "GuidProp",
+			"$itemType": "inline",
+			"$itemRules": [
+				{
+					"$rule": "GreaterThan",
+					"$value": "d2d41b9b-3ec3-ec11-baab-3448edbf947e"
+				}
+			]
+		}
+	]
+}

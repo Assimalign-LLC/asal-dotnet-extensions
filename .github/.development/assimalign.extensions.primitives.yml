@@ -1,0 +1,43 @@
+name: assimalign.extensions.primitives.ci
+
+on:
+  push:
+    branches:
+    - main
+    - development
+    - users/**
+    - features/**
+    paths: 
+    - 'src/common/src/**'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2    
+    
+    - name: Setup .NET 6
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.x'
+    
+    - name: Restore Project
+      run: dotnet restore 
+      working-directory: './src/common/src/Assimalign.Extensions.Primitives'
+    
+    - name: Build Project
+      run: dotnet build --configuration Release --no-restore
+      working-directory: './src/common/src/Assimalign.Extensions.Primitives'
+
+    - name: Restore Unit Tests Project
+      run: dotnet restore 
+      working-directory: './src/common/tests/Assimalign.Extensions.PrimitivesTests'
+
+    - name: Run Unit Tests
+      run: dotnet test --no-restore --verbosity normal
+      working-directory: './src/common/tests/Assimalign.Extensions.PrimitivesTests'
+    
+    - name: Publish Nuget Package
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      run: dotnet nuget push "*.nupkg" -k ${{secrets.NUGET_PUBLISHING_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      working-directory: './src/common/src/Assimalign.Extensions.Primitives/bin/Release/'

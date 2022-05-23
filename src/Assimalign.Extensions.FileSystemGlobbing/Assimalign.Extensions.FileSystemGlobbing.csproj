@@ -1,8 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-	<ItemGroup>
-		<None Include="..\..\docs\.assimalign.extensions.filesystemglobbing\readme.md">
-			<Pack>true</Pack>
-			<PackagePath></PackagePath>
-		</None>
-	</ItemGroup>
-</Project>

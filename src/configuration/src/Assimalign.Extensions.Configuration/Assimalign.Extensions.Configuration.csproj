@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+	    <EnableDefaultItems>true</EnableDefaultItems>
+		<Description>
+			Implementation of key-value pair based configuration for Assimalign.Extensions.Configuration. Includes the memory configuration provider.
+		</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\common\src\Assimalign.Extensions.Primitives\Assimalign.Extensions.Primitives.csproj" />
+    </ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\..\..\.assimalign.logo.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="README.md">
+			<Pack>true</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+</Project>

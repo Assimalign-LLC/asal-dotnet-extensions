@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<EnableDefaultItems>true</EnableDefaultItems>
+		<RootNamespace>Assimalign.Extensions.Configuration.Providers</RootNamespace>
+		<Description>XML configuration provider implementation for Assimalign.Extensions.Configuration.</Description>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\file\src\Assimalign.Extensions.Configuration.FileExtensions\Assimalign.Extensions.Configuration.FileExtensions.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\..\..\.assimalign.logo.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="README.md">
+			<Pack>true</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+</Project>
