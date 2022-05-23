@@ -62,7 +62,7 @@ public sealed class MapperFactory : IMapperFactory
             return new Mapper(builder.Build(), options);
         });
     }
-    /
+    
     // <inheritdoc />
     public IMapper Create(string mapperName, IEnumerable<IMapperProfile> profiles)
     {

@@ -2,8 +2,8 @@
 
 	<PropertyGroup>
 		<RootNamespace>Assimalign.Extensions.Validation.Configurable</RootNamespace>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>false</GenerateDocumentationFile>
 		<Description>
 
 		</Description>
