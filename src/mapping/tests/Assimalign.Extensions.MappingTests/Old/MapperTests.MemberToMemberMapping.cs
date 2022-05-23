@@ -93,22 +93,21 @@ public partial class MapperTests
     public void RunMemberToMemberTest()
     {
         var stopwatch = new Stopwatch();
-        var factory = new MapperFactory();
-
-        var mapper = factory.Create("default", new MapperProfileBuilderTest(), options =>
+        var factory = MapperFactory.Configure(factory =>
         {
-            options.CollectionHandling = MapperCollectionHandling.Merge;
+            factory.AddMapper("default", new MapperProfileBuilderTest(), options =>
+            {
+                options.CollectionHandling = MapperCollectionHandling.Merge;
+            });
         });
+
+        var mapper = factory.CreateMapper("default");
 
         //var mapper = Mapper.Create(configure =>
         //{
         //    configure.CollectionHandling = MapperCollectionHandling.Merge;
         //    configure.AddProfile(new MapperMemberToMemberProfile());
         //});
-
-
-
-        
 
         var person1 = new Person1()
         {

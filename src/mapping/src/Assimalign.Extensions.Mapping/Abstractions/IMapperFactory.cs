@@ -8,27 +8,35 @@ namespace Assimalign.Extensions.Mapping;
 ///</summary>
 public interface IMapperFactory
 {
-    /// <summary>
-    /// Creates a mapper
-    /// </summary>
-    /// <param name="mapperName"></param>
-    /// <param name="builder"></param>
-    /// <returns></returns>
-    IMapper Create(string mapperName, IMapperProfileBuilder builder);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="mapperName"></param>
-    /// <param name="configure"></param>
     /// <returns></returns>
-    IMapper Create(string mapperName, Action<IMapperProfileBuilder> configure);
+    IMapper CreateMapper(string mapperName);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="mapperName"></param>
-    /// <param name="profiles"></param>
-    /// <returns></returns>
-    IMapper Create(string mapperName, IEnumerable<IMapperProfile> profiles);
+    ///// <summary>
+    ///// Creates a mapper
+    ///// </summary>
+    ///// <param name="mapperName"></param>
+    ///// <param name="builder"></param>
+    ///// <returns></returns>
+    //IMapper Create(string mapperName, IMapperProfileBuilder builder);
+
+    ///// <summary>
+    ///// 
+    ///// </summary>
+    ///// <param name="mapperName"></param>
+    ///// <param name="configure"></param>
+    ///// <returns></returns>
+    //IMapper Create(string mapperName, Action<IMapperProfileBuilder> configure);
+
+    ///// <summary>
+    ///// 
+    ///// </summary>
+    ///// <param name="mapperName"></param>
+    ///// <param name="profiles"></param>
+    ///// <returns></returns>
+    //IMapper Create(string mapperName, IEnumerable<IMapperProfile> profiles);
 }

@@ -1,15 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Mapping.Internal;
 
 internal class MapperProfileBuilderDefault : MapperProfileBuilder
 {
+    private readonly Action<IMapperProfileBuilder> configure;
+
+    public MapperProfileBuilderDefault(Action<IMapperProfileBuilder> configure)
+    {
+        this.configure = configure;
+    }
+
+
     protected override void OnBuild(IMapperProfileBuilder builder)
     {
-       
+        configure.Invoke(builder);
     }
 }
