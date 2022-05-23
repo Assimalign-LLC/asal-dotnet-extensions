@@ -18,15 +18,18 @@ public partial class MapperTestsExceptions
     {
         Assert.Throws<ArgumentException>(() =>
         {
-            var factory = new MapperFactory();
-
-            factory.Create("default", builder =>
+            var factory = MapperFactory.Configure(factory =>
             {
-                builder.CreateProfile<TestPerson, TestUser>(descriptor =>
+                factory.AddMapper("default", builder =>
                 {
-                    descriptor.MapMember(target => target.Details.FirstName, source => source.FirstName);
+                    builder.CreateProfile<TestPerson, TestUser>(descriptor =>
+                    {
+                        descriptor.MapMember(target => target.Details.FirstName, source => source.FirstName);
+                    });
                 });
             });
+
+            
         });
     }
 
@@ -36,15 +39,18 @@ public partial class MapperTestsExceptions
     {
         Assert.Throws<InvalidCastException>(() =>
         {
-            var factory = new MapperFactory();
-
-            factory.Create("default", builder =>
+            var factory = MapperFactory.Configure(factory =>
             {
-                builder.CreateProfile<TestUser, TestPerson>(descriptor =>
+                factory.AddMapper("default", builder =>
                 {
-                    descriptor.MapMember(target => target.FirstName, source => source.Details.Age);
+                    builder.CreateProfile<TestUser, TestPerson>(descriptor =>
+                    {
+                        descriptor.MapMember(target => target.FirstName, source => source.Details.Age);
+                    });
                 });
             });
+
+            
         });
     }
 
@@ -54,15 +60,16 @@ public partial class MapperTestsExceptions
     {
         Assert.Throws<ArgumentException>(() =>
         {
-            var factory = new MapperFactory();
-
-            factory.Create("default", builder =>
+            var factory = MapperFactory.Configure(factory =>
             {
-                builder.CreateProfile<TestUser, TestPerson>(descriptor =>
+                factory.AddMapper("default", builder =>
                 {
-                    descriptor.MapMember(target => target.FirstName.ToLower(), source => source.Details.Age);
+                    builder.CreateProfile<TestUser, TestPerson>(descriptor =>
+                    {
+                        descriptor.MapMember(target => target.FirstName.ToLower(), source => source.Details.Age);
+                    });
                 });
-            });
+            });             
         });
     }
 
@@ -86,8 +93,10 @@ public partial class MapperTestsExceptions
     {
         Assert.Throws<ArgumentException>(() =>
         {
-            var factory = new MapperFactory();
-            factory.Create("default", new MapperProfileBuilderTestCase1());
+            var factory = MapperFactory.Configure(factory =>
+            {
+                factory.AddMapper("default", new MapperProfileBuilderTestCase1());
+            });           
         });
     }
 
@@ -108,8 +117,10 @@ public partial class MapperTestsExceptions
     {
         Assert.Throws<InvalidCastException>(() =>
         {
-            var factory = new MapperFactory();
-            factory.Create("default", new MapperProfileBuilderTestCase2());
+            var factory = MapperFactory.Configure(factory =>
+            {
+                factory.AddMapper("default", new MapperProfileBuilderTestCase2());
+            });
         });
     }
 
@@ -130,8 +141,10 @@ public partial class MapperTestsExceptions
     {
         Assert.Throws<ArgumentException>(() =>
         {
-            var factory = new MapperFactory();
-            factory.Create("default", new MapperProfileBuilderTestCase3());
+            var factory = MapperFactory.Configure(factory =>
+            {
+                factory.AddMapper("default", new MapperProfileBuilderTestCase3());
+            });
         });
     }
 }
