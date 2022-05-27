@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<EnableDefaultItems>true</EnableDefaultItems>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\Logging\src\Assimalign.Extensions.Logging\Assimalign.Extensions.Logging.csproj" />
+		<ProjectReference Include="..\..\..\Configuration\src\Assimalign.Extensions.Configuration\Assimalign.Extensions.Configuration.csproj" />
+		<ProjectReference Include="..\..\..\Configuration\src\Assimalign.Extensions.Configuration.Binder\Assimalign.Extensions.Configuration.Binder.csproj" />
+		<ProjectReference Include="..\..\..\DependencyInjection\src\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\..\..\.assimalign.logo.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="README.md">
+			<Pack>true</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+</Project>

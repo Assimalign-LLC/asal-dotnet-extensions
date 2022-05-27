@@ -3,9 +3,9 @@
 		<EnableDefaultItems>true</EnableDefaultItems>
 	</PropertyGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\logging\src\Assimalign.Extensions.Logging\Assimalign.Extensions.Logging.csproj" />
-		<ProjectReference Include="..\..\..\logging\src\Assimalign.Extensions.Logging.Configuration\Assimalign.Extensions.Logging.Configuration.csproj" />
-		<ProjectReference Include="..\..\..\di\src\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj" />
+		<ProjectReference Include="..\..\..\Logging\src\Assimalign.Extensions.Logging\Assimalign.Extensions.Logging.csproj" />
+		<ProjectReference Include="..\..\..\Logging\src\Assimalign.Extensions.Logging.Configuration\Assimalign.Extensions.Logging.Configuration.csproj" />
+		<ProjectReference Include="..\..\..\DependencyInjection\src\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Include="..\Assimalign.Extensions.Logging\Internal\NullExternalScopeProvider.cs" Link="Internal\NullExternalScopeProvider.cs" />
