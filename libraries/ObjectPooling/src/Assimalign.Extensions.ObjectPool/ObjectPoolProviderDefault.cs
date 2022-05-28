@@ -1,35 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.ObjectPool
+namespace Assimalign.Extensions.ObjectPool;
+
+/// <summary>
+/// The default <see cref="ObjectPoolProvider"/>.
+/// </summary>
+public class ObjectPoolProviderDefault : ObjectPoolProvider
 {
     /// <summary>
-    /// The default <see cref="ObjectPoolProvider"/>.
+    /// The maximum number of objects to retain in the pool.
     /// </summary>
-    public class ObjectPoolProviderDefault : ObjectPoolProvider
+    public int MaximumRetained { get; set; } = Environment.ProcessorCount * 2;
+
+    /// <inheritdoc/>
+    public override ObjectPool<T> Create<T>(IObjectPoolPolicy<T> policy)
     {
-        /// <summary>
-        /// The maximum number of objects to retain in the pool.
-        /// </summary>
-        public int MaximumRetained { get; set; } = Environment.ProcessorCount * 2;
-
-        /// <inheritdoc/>
-        public override ObjectPool<T> Create<T>(IPooledObjectPolicy<T> policy)
+        if (policy == null)
         {
-            if (policy == null)
-            {
-                throw new ArgumentNullException(nameof(policy));
-            }
+            throw new ArgumentNullException(nameof(policy));
+        }
 
-            if (typeof(IDisposable).IsAssignableFrom(typeof(T)))
-            {
-                return new ObjectPoolDisposable<T>(policy, MaximumRetained);
-            }
-
+        if (typeof(IDisposable).IsAssignableFrom(typeof(T)))
+        {
             return new ObjectPoolDisposable<T>(policy, MaximumRetained);
         }
+
+        return new ObjectPoolDefault<T>(policy, MaximumRetained);
     }
 }

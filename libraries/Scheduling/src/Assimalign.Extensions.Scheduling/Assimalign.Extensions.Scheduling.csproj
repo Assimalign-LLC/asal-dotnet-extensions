@@ -2,6 +2,10 @@
 	<PropertyGroup>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageIcon>.assimalign.logo.png</PackageIcon>
+		<Description>
+			A generic implementation for creating a task scheduler.
+			
+		</Description>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Include="..\..\..\..\.assimalign.logo.png">
@@ -14,5 +18,8 @@
 			<Pack>true</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Schedules\" />
 	</ItemGroup>
 </Project>

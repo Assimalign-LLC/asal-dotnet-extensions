@@ -8,9 +8,9 @@ on:
     - users/**
     - features/**
     paths: 
-    - 'libraries/validation/src/**'
+    - 'libraries/Validation/src/**'
     - 'libraries/Directory.Build.props'                                     # When the Global Props File Changes
-    - 'libraries/validation/Directory.Build.props'
+    - 'libraries/Validation/Directory.Build.props'
     - '.github/workflows/assimalign.extensions.validation.yml'        # When Pipeline File Changes
 
 jobs:
@@ -32,21 +32,21 @@ jobs:
     
     - name: Restore Project
       run: dotnet restore 
-      working-directory: './libraries/validation/src/Assimalign.Extensions.Validation'
+      working-directory: './libraries/Validation/src/Assimalign.Extensions.Validation'
     
     - name: Build Project
       run: dotnet build --configuration Release --no-restore
-      working-directory: './libraries/validation/src/Assimalign.Extensions.Validation'
+      working-directory: './libraries/Validation/src/Assimalign.Extensions.Validation'
 
     - name: Restore Unit Tests Project
       run: dotnet restore 
-      working-directory: './libraries/validation/tests/Assimalign.Extensions.ValidationTests'
+      working-directory: './libraries/Validation/tests/Assimalign.Extensions.Validation.Tests'
 
     - name: Run Unit Tests
       run: dotnet test --no-restore --verbosity normal
-      working-directory: './libraries/validation/tests/Assimalign.Extensions.ValidationTests'
+      working-directory: './libraries/Validation/tests/Assimalign.Extensions.Validation.Tests'
     
     - name: Publish Nuget Package
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       run: dotnet nuget push "*.nupkg" -k ${{ secrets.NUGET_PUBLISHING_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
-      working-directory: './libraries/validation/src/Assimalign.Extensions.Validation/bin/Release/'
+      working-directory: './libraries/Validation/src/Assimalign.Extensions.Validation/bin/Release/'
