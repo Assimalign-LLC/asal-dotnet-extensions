@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Scheduling;
 
-/// <summary>
-/// 
-/// </summary>
-public interface IJobContext
+public sealed class JobScheduleBuilder
 {
-    
+
+
+
+    public JobScheduleBuilder ConfigureContext(Func<IJobContext> configure)
+    {
+
+        return this;
+    }
+
 }

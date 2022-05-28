@@ -19,7 +19,4 @@
 			<PackagePath>\</PackagePath>
 		</None>
 	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Schedules\" />
-	</ItemGroup>
 </Project>

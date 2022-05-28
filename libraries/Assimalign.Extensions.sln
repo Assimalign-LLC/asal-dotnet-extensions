@@ -358,6 +358,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Scheduling.Benchmarks", "Scheduling\benchmarks\Assimalign.Extensions.Scheduling.Benchmarks\Assimalign.Extensions.Scheduling.Benchmarks.csproj", "{324938EC-45CB-4ABA-A7D2-0EFD2F5D3904}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Hosting.Scheduling", "Hosting\src\Assimalign.Extensions.Hosting.Scheduling\Assimalign.Extensions.Hosting.Scheduling.csproj", "{224E06E5-B8DF-419F-A233-4C3E5ACC654F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -596,6 +598,10 @@ Global
 		{324938EC-45CB-4ABA-A7D2-0EFD2F5D3904}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{324938EC-45CB-4ABA-A7D2-0EFD2F5D3904}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{324938EC-45CB-4ABA-A7D2-0EFD2F5D3904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{224E06E5-B8DF-419F-A233-4C3E5ACC654F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{224E06E5-B8DF-419F-A233-4C3E5ACC654F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{224E06E5-B8DF-419F-A233-4C3E5ACC654F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{224E06E5-B8DF-419F-A233-4C3E5ACC654F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -732,6 +738,7 @@ Global
 		{096C4C33-FF2D-4E95-BE54-031B68290E42} = {D6D76B90-C33C-4285-9EB5-9C00E0B08F98}
 		{9CBCEB11-8AAF-4D83-A44F-86A60960747C} = {945CDF55-6B80-4618-AFB1-18734456A96E}
 		{324938EC-45CB-4ABA-A7D2-0EFD2F5D3904} = {9CBCEB11-8AAF-4D83-A44F-86A60960747C}
+		{224E06E5-B8DF-419F-A233-4C3E5ACC654F} = {545C55AB-C4B2-4DC5-B5BF-7F0D2F0B9D59}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FCCF2D81-2E3A-4508-918E-048D800EABE8}

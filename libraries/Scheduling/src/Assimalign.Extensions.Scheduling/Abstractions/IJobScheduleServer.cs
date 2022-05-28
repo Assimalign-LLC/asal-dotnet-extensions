@@ -11,7 +11,7 @@ namespace Assimalign.Extensions.Scheduling;
 /// <summary>
 /// 
 /// </summary>
-public interface IJobScheduleManager : IAsyncDisposable
+public interface IJobScheduleServer : IAsyncDisposable
 {
     /// <summary>
     /// 
@@ -21,19 +21,14 @@ public interface IJobScheduleManager : IAsyncDisposable
     /// <summary>
     /// 
     /// </summary>
-    IJobScheduleMonitor ScheduleMonitor { get; }
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task StartAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task StartAsync(CancellationToken cancellationToken);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task StopAsync(CancellationToken cancellationToken);
+    Task StopAsync(CancellationToken cancellationToken = default);
 }

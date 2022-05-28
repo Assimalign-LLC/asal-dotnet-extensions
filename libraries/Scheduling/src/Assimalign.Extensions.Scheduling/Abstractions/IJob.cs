@@ -14,6 +14,10 @@ public interface IJob
     /// <summary>
     /// 
     /// </summary>
+    string JobId { get; }
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="context"></param>
     void Invoke(IJobContext context);
 }

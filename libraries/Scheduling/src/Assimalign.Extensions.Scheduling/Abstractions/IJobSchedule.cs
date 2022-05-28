@@ -1,55 +1,81 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Assimalign.Extensions.Scheduling;
 
 /// <summary>
 /// 
 /// </summary>
-public interface IJobSchedule
+public interface IJobSchedule : IDisposable
 {
     /// <summary>
     /// A unique identifier for the Job Schedule.
     /// </summary>
     string Id { get; }
-    
+
+    /// <summary>
+    /// 
+    /// </summary>
+    Timer Timer { get; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    DateTime StartDate { get; }
+
+    /// <summary>
+    /// The initial time in which the schedule is to start.
+    /// </summary>
+    TimeSpan StartTime { get; }
+
+    /// <summary>
+    /// The set interval of time to be used after the initial start time.
+    /// </summary>
+    TimeSpan Interval { get; }
+
+    /// <summary>
+    /// A timestamp indicating the last time the schedule was run.
+    /// </summary>
+    DateTime LastRunTime { get; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    DateTime NextRunTime { get; }
+
     /// <summary>
     /// 
     /// </summary>
     IEnumerable<IJob> Jobs { get; }
 
     /// <summary>
+    /// Get's the current runtime status.
+    /// </summary>
+    JobScheduleStatus Status { get; }
+
+    /// <summary>
     /// 
     /// </summary>
-    JobScheduleStatus ScheduleStatus { get; }
+    /// <param name="job"></param>
+    /// <returns></returns>
+    IJobSchedule AttachJob(IJob job);
 
     /// <summary>
-    /// Gets the next occurrence of the schedule based on the specified
-    /// base time.
+    /// 
     /// </summary>
-    /// <param name="now">The time to compute the next schedule occurrence from.</param>
-    /// <returns>The next schedule occurrence.</returns>
-    DateTime GetNextOccurrence(DateTime now);
-
-    /// <summary>
-    /// Returns a collection of the next 'count' occurrences of the schedule,
-    /// starting from now.
-    /// </summary>
-    /// <param name="count">The number of occurrences to return.</param>
-    /// <returns>A collection of the next occurrences.</returns>
-    /// <param name="now">The optional <see cref="DateTime"/> to start from.</param>
-    IEnumerable<DateTime> GetNextOccurrences(int count, DateTime? now = null);
+    void OnStart();
 
     /// <summary>
     /// Runs all the Jobs for this schedule.
     /// </summary>
-    void Run();
+    void OnRun();
 
     /// <summary>
     /// 
     /// </summary>
-    void OnComplete();
+    void OnComplete(IJobContext context);
 }

@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.Scheduling;
-
-/// <summary>
-/// 
-/// </summary>
-public interface IJobContext
+namespace Assimalign.Extensions.Scheduling.Schedules
 {
-    
+    public class DailyJobSchedule
+    {
+
+    }
 }
