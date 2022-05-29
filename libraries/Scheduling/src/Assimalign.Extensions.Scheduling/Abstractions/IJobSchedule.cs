@@ -10,7 +10,7 @@ namespace Assimalign.Extensions.Scheduling;
 /// <summary>
 /// 
 /// </summary>
-public interface IJobSchedule : IDisposable
+public interface IJobSchedule : IDisposable, IAsyncDisposable
 {
     /// <summary>
     /// A unique identifier for the Job Schedule.
@@ -20,6 +20,9 @@ public interface IJobSchedule : IDisposable
     /// <summary>
     /// 
     /// </summary>
+    /// <remarks>
+    /// 
+    /// </remarks>
     Timer Timer { get; }
 
     /// <summary>
@@ -38,17 +41,17 @@ public interface IJobSchedule : IDisposable
     TimeSpan Interval { get; }
 
     /// <summary>
-    /// A timestamp indicating the last time the schedule was run.
+    /// A timestamp indicating the last runtime.
     /// </summary>
     DateTime LastRunTime { get; }
 
     /// <summary>
-    /// 
+    /// A timestamp indicating the next runtime.
     /// </summary>
     DateTime NextRunTime { get; }
 
     /// <summary>
-    /// 
+    /// A collection of Jobs to be scheduled.
     /// </summary>
     IEnumerable<IJob> Jobs { get; }
 
@@ -58,7 +61,7 @@ public interface IJobSchedule : IDisposable
     JobScheduleStatus Status { get; }
 
     /// <summary>
-    /// 
+    /// Attaches a job to the given schedule.
     /// </summary>
     /// <param name="job"></param>
     /// <returns></returns>
@@ -72,7 +75,7 @@ public interface IJobSchedule : IDisposable
     /// <summary>
     /// Runs all the Jobs for this schedule.
     /// </summary>
-    void OnRun();
+    void OnRun(IJobContext context);
 
     /// <summary>
     /// 

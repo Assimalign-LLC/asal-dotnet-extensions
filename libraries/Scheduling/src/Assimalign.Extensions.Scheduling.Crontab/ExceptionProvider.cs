@@ -4,10 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.Scheduling.Schedules
-{
-    public class DailyJobSchedule
-    {
+namespace Assimalign.Extensions.Scheduling;
 
-    }
-}
+
+public delegate Exception ExceptionProvider();

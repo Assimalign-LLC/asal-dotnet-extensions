@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Scheduling;
 
-public sealed class JobScheduleOptions
+internal static class StringSeparatorStock
 {
-    public bool RunOnStartup { get; set; }
-    public static JobScheduleOptions Default => throw new NotImplementedException();
+    public static readonly char[] Space = { ' ' };
+    public static readonly char[] Comma = { ',' };
 }

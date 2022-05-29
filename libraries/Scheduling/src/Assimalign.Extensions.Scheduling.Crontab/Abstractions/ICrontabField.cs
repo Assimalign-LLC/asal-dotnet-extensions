@@ -6,15 +6,9 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Scheduling;
 
-public sealed class JobScheduleBuilder
+public interface ICrontabField
 {
-
-
-
-    public JobScheduleBuilder ConfigureContext(Func<IJobContext> configure)
-    {
-
-        return this;
-    }
-
+    int GetFirst();
+    int Next(int start);
+    bool Contains(int value);
 }

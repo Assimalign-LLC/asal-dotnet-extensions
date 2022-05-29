@@ -1,11 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageIcon>.assimalign.logo.png</PackageIcon>
 		<Description>
 			A generic implementation for creating a task scheduler.
-			
 		</Description>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Include="..\..\..\..\.assimalign.logo.png">
@@ -18,5 +19,8 @@
 			<Pack>true</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Schedules\" />
 	</ItemGroup>
 </Project>
