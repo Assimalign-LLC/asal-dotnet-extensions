@@ -20,7 +20,7 @@ public static class JobScheduleExtensions
     {
         var schedule = CrontabSchedule.Parse("");
 
-        schedule.
+  
         return new JobSchedule.JobScheduleDefault()
         {
 

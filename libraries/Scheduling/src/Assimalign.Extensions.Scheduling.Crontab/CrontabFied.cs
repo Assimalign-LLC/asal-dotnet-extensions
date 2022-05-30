@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Assimalign.Extensions.Scheduling;
 
-public class CrontabField : ICrontabField
+public class CrontabFied : ICrontabField
 {
     readonly BitArray _bits;
     /* read-only */
@@ -17,11 +17,11 @@ public class CrontabField : ICrontabField
     /// <summary>
     /// Parses a crontab field expression given its kind.
     /// </summary>
-    public static CrontabField Parse(CrontabFieldKind kind, string expression) => TryParse(kind, expression, v => v, e => throw e());
-    public static CrontabField? TryParse(CrontabFieldKind kind, string expression) => TryParse(kind, expression, v => v, _ => (CrontabField?)null);
-    public static T TryParse<T>(CrontabFieldKind kind, string expression, Func<CrontabField, T> valueSelector, Func<ExceptionProvider, T> errorSelector)
+    public static CrontabFied Parse(CrontabFieldKind kind, string expression) => TryParse(kind, expression, v => v, e => throw e());
+    public static CrontabFied? TryParse(CrontabFieldKind kind, string expression) => TryParse(kind, expression, v => v, _ => (CrontabFied?)null);
+    public static T TryParse<T>(CrontabFieldKind kind, string expression, Func<CrontabFied, T> valueSelector, Func<ExceptionProvider, T> errorSelector)
     {
-        var field = new CrontabField(CrontabFieldImpl.FromKind(kind));
+        var field = new CrontabFied(CrontabFieldImpl.FromKind(kind));
         var error = field._impl.TryParse(expression, field.Accumulate, (ExceptionProvider?)null, e => e);
         return error == null ? valueSelector(field) : errorSelector(error);
     }
@@ -29,34 +29,34 @@ public class CrontabField : ICrontabField
     /// <summary>
     /// Parses a crontab field expression representing seconds.
     /// </summary>
-    public static CrontabField Seconds(string expression) => Parse(CrontabFieldKind.Second, expression);
+    public static CrontabFied Seconds(string expression) => Parse(CrontabFieldKind.Second, expression);
 
     /// <summary>
     /// Parses a crontab field expression representing minutes.
     /// </summary>
-    public static CrontabField Minutes(string expression) => Parse(CrontabFieldKind.Minute, expression);
+    public static CrontabFied Minutes(string expression) => Parse(CrontabFieldKind.Minute, expression);
 
     /// <summary>
     /// Parses a crontab field expression representing hours.
     /// </summary>
-    public static CrontabField Hours(string expression) => Parse(CrontabFieldKind.Hour, expression);
+    public static CrontabFied Hours(string expression) => Parse(CrontabFieldKind.Hour, expression);
 
     /// <summary>
     /// Parses a crontab field expression representing days in any given month.
     /// </summary>
-    public static CrontabField Days(string expression) => Parse(CrontabFieldKind.Day, expression);
+    public static CrontabFied Days(string expression) => Parse(CrontabFieldKind.DayOfMonth, expression);
 
     /// <summary>
     /// Parses a crontab field expression representing months.
     /// </summary>
-    public static CrontabField Months(string expression) => Parse(CrontabFieldKind.Month, expression);
+    public static CrontabFied Months(string expression) => Parse(CrontabFieldKind.Month, expression);
 
     /// <summary>
     /// Parses a crontab field expression representing days of a week.
     /// </summary>
-    public static CrontabField DaysOfWeek(string expression) => Parse(CrontabFieldKind.DayOfWeek, expression);
+    public static CrontabFied DaysOfWeek(string expression) => Parse(CrontabFieldKind.DayOfWeek, expression);
 
-    CrontabField(CrontabFieldImpl impl)
+    CrontabFied(CrontabFieldImpl impl)
     {
         _impl = impl ?? throw new ArgumentNullException(nameof(impl));
         _bits = new BitArray(impl.ValueCount);

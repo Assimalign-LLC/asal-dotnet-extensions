@@ -67,7 +67,7 @@ public sealed partial class JobSchedule
             {
                 action();
             }
-            Timer = new Timer(new TimerCallback(Run), GetContext.Invoke(), StartTime, Interval);
+           // Timer = new Timer(new TimerCallback(Run), GetContext.Invoke(), StartTime, Interval);
         }
         public void OnRun(IJobContext context)
         {

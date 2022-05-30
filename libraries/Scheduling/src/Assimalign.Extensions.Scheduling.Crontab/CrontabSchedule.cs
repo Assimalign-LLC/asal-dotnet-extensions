@@ -8,14 +8,14 @@ namespace Assimalign.Extensions.Scheduling;
 
 public class CrontabSchedule
 {
-    readonly CrontabField? _seconds;
-    readonly CrontabField _minutes;
-    readonly CrontabField _hours;
-    readonly CrontabField _days;
-    readonly CrontabField _months;
-    readonly CrontabField _daysOfWeek;
+    readonly CrontabFied? _seconds;
+    readonly CrontabFied _minutes;
+    readonly CrontabFied _hours;
+    readonly CrontabFied _days;
+    readonly CrontabFied _months;
+    readonly CrontabFied _daysOfWeek;
 
-    static readonly CrontabField SecondZero = CrontabField.Seconds("0");
+    static readonly CrontabFied SecondZero = CrontabFied.Seconds("0");
 
     // ReSharper disable once PartialTypeWithSinglePart
 
@@ -96,14 +96,17 @@ public class CrontabSchedule
             });
         }
 
-        var fields = new CrontabField[6];
+        var fields = new CrontabFied[6];
 
         var offset = includingSeconds ? 0 : 1;
         for (var i = 0; i < tokens.Length; i++)
         {
             var kind = (CrontabFieldKind)i + offset;
-            var field = CrontabField.TryParse(kind, tokens[i], v => new { ErrorProvider = (ExceptionProvider?)null, Value = (CrontabField?)v },
-                                                               e => new { ErrorProvider = (ExceptionProvider?)e, Value = (CrontabField?)null });
+            var field = CrontabFied.TryParse(
+                kind, 
+                tokens[i], 
+                v => new { ErrorProvider = (ExceptionProvider?)null, Value = (CrontabFied?)v },
+                e => new { ErrorProvider = (ExceptionProvider?)e, Value = (CrontabFied?)null });
 
             if (field.ErrorProvider != null)
                 return errorSelector(field.ErrorProvider);
@@ -114,12 +117,12 @@ public class CrontabSchedule
     }
 
     CrontabSchedule(
-        CrontabField? seconds, 
-        CrontabField minutes, 
-        CrontabField hours, 
-        CrontabField days, 
-        CrontabField months, 
-        CrontabField daysOfWeek)
+        CrontabFied? seconds, 
+        CrontabFied minutes, 
+        CrontabFied hours, 
+        CrontabFied days, 
+        CrontabFied months, 
+        CrontabFied daysOfWeek)
     {
         _seconds = seconds;
         _minutes = minutes;
