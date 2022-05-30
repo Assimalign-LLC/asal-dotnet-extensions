@@ -73,84 +73,44 @@ public readonly struct Crontab //: IEnumerable<DateTime> // IFormattable, IEquat
 
 	public DateTime GetNextOccurance()
 	{
+		// Below is crap implementation, but get's the job done
+		// TODO: Refactor this crap
+
 		var now = DateTime.Now;
+		var year = now.Year;
+		var list = new List<DateTime>();
 
+		for (int i = 0; i < 2; i++)
+		{
+			foreach (var month in Month.Occurances)
+			{
+				foreach (var day in DayOfMonth.Occurances)
+				{
+					foreach (var hour in Hour.Occurances)
+					{
+						foreach (var minute in Minute.Occurances)
+						{
+							try
+							{
+								cache.Add(new DateTime(year, month, day, hour, minute, 0));
+							}
+							catch
+							{
+								continue;
+							}
+						}
+					}
+				}
+			}
+			year++;
+		}
 
+		var dw = DayOfWeek.Occurances;
+		return list
+			.Where(x => dw.Contains((int)x.DayOfWeek))
+			.Where(x => x > now)
+			.First();
 
-		//		while (true)
-		//		{
-		//
-		//			foreach (var month in month.Occurances)
-		//			{
-		//				if (Month.IsAny)
-		//				{
-		//
-		//				}
-		//				foreach (var dayOfMonth in DayOfMonth.Occurances)
-		//				{
-		//					foreach (var dayOfWeek in DayOfWeek.Occurances)
-		//					{
-		//
-		//						foreach (var hour in Hour.Occurances)
-		//						{
-		//							foreach (var minute in Minute.Occurances)
-		//							{
-		//								if (Second.IsAny)
-		//								{
-		//
-		//								}
-		//								foreach (var second in Second.Occurances)
-		//								{
-		//
-		//								}
-		//							}
-		//						}
-		//					}
-		//				}
-		//			}
-		//
-		//			now.AddSeconds(1);
-		//		}
-
-
-		//while (true)
-		//{
-		//    restart:
-		//    foreach (var month in Month.Occurances)
-		//    {
-		//        if (month <= now.Month)
-		//        {
-		//            continue;
-		//        }
-		//        // Let's increment the month up if need be
-		//        while (now.Month < month)
-		//        {
-		//            now.AddMonths(1);
-		//        }
-
-
-
-		//        var t = DayOfMonth.Occurances.Length * DayOfWeek.Occurances.Length;
-
-
-
-		//        foreach (var dayOfMonth in DayOfMonth.Occurances)
-		//        {
-
-		//            if (dayOfMonth >= now.Day)
-		//            {
-		//                // Let's increment the month up
-		//                while (now.Day < dayOfMonth)
-		//                {
-		//                    now.AddDays(1);
-		//                }
-		//                foreach (var dayOfWeek in )
-		//            }
-		//        }
-		//    }
-		//}
-
-		return now;
 	}
 
 	/// <summary>
@@ -191,6 +151,7 @@ public readonly struct Crontab //: IEnumerable<DateTime> // IFormattable, IEquat
 
 	public static bool operator ==(Crontab left, Crontab right) => left.Equals(right);
 	public static bool operator !=(Crontab left, Crontab right) => !left.Equals(right);
+
 	public static implicit operator Crontab(string expression) => Crontab.Parse(expression);
 
 
