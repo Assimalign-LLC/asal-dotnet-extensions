@@ -49,7 +49,7 @@ namespace Assimalign.Extensions.Scheduling;
 /// crontab format except that it can denotate more precise schedules
 /// that use a seconds component.
 /// ]]>
-public readonly struct Crontab //: IEnumerable<DateTime> // IFormattable, IEquatable<Crontab>, IEnumerable<DateTime>
+public readonly struct Crontab: IEquatable<Crontab>, IEnumerable<DateTime> // IFormattable, IEquatable<Crontab>, IEnumerable<DateTime>
 {
 	public const char RangValue = '-';
 	public const char StepValue = '/';
@@ -71,85 +71,98 @@ public readonly struct Crontab //: IEnumerable<DateTime> // IFormattable, IEquat
 	public CrontabField Month { get; }
 	public CrontabField DayOfWeek { get; }
 
-	public DateTime GetNextOccurance()
+	/// <summary>
+	/// Get's the amount of time until the next occurrence from the current local time.
+	/// </summary>
+	/// <returns></returns>
+	/// <exception cref="NotImplementedException"></exception>
+	public TimeSpan GetTimeSpan()
+    {
+		return GetNextDateTime().Subtract(DateTime.Now);
+    }
+
+	/// <summary>
+	/// Get's the next occurrence in DateTime from the current local time.
+	/// </summary>
+	/// <returns></returns>
+	public DateTime GetDateTime()
 	{
-		// Below is crap implementation, but get's the job done
-		// TODO: Refactor this crap
-
-		var now = DateTime.Now;
-		var year = now.Year;
-		var list = new List<DateTime>();
-
-		for (int i = 0; i < 2; i++)
-		{
-			foreach (var month in Month.Occurances)
-			{
-				foreach (var day in DayOfMonth.Occurances)
-				{
-					foreach (var hour in Hour.Occurances)
-					{
-						foreach (var minute in Minute.Occurances)
-						{
-							try
-							{
-								cache.Add(new DateTime(year, month, day, hour, minute, 0));
-							}
-							catch
-							{
-								continue;
-							}
-						}
-					}
-				}
-			}
-			year++;
-		}
-
-		var dw = DayOfWeek.Occurances;
-		return list
-			.Where(x => dw.Contains((int)x.DayOfWeek))
-			.Where(x => x > now)
-			.First();
-
+		return GetDateTime(DateTime.Now);
 	}
 
 	/// <summary>
 	/// 
 	/// </summary>
-	/// <param name="other"></param>
+	/// <param name="start"></param>
 	/// <returns></returns>
-	/// <exception cref="NotImplementedException"></exception>
-	//public bool Equals(Crontab other)
-	//{
-	//	throw new NotImplementedException();
-	//}
-	///// <summary>
-	///// 
-	///// </summary>
-	///// <param name="instance"></param>
-	///// <returns></returns>
-	//public override bool Equals([NotNullWhen(true)] object instance) => instance is Crontab crontab ? Equals(crontab) : false;
-	///// <summary>
-	///// 
-	///// </summary>
-	///// <returns></returns>
-	//public override string ToString()
-	//{
-	//	return base.ToString();
-	//}
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="format"></param>
-	/// <param name="formatProvider"></param>
-	/// <returns></returns>
-	/// <exception cref="NotImplementedException"></exception>
-	//public string ToString(string format, IFormatProvider formatProvider)
-	//{
-	//	throw new NotImplementedException();
-	//}
+	public DateTime GetDateTime(DateTime start)
+    {
+		var next = new DateTime(start.Year, 1, 1, 0, 0, 0);
 
-	public static bool operator ==(Crontab left, Crontab right) => left.Equals(right);
+	restart:
+		for (int a = 0; a < 12; a++)
+		{
+			if (!Month.Occurances.Contains(a + 1))
+			{
+				next = next.AddMonths(1);
+				continue;
+			}
+			for (int b = 0; b < DateTime.DaysInMonth(next.Year, a + 1); b++)
+			{
+				if (!DayOfMonth.Occurances.Contains(b + 1) || !DayOfWeek.Occurances.Contains((int)next.DayOfWeek))
+				{
+					next = next.AddDays(1);
+					continue;
+				}
+				for (int c = 0; c < 24; c++)
+				{
+					if (!Hour.Occurances.Contains(c))
+					{
+						next = next.AddHours(1);
+						continue;
+					}
+					for (int d = 0; d < 60; d++)
+					{
+						if (Minute.Occurances.Contains(d) && next > start)
+						{
+							return next;
+						}
+						else
+						{
+							next = next.AddMinutes(1);
+						}
+					}
+				}
+			}
+		}
+
+		goto restart;
+	}
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public bool Equals(Crontab other)
+    {
+        return 
+			this.Minute.Expression == other.Minute.Expression &&
+			this.Hour.Expression == other.Hour.Expression &&
+			this.DayOfMonth.Expression == other.DayOfMonth.Expression &&
+			this.Month.Expression == other.Month.Expression &&
+			this.DayOfWeek.Expression == other.DayOfWeek.Expression;
+	}
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="instance"></param>
+    /// <returns></returns>
+    public override bool Equals([NotNullWhen(true)] object instance) => instance is Crontab crontab ? Equals(crontab) : false;
+
+    public static bool operator ==(Crontab left, Crontab right) => left.Equals(right);
 	public static bool operator !=(Crontab left, Crontab right) => !left.Equals(right);
 
 	public static implicit operator Crontab(string expression) => Crontab.Parse(expression);
@@ -203,36 +216,51 @@ public readonly struct Crontab //: IEnumerable<DateTime> // IFormattable, IEquat
 		return new Crontab(minute, hour, dayOfMonth, month, dayOfWeek);
 	}
 
-	//	IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
-	//	public IEnumerator<DateTime> GetEnumerator()
-	//	{
-	//		throw new NotImplementedException();
-	//	}
-	//
-	//	private class CrontabEnumerator : IEnumerator<DateTime>
-	//	{
-	//		public CrontabEnumerator(Crontab crontab)
-	//		{
-	//				
-	//		}
-	//
-	//		public DateTime Current => throw new NotImplementedException();
-	//
-	//		object IEnumerator.Current => throw new NotImplementedException();
-	//
-	//		public void Dispose()
-	//		{
-	//			throw new NotImplementedException();
-	//		}
-	//
-	//		public bool MoveNext()
-	//		{
-	//			throw new NotImplementedException();
-	//		}
-	//
-	//		public void Reset()
-	//		{
-	//			throw new NotImplementedException();
-	//		}
-	//	}
+    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+    public IEnumerator<DateTime> GetEnumerator()
+    {
+		return new CrontabEnumerator(this);
+    }
+
+    private class CrontabEnumerator : IEnumerator<DateTime>
+    {
+		private readonly Crontab crontab;
+		private DateTime? index;
+
+        public CrontabEnumerator(Crontab crontab)
+        {
+			this.crontab = crontab;
+        }
+
+        public DateTime Current
+        {
+			get
+            {
+				if (!index.HasValue)
+                {
+					index = crontab.GetDateTime();
+					return index.GetValueOrDefault();
+                }
+				else
+                {
+					index = crontab.GetDateTime(index.Value);
+					return index.GetValueOrDefault();
+                }
+            }
+        }
+
+		object IEnumerator.Current => this.Current;
+
+        public void Dispose()
+        {
+            
+        }
+
+		public bool MoveNext() => true;
+
+        public void Reset()
+        {
+            index 
+        }
+    }
 }

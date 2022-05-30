@@ -9,11 +9,6 @@ namespace Assimalign.Extensions.Scheduling;
 /// </summary>
 public readonly struct CrontabField
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="kind"></param>
-	/// <param name="expression"></param>
 	private CrontabField(CrontabFieldKind kind, string expression, int minBoundary, int maxBoundary, int[] occurances)
 	{
 		this.Kind = kind;
