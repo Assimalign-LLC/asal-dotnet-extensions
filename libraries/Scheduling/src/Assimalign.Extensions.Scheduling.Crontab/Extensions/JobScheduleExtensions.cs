@@ -18,12 +18,12 @@ public static class JobScheduleExtensions
     /// <returns></returns>
     public static IJobSchedule FromCrontab(string expression)
     {
-        var schedule = CrontabSchedule.Parse("");
+        var schedule = Crontab.Parse("");
 
   
         return new JobSchedule.JobScheduleDefault()
         {
-
+            
         };
     }
 }

@@ -360,7 +360,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Sched
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Hosting.Scheduling", "Hosting\src\Assimalign.Extensions.Hosting.Scheduling\Assimalign.Extensions.Hosting.Scheduling.csproj", "{224E06E5-B8DF-419F-A233-4C3E5ACC654F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Scheduling.Crontab", "Scheduling\src\Assimalign.Extensions.Scheduling.Crontab\Assimalign.Extensions.Scheduling.Crontab.csproj", "{F1F24B0D-0443-4B9B-9DD6-2148EF519980}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Scheduling.Crontab", "Scheduling\src\Assimalign.Extensions.Scheduling.Crontab\Assimalign.Extensions.Scheduling.Crontab.csproj", "{F1F24B0D-0443-4B9B-9DD6-2148EF519980}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Scheduling.Crontab.Tests", "Scheduling\tests\Assimalign.Extensions.Scheduling.Crontab.Tests\Assimalign.Extensions.Scheduling.Crontab.Tests.csproj", "{4B1EEA0D-3B74-4C95-A6AE-269A95E605ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -608,6 +610,10 @@ Global
 		{F1F24B0D-0443-4B9B-9DD6-2148EF519980}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1F24B0D-0443-4B9B-9DD6-2148EF519980}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1F24B0D-0443-4B9B-9DD6-2148EF519980}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B1EEA0D-3B74-4C95-A6AE-269A95E605ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B1EEA0D-3B74-4C95-A6AE-269A95E605ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B1EEA0D-3B74-4C95-A6AE-269A95E605ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B1EEA0D-3B74-4C95-A6AE-269A95E605ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -746,6 +752,7 @@ Global
 		{324938EC-45CB-4ABA-A7D2-0EFD2F5D3904} = {9CBCEB11-8AAF-4D83-A44F-86A60960747C}
 		{224E06E5-B8DF-419F-A233-4C3E5ACC654F} = {545C55AB-C4B2-4DC5-B5BF-7F0D2F0B9D59}
 		{F1F24B0D-0443-4B9B-9DD6-2148EF519980} = {C749AE79-B304-4E54-B8A2-80B15840E6F7}
+		{4B1EEA0D-3B74-4C95-A6AE-269A95E605ED} = {D6D76B90-C33C-4285-9EB5-9C00E0B08F98}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FCCF2D81-2E3A-4508-918E-048D800EABE8}

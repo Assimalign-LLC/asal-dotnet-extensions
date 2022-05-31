@@ -26,19 +26,14 @@ public interface IJobSchedule : IDisposable, IAsyncDisposable
     Timer Timer { get; }
 
     /// <summary>
-    /// 
+    /// The initial date in which the schedule was started.
     /// </summary>
     DateTime StartDate { get; }
 
     /// <summary>
-    /// The initial time in which the schedule is to start.
+    /// The initial time in which the schedule was started.
     /// </summary>
     TimeSpan StartTime { get; }
-
-    /// <summary>
-    /// The set interval of time to be used after the initial start time.
-    /// </summary>
-    TimeSpan Interval { get; }
 
     /// <summary>
     /// A timestamp indicating the last runtime.
@@ -73,12 +68,7 @@ public interface IJobSchedule : IDisposable, IAsyncDisposable
     void OnStart();
 
     /// <summary>
-    /// Runs all the Jobs for this schedule.
-    /// </summary>
-    void OnRun(IJobContext context);
-
-    /// <summary>
     /// 
     /// </summary>
-    void OnComplete(IJobContext context);
+    void OnStop();
 }

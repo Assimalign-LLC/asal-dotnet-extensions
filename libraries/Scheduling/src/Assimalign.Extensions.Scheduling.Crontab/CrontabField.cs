@@ -43,17 +43,6 @@ public readonly struct CrontabField
 	/// </summary>
 	public int MinBoundary { get; }
 
-	public static CrontabField Parse(CrontabFieldKind kind, string expression)
-	{
-		return kind switch
-		{
-			CrontabFieldKind.Minute => ParseMinute(expression),
-			CrontabFieldKind.Hour => ParseHour(expression),
-			CrontabFieldKind.DayOfMonth => ParseDayOfMonth(expression),
-			CrontabFieldKind.Month => ParseMonth(expression),
-			CrontabFieldKind.DayOfWeek => ParseDayOfWeek(expression)
-		};
-	}
 	public static CrontabField ParseMinute(string expression)
 	{
 		return new CrontabField(
@@ -288,4 +277,10 @@ public readonly struct CrontabField
 			return new int[1] { value };
 		}
 	}
+
+
+    public override string ToString()
+    {
+		return this.Expression;
+    }
 }

@@ -9,7 +9,15 @@ namespace Assimalign.Extensions.Scheduling;
 
 public sealed partial class JobSchedule
 {
-  
+    /// <summary>
+    /// Creates a job schedule to be invoked at the specified time: <paramref name="ticks"/>.
+    /// </summary>
+    /// <param name="ticks">The time in which to run the schedule.</param>
+    /// <returns></returns>
+    public static IJobSchedule Daily(long ticks)
+    {
+        return Daily(new TimeSpan(ticks));
+    }
     public static IJobSchedule Daily(string timeSpan)
     {
         return Daily(TimeSpan.Parse(timeSpan));
@@ -31,8 +39,14 @@ public sealed partial class JobSchedule
 
         return scheduler;
     }
-    public static IJobSchedule Crontab(string expression)
+    public static IJobSchedule Weekly(DayOfWeek dayOfWeek)
     {
         throw new NotImplementedException();
     }
+    public static IJobSchedule Monthly(int day)
+    {
+        throw new NotImplementedException();
+    }
+
+   
 }

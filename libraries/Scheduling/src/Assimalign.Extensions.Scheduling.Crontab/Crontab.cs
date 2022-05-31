@@ -2,10 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 
 namespace Assimalign.Extensions.Scheduling;
 
@@ -49,7 +48,9 @@ namespace Assimalign.Extensions.Scheduling;
 /// crontab format except that it can denotate more precise schedules
 /// that use a seconds component.
 /// ]]>
-public readonly struct Crontab: IEquatable<Crontab>, IEnumerable<DateTime> // IFormattable, IEquatable<Crontab>, IEnumerable<DateTime>
+[Serializable]
+[StructLayout(LayoutKind.Auto)]
+public readonly struct Crontab: IEquatable<Crontab>, IEnumerable<DateTime>, ISerializable, IFormattable
 {
 	public const char RangValue = '-';
 	public const char StepValue = '/';
@@ -65,10 +66,29 @@ public readonly struct Crontab: IEquatable<Crontab>, IEnumerable<DateTime> // IF
 		this.DayOfWeek = dayOfWeek;
 	}
 
+	/// <summary>
+	/// 
+	/// </summary>
 	public CrontabField Minute { get; }
+
+	/// <summary>
+	/// 
+	/// </summary>
 	public CrontabField Hour { get; }
+
+	/// <summary>
+	/// 
+	/// </summary>
 	public CrontabField DayOfMonth { get; }
+
+	/// <summary>
+	/// 
+	/// </summary>
 	public CrontabField Month { get; }
+
+	/// <summary>
+	/// 
+	/// </summary>
 	public CrontabField DayOfWeek { get; }
 
 	/// <summary>
@@ -78,7 +98,7 @@ public readonly struct Crontab: IEquatable<Crontab>, IEnumerable<DateTime> // IF
 	/// <exception cref="NotImplementedException"></exception>
 	public TimeSpan GetTimeSpan()
     {
-		return GetNextDateTime().Subtract(DateTime.Now);
+		return GetDateTime().Subtract(DateTime.Now);
     }
 
 	/// <summary>
@@ -97,6 +117,7 @@ public readonly struct Crontab: IEquatable<Crontab>, IEnumerable<DateTime> // IF
 	/// <returns></returns>
 	public DateTime GetDateTime(DateTime start)
     {
+		var index = 0;
 		var next = new DateTime(start.Year, 1, 1, 0, 0, 0);
 
 	restart:
@@ -135,7 +156,12 @@ public readonly struct Crontab: IEquatable<Crontab>, IEnumerable<DateTime> // IF
 				}
 			}
 		}
-
+		
+		if (index >= 2)
+        {
+			throw new Exception("The provided expression was parsed but has an invalid tab. ");
+        }
+		index++;
 		goto restart;
 	}
 
@@ -155,19 +181,46 @@ public readonly struct Crontab: IEquatable<Crontab>, IEnumerable<DateTime> // IF
 			this.DayOfWeek.Expression == other.DayOfWeek.Expression;
 	}
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="format"></param>
+	/// <param name="formatProvider"></param>
+	/// <returns></returns>
+	public string ToString(string format, IFormatProvider formatProvider)
+	{
+		switch(format)
+        {
+			case "E":
+                {
+					return $"{Minute} {Hour} {DayOfMonth} {Month} {DayOfWeek}";
+                }
+			default:
+                {
+					return $"{Minute} {Hour} {DayOfMonth} {Month} {DayOfWeek}";
+				}
+		}
+	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
+    public override string ToString()
+    {
+        return ToString("E", default);
+    }
+
     /// <summary>
     /// 
     /// </summary>
     /// <param name="instance"></param>
     /// <returns></returns>
     public override bool Equals([NotNullWhen(true)] object instance) => instance is Crontab crontab ? Equals(crontab) : false;
-
     public static bool operator ==(Crontab left, Crontab right) => left.Equals(right);
 	public static bool operator !=(Crontab left, Crontab right) => !left.Equals(right);
 
 	public static implicit operator Crontab(string expression) => Crontab.Parse(expression);
-
-
 	public static Crontab Parse(string expression)
 	{
 		var segments = expression.Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -216,11 +269,25 @@ public readonly struct Crontab: IEquatable<Crontab>, IEnumerable<DateTime> // IF
 		return new Crontab(minute, hour, dayOfMonth, month, dayOfWeek);
 	}
 
-    IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+
+	void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+	{
+		if (info is null)
+        {
+			throw new ArgumentNullException("info");
+        }
+
+		info.AddValue("crontabExpression", this.ToString());
+	}
+
+	#region Crontab Enumeration
+	IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
     public IEnumerator<DateTime> GetEnumerator()
     {
 		return new CrontabEnumerator(this);
     }
+
+    
 
     private class CrontabEnumerator : IEnumerator<DateTime>
     {
@@ -260,7 +327,8 @@ public readonly struct Crontab: IEquatable<Crontab>, IEnumerable<DateTime> // IF
 
         public void Reset()
         {
-            index 
+			index = null; 
         }
     }
+	#endregion
 }
