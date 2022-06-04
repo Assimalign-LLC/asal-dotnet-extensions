@@ -46,7 +46,5 @@ public sealed partial class JobSchedule
     public static IJobSchedule Monthly(int day)
     {
         throw new NotImplementedException();
-    }
-
-   
+    }   
 }
