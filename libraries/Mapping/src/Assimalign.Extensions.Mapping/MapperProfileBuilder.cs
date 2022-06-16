@@ -23,7 +23,7 @@ public abstract class MapperProfileBuilder : IMapperProfileBuilder
 
 
     /// <inheritdoc cref="IMapperProfileBuilder.CreateProfile{TTarget, TSource}(Action{IMapperActionDescriptor{TTarget, TSource}})"/>
-    public IMapperProfileBuilder CreateProfile<TTarget, TSource>(Action<IMapperActionDescriptor<TTarget, TSource>> configure)
+    IMapperProfileBuilder IMapperProfileBuilder.CreateProfile<TTarget, TSource>(Action<IMapperActionDescriptor<TTarget, TSource>> configure)
     {
         var profile = new MapperProfileDefault<TTarget, TSource>(configure);
         var descriptor = new MapperActionDescriptor<TTarget, TSource>()
@@ -39,7 +39,7 @@ public abstract class MapperProfileBuilder : IMapperProfileBuilder
     }
 
     /// <inheritdoc cref="IMapperProfileBuilder.Build"/>
-    public IEnumerable<IMapperProfile> Build()
+    IEnumerable<IMapperProfile> IMapperProfileBuilder.Build()
     {
         if (!isBuilt)
         {

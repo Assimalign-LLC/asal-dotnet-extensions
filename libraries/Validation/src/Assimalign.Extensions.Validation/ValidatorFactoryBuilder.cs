@@ -36,4 +36,28 @@ public sealed class ValidatorFactoryBuilder
 
         return this;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="validatorName"></param>
+    /// <param name="builder"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public ValidatorFactoryBuilder AddValidator(string validatorName, IValidationProfileBuilder builder)
+    {
+        if (string.IsNullOrEmpty(validatorName))
+        {
+            throw new ArgumentNullException(nameof(validatorName), $"The parameter 'validatorName' cannot be null or empty.");
+        }
+        if (builder is null)
+        {
+            throw new ArgumentNullException(nameof(builder));
+        }
+
+        return AddValidator(validatorName, validatoBuilder =>
+        {
+            validatoBuilder.AddProfiles(builder);
+        });
+    }
 }

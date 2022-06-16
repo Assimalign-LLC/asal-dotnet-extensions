@@ -61,7 +61,7 @@ public sealed class MapperFactoryBuilder
     {
         Mappers.GetOrAdd(mapperName, name =>
         {
-            var builder = new MapperProfileBuilderDefault(configure);
+            var builder = new MapperProfileBuilderDefault(configure) as IMapperProfileBuilder;
             return new Mapper(builder.Build(), new MapperOptions());
         });
 
