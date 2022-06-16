@@ -1,0 +1,16 @@
+<Project>
+	<PropertyGroup>
+		<Authors>Chase Crawford</Authors>
+		<Copyright>© Assimalign LLC 2022</Copyright>
+		<PackageIconUrl>https://corporate.assets.assimalign.com/assets/logos/.assimalign.logo.png</PackageIconUrl>
+		<PackageRepositoryUrl>https://github.com/Assimalign-LLC/asal-dotnet-extensions</PackageRepositoryUrl>
+	</PropertyGroup>
+	<PropertyGroup>
+		<VersionPrefix>1.0.0</VersionPrefix>
+		<VersionSuffix>pre.1.0.4</VersionSuffix>
+		<TargetFrameworks>net6.0</TargetFrameworks>
+
+		<!-- <IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat> -->
+	</PropertyGroup>
+</Project>

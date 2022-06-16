@@ -8,9 +8,9 @@ on:
     - users/**
     - features/**
     paths: 
-    - 'src/validation/src/**'
-    - 'src/Directory.Build.props'                                                 # When the Global Props File Changes
-    - 'src/validation/Directory.Build.props'
+    - 'libraries/Validation/src/**'
+    - 'libraries/Directory.Build.props'                                                 # When the Global Props File Changes
+    - 'libraries/Validation/Directory.Build.props'
     - '.github/workflows/assimalign.extensions.validation.configurable.yml'        # When Pipeline File Changes
 
 jobs:
@@ -32,22 +32,22 @@ jobs:
     
     - name: Restore Project
       run: dotnet restore 
-      working-directory: './src/validation/src/Assimalign.Extensions.Validation.Configurable'
+      working-directory: './libraries/Validation/src/Assimalign.Extensions.Validation.Configurable'
     
     - name: Build Project
       run: dotnet build --configuration Release --no-restore
-      working-directory: './src/validation/src/Assimalign.Extensions.Validation.Configurable'
+      working-directory: './libraries/Validation/src/Assimalign.Extensions.Validation.Configurable'
     
     #   NOTE: Currently No Test Projects for This library
     # - name: Restore Unit Tests Project
     #   run: dotnet restore 
-    #   working-directory: './src/validation/tests/Assimalign.Extensions.Validation.ConfigurableTests'
+    #   working-directory: './libraries/Validation/tests/Assimalign.Extensions.Validation.Configurable.Tests'
 
     # - name: Run Unit Tests
     #   run: dotnet test --no-restore --verbosity normal
-    #   working-directory: './src/validation/tests/Assimalign.Extensions.Validation.ConfigurableTests'
+    #   working-directory: './libraries/Validation/tests/Assimalign.Extensions.Validation.Configurable.Tests'
     
     - name: Publish Nuget Package
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       run: dotnet nuget push "*.nupkg" -k ${{ secrets.NUGET_PUBLISHING_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
-      working-directory: './src/validation/src/Assimalign.Extensions.Validation.Configurable/bin/Release/'
+      working-directory: './libraries/Validation/src/Assimalign.Extensions.Validation.Configurable/bin/Release/'

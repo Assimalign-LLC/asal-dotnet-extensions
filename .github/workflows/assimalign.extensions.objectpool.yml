@@ -1,4 +1,4 @@
-name: assimalign.extensions.validation.configurable.json.ci
+name: assimalign.extensions.objectpool.ci
 
 on:
   push:
@@ -8,10 +8,10 @@ on:
     - users/**
     - features/**
     paths: 
-    - 'libraries/Validation/src/**'
+    - 'libraries/ObjectPooling/src/**'
     - 'libraries/Directory.Build.props'                                     # When the Global Props File Changes
-    - 'libraries/Validation/Directory.Build.props'
-    - '.github/workflows/assimalign.extensions.validation.configurable.json.yml'        # When Pipeline File Changes
+    - 'libraries/ObjectPooling/Directory.Build.props'
+    - '.github/workflows/assimalign.extensions.objectpool.yml'        # When Pipeline File Changes
 
 jobs:
   build:
@@ -32,21 +32,21 @@ jobs:
     
     - name: Restore Project
       run: dotnet restore 
-      working-directory: './libraries/Validation/src/Assimalign.Extensions.Validation.Configurable.Json'
+      working-directory: './libraries/ObjectPooling/src/Assimalign.Extensions.ObjectPool'
     
     - name: Build Project
       run: dotnet build --configuration Release --no-restore
-      working-directory: './libraries/Validation/src/Assimalign.Extensions.Validation.Configurable.Json'
+      working-directory: './libraries/ObjectPooling/src/Assimalign.Extensions.ObjectPool'
 
     - name: Restore Unit Tests Project
       run: dotnet restore 
-      working-directory: './libraries/Validation/tests/Assimalign.Extensions.Validation.Configurable.Json.Tests'
+      working-directory: './libraries/ObjectPooling/tests/Assimalign.Extensions.ObjectPool.Tests'
 
     - name: Run Unit Tests
       run: dotnet test --no-restore --verbosity normal
-      working-directory: './libraries/Validation/tests/Assimalign.Extensions.Validation.Configurable.Json.Tests'
+      working-directory: './libraries/ObjectPooling/tests/Assimalign.Extensions.ObjectPool.Tests'
     
     - name: Publish Nuget Package
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       run: dotnet nuget push "*.nupkg" -k ${{ secrets.NUGET_PUBLISHING_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
-      working-directory: './libraries/Validation/src/Assimalign.Extensions.Validation.Configurable.Json/bin/Release/'
+      working-directory: './libraries/ObjectPooling/src/Assimalign.Extensions.ObjectPool/bin/Release/'
