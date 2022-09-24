@@ -33,6 +33,23 @@ public sealed class ValidatorBuilder
     }
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    public void AddProfiles(IValidationProfileBuilder builder)
+    {
+        if (builder is null)
+        {
+            throw new ArgumentNullException(nameof(builder));
+        }
+        foreach (var profile in builder.Build())
+        {
+            AddProfile(profile);
+        }
+    }
+
+    /// <summary>
     /// Adds a <see cref="IValidationProfile"/> to the collection of profiles 
     /// which will be registered under an instance of <see cref="IValidator"/>.
     /// </summary>

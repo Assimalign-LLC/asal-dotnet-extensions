@@ -23,7 +23,7 @@ public sealed class Validator : IValidator
     public Validator(IEnumerable<IValidationProfile> profiles, ValidationOptions options)
     {
         this.Profiles = profiles;
-        this.options = options;
+        this.options = options ?? new ValidationOptions();
 
         var duplicates = Profiles
             .GroupBy(x => x.ValidationType)
