@@ -4,7 +4,6 @@ using System.Diagnostics;
 namespace Assimalign.Extensions.Logging.Debug
 {
     using Assimalign.Extensions.Logging;
-    using Assimalign.Extensions.Logging;
 
     /// <summary>
     /// A logger that writes messages in the debug output window only when a debugger is attached.

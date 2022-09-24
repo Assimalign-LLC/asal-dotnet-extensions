@@ -45,7 +45,7 @@ namespace Assimalign.Extensions.Logging
                 throw new ArgumentNullException(nameof(type));
             }
 
-            return factory.CreateLogger(TypeNameHelper.GetTypeDisplayName(type, includeGenericParameters: false, nestedTypeDelimiter: '.'));
+            return factory.Create(TypeNameHelper.GetTypeDisplayName(type, includeGenericParameters: false, nestedTypeDelimiter: '.'));
         }
     }
 }

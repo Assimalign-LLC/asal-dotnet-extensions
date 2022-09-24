@@ -117,7 +117,7 @@ namespace Assimalign.Extensions.Logging
         /// </summary>
         /// <param name="categoryName">The category name for messages produced by the logger.</param>
         /// <returns>The <see cref="ILogger"/> that was created.</returns>
-        public ILogger CreateLogger(string categoryName)
+        public ILogger Create(string categoryName)
         {
             if (CheckDisposed())
             {
@@ -295,9 +295,9 @@ namespace Assimalign.Extensions.Logging
                 _serviceProvider.Dispose();
             }
 
-            public ILogger CreateLogger(string categoryName)
+            public ILogger Create(string categoryName)
             {
-                return _loggerFactory.CreateLogger(categoryName);
+                return _loggerFactory.Create(categoryName);
             }
 
             public void AddProvider(ILoggerProvider provider)

@@ -29,7 +29,6 @@ internal class MapperActionDescriptor<TTarget, TSource> : IMapperActionDescripto
 
     IMapperActionDescriptor IMapperActionDescriptor.MapAction(IMapperAction action) => MapAction(action);
     
-
     public IMapperActionDescriptor<TTarget, TSource> MapAction(IMapperAction action) 
     {
         MapActions.Push(action);

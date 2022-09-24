@@ -28,7 +28,7 @@ namespace Assimalign.Extensions.Logging
         /// <remarks>
         /// This returns a <see cref="NullLogger"/> instance which logs nothing.
         /// </remarks>
-        public ILogger CreateLogger(string name)
+        public ILogger Create(string name)
         {
             return NullLogger.Instance;
         }

@@ -28,7 +28,7 @@ namespace Assimalign.Extensions.Logging
                 throw new ArgumentNullException(nameof(factory));
             }
 
-            _logger = factory.CreateLogger(TypeNameHelper.GetTypeDisplayName(typeof(T), includeGenericParameters: false, nestedTypeDelimiter: '.'));
+            _logger = factory.Create(TypeNameHelper.GetTypeDisplayName(typeof(T), includeGenericParameters: false, nestedTypeDelimiter: '.'));
         }
 
         /// <inheritdoc />

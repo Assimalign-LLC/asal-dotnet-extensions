@@ -74,7 +74,7 @@ namespace Assimalign.Extensions.Hosting.Internal
 			this.environment = environment ?? throw new ArgumentNullException("environment");
 			this.applicationLifetime = applicationLifetime ?? throw new ArgumentNullException("applicationLifetime");
 			this.hostOptions = hostOptions?.Value ?? throw new ArgumentNullException("hostOptions");
-			this.logger = loggerFactory.CreateLogger("Assimalign.Hosting.Lifetime");
+			this.logger = loggerFactory.Create("Assimalign.Hosting.Lifetime");
 		}
 
 		/// <summary>

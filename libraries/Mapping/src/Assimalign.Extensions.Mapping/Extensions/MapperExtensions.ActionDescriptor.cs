@@ -45,13 +45,14 @@ public static class MapperActionDescriptorExtensions
     }
 
     /// <summary>
-    /// 
+    /// Maps a property by string name from the <paramref name="source"/> type 
+    /// to the <paramref name="target"/> type.
     /// </summary>
-    /// <typeparam name="TTarget"></typeparam>
-    /// <typeparam name="TSource"></typeparam>
+    /// <typeparam name="TTarget">The target type to be mapped.</typeparam>
+    /// <typeparam name="TSource">The source type to be mapped.</typeparam>
     /// <param name="descriptor"></param>
-    /// <param name="target"></param>
-    /// <param name="source"></param>
+    /// <param name="target">The property name within the <typeparamref name="TTarget"/>.</param>
+    /// <param name="source">The property name within the <typeparamref name="TSource"/>.</param>
     /// <returns></returns>
     /// <exception cref="MapperInvalidMappingException"></exception>
     public static IMapperActionDescriptor<TTarget, TSource> MapMember<TTarget, TSource>(this IMapperActionDescriptor<TTarget, TSource> descriptor, string target, string source)
