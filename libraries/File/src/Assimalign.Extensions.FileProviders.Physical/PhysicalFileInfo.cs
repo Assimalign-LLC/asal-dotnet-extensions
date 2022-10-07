@@ -2,7 +2,7 @@
 using System.IO;
 
 
-namespace Assimalign.Extensions.FileProviders.Physical;
+namespace Assimalign.Extensions.FileProviders;
 
 using Assimalign.Extensions.FileSystemGlobbing;
 

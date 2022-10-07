@@ -9,8 +9,6 @@ using System.Runtime.Serialization;
 namespace Assimalign.Extensions.Scheduling;
 
 /// <summary>
-/// 
-/// </summary>
 /// <![CDATA[
 /// Crontab expression format:
 ///
@@ -48,8 +46,11 @@ namespace Assimalign.Extensions.Scheduling;
 /// crontab format except that it can denotate more precise schedules
 /// that use a seconds component.
 /// ]]>
+/// </summary>
+
+
 [Serializable]
-[StructLayout(LayoutKind.Auto)]
+[StructLayout(LayoutKind.Sequential)]
 public readonly struct Crontab: IEquatable<Crontab>, IEnumerable<DateTime>, ISerializable, IFormattable
 {
 	public const char RangValue = '-';

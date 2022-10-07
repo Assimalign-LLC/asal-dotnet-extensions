@@ -8,48 +8,49 @@ using Assimalign.Extensions.Validation.Internal.Extensions;
 
 internal sealed class ValidationItem<T, TValue> : ValidationItemBase<T, TValue>
 {
-
     public override void Evaluate(IValidationContext context)
     {
-        if (context.Instance is T instance)
+        if (context.Instance is not T instance)
         {
-            if (this.ValidationCondition is not null && !this.ValidationCondition.Invoke(instance))
+            return;
+        }
+        if (this.ValidationCondition is not null && !this.ValidationCondition.Invoke(instance))
+        {
+            return;
+        }
+
+        var value = this.GetValue(instance);
+        var stopwatch = new Stopwatch();
+
+        foreach (var rule in this.ItemRuleStack)
+        {
+            if (!context.ContinueThroughValidationChain && context.Errors.Any())
             {
-                return;
+                break;
+            }
+            if (rule is ValidationRuleBase<TValue> ruleBase)
+            {
+                ruleBase.ParentContext = context;
             }
 
-            var value = this.GetValue(instance);
-            var stopwatch = new Stopwatch();
+            stopwatch.Restart();
 
-            foreach (var rule in this.ItemRuleStack)
+            if (rule.TryValidate(value, out var ruleContext))
             {
-                if (!context.ContinueThroughValidationChain && context.Errors.Any())
+                foreach (var error in ruleContext.Errors)
                 {
-                    break;
-                }
-                if (rule is ValidationRuleBase<TValue> ruleBase)
-                {
-                    ruleBase.ParentContext = context;
+                    context.AddFailure(error);
                 }
 
-                stopwatch.Restart();
-
-                if (rule.TryValidate(value, out var ruleContext))
-                {
-                    foreach (var error in ruleContext.Errors)
-                    {
-                        context.AddFailure(error);
-                    }
-
-                    stopwatch.Stop();
-                    context.AddInvocation(new ValidationInvocation(rule.Name, true, stopwatch.ElapsedTicks));
-                }
-                else
-                {
-                    stopwatch.Stop();
-                    context.AddInvocation(new ValidationInvocation(rule.Name, false, stopwatch.ElapsedTicks));
-                }
+                stopwatch.Stop();
+                context.AddInvocation(new ValidationInvocation(rule.Name, true, stopwatch.ElapsedTicks));
+            }
+            else
+            {
+                stopwatch.Stop();
+                context.AddInvocation(new ValidationInvocation(rule.Name, false, stopwatch.ElapsedTicks));
             }
         }
+
     }
 }

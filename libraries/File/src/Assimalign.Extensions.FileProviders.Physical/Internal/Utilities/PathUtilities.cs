@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 
-namespace Assimalign.Extensions.FileProviders.Internal.Utilities;
+namespace Assimalign.Extensions.FileProviders.Internal;
 
 using Assimalign.Extensions.Primitives;
 

@@ -6,7 +6,7 @@ namespace Assimalign.Extensions.Configuration.Providers;
 /// <summary>
 /// Represents in-memory data as an <see cref="IConfigurationSource"/>.
 /// </summary>
-public class ConfigurationMemorySource : IConfigurationSource
+public class MemoryConfigurationSource : IConfigurationSource
 {
     /// <summary>
     /// The initial key value configuration pairs.
@@ -14,12 +14,12 @@ public class ConfigurationMemorySource : IConfigurationSource
     public IEnumerable<KeyValuePair<string, string>> InitialData { get; set; }
 
     /// <summary>
-    /// Builds the <see cref="ConfigurationMemoryProvider"/> for this source.
+    /// Builds the <see cref="MemoryConfigurationProvider"/> for this source.
     /// </summary>
     /// <param name="builder">The <see cref="IConfigurationBuilder"/>.</param>
-    /// <returns>A <see cref="ConfigurationMemoryProvider"/></returns>
+    /// <returns>A <see cref="MemoryConfigurationProvider"/></returns>
     public IConfigurationProvider Build(IConfigurationBuilder builder)
     {
-        return new ConfigurationMemoryProvider(this);
+        return new MemoryConfigurationProvider(this);
     }
 }

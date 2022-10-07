@@ -8,7 +8,7 @@ using Assimalign.Extensions.Configuration;
 /// <summary>
 /// Stream based <see cref="IConfigurationSource" />.
 /// </summary>
-public abstract class ConfigurationStreamSource : IConfigurationSource
+public abstract class StreamConfigurationSource : IConfigurationSource
 {
     /// <summary>
     /// The stream containing the configuration data.
@@ -16,7 +16,7 @@ public abstract class ConfigurationStreamSource : IConfigurationSource
     public Stream Stream { get; set; }
 
     /// <summary>
-    /// Builds the <see cref="ConfigurationStreamProvider"/> for this source.
+    /// Builds the <see cref="StreamConfigurationProvider"/> for this source.
     /// </summary>
     /// <param name="builder">The <see cref="IConfigurationBuilder"/>.</param>
     /// <returns>An <see cref="IConfigurationProvider"/></returns>

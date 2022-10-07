@@ -22,28 +22,24 @@ namespace Assimalign.Extensions.FileProviders.Physical
     public class PhysicalFileProvider : IFileProvider, IDisposable
     {
         private const string PollingEnvironmentKey = "DOTNET_USE_POLLING_FILE_WATCHER";
-        private static readonly char[] _pathSeparators = new[]
-            {Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar};
+        private static readonly char[] separators = new[] {Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar};
 
         private readonly ExclusionFilterType _filters;
 
-        private readonly Func<PhysicalFilesWatcher> _fileWatcherFactory;
-        private PhysicalFilesWatcher _fileWatcher;
-        private bool _fileWatcherInitialized;
-        private object _fileWatcherLock = new object();
+        private readonly Func<PhysicalFilesWatcher> fileWatcherFactory;
+        private PhysicalFilesWatcher fileWatcher;
+        private bool fileWatcherInitialized;
+        private object fileWatcherLock = new object();
 
-        private bool? _usePollingFileWatcher;
-        private bool? _useActivePolling;
-        private bool _disposed;
+        private bool? usePollingFileWatcher;
+        private bool? useActivePolling;
+        private bool isDisposed;
 
         /// <summary>
         /// Initializes a new instance of a PhysicalFileProvider at the given root directory.
         /// </summary>
         /// <param name="root">The root directory. This should be an absolute path.</param>
-        public PhysicalFileProvider(string root)
-            : this(root, ExclusionFilterType.Sensitive)
-        {
-        }
+        public PhysicalFileProvider(string root) : this(root, ExclusionFilterType.Sensitive) { }
 
         /// <summary>
         /// Initializes a new instance of a PhysicalFileProvider at the given root directory.
@@ -66,7 +62,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
             }
 
             _filters = filters;
-            _fileWatcherFactory = () => CreateFileWatcher();
+            fileWatcherFactory = () => CreateFileWatcher();
         }
 
         /// <summary>
@@ -87,23 +83,23 @@ namespace Assimalign.Extensions.FileProviders.Physical
         {
             get
             {
-                if (_fileWatcher != null)
+                if (fileWatcher != null)
                 {
                     return false;
                 }
-                if (_usePollingFileWatcher == null)
+                if (usePollingFileWatcher == null)
                 {
                     ReadPollingEnvironmentVariables();
                 }
-                return _usePollingFileWatcher ?? false;
+                return usePollingFileWatcher ?? false;
             }
             set
             {
-                if (_fileWatcher != null)
+                if (fileWatcher != null)
                 {
                     throw new InvalidOperationException();// SR.Format(SR.CannotModifyWhenFileWatcherInitialized, nameof(UsePollingFileWatcher)));
                 }
-                _usePollingFileWatcher = value;
+                usePollingFileWatcher = value;
             }
         }
 
@@ -126,33 +122,39 @@ namespace Assimalign.Extensions.FileProviders.Physical
         {
             get
             {
-                if (_useActivePolling == null)
+                if (useActivePolling == null)
                 {
                     ReadPollingEnvironmentVariables();
                 }
 
-                return _useActivePolling.Value;
+                return useActivePolling.Value;
             }
 
-            set => _useActivePolling = value;
+            set => useActivePolling = value;
         }
+
+        /// <summary>
+        /// The root directory for this instance.
+        /// </summary>
+        public string Root { get; }
+
 
         internal PhysicalFilesWatcher FileWatcher
         {
             get
             {
                 return LazyInitializer.EnsureInitialized(
-                    ref _fileWatcher,
-                    ref _fileWatcherInitialized,
-                    ref _fileWatcherLock,
-                    _fileWatcherFactory);
+                    ref fileWatcher,
+                    ref fileWatcherInitialized,
+                    ref fileWatcherLock,
+                    fileWatcherFactory);
             }
             set
             {
-                Debug.Assert(!_fileWatcherInitialized);
+                Debug.Assert(!fileWatcherInitialized);
 
-                _fileWatcherInitialized = true;
-                _fileWatcher = value;
+                fileWatcherInitialized = true;
+                fileWatcher = value;
             }
         }
 
@@ -161,7 +163,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
             string root = PathUtilities.EnsureTrailingSlash(Path.GetFullPath(Root));
 
             FileSystemWatcher watcher;
-#if NET6_0_OR_GREATER
+
             //  For browser/iOS/tvOS we will proactively fallback to polling since FileSystemWatcher is not supported.
             if (OperatingSystem.IsBrowser() || (OperatingSystem.IsIOS() && !OperatingSystem.IsMacCatalyst()) || OperatingSystem.IsTvOS())
             {
@@ -170,7 +172,6 @@ namespace Assimalign.Extensions.FileProviders.Physical
                 watcher = null;
             }
             else
-#endif
             {
                 // When UsePollingFileWatcher & UseActivePolling are set, we won't use a FileSystemWatcher.
                 watcher = UsePollingFileWatcher && UseActivePolling ? null : new FileSystemWatcher(root);
@@ -188,8 +189,8 @@ namespace Assimalign.Extensions.FileProviders.Physical
             bool pollForChanges = string.Equals(environmentValue, "1", StringComparison.Ordinal) ||
                 string.Equals(environmentValue, "true", StringComparison.OrdinalIgnoreCase);
 
-            _usePollingFileWatcher = pollForChanges;
-            _useActivePolling = pollForChanges;
+            usePollingFileWatcher = pollForChanges;
+            useActivePolling = pollForChanges;
         }
 
         /// <summary>
@@ -207,21 +208,17 @@ namespace Assimalign.Extensions.FileProviders.Physical
         /// <param name="disposing"><c>true</c> is invoked from <see cref="IDisposable.Dispose"/>.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposed)
+            if (!isDisposed)
             {
                 if (disposing)
                 {
-                    _fileWatcher?.Dispose();
+                    fileWatcher?.Dispose();
                 }
-                _disposed = true;
+                isDisposed = true;
             }
         }
 
-        /// <summary>
-        /// The root directory for this instance.
-        /// </summary>
-        public string Root { get; }
-
+        
         private string GetFullPath(string path)
         {
             if (PathUtilities.PathNavigatesAboveRoot(path))
@@ -261,28 +258,28 @@ namespace Assimalign.Extensions.FileProviders.Physical
         {
             if (string.IsNullOrEmpty(subpath) || PathUtilities.HasInvalidPathChars(subpath))
             {
-                return new NotFoundFileSystem(subpath);
+                return null;
             }
 
             // Relative paths starting with leading slashes are okay
-            subpath = subpath.TrimStart(_pathSeparators);
+            subpath = subpath.TrimStart(separators);
 
             // Absolute paths not permitted.
             if (Path.IsPathRooted(subpath))
             {
-                return new NotFoundFileSystem(subpath);
+                return null;
             }
 
             string fullPath = GetFullPath(subpath);
             if (fullPath == null)
             {
-                return new NotFoundFileSystem(subpath);
+                return null;
             }
 
             var fileInfo = new FileInfo(fullPath);
             if (FileSystemInfoHelper.IsExcluded(fileInfo, _filters))
             {
-                return new NotFoundFileSystem(subpath);
+                return null;
             }
 
             return new PhysicalFileInfo(fileInfo);
@@ -303,22 +300,22 @@ namespace Assimalign.Extensions.FileProviders.Physical
             {
                 if (subpath == null || PathUtilities.HasInvalidPathChars(subpath))
                 {
-                    return NotFoundFileSystemDirectory.Singleton;
+                    return null;
                 }
 
                 // Relative paths starting with leading slashes are okay
-                subpath = subpath.TrimStart(_pathSeparators);
+                subpath = subpath.TrimStart(separators);
 
                 // Absolute paths not permitted.
                 if (Path.IsPathRooted(subpath))
                 {
-                    return NotFoundFileSystemDirectory.Singleton;
+                    return null;
                 }
 
                 string fullPath = GetFullPath(subpath);
                 if (fullPath == null || !Directory.Exists(fullPath))
                 {
-                    return NotFoundFileSystemDirectory.Singleton;
+                    return null;
                 }
 
                 return new PhysicalDirectoryInfo(fullPath, _filters);
@@ -329,7 +326,7 @@ namespace Assimalign.Extensions.FileProviders.Physical
             catch (IOException)
             {
             }
-            return NotFoundFileSystemDirectory.Singleton;
+            return null;
         }
 
         /// <summary>
@@ -348,13 +345,17 @@ namespace Assimalign.Extensions.FileProviders.Physical
         /// </returns>
         public IChangeToken Watch(string filter)
         {
-            if (filter == null || PathUtilities.HasInvalidFilterChars(filter))
+            if (filter is null)
             {
-                return NullChangeToken.Singleton;
+                throw new ArgumentNullException(nameof(filter));
+            }
+            if (PathUtilities.HasInvalidFilterChars(filter))
+            {
+                throw new ArgumentException("The provider filter has an invalid character.");
             }
 
             // Relative paths starting with leading slashes are okay
-            filter = filter.TrimStart(_pathSeparators);
+            filter = filter.TrimStart(separators);
 
             return FileWatcher.CreateFileChangeToken(filter);
         }

@@ -1,4 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<Description>
+			This library contains a set of APIs for blob pattern matching.
+		</Description>
+	</PropertyGroup>
 	<ItemGroup>
 		<None Include="..\..\..\..\.assimalign.logo.png">
 			<Pack>True</Pack>

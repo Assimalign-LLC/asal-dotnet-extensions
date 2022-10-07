@@ -12,7 +12,7 @@ using Assimalign.Extensions.Configuration;
 /// <summary>
 /// Represents a chained <see cref="IConfiguration"/> as an <see cref="IConfigurationSource"/>.
 /// </summary>
-public class ConfigurationChainedSource : IConfigurationSource
+public class ChainedConfigurationSource : IConfigurationSource
 {
     /// <summary>
     /// The chained configuration.
@@ -26,10 +26,10 @@ public class ConfigurationChainedSource : IConfigurationSource
     public bool ShouldDisposeConfiguration { get; set; }
 
     /// <summary>
-    /// Builds the <see cref="ConfigurationChainedProvider"/> for this source.
+    /// Builds the <see cref="ChainedConfigurationProvider"/> for this source.
     /// </summary>
     /// <param name="builder">The <see cref="IConfigurationBuilder"/>.</param>
-    /// <returns>A <see cref="ConfigurationChainedProvider"/></returns>
+    /// <returns>A <see cref="ChainedConfigurationProvider"/></returns>
     public IConfigurationProvider Build(IConfigurationBuilder builder)
-        => new ConfigurationChainedProvider(this);
+        => new ChainedConfigurationProvider(this);
 }

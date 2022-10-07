@@ -35,7 +35,7 @@ public static partial class ConfigurationBuilderExtensions
             throw new ArgumentNullException(nameof(config));
         }
 
-        configurationBuilder.Add(new ConfigurationChainedSource()
+        configurationBuilder.Add(new ChainedConfigurationSource()
         {
             Configuration = config,
             ShouldDisposeConfiguration = shouldDisposeConfiguration,
@@ -57,7 +57,7 @@ public static partial class ConfigurationBuilderExtensions
             throw new ArgumentNullException(nameof(configurationBuilder));
         }
 
-        configurationBuilder.Add(new ConfigurationMemorySource());
+        configurationBuilder.Add(new MemoryConfigurationSource());
         return configurationBuilder;
     }
 
@@ -76,7 +76,7 @@ public static partial class ConfigurationBuilderExtensions
             throw new ArgumentNullException(nameof(configurationBuilder));
         }
 
-        configurationBuilder.Add(new ConfigurationMemorySource { InitialData = initialData });
+        configurationBuilder.Add(new MemoryConfigurationSource { InitialData = initialData });
         return configurationBuilder;
     }
     #endregion

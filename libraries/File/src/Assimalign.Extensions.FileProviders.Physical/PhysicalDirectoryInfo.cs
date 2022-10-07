@@ -2,10 +2,10 @@
 using System.IO;
 using System.Collections.Generic;
 
-namespace Assimalign.Extensions.FileProviders.Physical;
+namespace Assimalign.Extensions.FileProviders;
 
 using Assimalign.Extensions.FileSystemGlobbing;
-using Assimalign.Extensions.FileProviders.Physical.Internal;
+using Assimalign.Extensions.FileProviders.Internal;
 
 
 

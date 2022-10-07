@@ -27,10 +27,8 @@ public class PhysicalFilesWatcher : IDisposable
 
     internal static TimeSpan DefaultPollingInterval = TimeSpan.FromSeconds(4);
 
-    private readonly ConcurrentDictionary<string, ChangeTokenInfo> _filePathTokenLookup =
-        new ConcurrentDictionary<string, ChangeTokenInfo>(StringComparer.OrdinalIgnoreCase);
-    private readonly ConcurrentDictionary<string, ChangeTokenInfo> _wildcardTokenLookup =
-        new ConcurrentDictionary<string, ChangeTokenInfo>(StringComparer.OrdinalIgnoreCase);
+    private readonly ConcurrentDictionary<string, ChangeTokenInfo> _filePathTokenLookup = new();
+    private readonly ConcurrentDictionary<string, ChangeTokenInfo> _wildcardTokenLookup = new(StringComparer.OrdinalIgnoreCase);
 
     private readonly FileSystemWatcher _fileWatcher;
     private readonly object _fileWatcherLock = new object();
@@ -53,13 +51,8 @@ public class PhysicalFilesWatcher : IDisposable
     /// True when the watcher should use polling to trigger instances of
     /// <see cref="IChangeToken" /> created by <see cref="CreateFileChangeToken(string)" />
     /// </param>
-    public PhysicalFilesWatcher(
-        string root,
-        FileSystemWatcher fileSystemWatcher,
-        bool pollForChanges)
-        : this(root, fileSystemWatcher, pollForChanges, ExclusionFilterType.Sensitive)
-    {
-    }
+    public PhysicalFilesWatcher(string root, FileSystemWatcher fileSystemWatcher, bool pollForChanges)
+        : this(root, fileSystemWatcher, pollForChanges, ExclusionFilterType.Sensitive) { }
 
     /// <summary>
     /// Initializes an instance of <see cref="PhysicalFilesWatcher" /> that watches files in <paramref name="root" />.
@@ -180,7 +173,7 @@ public class PhysicalFilesWatcher : IDisposable
         if (!_filePathTokenLookup.TryGetValue(filePath, out ChangeTokenInfo tokenInfo))
         {
             var cancellationTokenSource = new CancellationTokenSource();
-            var cancellationChangeToken = new ChangeTokenCancellation(cancellationTokenSource.Token);
+            var cancellationChangeToken = new CancellationChangeToken(cancellationTokenSource.Token);
             tokenInfo = new ChangeTokenInfo(cancellationTokenSource, cancellationChangeToken);
             tokenInfo = _filePathTokenLookup.GetOrAdd(filePath, tokenInfo);
         }
@@ -215,7 +208,7 @@ public class PhysicalFilesWatcher : IDisposable
         if (!_wildcardTokenLookup.TryGetValue(pattern, out ChangeTokenInfo tokenInfo))
         {
             var cancellationTokenSource = new CancellationTokenSource();
-            var cancellationChangeToken = new ChangeTokenCancellation(cancellationTokenSource.Token);
+            var cancellationChangeToken = new CancellationChangeToken(cancellationTokenSource.Token);
             var matcher = new FilePatternMatcher(StringComparison.OrdinalIgnoreCase);
             matcher.AddInclude(pattern);
             tokenInfo = new ChangeTokenInfo(cancellationTokenSource, cancellationChangeToken, matcher);
@@ -498,14 +491,14 @@ public class PhysicalFilesWatcher : IDisposable
     {
         public ChangeTokenInfo(
             CancellationTokenSource tokenSource,
-            ChangeTokenCancellation changeToken)
+            CancellationChangeToken changeToken)
             : this(tokenSource, changeToken, matcher: null)
         {
         }
 
         public ChangeTokenInfo(
             CancellationTokenSource tokenSource,
-            ChangeTokenCancellation changeToken,
+            CancellationChangeToken changeToken,
             FilePatternMatcher matcher)
         {
             TokenSource = tokenSource;
@@ -515,7 +508,7 @@ public class PhysicalFilesWatcher : IDisposable
 
         public CancellationTokenSource TokenSource { get; }
 
-        public ChangeTokenCancellation ChangeToken { get; }
+        public CancellationChangeToken ChangeToken { get; }
 
         public FilePatternMatcher Matcher { get; }
     }

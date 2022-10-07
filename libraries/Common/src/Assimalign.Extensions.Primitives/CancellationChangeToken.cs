@@ -7,13 +7,13 @@ namespace Assimalign.Extensions.Primitives;
 /// <summary>
 /// A <see cref="IChangeToken"/> implementation using <see cref="CancellationToken"/>.
 /// </summary>
-public class ChangeTokenCancellation : IChangeToken
+public class CancellationChangeToken : IChangeToken
 {
     /// <summary>
-    /// Initializes a new instance of <see cref="ChangeTokenCancellation"/>.
+    /// Initializes a new instance of <see cref="CancellationChangeToken"/>.
     /// </summary>
     /// <param name="cancellationToken">The <see cref="CancellationToken"/>.</param>
-    public ChangeTokenCancellation(CancellationToken cancellationToken)
+    public CancellationChangeToken(CancellationToken cancellationToken)
     {
         Token = cancellationToken;
     }

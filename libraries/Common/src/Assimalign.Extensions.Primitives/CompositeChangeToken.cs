@@ -9,7 +9,7 @@ namespace Assimalign.Extensions.Primitives;
 /// <summary>
 /// An <see cref="IChangeToken"/> which represents one or more <see cref="IChangeToken"/> instances.
 /// </summary>
-public class ChangeTokenComposite : IChangeToken
+public class CompositeChangeToken : IChangeToken
 {
     private static readonly Action<object> _onChangeDelegate = OnChange;
     private readonly object _callbackLock = new object();
@@ -18,10 +18,10 @@ public class ChangeTokenComposite : IChangeToken
     private List<IDisposable> _disposables;
 
     /// <summary>
-    /// Creates a new instance of <see cref="ChangeTokenComposite"/>.
+    /// Creates a new instance of <see cref="CompositeChangeToken"/>.
     /// </summary>
     /// <param name="changeTokens">The list of <see cref="IChangeToken"/> to compose.</param>
-    public ChangeTokenComposite(IReadOnlyList<IChangeToken> changeTokens)
+    public CompositeChangeToken(IReadOnlyList<IChangeToken> changeTokens)
     {
         ChangeTokens = changeTokens ?? throw new ArgumentNullException(nameof(changeTokens));
         for (int i = 0; i < ChangeTokens.Count; i++)
@@ -35,7 +35,7 @@ public class ChangeTokenComposite : IChangeToken
     }
 
     /// <summary>
-    /// Returns the list of <see cref="IChangeToken"/> which compose the current <see cref="ChangeTokenComposite"/>.
+    /// Returns the list of <see cref="IChangeToken"/> which compose the current <see cref="CompositeChangeToken"/>.
     /// </summary>
     public IReadOnlyList<IChangeToken> ChangeTokens { get; }
 
@@ -102,7 +102,7 @@ public class ChangeTokenComposite : IChangeToken
 
     private static void OnChange(object state)
     {
-        var compositeChangeTokenState = (ChangeTokenComposite)state;
+        var compositeChangeTokenState = (CompositeChangeToken)state;
         if (compositeChangeTokenState._cancellationTokenSource == null)
         {
             return;

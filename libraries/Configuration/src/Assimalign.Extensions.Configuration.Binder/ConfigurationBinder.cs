@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assimalign.Extensions.Configuration.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -434,7 +435,7 @@ public static class ConfigurationBinder
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException();// SR.Format(SR.Error_FailedToActivate, type), ex);
+            throw new InvalidOperationException(Resources.ExceptionMessageFailedToActivate);// SR.Format(SR.Error_FailedToActivate, type), ex);
         }
     }
 

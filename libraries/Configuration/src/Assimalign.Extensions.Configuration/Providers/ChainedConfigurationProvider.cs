@@ -6,7 +6,7 @@ namespace Assimalign.Extensions.Configuration.Providers;
 using Assimalign.Extensions.Primitives;
 using Assimalign.Extensions.Configuration;
 
-public class ConfigurationChainedProvider : IConfigurationProvider, IDisposable
+public class ChainedConfigurationProvider : IConfigurationProvider, IDisposable
 {
     private readonly IConfiguration configuration;
     private readonly bool disposeConfiguration;
@@ -15,7 +15,7 @@ public class ConfigurationChainedProvider : IConfigurationProvider, IDisposable
     /// Initialize a new instance from the source configuration.
     /// </summary>
     /// <param name="source">The source configuration.</param>
-    public ConfigurationChainedProvider(ConfigurationChainedSource source)
+    public ChainedConfigurationProvider(ChainedConfigurationSource source)
     {
         if (source == null)
         {

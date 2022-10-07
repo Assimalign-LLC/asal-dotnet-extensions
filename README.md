@@ -4,6 +4,8 @@
 
 The .NET extensions within this repository are made-up of custom implementations and/or customized version of other Third-Party libraries. It should be important to note that while some of these libraries are a derivative of Microsoft Extensions and other popular third-party libraries they may not have the same implementation and could cause breaking changes if trying to swap out. 
 
+In the future adapters may be offered to bridge the APIs for
+
 The intent behind this repository is to create a standard ecosystem of commonly used libraries don't necessarly :
 
 1. **Standardize and expose API's which are otherwise not exposed in other libraries,**

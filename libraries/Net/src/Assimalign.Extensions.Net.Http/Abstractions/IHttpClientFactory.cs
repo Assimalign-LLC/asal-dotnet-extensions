@@ -8,11 +8,6 @@ namespace Assimalign.Extensions.Net.Http;
 /// A factory abstraction for a component that can create <see cref="HttpClient"/> instances with custom
 /// configuration for a given logical name.
 /// </summary>
-/// <remarks>
-/// A default <see cref="IHttpClientFactory"/> can be registered in an <see cref="IServiceCollection"/>
-/// by calling <see cref="HttpClientFactoryServiceCollectionExtensions.AddHttpClient(IServiceCollection)"/>.
-/// The default <see cref="IHttpClientFactory"/> will be registered in the service collection as a singleton.
-/// </remarks>
 public interface IHttpClientFactory
 {
     /// <summary>

@@ -7,7 +7,7 @@ namespace Assimalign.Extensions.Configuration.Providers;
 /// <summary>
 /// Stream based configuration provider
 /// </summary>
-public abstract class ConfigurationStreamProvider : ConfigurationProvider
+public abstract class StreamConfigurationProvider : ConfigurationProvider
 {
     private bool isLoaded;
 
@@ -15,7 +15,7 @@ public abstract class ConfigurationStreamProvider : ConfigurationProvider
     /// Constructor.
     /// </summary>
     /// <param name="source">The source.</param>
-    public ConfigurationStreamProvider(ConfigurationStreamSource source)
+    public StreamConfigurationProvider(StreamConfigurationSource source)
     {
         Source = source ?? throw new ArgumentNullException(nameof(source));
     }
@@ -23,7 +23,7 @@ public abstract class ConfigurationStreamProvider : ConfigurationProvider
     /// <summary>
     /// The source settings for this provider.
     /// </summary>
-    public ConfigurationStreamSource Source { get; }
+    public StreamConfigurationSource Source { get; }
 
     /// <summary>
     /// Load the configuration data from the stream.

@@ -5,7 +5,7 @@
     /// <summary>
     /// Represents a JSON file as an <see cref="IConfigurationSource"/>.
     /// </summary>
-    public class ConfigurationJsonStreamSource : ConfigurationStreamSource
+    public class ConfigurationJsonStreamSource : StreamConfigurationSource
     {
         /// <summary>
         /// Builds the <see cref="ConfigurationJsonStreamProvider"/> for this source.

@@ -1,13 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>Assimalign.Extensions.FileProviders</RootNamespace>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Assimalign.Extensions.FileProviders\Assimalign.Extensions.FileProviders.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Assimalign.Extensions.FileProviders\Assimalign.Extensions.FileProviders.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\..\..\.assimalign.logo.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="README.md">
+			<Pack>true</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>

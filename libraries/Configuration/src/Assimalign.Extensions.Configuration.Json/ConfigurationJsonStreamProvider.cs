@@ -5,7 +5,7 @@ namespace Assimalign.Extensions.Configuration.Providers;
 /// <summary>
 /// Loads configuration key/values from a json stream into a provider.
 /// </summary>
-public class ConfigurationJsonStreamProvider : ConfigurationStreamProvider
+public class ConfigurationJsonStreamProvider : StreamConfigurationProvider
 {
     /// <summary>
     /// Constructor.

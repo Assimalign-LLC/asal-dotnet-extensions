@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace Assimalign.Extensions.FileProviders;
 
 using Assimalign.Extensions.Primitives;
-
 using Assimalign.Extensions.FileSystemGlobbing;
 
 

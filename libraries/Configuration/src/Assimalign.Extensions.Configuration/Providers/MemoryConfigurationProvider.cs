@@ -8,15 +8,15 @@ namespace Assimalign.Extensions.Configuration.Providers;
 /// <summary>
 /// In-memory implementation of <see cref="Assimalign.Extensions.Configuration.Abstractions.IConfigurationProvider"/>
 /// </summary>
-public class ConfigurationMemoryProvider : ConfigurationProvider, IEnumerable<KeyValuePair<string, string>>
+public class MemoryConfigurationProvider : ConfigurationProvider, IEnumerable<KeyValuePair<string, string>>
 {
-    private readonly ConfigurationMemorySource _source;
+    private readonly MemoryConfigurationSource _source;
 
     /// <summary>
     /// Initialize a new instance from the source.
     /// </summary>
     /// <param name="source">The source settings.</param>
-    public ConfigurationMemoryProvider(ConfigurationMemorySource source)
+    public MemoryConfigurationProvider(MemoryConfigurationSource source)
     {
         if (source == null)
         {

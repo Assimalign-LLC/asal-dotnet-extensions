@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace Assimalign.Extensions.FileProviders.Physical.Internal;
+namespace Assimalign.Extensions.FileProviders.Internal;
 
 
 internal static class FileSystemInfoHelper
