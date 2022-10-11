@@ -8,6 +8,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\scheduling\src\Assimalign.Extensions.Scheduling\Assimalign.Extensions.Scheduling.csproj" />
+		<ProjectReference Include="..\Assimalign.Extensions.Hosting\Assimalign.Extensions.Hosting.csproj" />
 	</ItemGroup>
 
 </Project>

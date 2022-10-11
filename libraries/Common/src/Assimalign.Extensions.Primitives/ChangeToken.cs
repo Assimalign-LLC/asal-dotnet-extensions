@@ -8,7 +8,7 @@ namespace Assimalign.Extensions.Primitives;
 /// <summary>
 /// Propagates notifications that a change has occurred.
 /// </summary>
-public static class ChangeToken
+public abstract class ChangeToken : IChangeToken
 {
     /// <summary>
     /// Registers the <paramref name="changeTokenConsumer"/> action to be called whenever the token produced changes.

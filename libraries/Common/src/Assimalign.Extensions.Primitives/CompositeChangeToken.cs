@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Threading;
 
@@ -16,6 +17,8 @@ public class CompositeChangeToken : IChangeToken
     private CancellationTokenSource _cancellationTokenSource;
     private bool _registeredCallbackProxy;
     private List<IDisposable> _disposables;
+
+    public CompositeChangeToken(IChangeToken[] tokens) : this(tokens.ToImmutableList()) { }
 
     /// <summary>
     /// Creates a new instance of <see cref="CompositeChangeToken"/>.

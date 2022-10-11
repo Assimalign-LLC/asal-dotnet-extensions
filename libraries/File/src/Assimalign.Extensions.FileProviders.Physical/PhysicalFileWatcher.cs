@@ -193,7 +193,7 @@ public class PhysicalFilesWatcher : IDisposable
             }
 
             changeToken = new CompositeChangeToken(
-                new[]
+                new IChangeToken[]
                 {
                     changeToken,
                     pollingChangeToken,
