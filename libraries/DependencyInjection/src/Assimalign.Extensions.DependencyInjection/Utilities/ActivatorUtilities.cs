@@ -18,6 +18,84 @@ namespace Assimalign.Extensions.DependencyInjection.Utilities
         private static readonly MethodInfo GetServiceInfo =
             GetMethodInfo<Func<IServiceProvider, Type, Type, bool, object?>>((sp, t, r, c) => GetService(sp, t, r, c));
 
+        
+
+        /// <summary>
+        /// Create a delegate that will instantiate a type with constructor arguments provided directly
+        /// and/or from an <see cref="IServiceProvider"/>.
+        /// </summary>
+        /// <param name="instanceType">The type to activate</param>
+        /// <param name="argumentTypes">
+        /// The types of objects, in order, that will be passed to the returned function as its second parameter
+        /// </param>
+        /// <returns>
+        /// A factory that will instantiate instanceType using an <see cref="IServiceProvider"/>
+        /// and an argument array containing objects matching the types defined in argumentTypes
+        /// </returns>
+        public static ObjectFactory CreateFactory([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type instanceType, Type[] argumentTypes)
+        {
+            CreateFactoryInternal(
+                instanceType, 
+                argumentTypes, 
+                out ParameterExpression provider,
+                out ParameterExpression argumentArray,
+                out Expression factoryExpressionBody);
+
+            var factoryLambda = Expression.Lambda<Func<IServiceProvider, object?[]?, object>>(
+                factoryExpressionBody, 
+                provider, 
+                argumentArray);
+
+            Func<IServiceProvider, object?[]?, object>? result = factoryLambda.Compile();
+
+            return result.Invoke;
+        }
+
+        /// <summary>
+        /// Create a delegate that will instantiate a type with constructor arguments provided directly
+        /// and/or from an <see cref="IServiceProvider"/>.
+        /// </summary>
+        /// <typeparam name="T">The type to activate</typeparam>
+        /// <param name="argumentTypes">
+        /// The types of objects, in order, that will be passed to the returned function as its second parameter
+        /// </param>
+        /// <returns>
+        /// A factory that will instantiate type T using an <see cref="IServiceProvider"/>
+        /// and an argument array containing objects matching the types defined in argumentTypes
+        /// </returns>
+        public static ObjectFactory<T> CreateFactory<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] T>(Type[] argumentTypes)
+        {
+            CreateFactoryInternal(
+                typeof(T), 
+                argumentTypes, 
+                out ParameterExpression provider, 
+                out ParameterExpression argumentArray, 
+                out Expression factoryExpressionBody);
+
+            var factoryLambda = Expression.Lambda<Func<IServiceProvider, object?[]?, T>>(
+                factoryExpressionBody, 
+                provider, 
+                argumentArray);
+
+            Func<IServiceProvider, object?[]?, T>? result = factoryLambda.Compile();
+
+            return result.Invoke;
+        }
+
+        private static void CreateFactoryInternal([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type instanceType, Type[] argumentTypes, out ParameterExpression provider, out ParameterExpression argumentArray, out Expression factoryExpressionBody)
+        {
+            FindApplicableConstructor(
+                instanceType, 
+                argumentTypes,
+                out ConstructorInfo constructor, 
+                out int?[] parameterMap);
+
+            provider = Expression.Parameter(typeof(IServiceProvider), "provider");
+            argumentArray = Expression.Parameter(typeof(object[]), "argumentArray");
+            factoryExpressionBody = BuildFactoryExpression(constructor, parameterMap, provider, argumentArray);
+        }
+
+
         /// <summary>
         /// Instantiate a type with constructor arguments provided directly and/or from an <see cref="IServiceProvider"/>.
         /// </summary>
@@ -25,10 +103,7 @@ namespace Assimalign.Extensions.DependencyInjection.Utilities
         /// <param name="instanceType">The type to activate</param>
         /// <param name="parameters">Constructor arguments not provided by the <paramref name="provider"/>.</param>
         /// <returns>An activated object of type instanceType</returns>
-        public static object CreateInstance(
-            IServiceProvider provider,
-            Type instanceType,
-            params object[] parameters)
+        public static object CreateInstance(IServiceProvider provider, Type instanceType, params object[] parameters)
         {
             int bestLength = -1;
             bool seenPreferred = false;
@@ -40,8 +115,8 @@ namespace Assimalign.Extensions.DependencyInjection.Utilities
                 foreach (ConstructorInfo? constructor in instanceType.GetConstructors())
                 {
                     var matcher = new ConstructorMatcher(constructor);
-                    bool isPreferred = constructor.IsDefined(typeof(ActivatorUtilitiesConstructorAttribute), false);
-                    int length = matcher.Match(parameters);
+                    var isPreferred = constructor.IsDefined(typeof(ActivatorUtilitiesConstructorAttribute), false);
+                    var length = matcher.Match(parameters);
 
                     if (isPreferred)
                     {
@@ -49,13 +124,11 @@ namespace Assimalign.Extensions.DependencyInjection.Utilities
                         {
                             ThrowMultipleCtorsMarkedWithAttributeException();
                         }
-
                         if (length == -1)
                         {
                             ThrowMarkedCtorDoesNotTakeAllProvidedArguments();
                         }
                     }
-
                     if (isPreferred || bestLength < length)
                     {
                         bestLength = length;
@@ -73,35 +146,6 @@ namespace Assimalign.Extensions.DependencyInjection.Utilities
             }
 
             return bestMatcher.CreateInstance(provider);
-        }
-
-        /// <summary>
-        /// Create a delegate that will instantiate a type with constructor arguments provided directly
-        /// and/or from an <see cref="IServiceProvider"/>.
-        /// </summary>
-        /// <param name="instanceType">The type to activate</param>
-        /// <param name="argumentTypes">
-        /// The types of objects, in order, that will be passed to the returned function as its second parameter
-        /// </param>
-        /// <returns>
-        /// A factory that will instantiate instanceType using an <see cref="IServiceProvider"/>
-        /// and an argument array containing objects matching the types defined in argumentTypes
-        /// </returns>
-        public static ObjectFactory CreateFactory(
-            Type instanceType,
-            Type[] argumentTypes)
-        {
-            FindApplicableConstructor(instanceType, argumentTypes, out ConstructorInfo? constructor, out int?[]? parameterMap);
-
-            ParameterExpression? provider = Expression.Parameter(typeof(IServiceProvider), "provider");
-            ParameterExpression? argumentArray = Expression.Parameter(typeof(object[]), "argumentArray");
-            Expression? factoryExpressionBody = BuildFactoryExpression(constructor, parameterMap, provider, argumentArray);
-
-            var factoryLambda = Expression.Lambda<Func<IServiceProvider, object?[]?, object>>(
-                factoryExpressionBody, provider, argumentArray);
-
-            Func<IServiceProvider, object?[]?, object>? result = factoryLambda.Compile();
-            return result.Invoke;
         }
 
         /// <summary>
@@ -133,9 +177,7 @@ namespace Assimalign.Extensions.DependencyInjection.Utilities
         /// <param name="provider">The service provider</param>
         /// <param name="type">The type of the service</param>
         /// <returns>The resolved service or created instance</returns>
-        public static object GetServiceOrCreateInstance(
-            IServiceProvider provider,
-            Type type)
+        public static object GetServiceOrCreateInstance(IServiceProvider provider, Type type)
         {
             return provider.GetService(type) ?? CreateInstance(provider, type);
         }
@@ -145,7 +187,6 @@ namespace Assimalign.Extensions.DependencyInjection.Utilities
             var mc = (MethodCallExpression)expr.Body;
             return mc.Method;
         }
-
         private static object? GetService(IServiceProvider sp, Type type, Type requiredBy, bool isDefaultParameterRequired)
         {
             object? service = sp.GetService(type);
@@ -156,7 +197,6 @@ namespace Assimalign.Extensions.DependencyInjection.Utilities
             }
             return service;
         }
-
         private static Expression BuildFactoryExpression(
             ConstructorInfo constructor,
             int?[] parameterMap,
@@ -170,7 +210,7 @@ namespace Assimalign.Extensions.DependencyInjection.Utilities
             {
                 ParameterInfo? constructorParameter = constructorParameters[i];
                 Type? parameterType = constructorParameter.ParameterType;
-                bool hasDefaultValue = ParameterDefaultValue.TryGetDefaultValue(constructorParameter, out object? defaultValue);
+                bool hasDefaultValue = constructorParameter.TryGetDefaultValue(out object? defaultValue);
 
                 if (parameterMap[i] != null)
                 {
@@ -379,7 +419,7 @@ namespace Assimalign.Extensions.DependencyInjection.Utilities
                         object? value = provider.GetService(_parameters[index].ParameterType);
                         if (value == null)
                         {
-                            if (!ParameterDefaultValue.TryGetDefaultValue(_parameters[index], out object? defaultValue))
+                            if (!_parameters[index].TryGetDefaultValue(out object? defaultValue))
                             {
                                 throw new InvalidOperationException($"Unable to resolve service for type '{_parameters[index].ParameterType}' while attempting to activate '{_constructor.DeclaringType}'.");
                             }

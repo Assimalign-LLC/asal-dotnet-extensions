@@ -6,9 +6,8 @@ using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.FileProviders.Physical;
+namespace Assimalign.Extensions.FileProviders;
 
-using Assimalign.Extensions.FileProviders;
 using Assimalign.Extensions.FileProviders.Internal;
 using Assimalign.Extensions.FileSystemGlobbing;
 using Assimalign.Extensions.Primitives;
@@ -80,12 +79,12 @@ public class PhysicalFilesWatcher : IDisposable
 
         if (fileSystemWatcher != null)
         {
-#if NET6_0_OR_GREATER
+
             if (OperatingSystem.IsBrowser() || (OperatingSystem.IsIOS() && !OperatingSystem.IsMacCatalyst()) || OperatingSystem.IsTvOS())
             {
                 throw new PlatformNotSupportedException();// SR.Format(SR.FileSystemWatcher_PlatformNotSupported, typeof(FileSystemWatcher)));
             }
-#endif
+
 
             _fileWatcher = fileSystemWatcher;
             _fileWatcher.IncludeSubdirectories = true;

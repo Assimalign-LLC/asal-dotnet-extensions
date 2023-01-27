@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 
 namespace Assimalign.Extensions.DependencyInjection;
 
@@ -22,4 +22,26 @@ public interface IServiceProviderFactory<TContainerBuilder>
     /// <param name="containerBuilder">The container builder</param>
     /// <returns>An <see cref="IServiceProvider"/></returns>
     IServiceProvider CreateServiceProvider(TContainerBuilder containerBuilder);
+}
+
+
+/// <summary>
+/// 
+/// </summary>
+public interface IServiceProviderFactory
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TKey"></typeparam>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    IServiceProvider Create<TKey>(TKey key) where TKey : IComparable;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="services"></param>
+    /// <returns></returns>
+    IServiceProvider Create(IServiceCollection services);
 }

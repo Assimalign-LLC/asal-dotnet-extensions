@@ -4,9 +4,8 @@ using System.Collections.Concurrent;
 
 namespace Assimalign.Extensions.Validation;
 
-
 /// <summary>
-/// A fluent builder for creating a 
+/// A fluent builder for creating a <see cref="IValidatorFactory"/>.
 /// </summary>
 public sealed class ValidatorFactoryBuilder
 {
@@ -54,10 +53,39 @@ public sealed class ValidatorFactoryBuilder
         {
             throw new ArgumentNullException(nameof(builder));
         }
-
         return AddValidator(validatorName, validatoBuilder =>
         {
-            validatoBuilder.AddProfiles(builder);
+            validatoBuilder.AddProfile(builder);
         });
+    }
+
+    /// <summary>
+    /// Builds the <see cref="IValidatorFactory"/> with the 
+    /// configured validation profiles.
+    /// </summary>
+    /// <returns></returns>
+    public IValidatorFactory Build()
+    {
+        return new ValidatorFactory(validators);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="configure"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static IValidatorFactory Create(Action<ValidatorFactoryBuilder> configure)
+    {
+        if (configure is null)
+        {
+            throw new ArgumentNullException(nameof(configure));
+        }
+
+        var builder = new ValidatorFactoryBuilder();
+
+        configure.Invoke(builder);
+
+        return builder.Build();
     }
 }

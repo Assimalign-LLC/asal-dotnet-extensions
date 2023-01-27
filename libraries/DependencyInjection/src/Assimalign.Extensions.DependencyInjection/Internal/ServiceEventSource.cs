@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Tracing;
-using System.Linq.Expressions;
 using System.Text;
+using System.Collections.Generic;
+using System.Diagnostics.Tracing;
+using System.Diagnostics.CodeAnalysis;
 
 
 namespace Assimalign.Extensions.DependencyInjection;
 
-using Assimalign.Extensions.DependencyInjection.ServiceLoopkup;
+using Assimalign.Extensions.DependencyInjection.Internal;
 
 
 [EventSource(Name = "Assimalign-Extensions-DependencyInjection")]
@@ -108,7 +107,7 @@ internal sealed class ServiceEventSource : EventSource
     {
         if (IsEnabled(EventLevel.Verbose, EventKeywords.All))
         {
-            string format = CallSiteJsonFormatter.Instance.Format(callSite);
+            string format = CallSiteJsonFormatterVisitor.Instance.Format(callSite);
             int chunkCount = format.Length / MaxChunkSize + (format.Length % MaxChunkSize > 0 ? 1 : 0);
 
             int providerHashCode = provider.GetHashCode();

@@ -51,7 +51,7 @@ namespace Assimalign.Extensions.Logging
                     if ((_activityTrackingOption & ActivityTrackingOptions.Tags) != 0
                         && activity.TagObjects.GetEnumerator().MoveNext())
                     {
-                        // As TagObjects is a IEnumerable<KeyValuePair<string, object?>> this can be used directly as a scope.
+                        // As TagObjects is a Enumerable<KeyValuePair<string, object?>> this can be used directly as a scope.
                         // We do this to safe the allocation of a wrapper object.
                         callback(activity.TagObjects, state);
                     }

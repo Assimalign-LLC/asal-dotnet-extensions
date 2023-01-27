@@ -108,6 +108,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{E5214EC7-FEC9-4191-8FA0-97E91216764D}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Validation.Configurable.JsonBenchmarks", "validation\benchmarks\Assimalign.Extensions.Validation.Configurable.JsonBenchmarks\Assimalign.Extensions.Validation.Configurable.JsonBenchmarks.csproj", "{533B40B2-1B34-49F5-BA41-3CC692AFD559}"
@@ -284,7 +285,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Confi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.DependencyInjection", "DependencyInjection\src\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj", "{8F9A3102-0653-4A5A-B1F9-C25576D06C54}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.DependencyInjectionTests", "DependencyInjection\tests\Assimalign.Extensions.DependencyInjectionTests\Assimalign.Extensions.DependencyInjectionTests.csproj", "{CCD9B929-6879-4044-82C5-3A8C6413E629}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.DependencyInjection.Tests", "DependencyInjection\tests\Assimalign.Extensions.DependencyInjectionTests\Assimalign.Extensions.DependencyInjection.Tests.csproj", "{CCD9B929-6879-4044-82C5-3A8C6413E629}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Diagnostics", "diagnostics\src\Assimalign.Extensions.Diagnostics\Assimalign.Extensions.Diagnostics.csproj", "{A67D818F-3315-41E0-B555-A871617D8F5A}"
 EndProject
@@ -374,11 +375,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Marku
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{6BD33764-3538-4CA0-B1BF-E99FD544B810}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Configuration.Tests", "Configuration\tests\Assimalign.Extensions.Configuration.Tests\Assimalign.Extensions.Configuration.Tests.csproj", "{339ACCA3-9DE2-4B80-9D0C-7636688ACB1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Configuration.Tests", "Configuration\tests\Assimalign.Extensions.Configuration.Tests\Assimalign.Extensions.Configuration.Tests.csproj", "{339ACCA3-9DE2-4B80-9D0C-7636688ACB1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.FileSystemGlobbing.Tests", "File\tests\Assimalign.Extensions.FileSystemGlobbing.Tests\Assimalign.Extensions.FileSystemGlobbing.Tests.csproj", "{49F53593-ED94-41BC-9597-96415BE2C55F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.FileSystemGlobbing.Tests", "File\tests\Assimalign.Extensions.FileSystemGlobbing.Tests\Assimalign.Extensions.FileSystemGlobbing.Tests.csproj", "{49F53593-ED94-41BC-9597-96415BE2C55F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.Configuration.Ini", "Configuration\src\Assimalign.Extensions.Configuration.Ini\Assimalign.Extensions.Configuration.Ini.csproj", "{FDE128B8-F1F7-421A-AF31-FB9F628CD81C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Configuration.Ini", "Configuration\src\Assimalign.Extensions.Configuration.Ini\Assimalign.Extensions.Configuration.Ini.csproj", "{FDE128B8-F1F7-421A-AF31-FB9F628CD81C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

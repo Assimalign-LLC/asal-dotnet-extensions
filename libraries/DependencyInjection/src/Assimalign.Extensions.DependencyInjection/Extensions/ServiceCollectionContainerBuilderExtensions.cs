@@ -1,62 +1,55 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.DependencyInjection
+namespace Assimalign.Extensions.DependencyInjection;
+
+public static class ServiceCollectionContainerBuilderExtensions
 {
-    using Assimalign.Extensions.DependencyInjection;
+    /// <summary>
+    /// Creates a <see cref="ServiceProvider"/> containing services from the provided <see cref="IServiceCollection"/>.
+    /// </summary>
+    /// <param name="services">The <see cref="IServiceCollection"/> containing service descriptors.</param>
+    /// <returns>The <see cref="ServiceProvider"/>.</returns>
 
-    public static class ServiceCollectionContainerBuilderExtensions
+    public static ServiceProvider BuildServiceProvider(this IServiceCollection services)
     {
-        /// <summary>
-        /// Creates a <see cref="ServiceProvider"/> containing services from the provided <see cref="IServiceCollection"/>.
-        /// </summary>
-        /// <param name="services">The <see cref="IServiceCollection"/> containing service descriptors.</param>
-        /// <returns>The <see cref="ServiceProvider"/>.</returns>
+        return BuildServiceProvider(services, ServiceProviderOptions.Default);
+    }
 
-        public static ServiceProvider BuildServiceProvider(this IServiceCollection services)
+    /// <summary>
+    /// Creates a <see cref="ServiceProvider"/> containing services from the provided <see cref="IServiceCollection"/>
+    /// optionally enabling scope validation.
+    /// </summary>
+    /// <param name="services">The <see cref="IServiceCollection"/> containing service descriptors.</param>
+    /// <param name="validateScopes">
+    /// <c>true</c> to perform check verifying that scoped services never gets resolved from root provider; otherwise <c>false</c>.
+    /// </param>
+    /// <returns>The <see cref="ServiceProvider"/>.</returns>
+    public static ServiceProvider BuildServiceProvider(this IServiceCollection services, bool validateScopes)
+    {
+        return services.BuildServiceProvider(new ServiceProviderOptions { ValidateScopes = validateScopes });
+    }
+
+    /// <summary>
+    /// Creates a <see cref="ServiceProvider"/> containing services from the provided <see cref="IServiceCollection"/>
+    /// optionally enabling scope validation.
+    /// </summary>
+    /// <param name="services">The <see cref="IServiceCollection"/> containing service descriptors.</param>
+    /// <param name="options">
+    /// Configures various service provider behaviors.
+    /// </param>
+    /// <returns>The <see cref="ServiceProvider"/>.</returns>
+    public static ServiceProvider BuildServiceProvider(this IServiceCollection services, ServiceProviderOptions options)
+    {
+        if (services == null)
         {
-            return BuildServiceProvider(services, ServiceProviderOptions.Default);
+            throw new ArgumentNullException(nameof(services));
         }
 
-        /// <summary>
-        /// Creates a <see cref="ServiceProvider"/> containing services from the provided <see cref="IServiceCollection"/>
-        /// optionally enabling scope validation.
-        /// </summary>
-        /// <param name="services">The <see cref="IServiceCollection"/> containing service descriptors.</param>
-        /// <param name="validateScopes">
-        /// <c>true</c> to perform check verifying that scoped services never gets resolved from root provider; otherwise <c>false</c>.
-        /// </param>
-        /// <returns>The <see cref="ServiceProvider"/>.</returns>
-        public static ServiceProvider BuildServiceProvider(this IServiceCollection services, bool validateScopes)
+        if (options == null)
         {
-            return services.BuildServiceProvider(new ServiceProviderOptions { ValidateScopes = validateScopes });
+            throw new ArgumentNullException(nameof(options));
         }
 
-        /// <summary>
-        /// Creates a <see cref="ServiceProvider"/> containing services from the provided <see cref="IServiceCollection"/>
-        /// optionally enabling scope validation.
-        /// </summary>
-        /// <param name="services">The <see cref="IServiceCollection"/> containing service descriptors.</param>
-        /// <param name="options">
-        /// Configures various service provider behaviors.
-        /// </param>
-        /// <returns>The <see cref="ServiceProvider"/>.</returns>
-        public static ServiceProvider BuildServiceProvider(this IServiceCollection services, ServiceProviderOptions options)
-        {
-            if (services == null)
-            {
-                throw new ArgumentNullException(nameof(services));
-            }
-
-            if (options == null)
-            {
-                throw new ArgumentNullException(nameof(options));
-            }
-
-            return new ServiceProvider(services, options);
-        }
+        return new ServiceProvider(services, options);
     }
 }

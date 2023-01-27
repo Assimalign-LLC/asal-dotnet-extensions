@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Assimalign.Extensions.DependencyInjection;
 
-public class ServiceDescriptor
+/// <summary>
+/// When does
+/// </summary>
+public sealed partial class ServiceDescriptor
 {
     /// <summary>
     /// Initializes a new instance of <see cref="ServiceDescriptor"/> with the specified <paramref name="implementationType"/>.
@@ -12,17 +14,13 @@ public class ServiceDescriptor
     /// <param name="serviceType">The <see cref="Type"/> of the service.</param>
     /// <param name="implementationType">The <see cref="Type"/> implementing the service.</param>
     /// <param name="lifetime">The <see cref="ServiceLifetime"/> of the service.</param>
-    public ServiceDescriptor(
-        Type serviceType,
-        Type implementationType,
-        ServiceLifetime lifetime)
+    public ServiceDescriptor(Type serviceType, Type implementationType, ServiceLifetime lifetime)
         : this(serviceType, lifetime)
     {
         if (serviceType == null)
         {
             throw new ArgumentNullException(nameof(serviceType));
         }
-
         if (implementationType == null)
         {
             throw new ArgumentNullException(nameof(implementationType));
@@ -37,9 +35,7 @@ public class ServiceDescriptor
     /// </summary>
     /// <param name="serviceType">The <see cref="Type"/> of the service.</param>
     /// <param name="instance">The instance implementing the service.</param>
-    public ServiceDescriptor(
-        Type serviceType,
-        object instance)
+    public ServiceDescriptor(Type serviceType, object instance) 
         : this(serviceType, ServiceLifetime.Singleton)
     {
         if (serviceType == null)
@@ -61,10 +57,7 @@ public class ServiceDescriptor
     /// <param name="serviceType">The <see cref="Type"/> of the service.</param>
     /// <param name="factory">A factory used for creating service instances.</param>
     /// <param name="lifetime">The <see cref="ServiceLifetime"/> of the service.</param>
-    public ServiceDescriptor(
-        Type serviceType,
-        Func<IServiceProvider, object> factory,
-        ServiceLifetime lifetime)
+    public ServiceDescriptor(Type serviceType, Func<IServiceProvider, object> factory, ServiceLifetime lifetime)
         : this(serviceType, lifetime)
     {
         if (serviceType == null)
@@ -160,15 +153,12 @@ public class ServiceDescriptor
     /// <param name="service">The type of the service.</param>
     /// <param name="implementationType">The type of the implementation.</param>
     /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
-    public static ServiceDescriptor Transient(
-        Type service,
-        Type implementationType)
+    public static ServiceDescriptor Transient(Type service,Type implementationType)
     {
         if (service == null)
         {
             throw new ArgumentNullException(nameof(service));
         }
-
         if (implementationType == null)
         {
             throw new ArgumentNullException(nameof(implementationType));
@@ -345,7 +335,7 @@ public class ServiceDescriptor
     /// <typeparam name="TService">The type of the service.</typeparam>
     /// <typeparam name="TImplementation">The type of the implementation.</typeparam>
     /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
-    public static ServiceDescriptor Singleton<TService,TImplementation>()
+    public static ServiceDescriptor Singleton<TService, TImplementation>()
         where TService : class
         where TImplementation : class, TService
     {

@@ -7,8 +7,8 @@
 	</PropertyGroup>
 	<PropertyGroup>
 		<VersionPrefix>1.0.0</VersionPrefix>
-		<VersionSuffix>pre.1.0.4</VersionSuffix>
-		<TargetFrameworks>net6.0</TargetFrameworks>
+		<VersionSuffix>pre.1.0.5</VersionSuffix>
+		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
 
 		<!-- <IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat> -->

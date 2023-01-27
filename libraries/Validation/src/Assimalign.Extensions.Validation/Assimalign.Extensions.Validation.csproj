@@ -4,10 +4,7 @@
 		<RootNamespace>Assimalign.Extensions.Validation</RootNamespace>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<Description>
-			The following library offers an extensive set of fluent APIs for object validation built 
-			the unified .NET. NOTE: Any .NET framework below version 5 is NOT supported.
-		</Description>
+		<Description>The following library offers an extensive set of fluent APIs for object validation built the unified .NET. NOTE: Any .NET framework below version 5 is NOT supported.</Description>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageIcon>.assimalign.logo.png</PackageIcon>
 	</PropertyGroup>

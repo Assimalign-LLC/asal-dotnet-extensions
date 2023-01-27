@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.DependencyInjection;
 
@@ -35,60 +32,31 @@ public class ServiceCollection : IServiceCollection
     }
 
     /// <inheritdoc />
-    public void Clear()
-    {
-        descriptors.Clear();
-    }
+    public void Clear() => descriptors.Clear();
 
     /// <inheritdoc />
-    public bool Contains(ServiceDescriptor item)
-    {
-        return descriptors.Contains(item);
-    }
+    public bool Contains(ServiceDescriptor item) => descriptors.Contains(item);
 
     /// <inheritdoc />
-    public void CopyTo(ServiceDescriptor[] array, int arrayIndex)
-    {
-        descriptors.CopyTo(array, arrayIndex);
-    }
+    public void CopyTo(ServiceDescriptor[] array, int arrayIndex) => descriptors.CopyTo(array, arrayIndex);
 
     /// <inheritdoc />
-    public bool Remove(ServiceDescriptor item)
-    {
-        return descriptors.Remove(item);
-    }
+    public bool Remove(ServiceDescriptor item) => descriptors.Remove(item);
 
     /// <inheritdoc />
-    public IEnumerator<ServiceDescriptor> GetEnumerator()
-    {
-        return descriptors.GetEnumerator();
-    }
+    public IEnumerator<ServiceDescriptor> GetEnumerator() => descriptors.GetEnumerator();
 
-    void ICollection<ServiceDescriptor>.Add(ServiceDescriptor item)
-    {
-        descriptors.Add(item);
-    }
+    void ICollection<ServiceDescriptor>.Add(ServiceDescriptor item) => descriptors.Add(item);
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    
 
     /// <inheritdoc />
-    public int IndexOf(ServiceDescriptor item)
-    {
-        return descriptors.IndexOf(item);
-    }
+    public int IndexOf(ServiceDescriptor item) => descriptors.IndexOf(item);
 
     /// <inheritdoc />
-    public void Insert(int index, ServiceDescriptor item)
-    {
-        descriptors.Insert(index, item);
-    }
+    public void Insert(int index, ServiceDescriptor item) => descriptors.Insert(index, item);
 
     /// <inheritdoc />
-    public void RemoveAt(int index)
-    {
-        descriptors.RemoveAt(index);
-    }
+    public void RemoveAt(int index) => descriptors.RemoveAt(index);
 }

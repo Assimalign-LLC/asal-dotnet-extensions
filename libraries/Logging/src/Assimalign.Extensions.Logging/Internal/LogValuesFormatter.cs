@@ -219,13 +219,13 @@ namespace Assimalign.Extensions.Logging
                 return NullValue;
             }
 
-            // since 'string' implements IEnumerable, special case it
+            // since 'string' implements Enumerable, special case it
             if (value is string)
             {
                 return value;
             }
 
-            // if the value implements IEnumerable, build a comma separated string.
+            // if the value implements Enumerable, build a comma separated string.
             if (value is IEnumerable enumerable)
             {
                 var vsb = new ValueStringBuilder(stackalloc char[256]);

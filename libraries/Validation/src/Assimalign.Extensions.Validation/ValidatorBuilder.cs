@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Assimalign.Extensions.Validation;
 
@@ -35,18 +33,29 @@ public sealed class ValidatorBuilder
     /// <summary>
     /// 
     /// </summary>
+    /// <exception cref="ArgumentNullException"></exception>
+    public ValidatorBuilder AddProfile<TValidationProfileBuilder>() where TValidationProfileBuilder : IValidationProfileBuilder, new()
+    {
+        return AddProfile(new TValidationProfileBuilder());
+    }
+
+    /// <summary>
+    /// Adds profiles that are built from <see cref="IValidationProfileBuilder"/>.
+    /// </summary>
     /// <param name="builder"></param>
     /// <exception cref="ArgumentNullException"></exception>
-    public void AddProfiles(IValidationProfileBuilder builder)
+    public ValidatorBuilder AddProfile(IValidationProfileBuilder builder)
     {
         if (builder is null)
         {
             throw new ArgumentNullException(nameof(builder));
         }
-        foreach (var profile in builder.Build())
+        foreach (var porfile in builder.Build())
         {
-            AddProfile(profile);
+            AddProfile(porfile);
         }
+
+        return this;
     }
 
     /// <summary>

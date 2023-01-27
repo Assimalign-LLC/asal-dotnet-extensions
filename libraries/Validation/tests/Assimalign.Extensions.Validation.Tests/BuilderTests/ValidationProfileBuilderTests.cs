@@ -40,7 +40,7 @@ public class ValidationProfileBuilderTests
     {
         var validator = Validator.Create(builder =>
         {
-            builder.AddProfiles(new ValidationProfileBuilderDefault());
+            builder.AddProfile(new ValidationProfileBuilderDefault());
         });
 
         Assert.Equal(2, validator.Profiles.Count());

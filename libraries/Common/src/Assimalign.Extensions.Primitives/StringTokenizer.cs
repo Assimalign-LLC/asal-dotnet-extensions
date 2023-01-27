@@ -9,8 +9,8 @@ namespace Assimalign.Extensions.Primitives;
 /// </summary>
 public readonly struct StringTokenizer : IEnumerable<StringSegment>
 {
-    private readonly StringSegment _value;
-    private readonly char[] _separators;
+    private readonly StringSegment value;
+    private readonly char[] separators;
 
     /// <summary>
     /// Initializes a new instance of <see cref="StringTokenizer"/>.
@@ -29,8 +29,8 @@ public readonly struct StringTokenizer : IEnumerable<StringSegment>
             ThrowHelper.ThrowArgumentNullException(ExceptionArgument.separators);
         }
 
-        _value = value;
-        _separators = separators;
+        this.value = value;
+        this.separators = separators;
     }
 
     /// <summary>
@@ -50,11 +50,11 @@ public readonly struct StringTokenizer : IEnumerable<StringSegment>
             ThrowHelper.ThrowArgumentNullException(ExceptionArgument.separators);
         }
 
-        _value = value;
-        _separators = separators;
+        this.value = value;
+        this.separators = separators;
     }
 
-    public Enumerator GetEnumerator() => new Enumerator(in _value, _separators);
+    public Enumerator GetEnumerator() => new Enumerator(in value, separators);
 
     IEnumerator<StringSegment> IEnumerable<StringSegment>.GetEnumerator() => GetEnumerator();
 
@@ -76,8 +76,8 @@ public readonly struct StringTokenizer : IEnumerable<StringSegment>
 
         public Enumerator(ref StringTokenizer tokenizer)
         {
-            _value = tokenizer._value;
-            _separators = tokenizer._separators;
+            _value = tokenizer.value;
+            _separators = tokenizer.separators;
             Current = default(StringSegment);
             _index = 0;
         }

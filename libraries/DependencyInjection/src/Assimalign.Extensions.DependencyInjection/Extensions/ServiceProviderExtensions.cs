@@ -38,18 +38,17 @@ namespace Assimalign.Extensions.DependencyInjection
             {
                 throw new ArgumentNullException(nameof(provider));
             }
-
             if (serviceType == null)
             {
                 throw new ArgumentNullException(nameof(serviceType));
             }
-
             if (provider is ISupportRequiredService requiredServiceSupportingProvider)
             {
                 return requiredServiceSupportingProvider.GetRequiredService(serviceType);
             }
 
-            object? service = provider.GetService(serviceType);
+            var service = provider.GetService(serviceType);
+
             if (service == null)
             {
                 throw new InvalidOperationException(SR.Format(SR.NoServiceRegistered, serviceType));

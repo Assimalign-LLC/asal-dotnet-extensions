@@ -8,19 +8,24 @@ using Assimalign.Extensions.FileSystemGlobbing;
 
 
 /// <summary>
-/// Represents a file on a physical filesystem
+/// Represents a file on a physical file-system
 /// </summary>
 public class PhysicalFileInfo : IFileSystemInfo
 {
     private readonly FileInfo fileInfo;
 
     /// <summary>
-    /// Initializes an instance of <see cref="PhysicalFileInfo"/> that wraps an instance of <see cref="System.IO.FileInfo"/>
+    /// Initializes an instance of <see cref="PhysicalFileInfo"/> that wraps an instance of <see cref="FileInfo"/>
     /// </summary>
-    /// <param name="fileInfo">The <see cref="System.IO.FileInfo"/></param>
+    /// <param name="fileInfo">The <see cref="FileInfo"/></param>
     public PhysicalFileInfo(FileInfo fileInfo)
     {
         this.fileInfo = fileInfo;
+    }
+
+    public PhysicalFileInfo(string path)
+    {
+        this.fileInfo = new FileInfo(path);
     }
 
     /// <inheritdoc />
@@ -28,7 +33,6 @@ public class PhysicalFileInfo : IFileSystemInfo
 
     /// <inheritdoc />
     public long Length => fileInfo.Length;
-
 
     /// <inheritdoc />
     public string Name => fileInfo.Name;

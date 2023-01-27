@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Runtime.CompilerServices;
 
 namespace Assimalign.Extensions.DependencyInjection;
 
-using Assimalign.Extensions.DependencyInjection.ServiceLoopkup;
-using Assimalign.Extensions.DependencyInjection.ServiceLoopkup.Kind;
+using Assimalign.Extensions.DependencyInjection.Internal;
 
 /// <summary>
 /// The default IServiceProvider.
 /// </summary>
 public sealed class ServiceProvider : IServiceProvider, IDisposable, IAsyncDisposable
 {
-    private readonly CallSiteValidator callSiteValidator;
+    private readonly CallSiteValidatorVisitor callSiteValidator;
     private readonly Func<Type, Func<ServiceProviderEngineScope, object>> createServiceAccessor;
 
     // Internal for testing
@@ -25,9 +24,9 @@ public sealed class ServiceProvider : IServiceProvider, IDisposable, IAsyncDispo
 
     internal CallSiteFactory CallSiteFactory { get; }
     internal ServiceProviderEngineScope Root { get; }
-
-    internal static bool VerifyOpenGenericServiceTrimmability { get; } =
-        AppContext.TryGetSwitch("Assimalign.Extensions.DependencyInjection.VerifyOpenGenericServiceTrimmability", out bool verifyOpenGenerics) ? verifyOpenGenerics : false;
+    internal static bool VerifyOpenGenericServiceTrimmability { get; } = AppContext.TryGetSwitch(
+        "Assimalign.Extensions.DependencyInjection.VerifyOpenGenericServiceTrimmability",
+        out bool verifyOpenGenerics) ? verifyOpenGenerics : false;
 
     internal ServiceProvider(ICollection<ServiceDescriptor> serviceDescriptors, ServiceProviderOptions options)
     {
@@ -46,7 +45,7 @@ public sealed class ServiceProvider : IServiceProvider, IDisposable, IAsyncDispo
 
         if (options.ValidateScopes)
         {
-            callSiteValidator = new CallSiteValidator();
+            callSiteValidator = new CallSiteValidatorVisitor();
         }
         if (options.ValidateOnBuild)
         {
@@ -114,11 +113,16 @@ public sealed class ServiceProvider : IServiceProvider, IDisposable, IAsyncDispo
             ThrowHelper.ThrowObjectDisposedException();
         }
 
-        Func<ServiceProviderEngineScope, object> realizedService = realizedServices.GetOrAdd(serviceType, createServiceAccessor);
+        var realizedService = realizedServices.GetOrAdd(serviceType, createServiceAccessor);
+
         OnResolve(serviceType, serviceProviderEngineScope);
+
         ServiceEventSource.Log.ServiceResolved(this, serviceType);
+
         var result = realizedService.Invoke(serviceProviderEngineScope);
+
         System.Diagnostics.Debug.Assert(result is null || CallSiteFactory.IsService(serviceType));
+
         return result;
     }
     private void ValidateService(ServiceDescriptor descriptor)
@@ -130,7 +134,7 @@ public sealed class ServiceProvider : IServiceProvider, IDisposable, IAsyncDispo
         try
         {
             var callSite = CallSiteFactory.GetCallSite(descriptor, new CallSiteChain());
-            
+
             if (callSite != null)
             {
                 OnCreate(callSite);
@@ -152,7 +156,7 @@ public sealed class ServiceProvider : IServiceProvider, IDisposable, IAsyncDispo
             // Optimize singleton case
             if (callSite.Cache.Location == CallSiteResultCacheLocation.Root)
             {
-                object value = CallSiteRuntimeResolver.Instance.Resolve(callSite, Root);
+                object value = CallSiteRuntimeResolverVisitor.Instance.Resolve(callSite, Root);
                 return scope => value;
             }
 
@@ -175,17 +179,8 @@ public sealed class ServiceProvider : IServiceProvider, IDisposable, IAsyncDispo
     }
     private ServiceProviderEngine GetEngine()
     {
-        ServiceProviderEngine engine;
-
-        if (RuntimeFeature.IsDynamicCodeCompiled)
-        {
-            engine = new DynamicServiceProviderEngine(this);
-        }
-        else
-        {
-            // Don't try to compile Expressions/IL if they are going to get interpreted
-            engine = RuntimeServiceProviderEngine.Instance;
-        }
-        return engine;
+        return RuntimeFeature.IsDynamicCodeCompiled ?
+            new DynamicServiceProviderEngine(this) :           
+            RuntimeServiceProviderEngine.Instance;  // Don't try to compile Expressions/IL if they are going to get interpreted
     }
 }

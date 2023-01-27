@@ -16,19 +16,13 @@ public readonly struct AsyncServiceScope : IServiceScope, IAsyncDisposable
     /// Wraps an instance of <see cref="IServiceScope" />.
     /// </summary>
     /// <param name="serviceScope">The <see cref="IServiceScope"/> instance to wrap.</param>
-    public AsyncServiceScope(IServiceScope serviceScope)
-    {
-        this.serviceScope = serviceScope ?? throw new ArgumentNullException(nameof(serviceScope));
-    }
+    public AsyncServiceScope(IServiceScope serviceScope) => this.serviceScope = serviceScope ?? throw new ArgumentNullException(nameof(serviceScope));
 
     /// <inheritdoc />
     public IServiceProvider ServiceProvider => this.serviceScope.ServiceProvider;
 
     /// <inheritdoc />
-    public void Dispose()
-    {
-        this.serviceScope.Dispose();
-    }
+    public void Dispose() => this.serviceScope.Dispose();
 
     /// <inheritdoc />
     public ValueTask DisposeAsync()

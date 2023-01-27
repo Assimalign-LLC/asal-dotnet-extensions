@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,21 +21,21 @@ public abstract class FileProvider : IFileProvider
     /// </summary>
     public static IFileProvider Null => new NullFileProvider();
 
-    private class NullFilePovider : IFileProvider
+    private partial class NullFileProvider : IFileProvider
     {
         public IFileSystemDirectoryInfo GetDirectory(string subpath)
         {
-            
+            return default;
         }
 
         public IFileSystemInfo GetFile(string subpath)
         {
-            
+            return default;
         }
 
         public IChangeToken Watch(string filter)
         {
-           
+            return default;
         }
     }
 }

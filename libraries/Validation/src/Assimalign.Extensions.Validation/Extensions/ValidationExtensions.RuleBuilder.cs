@@ -11,6 +11,7 @@ namespace Assimalign.Extensions.Validation;
 using Assimalign.Extensions.Validation.Properties;
 using Assimalign.Extensions.Validation.Internal;
 using Assimalign.Extensions.Validation.Internal.Rules;
+using System.Diagnostics.CodeAnalysis;
 
 
 /// <summary>

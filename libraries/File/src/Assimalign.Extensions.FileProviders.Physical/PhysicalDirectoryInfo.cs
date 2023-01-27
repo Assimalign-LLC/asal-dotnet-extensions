@@ -18,13 +18,13 @@ public class PhysicalDirectoryInfo : IFileSystemDirectoryInfo
     private readonly DirectoryInfo directoryInfo;
     private readonly ExclusionFilterType directoryInfoFilters;
 
-    private IEnumerable<IFileSystemInfo> files; 
+    private IEnumerable<IFileSystemInfo> files;
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="directory"></param>
-    public PhysicalDirectoryInfo(string directory)  
+    public PhysicalDirectoryInfo(string directory)
         : this(directory, ExclusionFilterType.Sensitive) { }
 
     /// <summary>
@@ -32,7 +32,7 @@ public class PhysicalDirectoryInfo : IFileSystemDirectoryInfo
     /// </summary>
     /// <param name="directory"></param>
     /// <param name="filters"></param>
-    public PhysicalDirectoryInfo(string directory, ExclusionFilterType filters) 
+    public PhysicalDirectoryInfo(string directory, ExclusionFilterType filters)
         : this(new DirectoryInfo(directory), filters)
     {
         this.directory = directory;
@@ -42,7 +42,7 @@ public class PhysicalDirectoryInfo : IFileSystemDirectoryInfo
     /// 
     /// </summary>
     /// <param name="directoryInfo"></param>
-    public PhysicalDirectoryInfo(DirectoryInfo directoryInfo) 
+    public PhysicalDirectoryInfo(DirectoryInfo directoryInfo)
         : this(directoryInfo, ExclusionFilterType.Sensitive) { }
 
     /// <summary>
@@ -64,17 +64,12 @@ public class PhysicalDirectoryInfo : IFileSystemDirectoryInfo
                 .Where(info => !FileSystemInfoHelper.IsExcluded(info, directoryInfoFilters))
                 .Select<FileSystemInfo, IFileSystemInfo>(info =>
                 {
-                    if (info is FileInfo file)
+                    return info switch
                     {
-                        return new PhysicalFileInfo(file);
-                    }
-                    else if (info is DirectoryInfo dir)
-                    {
-                        return new PhysicalDirectoryInfo(dir);
-                    }
-                        // shouldn't happen unless BCL introduces new implementation of base type
-                        throw new InvalidOperationException();// SR.UnexpectedFileSystemInfo);
-                    });
+                        FileInfo file => new PhysicalFileInfo(file),
+                        DirectoryInfo directory => new PhysicalDirectoryInfo(directory),
+                    };
+                });
         }
         catch (Exception ex) when (ex is DirectoryNotFoundException || ex is IOException)
         {
@@ -117,23 +112,27 @@ public class PhysicalDirectoryInfo : IFileSystemDirectoryInfo
     /// </summary>
     /// <exception cref="InvalidOperationException">Always thrown</exception>
     /// <returns>Never returns</returns>
-    public Stream CreateReadStream()
-    {
-        throw new InvalidOperationException();// SR.CannotCreateStream);
-    }
-
+    Stream IFileSystemInfo.CreateReadStream() => throw new InvalidOperationException();
+    /// <inheritdoc />
     public IEnumerable<IFileSystemInfo> EnumerateFileSystem()
     {
-        throw new NotImplementedException();
+        EnsureInitialized();
+        return files;
     }
-
+    
+    /// <inheritdoc />
     public IFileSystemDirectoryInfo? GetDirectory(string path)
     {
-        throw new NotImplementedException();
-    }
+        var fullPath = Path.Combine(directoryInfo.FullName, path);
 
+        return new PhysicalDirectoryInfo(fullPath);
+    }
+    
+    /// <inheritdoc />
     public IFileSystemInfo? GetFile(string path)
     {
-        throw new NotImplementedException();
+        var fullPath = Path.Combine(directoryInfo.FullName, path);
+
+        return new PhysicalFileInfo(fullPath);
     }
 }

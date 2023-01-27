@@ -6,7 +6,7 @@ namespace Assimalign.Extensions.Validation;
 using Assimalign.Extensions.Validation.Internal;
 
 /// <summary>
-/// 
+/// Am abstract class that allows for fluent building of validation profiles.
 /// </summary>
 public abstract class ValidationProfileBuilder : IValidationProfileBuilder
 {
@@ -20,7 +20,7 @@ public abstract class ValidationProfileBuilder : IValidationProfileBuilder
 
 
     /// <summary>
-    /// 
+    /// An overload that is called on profile build.
     /// </summary>
     /// <param name="builder"></param>
     protected abstract void OnBuild(IValidationProfileBuilder builder);
@@ -44,7 +44,7 @@ public abstract class ValidationProfileBuilder : IValidationProfileBuilder
 
     /// <inheritdoc />
     /// <remarks>
-    /// Once built 
+    /// Once built the return 
     /// </remarks>
     IEnumerable<IValidationProfile> IValidationProfileBuilder.Build()
     {
