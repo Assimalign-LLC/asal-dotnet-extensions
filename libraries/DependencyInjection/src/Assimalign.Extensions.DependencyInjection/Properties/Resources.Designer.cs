@@ -304,15 +304,6 @@ namespace Assimalign.Extensions.DependencyInjection.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to tds.
-        /// </summary>
-        internal static string test {
-            get {
-                return ResourceManager.GetString("test", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Generic implementation type &apos;{0}&apos; has a DynamicallyAccessedMembers attribute applied to a generic argument type, but the service type &apos;{1}&apos; doesn&apos;t have a matching DynamicallyAccessedMembers attribute on its generic argument type..
         /// </summary>
         internal static string TrimmingAnnotationsDoNotMatch {

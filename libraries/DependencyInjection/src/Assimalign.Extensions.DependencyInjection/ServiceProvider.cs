@@ -41,7 +41,7 @@ public sealed class ServiceProvider : IServiceProvider, IDisposable, IAsyncDispo
         // keep this in sync with CallSiteFactory.IsService
         CallSiteFactory.Add(typeof(IServiceProvider), new ServiceProviderCallSite());
         CallSiteFactory.Add(typeof(IServiceScopeFactory), new ConstantCallSite(typeof(IServiceScopeFactory), Root));
-        CallSiteFactory.Add(typeof(IServiceProviderHandler), new ConstantCallSite(typeof(IServiceProviderHandler), CallSiteFactory));
+        CallSiteFactory.Add(typeof(IServiceLookup), new ConstantCallSite(typeof(IServiceLookup), CallSiteFactory));
 
         if (options.ValidateScopes)
         {
@@ -164,6 +164,7 @@ public sealed class ServiceProvider : IServiceProvider, IDisposable, IAsyncDispo
         }
 
         return _ => null;
+        
     }
     internal void ReplaceServiceAccessor(CallSiteService callSite, Func<ServiceProviderEngineScope, object> accessor)
     {

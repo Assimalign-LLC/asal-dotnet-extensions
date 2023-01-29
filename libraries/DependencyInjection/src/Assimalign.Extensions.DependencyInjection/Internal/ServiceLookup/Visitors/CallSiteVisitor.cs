@@ -5,11 +5,7 @@ namespace Assimalign.Extensions.DependencyInjection.Internal;
 internal abstract class CallSiteVisitor<TArgument, TResult>
 {
     private readonly CallSiteStackGuard stackGuard;
-
-    protected CallSiteVisitor()
-    {
-        stackGuard = new CallSiteStackGuard();
-    }
+    protected CallSiteVisitor() => stackGuard = new CallSiteStackGuard();
 
     protected virtual TResult VisitCallSite(CallSiteService callSite, TArgument argument)
     {

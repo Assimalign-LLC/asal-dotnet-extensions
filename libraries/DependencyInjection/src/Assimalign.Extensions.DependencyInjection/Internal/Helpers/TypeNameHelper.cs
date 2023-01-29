@@ -1,16 +1,13 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.DependencyInjection.Internal;
 
 internal static class TypeNameHelper
 {
     private const char DefaultNestedTypeDelimiter = '+';
-
     private static readonly Dictionary<Type, string> _builtInTypeNames = new Dictionary<Type, string>
     {
         { typeof(void), "void" },
@@ -36,7 +33,6 @@ internal static class TypeNameHelper
     {
         return item == null ? null : GetTypeDisplayName(item.GetType(), fullName);
     }
-
     /// <summary>
     /// Pretty print a type name.
     /// </summary>
@@ -86,7 +82,6 @@ internal static class TypeNameHelper
             }
         }
     }
-
     private static void ProcessArrayType(StringBuilder builder, Type type, in DisplayNameOptions options)
     {
         Type innerType = type;
@@ -105,7 +100,6 @@ internal static class TypeNameHelper
             type = type.GetElementType()!;
         }
     }
-
     private static void ProcessGenericType(StringBuilder builder, Type type, Type[] genericArguments, int length, in DisplayNameOptions options)
     {
         int offset = 0;
@@ -157,7 +151,6 @@ internal static class TypeNameHelper
             builder.Append('>');
         }
     }
-
     private readonly struct DisplayNameOptions
     {
         public DisplayNameOptions(bool fullName, bool includeGenericParameterNames, bool includeGenericParameters, char nestedTypeDelimiter)
@@ -169,11 +162,8 @@ internal static class TypeNameHelper
         }
 
         public bool FullName { get; }
-
         public bool IncludeGenericParameters { get; }
-
         public bool IncludeGenericParameterNames { get; }
-
         public char NestedTypeDelimiter { get; }
     }
 }

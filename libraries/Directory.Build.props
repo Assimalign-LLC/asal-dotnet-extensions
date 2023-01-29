@@ -1,7 +1,7 @@
 <Project>
 	<PropertyGroup>
 		<Authors>Chase Crawford</Authors>
-		<Copyright>© Assimalign LLC 2022</Copyright>
+		<Copyright>© Assimalign LLC 2023</Copyright>
 		<PackageIconUrl>https://corporate.assets.assimalign.com/assets/logos/.assimalign.logo.png</PackageIconUrl>
 		<PackageRepositoryUrl>https://github.com/Assimalign-LLC/asal-dotnet-extensions</PackageRepositoryUrl>
 	</PropertyGroup>

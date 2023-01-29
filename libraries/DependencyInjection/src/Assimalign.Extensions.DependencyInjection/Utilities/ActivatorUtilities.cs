@@ -18,7 +18,7 @@ namespace Assimalign.Extensions.DependencyInjection.Utilities
         private static readonly MethodInfo GetServiceInfo =
             GetMethodInfo<Func<IServiceProvider, Type, Type, bool, object?>>((sp, t, r, c) => GetService(sp, t, r, c));
 
-        
+
 
         /// <summary>
         /// Create a delegate that will instantiate a type with constructor arguments provided directly
@@ -35,15 +35,15 @@ namespace Assimalign.Extensions.DependencyInjection.Utilities
         public static ObjectFactory CreateFactory([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type instanceType, Type[] argumentTypes)
         {
             CreateFactoryInternal(
-                instanceType, 
-                argumentTypes, 
+                instanceType,
+                argumentTypes,
                 out ParameterExpression provider,
                 out ParameterExpression argumentArray,
                 out Expression factoryExpressionBody);
 
             var factoryLambda = Expression.Lambda<Func<IServiceProvider, object?[]?, object>>(
-                factoryExpressionBody, 
-                provider, 
+                factoryExpressionBody,
+                provider,
                 argumentArray);
 
             Func<IServiceProvider, object?[]?, object>? result = factoryLambda.Compile();
@@ -66,15 +66,15 @@ namespace Assimalign.Extensions.DependencyInjection.Utilities
         public static ObjectFactory<T> CreateFactory<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] T>(Type[] argumentTypes)
         {
             CreateFactoryInternal(
-                typeof(T), 
-                argumentTypes, 
-                out ParameterExpression provider, 
-                out ParameterExpression argumentArray, 
+                typeof(T),
+                argumentTypes,
+                out ParameterExpression provider,
+                out ParameterExpression argumentArray,
                 out Expression factoryExpressionBody);
 
             var factoryLambda = Expression.Lambda<Func<IServiceProvider, object?[]?, T>>(
-                factoryExpressionBody, 
-                provider, 
+                factoryExpressionBody,
+                provider,
                 argumentArray);
 
             Func<IServiceProvider, object?[]?, T>? result = factoryLambda.Compile();
@@ -85,9 +85,9 @@ namespace Assimalign.Extensions.DependencyInjection.Utilities
         private static void CreateFactoryInternal([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type instanceType, Type[] argumentTypes, out ParameterExpression provider, out ParameterExpression argumentArray, out Expression factoryExpressionBody)
         {
             FindApplicableConstructor(
-                instanceType, 
+                instanceType,
                 argumentTypes,
-                out ConstructorInfo constructor, 
+                out ConstructorInfo constructor,
                 out int?[] parameterMap);
 
             provider = Expression.Parameter(typeof(IServiceProvider), "provider");
@@ -203,34 +203,32 @@ namespace Assimalign.Extensions.DependencyInjection.Utilities
             Expression serviceProvider,
             Expression factoryArgumentArray)
         {
-            ParameterInfo[]? constructorParameters = constructor.GetParameters();
+            var constructorParameters = constructor.GetParameters();
             var constructorArguments = new Expression[constructorParameters.Length];
 
             for (int i = 0; i < constructorParameters.Length; i++)
             {
-                ParameterInfo? constructorParameter = constructorParameters[i];
-                Type? parameterType = constructorParameter.ParameterType;
-                bool hasDefaultValue = constructorParameter.TryGetDefaultValue(out object? defaultValue);
+                var constructorParameter = constructorParameters[i];
+                var parameterType = constructorParameter.ParameterType;
+                var hasDefaultValue = constructorParameter.TryGetDefaultValue(out object? defaultValue);
 
-                if (parameterMap[i] != null)
-                {
-                    constructorArguments[i] = Expression.ArrayAccess(factoryArgumentArray, Expression.Constant(parameterMap[i]));
-                }
-                else
-                {
-                    var parameterTypeExpression = new Expression[] { serviceProvider,
+                constructorArguments[i] = parameterMap[i] != null ?
+                    Expression.ArrayAccess(factoryArgumentArray, Expression.Constant(parameterMap[i])) :
+                    Expression.Call(GetServiceInfo, new Expression[]
+                    {
+                        serviceProvider,
                         Expression.Constant(parameterType, typeof(Type)),
                         Expression.Constant(constructor.DeclaringType, typeof(Type)),
-                        Expression.Constant(hasDefaultValue) };
-                    constructorArguments[i] = Expression.Call(GetServiceInfo, parameterTypeExpression);
-                }
+                        Expression.Constant(hasDefaultValue)
+                    });
 
                 // Support optional constructor arguments by passing in the default value
                 // when the argument would otherwise be null.
                 if (hasDefaultValue)
                 {
-                    ConstantExpression? defaultValueExpression = Expression.Constant(defaultValue);
-                    constructorArguments[i] = Expression.Coalesce(constructorArguments[i], defaultValueExpression);
+                    constructorArguments[i] = Expression.Coalesce(
+                        constructorArguments[i], 
+                        Expression.Constant(defaultValue));
                 }
 
                 constructorArguments[i] = Expression.Convert(constructorArguments[i], parameterType);
@@ -305,7 +303,6 @@ namespace Assimalign.Extensions.DependencyInjection.Utilities
                     {
                         ThrowMultipleCtorsMarkedWithAttributeException();
                     }
-
                     if (!TryCreateParameterMap(constructor.GetParameters(), argumentTypes, out int?[] tempParameterMap))
                     {
                         ThrowMarkedCtorDoesNotTakeAllProvidedArguments();

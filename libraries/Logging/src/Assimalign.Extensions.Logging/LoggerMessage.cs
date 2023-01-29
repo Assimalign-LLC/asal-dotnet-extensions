@@ -138,18 +138,17 @@ namespace Assimalign.Extensions.Logging
         /// <returns>A delegate which when invoked creates a log message.</returns>
         public static Action<ILogger, Exception?> Define(LogLevel logLevel, EventId eventId, string formatString, LogDefineOptions? options)
         {
-            LogValuesFormatter formatter = CreateLogValuesFormatter(formatString, expectedNamedParameterCount: 0);
-
+            var formatter = CreateLogValuesFormatter(formatString, expectedNamedParameterCount: 0);
+#nullable enable
             void Log(ILogger logger, Exception? exception)
             {
                 logger.Log(logLevel, eventId, new LogValues(formatter), exception, LogValues.Callback);
             }
-
+#nullable disable
             if (options != null && options.SkipEnabledCheck)
             {
                 return Log;
             }
-
             return (logger, exception) =>
             {
                 if (logger.IsEnabled(logLevel))

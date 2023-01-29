@@ -1,10 +1,10 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-
-
-using System;
-using Assimalign.Extensions.DependencyInjection.Specification.Fakes;
-
-namespace Assimalign.Extensions.DependencyInjection.Tests.Fakes
+namespace Assimalign.Extensions.DependencyInjection.Specification.Fakes
 {
     public class ClassWithServiceAndOptionalArgsCtorWithStructs
     {

@@ -19,12 +19,12 @@ namespace Assimalign.Extensions.DependencyInjection.Specification
             }
 
             // Arrange
-            var collection = new TestServiceCollection();
-            collection.AddTransient(typeof(IFakeService), typeof(FakeService));
-            var provider = CreateServiceProvider(collection);
+            var provider = new ServiceProviderBuilder()
+                .AddTransient(typeof(IFakeService), typeof(FakeService))
+                .Build();   
 
             // Act
-            var serviceProviderIsService = provider.GetService<IServiceProviderHandler>();
+            var serviceProviderIsService = provider.GetService<IServiceLookup>();
 
             // Assert
             Assert.NotNull(serviceProviderIsService);
@@ -41,12 +41,12 @@ namespace Assimalign.Extensions.DependencyInjection.Specification
             }
 
             // Arrange
-            var collection = new TestServiceCollection();
-            collection.AddTransient(typeof(IFakeOpenGenericService<>), typeof(FakeOpenGenericService<>));
-            var provider = CreateServiceProvider(collection);
-
+            var provider = new ServiceProviderBuilder()
+                .AddTransient(typeof(IFakeOpenGenericService<>), typeof(FakeOpenGenericService<>))
+                .Build();
+ 
             // Act
-            var serviceProviderIsService = provider.GetService<IServiceProviderHandler>();
+            var serviceProviderIsService = provider.GetService<IServiceLookup>();
 
             // Assert
             Assert.NotNull(serviceProviderIsService);
@@ -63,12 +63,12 @@ namespace Assimalign.Extensions.DependencyInjection.Specification
             }
 
             // Arrange
-            var collection = new TestServiceCollection();
-            collection.AddTransient(typeof(IFakeOpenGenericService<IFakeService>), typeof(FakeOpenGenericService<IFakeService>));
-            var provider = CreateServiceProvider(collection);
+            var provider = new ServiceProviderBuilder()
+                .AddTransient(typeof(IFakeOpenGenericService<IFakeService>), typeof(FakeOpenGenericService<IFakeService>))
+                .Build();
 
             // Act
-            var serviceProviderIsService = provider.GetService<IServiceProviderHandler>();
+            var serviceProviderIsService = provider.GetService<IServiceLookup>();
 
             // Assert
             Assert.NotNull(serviceProviderIsService);
@@ -84,12 +84,12 @@ namespace Assimalign.Extensions.DependencyInjection.Specification
             }
 
             // Arrange
-            var collection = new TestServiceCollection();
-            collection.AddTransient(typeof(IFakeService), typeof(FakeService));
-            var provider = CreateServiceProvider(collection);
+            var provider = new ServiceProviderBuilder()
+                .AddTransient(typeof(IFakeService), typeof(FakeService))
+                .Build();
 
             // Act
-            var serviceProviderIsService = provider.GetService<IServiceProviderHandler>();
+            var serviceProviderIsService = provider.GetService<IServiceLookup>();
 
             // Assert
             Assert.NotNull(serviceProviderIsService);
@@ -107,18 +107,18 @@ namespace Assimalign.Extensions.DependencyInjection.Specification
             }
 
             // Arrange
-            var collection = new TestServiceCollection();
-            collection.AddTransient(typeof(IFakeService), typeof(FakeService));
-            var provider = CreateServiceProvider(collection);
+            var provider = new ServiceProviderBuilder()
+                .AddTransient(typeof(IFakeService), typeof(FakeService))
+                .Build();
 
             // Act
-            var serviceProviderIsService = provider.GetService<IServiceProviderHandler>();
+            var serviceProviderIsService = provider.GetService<IServiceLookup>();
 
             // Assert
             Assert.NotNull(serviceProviderIsService);
             Assert.True(serviceProviderIsService.IsService(typeof(IServiceProvider)));
             Assert.True(serviceProviderIsService.IsService(typeof(IServiceScopeFactory)));
-            Assert.True(serviceProviderIsService.IsService(typeof(IServiceProviderHandler)));
+            Assert.True(serviceProviderIsService.IsService(typeof(IServiceLookup)));
         }
     }
 }

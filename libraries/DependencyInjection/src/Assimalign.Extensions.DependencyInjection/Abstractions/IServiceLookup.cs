@@ -5,7 +5,7 @@ namespace Assimalign.Extensions.DependencyInjection;
 /// <summary>
 /// Optional service used to determine if the specified type is available from the <see cref="IServiceProvider"/>.
 /// </summary>
-public interface IServiceProviderHandler
+public interface IServiceLookup
 {
     /// <summary>
     /// Determines if the specified service type is available from the <see cref="IServiceProvider"/>.

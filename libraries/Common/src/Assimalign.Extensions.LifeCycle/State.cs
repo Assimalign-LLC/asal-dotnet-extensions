@@ -35,6 +35,7 @@ public sealed partial class State : IStateStoreFactory
 {
     public IStateStore Create(StateStoreType stateStoreType)
     {
+        #pragma warning disable CS8509
         return stateStoreType switch
         {
             StateStoreType.Default  => new DefaultStateStore(),

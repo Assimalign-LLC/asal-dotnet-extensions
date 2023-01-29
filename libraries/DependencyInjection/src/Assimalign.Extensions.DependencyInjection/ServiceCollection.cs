@@ -7,9 +7,18 @@ namespace Assimalign.Extensions.DependencyInjection;
 /// <summary>
 /// Default implementation of <see cref="IServiceCollection"/>.
 /// </summary>
-public class ServiceCollection : IServiceCollection
+public sealed class ServiceCollection : IServiceCollection
 {
     private readonly List<ServiceDescriptor> descriptors = new List<ServiceDescriptor>();
+
+    public ServiceCollection()
+    {
+            
+    }
+    public ServiceCollection(IEnumerable<ServiceDescriptor> descriptors)
+    {
+        this.descriptors.AddRange(descriptors);
+    }
 
 
     /// <inheritdoc />

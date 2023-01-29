@@ -14,7 +14,6 @@ using Assimalign.Extensions.DependencyInjection.Internal;
 internal sealed class ServiceEventSource : EventSource
 {
     public static readonly ServiceEventSource Log = new ServiceEventSource();
-
     public static class Keywords
     {
         public const EventKeywords ServiceProviderInitialized = (EventKeywords)0x1;
@@ -23,7 +22,7 @@ internal sealed class ServiceEventSource : EventSource
     // Event source doesn't support large payloads so we chunk large payloads like formatted call site tree and descriptors
     private const int MaxChunkSize = 10 * 1024;
 
-    private readonly List<WeakReference<ServiceProvider>> _providers = new();
+    private readonly List<WeakReference<ServiceProvider>> providers = new();
 
     private ServiceEventSource() : base(EventSourceSettings.EtwSelfDescribingEventFormat)
     {
@@ -107,10 +106,9 @@ internal sealed class ServiceEventSource : EventSource
     {
         if (IsEnabled(EventLevel.Verbose, EventKeywords.All))
         {
-            string format = CallSiteJsonFormatterVisitor.Instance.Format(callSite);
-            int chunkCount = format.Length / MaxChunkSize + (format.Length % MaxChunkSize > 0 ? 1 : 0);
-
-            int providerHashCode = provider.GetHashCode();
+            var format = CallSiteJsonFormatterVisitor.Instance.Format(callSite);
+            var chunkCount = format.Length / MaxChunkSize + (format.Length % MaxChunkSize > 0 ? 1 : 0);
+            var providerHashCode = provider.GetHashCode();
             for (int i = 0; i < chunkCount; i++)
             {
                 CallSiteBuilt(
@@ -142,9 +140,9 @@ internal sealed class ServiceEventSource : EventSource
     [NonEvent]
     public void ServiceProviderBuilt(ServiceProvider provider)
     {
-        lock (_providers)
+        lock (providers)
         {
-            _providers.Add(new WeakReference<ServiceProvider>(provider));
+            providers.Add(new WeakReference<ServiceProvider>(provider));
         }
 
         WriteServiceProviderBuilt(provider);
@@ -153,15 +151,15 @@ internal sealed class ServiceEventSource : EventSource
     [NonEvent]
     public void ServiceProviderDisposed(ServiceProvider provider)
     {
-        lock (_providers)
+        lock (providers)
         {
-            for (int i = _providers.Count - 1; i >= 0; i--)
+            for (int i = providers.Count - 1; i >= 0; i--)
             {
                 // remove the provider, along with any stale references
-                WeakReference<ServiceProvider> reference = _providers[i];
+                WeakReference<ServiceProvider> reference = providers[i];
                 if (!reference.TryGetTarget(out ServiceProvider target) || target == provider)
                 {
-                    _providers.RemoveAt(i);
+                    providers.RemoveAt(i);
                 }
             }
         }
@@ -276,9 +274,9 @@ internal sealed class ServiceEventSource : EventSource
             // because building the ServiceProvider happens early in the process. This way a listener
             // can get this information, even if they attach while the process is running.
 
-            lock (_providers)
+            lock (providers)
             {
-                foreach (WeakReference<ServiceProvider> reference in _providers)
+                foreach (WeakReference<ServiceProvider> reference in providers)
                 {
                     if (reference.TryGetTarget(out ServiceProvider provider))
                     {

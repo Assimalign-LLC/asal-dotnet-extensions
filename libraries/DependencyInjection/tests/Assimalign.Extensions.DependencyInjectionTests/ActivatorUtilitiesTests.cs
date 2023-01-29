@@ -228,7 +228,7 @@ namespace Assimalign.Extensions.DependencyInjection.Tests
 
         public object GetService(Type serviceType)
         {
-            if (serviceType == typeof(IServiceProviderHandler))
+            if (serviceType == typeof(IServiceLookup))
             {
                 return FakeServiceProviderIsService;
             }
@@ -240,7 +240,7 @@ namespace Assimalign.Extensions.DependencyInjection.Tests
         {
             _services = services;
             _services.AddSingleton<FakeServiceProvider>(this);
-            _services.AddSingleton<IServiceProviderHandler>((p) => (IServiceProviderHandler)FakeServiceProviderIsService);
+            _services.AddSingleton<IServiceLookup>((p) => (IServiceLookup)FakeServiceProviderIsService);
         }
 
         public void Build()
@@ -249,7 +249,7 @@ namespace Assimalign.Extensions.DependencyInjection.Tests
         }
     }
 
-    internal class FakeIServiceProviderIsService : IServiceProviderHandler
+    internal class FakeIServiceProviderIsService : IServiceLookup
     {
         public FakeIServiceProviderIsService() { }
         public bool IsServiceGotCalled { get; set; }

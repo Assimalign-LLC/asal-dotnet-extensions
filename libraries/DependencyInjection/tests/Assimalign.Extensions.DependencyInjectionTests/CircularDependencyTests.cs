@@ -19,9 +19,9 @@ namespace Assimalign.Extensions.DependencyInjection.Tests
                                   "Assimalign.Extensions.DependencyInjection.Tests.Fakes.SelfCircularDependency -> " +
                                   "Assimalign.Extensions.DependencyInjection.Tests.Fakes.SelfCircularDependency";
 
-            var serviceProvider = new ServiceCollection()
+            var serviceProvider = new ServiceProviderBuilder()
                 .AddTransient<SelfCircularDependency>()
-                .BuildServiceProvider();
+                .Build();
 
             var exception = Assert.Throws<InvalidOperationException>(() =>
                 serviceProvider.GetRequiredService<SelfCircularDependency>());
@@ -39,9 +39,9 @@ namespace Assimalign.Extensions.DependencyInjection.Tests
                                   "Assimalign.Extensions.DependencyInjection.Tests.Fakes.SelfCircularDependency -> " +
                                   "Assimalign.Extensions.DependencyInjection.Tests.Fakes.SelfCircularDependency";
 
-            var serviceProvider = new ServiceCollection()
+            var serviceProvider = new ServiceProviderBuilder()
                 .AddTransient<SelfCircularDependency>()
-                .BuildServiceProvider();
+                .Build();
 
             var exception = Assert.Throws<InvalidOperationException>(() =>
                 serviceProvider.GetRequiredService<IEnumerable<SelfCircularDependency>>());
@@ -58,9 +58,9 @@ namespace Assimalign.Extensions.DependencyInjection.Tests
                                   "Assimalign.Extensions.DependencyInjection.Tests.Fakes.SelfCircularDependencyGeneric<string> -> " +
                                   "Assimalign.Extensions.DependencyInjection.Tests.Fakes.SelfCircularDependencyGeneric<string>";
 
-            var serviceProvider = new ServiceCollection()
+            var serviceProvider = new ServiceProviderBuilder()
                 .AddTransient<SelfCircularDependencyGeneric<string>>()
-                .BuildServiceProvider();
+                .Build();
 
             var exception = Assert.Throws<InvalidOperationException>(() =>
                 serviceProvider.GetRequiredService<SelfCircularDependencyGeneric<string>>());
@@ -78,10 +78,10 @@ namespace Assimalign.Extensions.DependencyInjection.Tests
                                   "Assimalign.Extensions.DependencyInjection.Tests.Fakes.SelfCircularDependencyGeneric<string> -> " +
                                   "Assimalign.Extensions.DependencyInjection.Tests.Fakes.SelfCircularDependencyGeneric<string>";
 
-            var serviceProvider = new ServiceCollection()
+            var serviceProvider = new ServiceProviderBuilder()
                 .AddTransient<SelfCircularDependencyGeneric<int>>()
                 .AddTransient<SelfCircularDependencyGeneric<string>>()
-                .BuildServiceProvider();
+                .Build();
 
             var exception = Assert.Throws<InvalidOperationException>(() =>
                 serviceProvider.GetRequiredService<SelfCircularDependencyGeneric<int>>());
@@ -92,10 +92,10 @@ namespace Assimalign.Extensions.DependencyInjection.Tests
         [Fact]
         public void NoCircularDependencyGeneric()
         {
-            var serviceProvider = new ServiceCollection()
+            var serviceProvider = new ServiceProviderBuilder()
                 .AddSingleton(new SelfCircularDependencyGeneric<string>())
                 .AddTransient<SelfCircularDependencyGeneric<int>>()
-                .BuildServiceProvider();
+                .Build();
 
             // This will not throw because we are creating an instance of the first time
             // using the parameterless constructor which has no circular dependency
@@ -114,10 +114,10 @@ namespace Assimalign.Extensions.DependencyInjection.Tests
                                   "(Assimalign.Extensions.DependencyInjection.Tests.Fakes.SelfCircularDependencyWithInterface) -> " +
                                   "Assimalign.Extensions.DependencyInjection.Tests.Fakes.ISelfCircularDependencyWithInterface";
 
-            var serviceProvider = new ServiceCollection()
+            var serviceProvider = new ServiceProviderBuilder()
                 .AddTransient<ISelfCircularDependencyWithInterface, SelfCircularDependencyWithInterface>()
                 .AddTransient<SelfCircularDependencyWithInterface>()
-                .BuildServiceProvider();
+                .Build();
 
             var exception = Assert.Throws<InvalidOperationException>(() =>
                 serviceProvider.GetRequiredService<SelfCircularDependencyWithInterface>());
@@ -135,10 +135,10 @@ namespace Assimalign.Extensions.DependencyInjection.Tests
                                   "Assimalign.Extensions.DependencyInjection.Tests.Fakes.DirectCircularDependencyB -> " +
                                   "Assimalign.Extensions.DependencyInjection.Tests.Fakes.DirectCircularDependencyA";
 
-            var serviceProvider = new ServiceCollection()
+            var serviceProvider = new ServiceProviderBuilder()
                 .AddSingleton<DirectCircularDependencyA>()
                 .AddSingleton<DirectCircularDependencyB>()
-                .BuildServiceProvider();
+                .Build();
 
             var exception = Assert.Throws<InvalidOperationException>(() =>
                 serviceProvider.GetRequiredService<DirectCircularDependencyA>());
@@ -157,11 +157,11 @@ namespace Assimalign.Extensions.DependencyInjection.Tests
                                   "Assimalign.Extensions.DependencyInjection.Tests.Fakes.IndirectCircularDependencyC -> " +
                                   "Assimalign.Extensions.DependencyInjection.Tests.Fakes.IndirectCircularDependencyA";
 
-            var serviceProvider = new ServiceCollection()
+            var serviceProvider = new ServiceProviderBuilder()
                 .AddSingleton<IndirectCircularDependencyA>()
                 .AddTransient<IndirectCircularDependencyB>()
                 .AddTransient<IndirectCircularDependencyC>()
-                .BuildServiceProvider();
+                .Build();
 
             var exception = Assert.Throws<InvalidOperationException>(() =>
                 serviceProvider.GetRequiredService<IndirectCircularDependencyA>());
@@ -172,11 +172,11 @@ namespace Assimalign.Extensions.DependencyInjection.Tests
         [Fact]
         public void NoCircularDependencySameTypeMultipleTimes()
         {
-            var serviceProvider = new ServiceCollection()
+            var serviceProvider = new ServiceProviderBuilder()
                 .AddTransient<NoCircularDependencySameTypeMultipleTimesA>()
                 .AddTransient<NoCircularDependencySameTypeMultipleTimesB>()
                 .AddTransient<NoCircularDependencySameTypeMultipleTimesC>()
-                .BuildServiceProvider();
+                .Build();
 
             var resolvedService = serviceProvider.GetRequiredService<NoCircularDependencySameTypeMultipleTimesA>();
             Assert.NotNull(resolvedService);
@@ -193,11 +193,11 @@ namespace Assimalign.Extensions.DependencyInjection.Tests
                                   "Assimalign.Extensions.DependencyInjection.Tests.Fakes.DirectCircularDependencyB -> " +
                                   "Assimalign.Extensions.DependencyInjection.Tests.Fakes.DirectCircularDependencyA";
 
-            var serviceProvider = new ServiceCollection()
+            var serviceProvider = new ServiceProviderBuilder()
                 .AddTransient<DependencyOnCircularDependency>()
                 .AddTransient<DirectCircularDependencyA>()
                 .AddTransient<DirectCircularDependencyB>()
-                .BuildServiceProvider();
+                .Build();
 
             var exception = Assert.Throws<InvalidOperationException>(() =>
                 serviceProvider.GetRequiredService<DependencyOnCircularDependency>());

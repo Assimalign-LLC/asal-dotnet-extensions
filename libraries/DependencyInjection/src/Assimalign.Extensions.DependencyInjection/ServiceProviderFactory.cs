@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Concurrent;
 
 namespace Assimalign.Extensions.DependencyInjection;
-
 
 /// <summary>
 /// 
@@ -11,70 +11,114 @@ namespace Assimalign.Extensions.DependencyInjection;
 /// Avoid using this factory implementation within core application code. This is meant to be a way of managing service containers
 /// from a parent level. For example 
 /// </remarks>
-public sealed class ServiceProviderFactory : IServiceProviderFactory
+public sealed class ServiceProviderFactory
 {
-    private static IServiceProviderFactory factory;
-    private ConcurrentDictionary<object, Func<IServiceProvider>> providers;
+    private static string defaultKey = Guid.NewGuid().ToString("N");
 
-    private ServiceProviderFactory(ConcurrentDictionary<object, Func<IServiceProvider>> providers)
+    private static Factory factory = new();
+    private static ConcurrentDictionary<string, Func<IServiceProvider>> providers = new(StringComparer.CurrentCultureIgnoreCase);
+
+    public ServiceProviderFactory Register(Action<IServiceProviderBuilder> configure)
     {
-        this.providers = providers;
-    }
-
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="TKey"></typeparam>
-    /// <param name="key"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    /// <exception cref="NotImplementedException"></exception>
-    public IServiceProvider Create<TKey>(TKey key) where TKey : IComparable
-    {
-        if (key == null)
-        {
-            throw new ArgumentNullException(nameof(key));
-        }
-        if (providers.TryGetValue(key, out var method))
-        {
-            return method.Invoke();
-        }
-        throw new NotImplementedException();
-    }
-
-
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="configure"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentNullException"></exception>
-    public static IServiceProviderFactory Create(Action<ServiceProviderFactoryBuilder> configure)
-    {
-        if (configure == null)
-        {
-            throw new ArgumentNullException(nameof(configure));
-        }
-
-        var builder = new ServiceProviderFactoryBuilder();
+        IServiceProviderBuilder builder = new ServiceProviderBuilder();
 
         configure.Invoke(builder);
 
-        return builder.Build();
+        var descriptor = ServiceDescriptor.Singleton<IServiceProviderFactory>(serviceProvider =>
+        {
+            return factory;
+        });
+
+        builder.Add(descriptor);
+
+        providers[defaultKey] = () => builder.Build();
+
+        return this;
     }
-    internal static IServiceProviderFactory New(ConcurrentDictionary<object, Func<IServiceProvider>> providers)
+    public ServiceProviderFactory Register(string serviceProviderName, IServiceCollection services)
     {
-        factory ??= new ServiceProviderFactory(providers);
+        var descriptor = ServiceDescriptor.Singleton<IServiceProviderFactory>(factory);
 
-        return factory;
+        services.Add(descriptor);
+
+        providers.TryAdd(serviceProviderName, () =>
+        {
+            return new ServiceProvider(services, ServiceProviderOptions.Default);
+        });
+
+        return this;
+    }
+    public ServiceProviderFactory Register(string serviceProviderName, Action<IServiceProviderBuilder> configure)
+    {
+        IServiceProviderBuilder builder = new ServiceProviderBuilder();
+
+        configure.Invoke(builder);
+
+        var descriptor = ServiceDescriptor.Singleton<IServiceProviderFactory>(serviceProvider =>
+        {
+            return factory;
+        });
+
+        builder.Add(descriptor);
+
+        providers[serviceProviderName] = () => builder.Build();
+
+        return this;
+    }
+    public ServiceProviderFactory Register(string serviceProviderName, ServiceProviderOptions options, Action<IServiceProviderBuilder> configure)
+    {
+        IServiceProviderBuilder builder = new ServiceProviderBuilder(options);
+
+        configure.Invoke(builder);
+
+        var descriptor = ServiceDescriptor.Singleton<IServiceProviderFactory>(serviceProvider =>
+        {
+            return factory;
+        });
+
+        builder.Add(descriptor);
+
+        providers[serviceProviderName] = () => builder.Build();
+
+        return this;
     }
 
-    public IServiceProvider Create(IServiceCollection services)
-    {
-        Func<IServiceProvider> func = () => services.BuildServiceProvider();
+    public IServiceProviderFactory Build() => factory;
 
-        
+    private partial class Factory : IServiceProviderFactory
+    {
+        IServiceProvider IServiceProviderFactory.Create()
+        {
+            if (!providers.Any())
+            {
+                throw new InvalidOperationException("No IServiceProvider's have been registered.");
+            }
+            if (providers.TryGetValue(defaultKey, out var provider))
+            {
+                return provider.Invoke();
+            }
+
+            throw new Exception("Provider does not exist");
+        }
+
+        IServiceProvider IServiceProviderFactory.Create(string serviceProviderName)
+        {
+            if (!providers.Any())
+            {
+                throw new InvalidOperationException("No IServiceProvider's have been registered.");
+            }
+            if (string.IsNullOrEmpty(serviceProviderName))
+            {
+                throw new ArgumentNullException(nameof(serviceProviderName));
+            }
+            if (providers.TryGetValue(serviceProviderName, out var provider))
+            {
+                return provider.Invoke();
+            }
+
+            throw new Exception("Provider does not exist");
+        }
+
+    
     }
 }

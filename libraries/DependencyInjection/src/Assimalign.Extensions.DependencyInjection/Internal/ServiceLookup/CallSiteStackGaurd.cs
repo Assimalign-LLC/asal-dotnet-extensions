@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace Assimalign.Extensions.DependencyInjection.Internal;
 
@@ -33,7 +33,6 @@ internal sealed class CallSiteStackGuard
             return t.Item1(t.Item2, t.Item3);
         }, (action, arg1, arg2));
     }
-
     private R RunOnEmptyStackCore<R>(Func<object, R> action, object state)
     {
         executionStackCount++;

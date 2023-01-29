@@ -1,32 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Assimalign.Extensions.DependencyInjection;
 
 /// <summary>
 /// Specifies the contract for a collection of service descriptors.
 /// </summary>
-public interface IServiceCollection : ICollection<ServiceDescriptor>, IEnumerable<ServiceDescriptor>
+public interface IServiceCollection : IList<ServiceDescriptor>
 {
-    /// <inheritdoc />
-    ServiceDescriptor this[int index] { get; set; }
-
     /// <summary>
-    /// 
+    /// Determines if the specified service type is available from the <see cref="IServiceProvider"/>.
     /// </summary>
-    /// <param name="item"></param>
-    /// <returns></returns>
-    int IndexOf(ServiceDescriptor item);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="index"></param>
-    /// <param name="item"></param>
-    void Insert(int index, ServiceDescriptor item);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="index"></param>
-    void RemoveAt(int index);
+    /// <param name="serviceType">An object that specifies the type of service object to test.</param>
+    /// <returns>true if the specified service is a available, false if it is not.</returns>
+    //bool IsService(Type serviceType);
 }

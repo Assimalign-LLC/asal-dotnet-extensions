@@ -8,10 +8,10 @@ namespace Assimalign.Extensions.DependencyInjection.Internal;
 
 internal sealed class ILEmitServiceProviderEngine : ServiceProviderEngine
 {
-    private readonly ILEmitResolverBuilder _expressionResolverBuilder;
+    private readonly ILEmitResolverVisitor _expressionResolverBuilder;
     public ILEmitServiceProviderEngine(ServiceProvider serviceProvider)
     {
-        _expressionResolverBuilder = new ILEmitResolverBuilder(serviceProvider);
+        _expressionResolverBuilder = new ILEmitResolverVisitor(serviceProvider);
     }
 
     public override Func<ServiceProviderEngineScope, object> RealizeService(CallSiteService callSite)

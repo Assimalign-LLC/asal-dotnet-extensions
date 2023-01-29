@@ -6,6 +6,7 @@
 		<EnableAOTAnalyzer>true</EnableAOTAnalyzer>
 		<ILEmitBackend>true</ILEmitBackend><!-- Debug IL generation -->
 		<ILEmitBackendSaveAssemblies>false</ILEmitBackendSaveAssemblies>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Include="..\..\..\..\.assimalign.logo.png">

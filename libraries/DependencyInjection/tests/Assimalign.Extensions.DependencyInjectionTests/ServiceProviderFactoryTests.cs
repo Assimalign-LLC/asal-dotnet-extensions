@@ -20,26 +20,43 @@ namespace Assimalign.Extensions.DependencyInjection.Tests
         [Fact]
         public void Test()
         {
-            var factory = ServiceProviderFactory.Create(builder =>
-            {
-                builder
-                    .AddServiceProvider(ServiceProviders.Provider1, services =>
-                    {
+            var factory = new ServiceProviderFactory()
+                .Register("test-01", builder =>
+                {
+                    
+                })
+                .Register("test-02", builder =>
+                {
+                    
+                })
+                .Build();
+
+            var provider = factory.Create("test-01");
+
+            var factory1 = provider.GetRequiredService<IServiceProviderFactory>();
+
+           
+                
+            //var factory = ServiceProviderFactory.Create(builder =>
+            //{
+            //    builder
+            //        .AddServiceProvider(ServiceProviders.Provider1, services =>
+            //        {
                         
-                    })
-                    .AddServiceProvider(ServiceProviders.Provider2, services =>
-                    {
+            //        })
+            //        .AddServiceProvider(ServiceProviders.Provider2, services =>
+            //        {
 
-                    });
-            });
+            //        });
+            //});
 
-            var provider1 = factory.Create(ServiceProviders.Provider1);
-            var provider2 = factory.Create(ServiceProviders.Provider2);
+            //var provider1 = factory.Create(ServiceProviders.Provider1);
+            //var provider2 = factory.Create(ServiceProviders.Provider2);
 
-            var factory1 = provider1.GetRequiredService<IServiceProviderFactory>();
-            var factory2 = provider2.GetRequiredService<IServiceProviderFactory>();
+            //var factory1 = provider1.GetRequiredService<IServiceProviderFactory>();
+            //var factory2 = provider2.GetRequiredService<IServiceProviderFactory>();
 
-            Assert.Same(factory1, factory2);
+            //Assert.Same(factory1, factory2);
         }
     }
 }

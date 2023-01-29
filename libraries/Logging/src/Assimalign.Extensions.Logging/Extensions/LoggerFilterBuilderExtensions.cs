@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Logging
 {
-    using Assimalign.Extensions.Options;
     using Assimalign.Extensions.Logging;
     using Assimalign.Extensions.DependencyInjection;
 

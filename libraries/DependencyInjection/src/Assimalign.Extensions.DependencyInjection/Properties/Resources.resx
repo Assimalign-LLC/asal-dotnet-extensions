@@ -210,9 +210,6 @@
   <data name="ServiceDescriptorNotExist" xml:space="preserve">
     <value>Requested service descriptor doesn't exist.</value>
   </data>
-  <data name="test" xml:space="preserve">
-    <value>tds</value>
-  </data>
   <data name="TrimmingAnnotationsDoNotMatch" xml:space="preserve">
     <value>Generic implementation type '{0}' has a DynamicallyAccessedMembers attribute applied to a generic argument type, but the service type '{1}' doesn't have a matching DynamicallyAccessedMembers attribute on its generic argument type.</value>
   </data>

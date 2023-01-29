@@ -34,6 +34,6 @@ public readonly struct AsyncServiceScope : IServiceScope, IAsyncDisposable
         this.serviceScope.Dispose();
 
         // ValueTask.CompletedTask is only available in net5.0 and later.
-        return default;
+        return ValueTask.CompletedTask;
     }
 }

@@ -3,6 +3,8 @@ using System.Reflection;
 
 namespace Assimalign.Extensions.DependencyInjection.Internal;
 
+using Assimalign.Extensions.DependencyInjection.Properties;
+
 internal sealed class ConstructorCallSite : CallSiteService
 {
     internal ConstructorInfo ConstructorInfo { get; }
@@ -18,7 +20,7 @@ internal sealed class ConstructorCallSite : CallSiteService
     {
         if (!serviceType.IsAssignableFrom(constructorInfo.DeclaringType))
         {
-            throw new ArgumentException(SR.Format(SR.ImplementationTypeCantBeConvertedToServiceType, constructorInfo.DeclaringType, serviceType));
+            throw new ArgumentException(Resources.GetImplementationTypeCantBeConvertedToServiceType(constructorInfo.DeclaringType, serviceType));
         }
 
         ServiceType = serviceType;
@@ -27,7 +29,6 @@ internal sealed class ConstructorCallSite : CallSiteService
     }
 
     public override Type ServiceType { get; }
-
     public override Type ImplementationType => ConstructorInfo.DeclaringType ?? throw new NullReferenceException();
     public override CallSiteKind Kind { get; } = CallSiteKind.Constructor;
 }

@@ -6,14 +6,18 @@ namespace Assimalign.Extensions.DependencyInjection;
 /// <summary>
 /// When does
 /// </summary>
-public sealed partial class ServiceDescriptor
+[DebuggerDisplay("Lifetime = {Lifetime}, ServiceType = {ServiceType}, ImplementationType = {ImplementationType}")]
+public sealed class ServiceDescriptor
 {
+
     /// <summary>
-    /// Initializes a new instance of <see cref="ServiceDescriptor"/> with the specified <paramref name="implementationType"/>.
+    /// Initializes a new implementationInstance of <see cref="ServiceDescriptor"/> with the specified <paramref name="implementationType"/>.
     /// </summary>
     /// <param name="serviceType">The <see cref="Type"/> of the service.</param>
     /// <param name="implementationType">The <see cref="Type"/> implementing the service.</param>
     /// <param name="lifetime">The <see cref="ServiceLifetime"/> of the service.</param>
+    /// <exception cref="ArgumentNullException"> Neither <paramref name="serviceType"/> or <paramref name="implementationType"/> can be null.</exception>
+    /// <exception cref="ArgumentException"><paramref name="implementationType"/> must be assignable to <paramref name="serviceType"/></exception>
     public ServiceDescriptor(Type serviceType, Type implementationType, ServiceLifetime lifetime)
         : this(serviceType, lifetime)
     {
@@ -25,38 +29,49 @@ public sealed partial class ServiceDescriptor
         {
             throw new ArgumentNullException(nameof(implementationType));
         }
+        //if (!serviceType.IsAssignableFrom(implementationType))
+        //{
+        //    throw new ArgumentException($"The type '{implementationType}' is not assignable to '{serviceType}'.");
+        //}
 
         ImplementationType = implementationType;
     }
 
     /// <summary>
-    /// Initializes a new instance of <see cref="ServiceDescriptor"/> with the specified <paramref name="instance"/>
+    /// Initializes a new implementationInstance of <see cref="ServiceDescriptor"/> with the specified <paramref name="implementationInstance"/>
     /// as a <see cref="ServiceLifetime.Singleton"/>.
     /// </summary>
     /// <param name="serviceType">The <see cref="Type"/> of the service.</param>
-    /// <param name="instance">The instance implementing the service.</param>
-    public ServiceDescriptor(Type serviceType, object instance) 
+    /// <param name="implementationInstance">The implementationInstance implementing the service.</param>
+    /// <exception cref="ArgumentNullException"> Neither <paramref name="serviceType"/> or <paramref name="implementationInstance"/> can be null.</exception>
+    /// <exception cref="ArgumentException">Type of <paramref name="implementationInstance"/> must be assignable to <paramref name="serviceType"/></exception>
+    public ServiceDescriptor(Type serviceType, object implementationInstance) 
         : this(serviceType, ServiceLifetime.Singleton)
     {
         if (serviceType == null)
         {
             throw new ArgumentNullException(nameof(serviceType));
         }
-
-        if (instance == null)
+        if (implementationInstance == null)
         {
-            throw new ArgumentNullException(nameof(instance));
+            throw new ArgumentNullException(nameof(implementationInstance));
         }
+        //if (!serviceType.IsAssignableFrom(implementationInstance.GetType()))
+        //{
+        //    throw new ArgumentException($"The type '{implementationInstance.GetType()}' is not assignable to '{serviceType}'.");
+        //}
 
-        ImplementationInstance = instance;
+        ImplementationInstance = implementationInstance;
     }
 
     /// <summary>
-    /// Initializes a new instance of <see cref="ServiceDescriptor"/> with the specified <paramref name="factory"/>.
+    /// Initializes a new implementationInstance of <see cref="ServiceDescriptor"/> with the specified <paramref name="factory"/>.
     /// </summary>
     /// <param name="serviceType">The <see cref="Type"/> of the service.</param>
     /// <param name="factory">A factory used for creating service instances.</param>
     /// <param name="lifetime">The <see cref="ServiceLifetime"/> of the service.</param>
+    /// <exception cref="ArgumentNullException"> Neither <paramref name="serviceType"/> or <paramref name="factory"/> can be null.</exception>
+    /// <exception cref="ArgumentException">The return type of <paramref name="factory"/> must be assignable to <paramref name="serviceType"/></exception>
     public ServiceDescriptor(Type serviceType, Func<IServiceProvider, object> factory, ServiceLifetime lifetime)
         : this(serviceType, lifetime)
     {
@@ -64,11 +79,17 @@ public sealed partial class ServiceDescriptor
         {
             throw new ArgumentNullException(nameof(serviceType));
         }
-
         if (factory == null)
         {
             throw new ArgumentNullException(nameof(factory));
         }
+
+        var returnType = factory.GetType().GenericTypeArguments[1];
+
+        //if (!serviceType.IsAssignableFrom(returnType))
+        //{
+        //    throw new ArgumentException($"The type '{returnType}' is not assignable to '{serviceType}'.");
+        //}
 
         ImplementationFactory = factory;
     }
@@ -79,20 +100,31 @@ public sealed partial class ServiceDescriptor
         ServiceType = serviceType;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public ServiceLifetime Lifetime { get; }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public Type ServiceType { get; }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public Type? ImplementationType { get; }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public object? ImplementationInstance { get; }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public Func<IServiceProvider, object>? ImplementationFactory { get; }
 
     /// <inheritdoc />
     public override string ToString()
     {
-        string? lifetime = $"{nameof(ServiceType)}: {ServiceType} {nameof(Lifetime)}: {Lifetime} ";
+        var lifetime = $"{nameof(ServiceType)}: {ServiceType} {nameof(Lifetime)}: {Lifetime} ";
 
         if (ImplementationType != null)
         {
@@ -113,13 +145,13 @@ public sealed partial class ServiceDescriptor
         {
             return ImplementationType;
         }
-        else if (ImplementationInstance != null)
+        if (ImplementationInstance != null)
         {
             return ImplementationInstance.GetType();
         }
-        else if (ImplementationFactory != null)
+        if (ImplementationFactory != null)
         {
-            Type[]? typeArguments = ImplementationFactory.GetType().GenericTypeArguments;
+            var typeArguments = ImplementationFactory.GetType().GenericTypeArguments;
 
             Debug.Assert(typeArguments.Length == 2);
 
@@ -130,14 +162,17 @@ public sealed partial class ServiceDescriptor
         return null;
     }
 
+
+    #region Static Methods
+
     /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
     /// <typeparamref name="TService"/>, <typeparamref name="TImplementation"/>,
     /// and the <see cref="ServiceLifetime.Transient"/> lifetime.
     /// </summary>
     /// <typeparam name="TService">The type of the service.</typeparam>
     /// <typeparam name="TImplementation">The type of the implementation.</typeparam>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
     public static ServiceDescriptor Transient<TService, TImplementation>()
         where TService : class
         where TImplementation : class, TService
@@ -146,13 +181,13 @@ public sealed partial class ServiceDescriptor
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
     /// <paramref name="service"/> and <paramref name="implementationType"/>
     /// and the <see cref="ServiceLifetime.Transient"/> lifetime.
     /// </summary>
     /// <param name="service">The type of the service.</param>
     /// <param name="implementationType">The type of the implementation.</param>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
     public static ServiceDescriptor Transient(Type service,Type implementationType)
     {
         if (service == null)
@@ -168,7 +203,7 @@ public sealed partial class ServiceDescriptor
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
     /// <typeparamref name="TService"/>, <typeparamref name="TImplementation"/>,
     /// <paramref name="implementationFactory"/>,
     /// and the <see cref="ServiceLifetime.Transient"/> lifetime.
@@ -176,7 +211,7 @@ public sealed partial class ServiceDescriptor
     /// <typeparam name="TService">The type of the service.</typeparam>
     /// <typeparam name="TImplementation">The type of the implementation.</typeparam>
     /// <param name="implementationFactory">A factory to create new instances of the service implementation.</param>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
     public static ServiceDescriptor Transient<TService, TImplementation>(
         Func<IServiceProvider, TImplementation> implementationFactory)
         where TService : class
@@ -191,13 +226,13 @@ public sealed partial class ServiceDescriptor
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
     /// <typeparamref name="TService"/>, <paramref name="implementationFactory"/>,
     /// and the <see cref="ServiceLifetime.Transient"/> lifetime.
     /// </summary>
     /// <typeparam name="TService">The type of the service.</typeparam>
     /// <param name="implementationFactory">A factory to create new instances of the service implementation.</param>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
     public static ServiceDescriptor Transient<TService>(Func<IServiceProvider, TService> implementationFactory)
         where TService : class
     {
@@ -210,13 +245,13 @@ public sealed partial class ServiceDescriptor
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
     /// <paramref name="service"/>, <paramref name="implementationFactory"/>,
     /// and the <see cref="ServiceLifetime.Transient"/> lifetime.
     /// </summary>
     /// <param name="service">The type of the service.</param>
     /// <param name="implementationFactory">A factory to create new instances of the service implementation.</param>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
     public static ServiceDescriptor Transient(Type service, Func<IServiceProvider, object> implementationFactory)
     {
         if (service == null)
@@ -233,13 +268,13 @@ public sealed partial class ServiceDescriptor
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
     /// <typeparamref name="TService"/>, <typeparamref name="TImplementation"/>,
     /// and the <see cref="ServiceLifetime.Scoped"/> lifetime.
     /// </summary>
     /// <typeparam name="TService">The type of the service.</typeparam>
     /// <typeparam name="TImplementation">The type of the implementation.</typeparam>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
     public static ServiceDescriptor Scoped<TService, TImplementation>()
         where TService : class
         where TImplementation : class, TService
@@ -248,22 +283,20 @@ public sealed partial class ServiceDescriptor
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
     /// <paramref name="service"/> and <paramref name="implementationType"/>
     /// and the <see cref="ServiceLifetime.Scoped"/> lifetime.
     /// </summary>
     /// <param name="service">The type of the service.</param>
     /// <param name="implementationType">The type of the implementation.</param>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
-    public static ServiceDescriptor Scoped(
-        Type service,
-        Type implementationType)
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
+    public static ServiceDescriptor Scoped(Type service, Type implementationType)
     {
         return Describe(service, implementationType, ServiceLifetime.Scoped);
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
     /// <typeparamref name="TService"/>, <typeparamref name="TImplementation"/>,
     /// <paramref name="implementationFactory"/>,
     /// and the <see cref="ServiceLifetime.Scoped"/> lifetime.
@@ -271,9 +304,8 @@ public sealed partial class ServiceDescriptor
     /// <typeparam name="TService">The type of the service.</typeparam>
     /// <typeparam name="TImplementation">The type of the implementation.</typeparam>
     /// <param name="implementationFactory">A factory to create new instances of the service implementation.</param>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
-    public static ServiceDescriptor Scoped<TService, TImplementation>(
-        Func<IServiceProvider, TImplementation> implementationFactory)
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
+    public static ServiceDescriptor Scoped<TService, TImplementation>(Func<IServiceProvider, TImplementation> implementationFactory)
         where TService : class
         where TImplementation : class, TService
     {
@@ -286,13 +318,13 @@ public sealed partial class ServiceDescriptor
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
     /// <typeparamref name="TService"/>, <paramref name="implementationFactory"/>,
     /// and the <see cref="ServiceLifetime.Scoped"/> lifetime.
     /// </summary>
     /// <typeparam name="TService">The type of the service.</typeparam>
     /// <param name="implementationFactory">A factory to create new instances of the service implementation.</param>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
     public static ServiceDescriptor Scoped<TService>(Func<IServiceProvider, TService> implementationFactory)
         where TService : class
     {
@@ -305,20 +337,19 @@ public sealed partial class ServiceDescriptor
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
     /// <paramref name="service"/>, <paramref name="implementationFactory"/>,
     /// and the <see cref="ServiceLifetime.Scoped"/> lifetime.
     /// </summary>
     /// <param name="service">The type of the service.</param>
     /// <param name="implementationFactory">A factory to create new instances of the service implementation.</param>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
     public static ServiceDescriptor Scoped(Type service, Func<IServiceProvider, object> implementationFactory)
     {
         if (service == null)
         {
             throw new ArgumentNullException(nameof(service));
         }
-
         if (implementationFactory == null)
         {
             throw new ArgumentNullException(nameof(implementationFactory));
@@ -328,13 +359,13 @@ public sealed partial class ServiceDescriptor
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
     /// <typeparamref name="TService"/>, <typeparamref name="TImplementation"/>,
     /// and the <see cref="ServiceLifetime.Singleton"/> lifetime.
     /// </summary>
     /// <typeparam name="TService">The type of the service.</typeparam>
     /// <typeparam name="TImplementation">The type of the implementation.</typeparam>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
     public static ServiceDescriptor Singleton<TService, TImplementation>()
         where TService : class
         where TImplementation : class, TService
@@ -343,16 +374,14 @@ public sealed partial class ServiceDescriptor
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
     /// <paramref name="service"/> and <paramref name="implementationType"/>
     /// and the <see cref="ServiceLifetime.Singleton"/> lifetime.
     /// </summary>
     /// <param name="service">The type of the service.</param>
     /// <param name="implementationType">The type of the implementation.</param>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
-    public static ServiceDescriptor Singleton(
-        Type service,
-        Type implementationType)
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
+    public static ServiceDescriptor Singleton(Type service, Type implementationType)
     {
         if (service == null)
         {
@@ -368,7 +397,7 @@ public sealed partial class ServiceDescriptor
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
     /// <typeparamref name="TService"/>, <typeparamref name="TImplementation"/>,
     /// <paramref name="implementationFactory"/>,
     /// and the <see cref="ServiceLifetime.Singleton"/> lifetime.
@@ -376,9 +405,8 @@ public sealed partial class ServiceDescriptor
     /// <typeparam name="TService">The type of the service.</typeparam>
     /// <typeparam name="TImplementation">The type of the implementation.</typeparam>
     /// <param name="implementationFactory">A factory to create new instances of the service implementation.</param>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
-    public static ServiceDescriptor Singleton<TService, TImplementation>(
-        Func<IServiceProvider, TImplementation> implementationFactory)
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
+    public static ServiceDescriptor Singleton<TService, TImplementation>(Func<IServiceProvider, TImplementation> implementationFactory)
         where TService : class
         where TImplementation : class, TService
     {
@@ -391,13 +419,13 @@ public sealed partial class ServiceDescriptor
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
     /// <typeparamref name="TService"/>, <paramref name="implementationFactory"/>,
     /// and the <see cref="ServiceLifetime.Singleton"/> lifetime.
     /// </summary>
     /// <typeparam name="TService">The type of the service.</typeparam>
     /// <param name="implementationFactory">A factory to create new instances of the service implementation.</param>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
     public static ServiceDescriptor Singleton<TService>(Func<IServiceProvider, TService> implementationFactory)
         where TService : class
     {
@@ -410,16 +438,14 @@ public sealed partial class ServiceDescriptor
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
     /// <paramref name="serviceType"/>, <paramref name="implementationFactory"/>,
     /// and the <see cref="ServiceLifetime.Singleton"/> lifetime.
     /// </summary>
     /// <param name="serviceType">The type of the service.</param>
     /// <param name="implementationFactory">A factory to create new instances of the service implementation.</param>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
-    public static ServiceDescriptor Singleton(
-        Type serviceType,
-        Func<IServiceProvider, object> implementationFactory)
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
+    public static ServiceDescriptor Singleton(Type serviceType, Func<IServiceProvider, object> implementationFactory)
     {
         if (serviceType == null)
         {
@@ -435,13 +461,13 @@ public sealed partial class ServiceDescriptor
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
     /// <typeparamref name="TService"/>, <paramref name="implementationInstance"/>,
     /// and the <see cref="ServiceLifetime.Singleton"/> lifetime.
     /// </summary>
     /// <typeparam name="TService">The type of the service.</typeparam>
-    /// <param name="implementationInstance">The instance of the implementation.</param>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
+    /// <param name="implementationInstance">The implementationInstance of the implementation.</param>
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
     public static ServiceDescriptor Singleton<TService>(TService implementationInstance)
         where TService : class
     {
@@ -454,16 +480,14 @@ public sealed partial class ServiceDescriptor
     }
 
     /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
     /// <paramref name="serviceType"/>, <paramref name="implementationInstance"/>,
     /// and the <see cref="ServiceLifetime.Singleton"/> lifetime.
     /// </summary>
     /// <param name="serviceType">The type of the service.</param>
-    /// <param name="implementationInstance">The instance of the implementation.</param>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
-    public static ServiceDescriptor Singleton(
-        Type serviceType,
-        object implementationInstance)
+    /// <param name="implementationInstance">The implementationInstance of the implementation.</param>
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
+    public static ServiceDescriptor Singleton(Type serviceType, object implementationInstance)
     {
         if (serviceType == null)
         {
@@ -476,6 +500,34 @@ public sealed partial class ServiceDescriptor
         }
 
         return new ServiceDescriptor(serviceType, implementationInstance);
+    }    
+
+    /// <summary>
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
+    /// <paramref name="serviceType"/>, <paramref name="implementationType"/>,
+    /// and <paramref name="lifetime"/>.
+    /// </summary>
+    /// <param name="serviceType">The type of the service.</param>
+    /// <param name="implementationType">The type of the implementation.</param>
+    /// <param name="lifetime">The lifetime of the service.</param>
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
+    public static ServiceDescriptor Describe(Type serviceType, Type implementationType, ServiceLifetime lifetime)
+    {
+        return new ServiceDescriptor(serviceType, implementationType, lifetime);
+    }
+
+    /// <summary>
+    /// Creates an implementationInstance of <see cref="ServiceDescriptor"/> with the specified
+    /// <paramref name="serviceType"/>, <paramref name="implementationFactory"/>,
+    /// and <paramref name="lifetime"/>.
+    /// </summary>
+    /// <param name="serviceType">The type of the service.</param>
+    /// <param name="implementationFactory">A factory to create new instances of the service implementation.</param>
+    /// <param name="lifetime">The lifetime of the service.</param>
+    /// <returns>A new implementationInstance of <see cref="ServiceDescriptor"/>.</returns>
+    public static ServiceDescriptor Describe(Type serviceType, Func<IServiceProvider, object> implementationFactory, ServiceLifetime lifetime)
+    {
+        return new ServiceDescriptor(serviceType, implementationFactory, lifetime);
     }
 
     private static ServiceDescriptor Describe<TService, TImplementation>(ServiceLifetime lifetime)
@@ -487,35 +539,6 @@ public sealed partial class ServiceDescriptor
             typeof(TImplementation),
             lifetime: lifetime);
     }
-
-    /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
-    /// <paramref name="serviceType"/>, <paramref name="implementationType"/>,
-    /// and <paramref name="lifetime"/>.
-    /// </summary>
-    /// <param name="serviceType">The type of the service.</param>
-    /// <param name="implementationType">The type of the implementation.</param>
-    /// <param name="lifetime">The lifetime of the service.</param>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
-    public static ServiceDescriptor Describe(
-        Type serviceType,
-        Type implementationType,
-        ServiceLifetime lifetime)
-    {
-        return new ServiceDescriptor(serviceType, implementationType, lifetime);
-    }
-
-    /// <summary>
-    /// Creates an instance of <see cref="ServiceDescriptor"/> with the specified
-    /// <paramref name="serviceType"/>, <paramref name="implementationFactory"/>,
-    /// and <paramref name="lifetime"/>.
-    /// </summary>
-    /// <param name="serviceType">The type of the service.</param>
-    /// <param name="implementationFactory">A factory to create new instances of the service implementation.</param>
-    /// <param name="lifetime">The lifetime of the service.</param>
-    /// <returns>A new instance of <see cref="ServiceDescriptor"/>.</returns>
-    public static ServiceDescriptor Describe(Type serviceType, Func<IServiceProvider, object> implementationFactory, ServiceLifetime lifetime)
-    {
-        return new ServiceDescriptor(serviceType, implementationFactory, lifetime);
-    }
+    
+    #endregion
 }

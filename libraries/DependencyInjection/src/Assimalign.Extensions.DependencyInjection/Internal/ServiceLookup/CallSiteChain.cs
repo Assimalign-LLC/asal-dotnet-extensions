@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
-using Assimalign.Extensions.DependencyInjection.Properties;
 
 namespace Assimalign.Extensions.DependencyInjection.Internal;
 
+using Assimalign.Extensions.DependencyInjection.Properties;
+
 internal sealed class CallSiteChain
 {
-    private readonly Dictionary<Type, ChainItemInfo> callSiteChain;
+    private readonly IDictionary<Type, ChainItemInfo> callSiteChain;
 
     public CallSiteChain()
     {
@@ -21,14 +22,8 @@ internal sealed class CallSiteChain
             throw new InvalidOperationException(CreateCircularDependencyExceptionMessage(serviceType));
         }
     }
-    public void Remove(Type serviceType)
-    {
-        callSiteChain.Remove(serviceType);
-    }
-    public void Add(Type serviceType, Type implementationType = null)
-    {
-        callSiteChain[serviceType] = new ChainItemInfo(callSiteChain.Count, implementationType);
-    }
+    public void Remove(Type serviceType) => callSiteChain.Remove(serviceType);
+    public void Add(Type serviceType, Type implementationType = null) => callSiteChain[serviceType] = new ChainItemInfo(callSiteChain.Count, implementationType);
     private string CreateCircularDependencyExceptionMessage(Type type)
     {
         var messageBuilder = new StringBuilder()
