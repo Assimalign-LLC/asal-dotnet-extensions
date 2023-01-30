@@ -5,7 +5,7 @@ namespace Assimalign.Extensions.DependencyInjection.Internal;
 internal abstract class CompiledServiceProviderEngine : ServiceProviderEngine
 {
 #if IL_EMIT
-        public ILEmitResolverBuilder ResolverBuilder { get; }
+    public ILEmitResolverBuilderVisitor ResolverBuilder { get; }
 #else
     public CallSiteExpressionResolverBuilderVisitor ResolverBuilder { get; }
 #endif

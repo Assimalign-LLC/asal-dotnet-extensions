@@ -8,7 +8,7 @@ using Assimalign.Extensions.DependencyInjection.Properties;
 
 internal sealed class CallSiteChain
 {
-    private readonly IDictionary<Type, ChainItemInfo> callSiteChain;
+    private readonly Dictionary<Type, ChainItemInfo> callSiteChain;
 
     public CallSiteChain()
     {

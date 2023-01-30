@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Assimalign.Extensions.DependencyInjection.Specification.Fakes;
+using Assimalign.Extensions.DependencyInjection.MockObjects;
 using Xunit;
 
 namespace Assimalign.Extensions.DependencyInjection.Specification
 {
+
+
     public abstract partial class DependencyInjectionSpecificationTests
     {
         public virtual bool SupportsIServiceProviderIsService => true;

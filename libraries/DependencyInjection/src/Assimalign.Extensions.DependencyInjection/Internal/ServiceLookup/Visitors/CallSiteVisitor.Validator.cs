@@ -3,7 +3,9 @@ using System.Collections.Concurrent;
 
 namespace Assimalign.Extensions.DependencyInjection.Internal;
 
-internal sealed class CallSiteValidatorVisitor : CallSiteVisitor<CallSiteValidatorVisitor.CallSiteValidatorState, Type>
+using Assimalign.Extensions.DependencyInjection.Properties;
+
+internal sealed class CallSiteValidatorVisitor : CallSiteVisitor<CallSiteValidatorVisitor.CallSiteValidatorState, Type?>
 {
     // Keys are services being resolved via GetService, values - first scoped service in their call site tree
     private readonly ConcurrentDictionary<Type, Type> scopedServices = new();
@@ -18,24 +20,25 @@ internal sealed class CallSiteValidatorVisitor : CallSiteVisitor<CallSiteValidat
     }
     public void ValidateResolution(Type serviceType, IServiceScope scope, IServiceScope rootScope)
     {
-        if (ReferenceEquals(scope, rootScope) && scopedServices.TryGetValue(serviceType, out Type scopedService))
+        if (ReferenceEquals(scope, rootScope) && scopedServices.TryGetValue(serviceType, out Type? scopedService))
         {
             if (serviceType == scopedService)
             {
                 throw new InvalidOperationException(
-                    SR.Format(SR.DirectScopedResolvedFromRootException, serviceType,
+                    Resources.GetDirectScopedResolvedFromRootExceptionMessage( 
+                        serviceType,
                         nameof(ServiceLifetime.Scoped).ToLowerInvariant()));
             }
 
             throw new InvalidOperationException(
-                SR.Format(SR.ScopedResolvedFromRootException,
+                Resources.GetScopedResolvedFromRootExceptionMessage(
                     serviceType,
                     scopedService,
                     nameof(ServiceLifetime.Scoped).ToLowerInvariant()));
         }
     }
 
-    protected override Type VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
+    protected override Type? VisitConstructor(ConstructorCallSite constructorCallSite, CallSiteValidatorState state)
     {
         Type result = null;
         foreach (CallSiteService parameterCallSite in constructorCallSite.ParameterCallSites)
@@ -75,7 +78,7 @@ internal sealed class CallSiteValidatorVisitor : CallSiteVisitor<CallSiteValidat
         }
         if (state.Singleton != null)
         {
-            throw new InvalidOperationException(SR.Format(SR.ScopedInSingletonException,
+            throw new InvalidOperationException(Resources.GetScopedInSingletonExceptionMessage(
                 scopedCallSite.ServiceType,
                 state.Singleton.ServiceType,
                 nameof(ServiceLifetime.Scoped).ToLowerInvariant(),

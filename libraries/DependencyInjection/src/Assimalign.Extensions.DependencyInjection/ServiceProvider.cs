@@ -7,20 +7,21 @@ using System.Runtime.CompilerServices;
 namespace Assimalign.Extensions.DependencyInjection;
 
 using Assimalign.Extensions.DependencyInjection.Internal;
+using System.Diagnostics.CodeAnalysis;
 
 /// <summary>
 /// The default IServiceProvider.
 /// </summary>
 public sealed class ServiceProvider : IServiceProvider, IDisposable, IAsyncDisposable
 {
-    private readonly CallSiteValidatorVisitor callSiteValidator;
-    private readonly Func<Type, Func<ServiceProviderEngineScope, object>> createServiceAccessor;
+    private readonly CallSiteValidatorVisitor? callSiteValidator;
+    private readonly Func<Type, Func<ServiceProviderEngineScope, object?>> createServiceAccessor;
 
     // Internal for testing
     internal ServiceProviderEngine engine;
 
-    private bool isDisposed;
-    private ConcurrentDictionary<Type, Func<ServiceProviderEngineScope, object>> realizedServices;
+    internal bool IsDisposed;
+    private ConcurrentDictionary<Type, Func<ServiceProviderEngineScope, object?>> realizedServices;
 
     internal CallSiteFactory CallSiteFactory { get; }
     internal ServiceProviderEngineScope Root { get; }
@@ -95,7 +96,7 @@ public sealed class ServiceProvider : IServiceProvider, IDisposable, IAsyncDispo
 
     private void DisposeCore()
     {
-        isDisposed = true;
+        IsDisposed = true;
         ServiceEventSource.Log.ServiceProviderDisposed(this);
     }
     private void OnCreate(CallSiteService callSite)
@@ -108,12 +109,12 @@ public sealed class ServiceProvider : IServiceProvider, IDisposable, IAsyncDispo
     }
     internal object GetService(Type serviceType, ServiceProviderEngineScope serviceProviderEngineScope)
     {
-        if (isDisposed)
+        if (IsDisposed)
         {
             ThrowHelper.ThrowObjectDisposedException();
         }
 
-        var realizedService = realizedServices.GetOrAdd(serviceType, createServiceAccessor);
+        var realizedService = realizedServices.GetOrAdd(serviceType, this.createServiceAccessor);
 
         OnResolve(serviceType, serviceProviderEngineScope);
 
@@ -148,7 +149,7 @@ public sealed class ServiceProvider : IServiceProvider, IDisposable, IAsyncDispo
     private Func<ServiceProviderEngineScope, object> CreateServiceAccessor(Type serviceType)
     {
         var callSite = CallSiteFactory.GetCallSite(serviceType, new CallSiteChain());
-        if (callSite is not null)
+        if (callSite != null)
         {
             ServiceEventSource.Log.CallSiteBuilt(this, serviceType, callSite);
             OnCreate(callSite);
@@ -172,7 +173,7 @@ public sealed class ServiceProvider : IServiceProvider, IDisposable, IAsyncDispo
     }
     internal IServiceScope CreateScope()
     {
-        if (isDisposed)
+        if (IsDisposed)
         {
             ThrowHelper.ThrowObjectDisposedException();
         }
@@ -180,8 +181,17 @@ public sealed class ServiceProvider : IServiceProvider, IDisposable, IAsyncDispo
     }
     private ServiceProviderEngine GetEngine()
     {
-        return RuntimeFeature.IsDynamicCodeCompiled ?
-            new DynamicServiceProviderEngine(this) :           
+        ServiceProviderEngine engine;
+        
+        engine = RuntimeFeature.IsDynamicCodeCompiled ?
+             CreateDynamicEngine() :           
             RuntimeServiceProviderEngine.Instance;  // Don't try to compile Expressions/IL if they are going to get interpreted
+
+        return engine;
+
+
+        [UnconditionalSuppressMessage("AotAnalysis", "IL3050:RequiresDynamicCode",
+                Justification = "CreateDynamicEngine won't be called when using NativeAOT.")] // see also https://github.com/dotnet/linker/issues/2715
+        ServiceProviderEngine CreateDynamicEngine() => new DynamicServiceProviderEngine(this);
     }
 }

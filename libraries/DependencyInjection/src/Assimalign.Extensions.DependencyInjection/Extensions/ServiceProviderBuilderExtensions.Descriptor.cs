@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using Assimalign.Extensions.DependencyInjection.Properties;
 
 namespace Assimalign.Extensions.DependencyInjection;
 
@@ -255,7 +256,7 @@ public static partial class ServiceProviderBuilderExtensions
         
         if (implementationType == typeof(object) || implementationType == descriptor2.ServiceType)
         {
-            throw new ArgumentException(System.SR.Format(System.SR.TryAddIndistinguishableTypeToEnumerable, implementationType, descriptor2.ServiceType), "descriptor");
+            throw new ArgumentException(Resources.GetTryAddIndistinguishableTypeToEnumerableExceptionMessage(implementationType, descriptor2.ServiceType), "descriptor");
         }
         if (!builder.Services.Any((ServiceDescriptor d) => d.ServiceType == descriptor2.ServiceType && d.GetImplementationType() == implementationType))
         {

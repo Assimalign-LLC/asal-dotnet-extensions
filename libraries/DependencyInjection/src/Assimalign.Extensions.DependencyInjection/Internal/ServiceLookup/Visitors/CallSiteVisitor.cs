@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assimalign.Extensions.DependencyInjection.Properties;
+using System;
 
 namespace Assimalign.Extensions.DependencyInjection.Internal;
 
@@ -31,7 +32,9 @@ internal abstract class CallSiteVisitor<TArgument, TResult>
             CallSiteKind.Constructor => VisitConstructor((ConstructorCallSite)callSite, argument),
             CallSiteKind.Constant => VisitConstant((ConstantCallSite)callSite, argument),
             CallSiteKind.ServiceProvider => VisitServiceProvider((ServiceProviderCallSite)callSite, argument),
-            _ => throw new NotSupportedException(SR.Format(SR.CallSiteTypeNotSupported, callSite.GetType()))
+            _ => throw new NotSupportedException(Resources.GetCallSiteTypeNotSupportedExceptionMessage(callSite.GetType()))
+
+           
         };
     }
     protected virtual TResult VisitNoCache(CallSiteService callSite, TArgument argument) => VisitCallSiteMain(callSite, argument);

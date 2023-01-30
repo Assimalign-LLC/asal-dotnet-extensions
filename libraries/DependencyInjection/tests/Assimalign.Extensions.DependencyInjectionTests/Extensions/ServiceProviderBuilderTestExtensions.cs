@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assimalign.Extensions.DependencyInjection.Tests;
+namespace Assimalign.Extensions.DependencyInjection;
 
 internal static class ServiceProviderBuilderTestExtensions
 {
-    public static ServiceProvider BuildServiceProvider(this IServiceProviderBuilder builder, ServiceProviderMode mode, ServiceProviderOptions options = null)
+    public static ServiceProvider BuildServiceProvider(this IServiceProviderBuilder builder, ServiceProviderEngine mode, ServiceProviderOptions options = null)
     {
-        if (mode == ServiceProviderMode.Default)
+        if (mode == ServiceProviderEngine.Default)
         {
             return (ServiceProvider)builder.Build();
         }
@@ -19,10 +19,10 @@ internal static class ServiceProviderBuilderTestExtensions
 
         provider.engine = mode switch
         {
-            ServiceProviderMode.Dynamic => new DynamicServiceProviderEngine(provider),
-            ServiceProviderMode.Runtime => RuntimeServiceProviderEngine.Instance,
-            ServiceProviderMode.Expressions => new ExpressionsServiceProviderEngine(provider),
-            ServiceProviderMode.ILEmit => new ILEmitServiceProviderEngine(provider),
+            ServiceProviderEngine.Dynamic => new DynamicServiceProviderEngine(provider),
+            ServiceProviderEngine.Runtime => RuntimeServiceProviderEngine.Instance,
+            ServiceProviderEngine.Expressions => new ExpressionsServiceProviderEngine(provider),
+            ServiceProviderEngine.ILEmit => new ILEmitServiceProviderEngine(provider),
             _ => throw new NotSupportedException()
         };
 

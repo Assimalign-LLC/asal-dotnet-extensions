@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assimalign.Extensions.DependencyInjection.Properties;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,7 +8,7 @@ namespace Assimalign.Extensions.DependencyInjection.Internal;
 internal sealed class ServiceProviderEngineScope : IServiceScope, IServiceProvider, IServiceScopeFactory, IAsyncDisposable
 {
     // For testing only
-    internal IList<object> Disposables => disposables ?? (IList<object>)Array.Empty<object>();
+    internal IList<object> Disposables => this.disposables ?? (IList<object>)Array.Empty<object>();
 
     private bool disposed;
     private List<object> disposables;
@@ -19,7 +20,7 @@ internal sealed class ServiceProviderEngineScope : IServiceScope, IServiceProvid
         IsRootScope = isRootScope;
     }
 
-    internal Dictionary<CallSiteServiceCacheKey, object> ResolvedServices { get; }
+    internal Dictionary<CallSiteServiceCacheKey, object?> ResolvedServices { get; }
 
     // This lock protects state on the scope, in particular, for the root scope, it protects
     // the list of disposable entries only, since ResolvedServices are cached on CallSites
@@ -41,9 +42,7 @@ internal sealed class ServiceProviderEngineScope : IServiceScope, IServiceProvid
     }
 
     public IServiceProvider ServiceProvider => this;
-
     public IServiceScope CreateScope() => RootProvider.CreateScope();
-
     internal object CaptureDisposable(object service)
     {
         if (ReferenceEquals(this, service) || !(service is IDisposable || service is IAsyncDisposable))
@@ -59,8 +58,8 @@ internal sealed class ServiceProviderEngineScope : IServiceScope, IServiceProvid
             }
             else
             {
-                disposables ??= new List<object>();
-                disposables.Add(service);
+                this.disposables ??= new List<object>();
+                this.disposables.Add(service);
             }
         }
         // Don't run customer code under the lock
@@ -81,7 +80,6 @@ internal sealed class ServiceProviderEngineScope : IServiceScope, IServiceProvid
 
         return service;
     }
-
     public void Dispose()
     {
         List<object> toDispose = BeginDispose();
@@ -96,12 +94,13 @@ internal sealed class ServiceProviderEngineScope : IServiceScope, IServiceProvid
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Format(SR.AsyncDisposableServiceDispose, TypeNameHelper.GetTypeDisplayName(toDispose[i])));
+                    throw new InvalidOperationException(
+                        Resources.GetAsyncDisposableServiceDisposeExceptionMessage(
+                            TypeNameHelper.GetTypeDisplayName(toDispose[i])));
                 }
             }
         }
     }
-
     public ValueTask DisposeAsync()
     {
         List<object> toDispose = BeginDispose();
@@ -160,7 +159,6 @@ internal sealed class ServiceProviderEngineScope : IServiceScope, IServiceProvid
             }
         }
     }
-
     private List<object> BeginDispose()
     {
         lock (Sync)
@@ -182,7 +180,14 @@ internal sealed class ServiceProviderEngineScope : IServiceScope, IServiceProvid
             // trying to get a cached singleton service. If it doesn't find it
             // it will try to create a new one which will result in an ObjectDisposedException.
 
-            return disposables;
         }
+        if (IsRootScope && !RootProvider.IsDisposed)
+        {
+            // If this ServiceProviderEngineScope instance is a root scope, disposing this instance will need to dispose the RootProvider too.
+            // Otherwise the RootProvider will never get disposed and will leak.
+            // Note, if the RootProvider get disposed first, it will automatically dispose all attached ServiceProviderEngineScope objects.
+            RootProvider.Dispose();
+        }
+        return disposables;
     }
 }

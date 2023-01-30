@@ -3,11 +3,13 @@
 
 using System;
 
-namespace Assimalign.Extensions.DependencyInjection.Tests
+namespace Assimalign.Extensions.DependencyInjection;
+
+public class ServiceProviderExpressionsContainerTests : ServiceProviderContainerTests
 {
-    public class ServiceProviderExpressionsContainerTests : ServiceProviderContainerTests
-    {
-        protected override IServiceProvider CreateServiceProvider(IServiceCollection collection) =>
-            collection.BuildServiceProvider(ServiceProviderMode.Expressions);
-    }
+    protected override IServiceProvider CreateServiceProvider(IServiceProviderBuilder collection) =>
+        collection.BuildServiceProvider(ServiceProviderEngine.Expressions);
+
+    protected override IServiceProvider CreateServiceProvider(IServiceProviderBuilder builder, ServiceProviderOptions options) =>
+        builder.BuildServiceProvider(ServiceProviderEngine.Expressions, options);
 }

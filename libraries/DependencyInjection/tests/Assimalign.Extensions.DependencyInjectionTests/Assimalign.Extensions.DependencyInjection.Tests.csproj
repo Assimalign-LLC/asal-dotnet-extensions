@@ -1,57 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
-
 		<IsPackable>false</IsPackable>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<ImplicitUsings>true</ImplicitUsings>
+		<EnableBinPlacing>false</EnableBinPlacing>
+		<EnableDefaultItems>true</EnableDefaultItems>
+		<CLSCompliant>false</CLSCompliant>
+		<IsTrimmable>false</IsTrimmable>
+		<RootNamespace>Assimalign.Extensions.DependencyInjection</RootNamespace>
 	</PropertyGroup>
-
 	<ItemGroup>
-
-
-
-	  <Compile Remove="Utilities\**" />
-
-
-
-	  <EmbeddedResource Remove="Utilities\**" />
-
-
-
-	  <None Remove="Utilities\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Compile Remove="ActivatorUtilitiesTests.cs" />
-		<Compile Remove="AssertExtensions.cs" />
-		<Compile Remove="AsyncServiceScopeTests.cs" />
-		<Compile Remove="CallSiteTests.cs" />
-
-		<Compile Remove="DependencyInjectionEventSourceTests.cs" />
 		<Compile Remove="ServiceCollectionContainerBuilderTestExtensions.cs" />
 		<Compile Remove="ServiceCollectionDescriptorExtensionsTests.cs" />
 		<Compile Remove="ServiceCollectionServiceExtensionsTest.cs" />
-		<Compile Remove="ServiceCollectionTests.cs" />
-		<Compile Remove="ServiceLookup\CallSiteFactoryTest.cs" />
-		<Compile Remove="ServiceProviderCompilationTest.cs" />
-		<Compile Remove="ServiceProviderCompilationTestData.cs" />
-
-
-		<Compile Remove="ServiceProviderDefaultContainerTestsWithOptions.cs" />
-		<Compile Remove="ServiceProviderDynamicContainerTests.cs" />
-		<Compile Remove="ServiceProviderEngineScopeTests.cs" />
-		<Compile Remove="ServiceProviderExpressionsContainerTests.cs" />
-		<Compile Remove="ServiceProviderILEmitContainerTests.cs" />
-
-		<Compile Remove="ServiceProviderServiceExtensionsTest.cs" />
-		<Compile Remove="ServiceProviderValidationTests.cs" />
-		<Compile Remove="ServiceTableTest.cs" />
-
 	</ItemGroup>
-
 	<ItemGroup>
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
 		<PackageReference Include="xunit" Version="2.4.2" />
@@ -64,9 +28,7 @@
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 	</ItemGroup>
-
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Assimalign.Extensions.DependencyInjection\Assimalign.Extensions.DependencyInjection.csproj" />
 	</ItemGroup>
-
 </Project>

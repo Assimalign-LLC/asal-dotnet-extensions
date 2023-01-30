@@ -2,8 +2,7 @@
 
 
 using System;
-using Assimalign.Extensions.DependencyInjection.Extensions;
-using Assimalign.Extensions.DependencyInjection.Specification.Fakes;
+using Assimalign.Extensions.DependencyInjection.MockObjects;
 using Xunit;
 
 namespace Assimalign.Extensions.DependencyInjection
@@ -13,11 +12,11 @@ namespace Assimalign.Extensions.DependencyInjection
         [Fact]
         public void TestMakeReadOnly()
         {
-            var serviceCollection = new ServiceCollection();
+            IServiceCollection serviceCollection = new ServiceCollection();
             var descriptor = new ServiceDescriptor(typeof(IFakeService), new FakeService());
             serviceCollection.Add(descriptor);
 
-            serviceCollection.MakeReadOnly();
+            ((ServiceCollection)serviceCollection).MakeReadOnly();
 
             var descriptor2 = new ServiceDescriptor(typeof(IFakeEveryService), new FakeService());
 
@@ -43,7 +42,7 @@ namespace Assimalign.Extensions.DependencyInjection
             Assert.Equal(descriptor, copyArray[0]);
 
             // ensure MakeReadOnly can be called twice, and it is just ignored
-            serviceCollection.MakeReadOnly();
+            ((ServiceCollection)serviceCollection).MakeReadOnly();
             Assert.True(serviceCollection.IsReadOnly);
         }
     }

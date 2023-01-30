@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assimalign.Extensions.DependencyInjection.Properties;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
@@ -49,7 +50,7 @@ public static class ServiceProviderExtensions
 
         if (service == null)
         {
-            throw new InvalidOperationException(SR.Format(SR.NoServiceRegistered, serviceType));
+            throw new InvalidOperationException(Resources.GetNoServiceRegisteredExceptionMessage(serviceType));
         }
 
         return service;

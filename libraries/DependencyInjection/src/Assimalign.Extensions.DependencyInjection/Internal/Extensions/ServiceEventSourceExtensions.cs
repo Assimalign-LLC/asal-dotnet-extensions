@@ -5,7 +5,7 @@ using System.Diagnostics.Tracing;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace Assimalign.Extensions.DependencyInjection.Internal.Extensions;
+namespace Assimalign.Extensions.DependencyInjection.Internal;
 
 internal static class ServiceEventSourceExtensions
 {

@@ -1,15 +1,17 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using Assimalign.Extensions.DependencyInjection.Internal.Extensions;
+
 
 namespace Assimalign.Extensions.DependencyInjection.Internal;
+
+using Assimalign.Extensions.DependencyInjection.Properties;
 
 internal sealed class CallSiteExpressionResolverBuilderVisitor : CallSiteVisitor<object?, Expression>
 {
@@ -280,7 +282,7 @@ internal sealed class CallSiteExpressionResolverBuilderVisitor : CallSiteVisitor
     {
         if (scope != ScopeParameter)
         {
-            throw new NotSupportedException(SR.GetCaptureDisposableNotSupported);
+            throw new NotSupportedException(Resources.GetCaptureDisposableNotSupported);
         }
         return CaptureDisposable;
     }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using Assimalign.Extensions.DependencyInjection.Properties;
 
 namespace Assimalign.Extensions.DependencyInjection.Internal;
 
@@ -31,30 +32,30 @@ internal sealed class CallSiteFactory : IServiceLookup
     {
         foreach (ServiceDescriptor descriptor in descriptors)
         {
-            Type serviceType = descriptor.ServiceType;
+            var serviceType = descriptor.ServiceType;
+            
             if (serviceType.IsGenericTypeDefinition)
             {
-                Type implementationType = descriptor.ImplementationType;
+                var implementationType = descriptor.ImplementationType;
 
                 if (implementationType == null || !implementationType.IsGenericTypeDefinition)
                 {
                     throw new ArgumentException(
-                        SR.Format(SR.OpenGenericServiceRequiresOpenGenericImplementation, serviceType),
+                        Resources.GetOpenGenericServiceRequiresOpenGenericImplementationExceptionMessage(serviceType),
                         "descriptors");
                 }
                 if (implementationType.IsAbstract || implementationType.IsInterface)
                 {
                     throw new ArgumentException(
-                        SR.Format(SR.TypeCannotBeActivated, implementationType, serviceType));
+                        Resources.GetTypeCannotBeActivatedExceptionMessage(implementationType, serviceType));
                 }
                 Type[] serviceTypeGenericArguments = serviceType.GetGenericArguments();
                 Type[] implementationTypeGenericArguments = implementationType.GetGenericArguments();
                 if (serviceTypeGenericArguments.Length != implementationTypeGenericArguments.Length)
                 {
                     throw new ArgumentException(
-                        SR.Format(SR.ArityOfOpenGenericServiceNotEqualArityOfOpenGenericImplementation, serviceType, implementationType), "descriptors");
+                        Resources.GetArityOfOpenGenericServiceNotEqualArityOfOpenGenericImplementationExceptionMessage(serviceType, implementationType), "descriptors");
                 }
-
                 if (ServiceProvider.VerifyOpenGenericServiceTrimmability)
                 {
                     ValidateTrimmingAnnotations(serviceType, serviceTypeGenericArguments, implementationType, implementationTypeGenericArguments);
@@ -70,7 +71,7 @@ internal sealed class CallSiteFactory : IServiceLookup
                     implementationType.IsInterface)
                 {
                     throw new ArgumentException(
-                        SR.Format(SR.TypeCannotBeActivated, implementationType, serviceType));
+                         Resources.GetTypeCannotBeActivatedExceptionMessage(implementationType, serviceType));
                 }
             }
 
@@ -108,14 +109,16 @@ internal sealed class CallSiteFactory : IServiceLookup
 
             if (!AreCompatible(serviceDynamicallyAccessedMembers, implementationDynamicallyAccessedMembers))
             {
-                throw new ArgumentException(SR.Format(SR.TrimmingAnnotationsDoNotMatch, implementationType.FullName, serviceType.FullName));
+                throw new ArgumentException(
+                    Resources.GetTrimmingAnnotationsDoNotMatchExceptionMessage(implementationType, serviceType));
             }
 
             bool serviceHasNewConstraint = serviceGenericType.GenericParameterAttributes.HasFlag(GenericParameterAttributes.DefaultConstructorConstraint);
             bool implementationHasNewConstraint = implementationGenericType.GenericParameterAttributes.HasFlag(GenericParameterAttributes.DefaultConstructorConstraint);
             if (implementationHasNewConstraint && !serviceHasNewConstraint)
             {
-                throw new ArgumentException(SR.Format(SR.TrimmingAnnotationsDoNotMatch_NewConstraint, implementationType.FullName, serviceType.FullName));
+                throw new ArgumentException(
+                    Resources.GetTrimmingAnnotationsDoNotMatch_NewConstraintExceptionMessage(implementationType, serviceType));
             }
         }
     }
@@ -156,7 +159,7 @@ internal sealed class CallSiteFactory : IServiceLookup
     }
 
     internal CallSiteService GetCallSite(Type serviceType, CallSiteChain callSiteChain) =>
-        callSiteCache.TryGetValue(new CallSiteServiceCacheKey(serviceType, DefaultSlot), out CallSiteService site) ? site :
+            callSiteCache.TryGetValue(new CallSiteServiceCacheKey(serviceType, DefaultSlot), out CallSiteService? site) ? site :
         CreateCallSite(serviceType, callSiteChain);
 
     internal CallSiteService GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
@@ -203,7 +206,7 @@ internal sealed class CallSiteFactory : IServiceLookup
 
     private CallSiteService TryCreateExact(Type serviceType, CallSiteChain callSiteChain)
     {
-        if (descriptorLookup.TryGetValue(serviceType, out ServiceDescriptorCacheItem descriptor))
+        if (descriptorLookup.TryGetValue(serviceType, out var descriptor))
         {
             return TryCreateExact(descriptor.Last, serviceType, callSiteChain, DefaultSlot);
         }
@@ -331,7 +334,7 @@ internal sealed class CallSiteFactory : IServiceLookup
             }
             else
             {
-                throw new InvalidOperationException(SR.InvalidServiceDescriptor);
+                throw new InvalidOperationException(Resources.InvalidServiceDescriptor);
             }
 
             return callSiteCache[callSiteKey] = callSite;
@@ -393,7 +396,7 @@ internal sealed class CallSiteFactory : IServiceLookup
 
             if (constructors.Length == 0)
             {
-                throw new InvalidOperationException(SR.Format(SR.NoConstructorMatch, implementationType));
+                throw new InvalidOperationException(Resources.GetNoConstructorMatchExceptionMessage(implementationType));
             }
             else if (constructors.Length == 1)
             {
@@ -456,7 +459,7 @@ internal sealed class CallSiteFactory : IServiceLookup
                                 // Ambiguous match exception
                                 throw new InvalidOperationException(string.Join(
                                     Environment.NewLine,
-                                    SR.Format(SR.AmbiguousConstructorException, implementationType),
+                                    Resources.GetAmbiguousConstructorExceptionMessage(implementationType),
                                     bestConstructor,
                                     constructors[i]));
                             }
@@ -468,7 +471,7 @@ internal sealed class CallSiteFactory : IServiceLookup
             if (bestConstructor == null)
             {
                 throw new InvalidOperationException(
-                    SR.Format(SR.UnableToActivateTypeException, implementationType));
+                    Resources.GetUnableToActivateTypeExceptionMessage(implementationType));
             }
             else
             {
@@ -503,7 +506,7 @@ internal sealed class CallSiteFactory : IServiceLookup
             {
                 if (throwIfCallSiteNotFound)
                 {
-                    throw new InvalidOperationException(SR.Format(SR.CannotResolveService,
+                    throw new InvalidOperationException(Resources.GetCannotResolveServiceExceptionMessage(
                         parameterType,
                         implementationType));
                 }
@@ -623,7 +626,7 @@ internal sealed class CallSiteFactory : IServiceLookup
                 }
             }
 
-            throw new InvalidOperationException(SR.ServiceDescriptorNotExist);
+            throw new InvalidOperationException(Resources.ServiceDescriptorNotExist);
         }
 
         public ServiceDescriptorCacheItem Add(ServiceDescriptor descriptor)

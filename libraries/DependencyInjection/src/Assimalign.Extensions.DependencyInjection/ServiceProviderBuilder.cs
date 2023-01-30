@@ -1,21 +1,19 @@
 ﻿using System;
+using System.Collections.Concurrent;
 
 namespace Assimalign.Extensions.DependencyInjection;
 
-public sealed class ServiceProviderBuilder : IServiceProviderBuilder
+public sealed class ServiceProviderBuilder : IServiceProviderBuilder, IDisposable
 {
+    private static readonly ConcurrentDictionary<int, IServiceCollection> services = new();
+    private static readonly ConcurrentDictionary<int, IServiceProvider> providers = new();
+    
+    
     private readonly ServiceProviderOptions options;
-    public ServiceProviderBuilder()
-    {
-        this.options = ServiceProviderOptions.Default;
-    }
-    public ServiceProviderBuilder(ServiceProviderOptions options)
-    {
-        this.options = options;
-    }
+    public ServiceProviderBuilder() => this.options = ServiceProviderOptions.Default;
+    public ServiceProviderBuilder(ServiceProviderOptions options) => this.options = options == null ? throw new ArgumentNullException(nameof(options)) : options;
 
-    private readonly IServiceCollection services = new ServiceCollection();
-    public IServiceCollection Services => this.services;
+    public IServiceCollection Services => services.GetOrAdd(this.GetHashCode(), new ServiceCollection());    
     public IServiceProviderBuilder Add(ServiceDescriptor serviceDescriptor)
     {
         if (serviceDescriptor == null)
@@ -32,5 +30,10 @@ public sealed class ServiceProviderBuilder : IServiceProviderBuilder
         return new ServiceProvider(
             Services, 
             options);
+    }
+
+    public void Dispose()
+    {
+        throw new NotImplementedException();
     }
 }

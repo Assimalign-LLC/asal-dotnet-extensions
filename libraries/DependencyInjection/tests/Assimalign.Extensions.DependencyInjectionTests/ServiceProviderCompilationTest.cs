@@ -8,21 +8,21 @@ using Xunit;
 
 namespace Assimalign.Extensions.DependencyInjection.Tests
 {
-    [ActiveIssue("https://github.com/dotnet/runtime/issues/33894", TestRuntimes.Mono)]
+    //[ActiveIssue("https://github.com/dotnet/runtime/issues/33894", TestRuntimes.Mono)]
     public class ServiceProviderCompilationTest
     {
         [Theory]
-        [InlineData(ServiceProviderMode.Default, typeof(I999))]
-        [InlineData(ServiceProviderMode.Dynamic, typeof(I999))]
-        [InlineData(ServiceProviderMode.Runtime, typeof(I999))]
-        [InlineData(ServiceProviderMode.ILEmit, typeof(I999))]
-        [InlineData(ServiceProviderMode.Expressions, typeof(I999))]
-        [ActiveIssue("https://github.com/dotnet/runtime/issues/33894", TestRuntimes.Mono)]
-        private async Task CompilesInLimitedStackSpace(ServiceProviderMode mode, Type serviceType)
+        [InlineData(ServiceProviderEngine.Default, typeof(I999))]
+        [InlineData(ServiceProviderEngine.Dynamic, typeof(I999))]
+        [InlineData(ServiceProviderEngine.Runtime, typeof(I999))]
+        [InlineData(ServiceProviderEngine.ILEmit, typeof(I999))]
+        [InlineData(ServiceProviderEngine.Expressions, typeof(I999))]
+        //[ActiveIssue("https://github.com/dotnet/runtime/issues/33894", TestRuntimes.Mono)]
+        private async Task CompilesInLimitedStackSpace(ServiceProviderEngine mode, Type serviceType)
         {
             // Arrange
             var stackSize = 256 * 1024;
-            var serviceCollection = new ServiceCollection();
+            var serviceCollection = new ServiceProviderBuilder();
             CompilationTestDataProvider.Register(serviceCollection);
             var serviceProvider = serviceCollection.BuildServiceProvider(mode);
 

@@ -1,7 +1,7 @@
 
 
 
-using Assimalign.Extensions.DependencyInjection.Specification.Fakes;
+using Assimalign.Extensions.DependencyInjection.MockObjects;
 
 namespace Assimalign.Extensions.DependencyInjection.ServiceLookup
 {
