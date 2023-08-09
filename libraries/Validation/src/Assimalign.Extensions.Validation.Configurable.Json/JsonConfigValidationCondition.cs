@@ -29,7 +29,7 @@ public sealed class JsonConfigValidationCondition<T> : IValidationCondition
     /// </summary>
     [JsonPropertyName("$validationItems")]
     public IEnumerable<JsonConfigValidationItem<T>> ValidationItems { get; set; }
-    IValidationItemStack IValidationCondition.ValidationItems => new ValidationItemStack(this.ValidationItems);
+    IValidationItemQueue IValidationCondition.ValidationItems => new ValidationItemQueue(this.ValidationItems);
 
 
     /// <summary>

@@ -9,11 +9,10 @@ namespace Assimalign.Extensions.Validation;
 /// </summary>
 /// <remarks>
 /// Validation rules that are chained together should be handled in 
-/// the order they are chained which is why a <see cref="Stack"/> 
+/// the order they are chained which is why a <see cref="Queue"/> 
 /// implementation was used.
 /// </remarks>
-public interface IValidationRuleStack : 
-    IEnumerable<IValidationRule>, 
+public interface IValidationRuleQueue :  
     ICollection, 
     IReadOnlyCollection<IValidationRule>
 {

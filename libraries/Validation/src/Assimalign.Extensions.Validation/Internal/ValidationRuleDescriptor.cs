@@ -9,7 +9,7 @@ using Assimalign.Extensions.Validation.Internal.Exceptions;
 
 internal sealed class ValidationRuleDescriptor : IValidationRuleDescriptor
 {
-    public IValidationItemStack ValidationItems { get; set; }
+    public IValidationItemQueue ValidationItems { get; set; }
 
     public IValidationRuleDescriptor RuleFor(IValidationItem item)
     {
@@ -20,7 +20,7 @@ internal sealed class ValidationRuleDescriptor : IValidationRuleDescriptor
 
 internal sealed class ValidationRuleDescriptor<T> : IValidationRuleDescriptor<T>
 {
-    public IValidationItemStack ValidationItems { get; set; }
+    public IValidationItemQueue ValidationItems { get; set; }
 
     public Func<T, bool> ValidationCondition { get; set; } 
 
@@ -85,7 +85,7 @@ internal sealed class ValidationRuleDescriptor<T> : IValidationRuleDescriptor<T>
         };
         var descriptor = new ValidationRuleDescriptor<T>()
         {
-            ValidationItems = new ValidationItemStack(),
+            ValidationItems = new ValidationItemQueue(),
             ValidationCondition = condition.Compile()
         };
         

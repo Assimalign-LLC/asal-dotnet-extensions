@@ -13,7 +13,7 @@ internal abstract class ValidationItemBase<T, TValue> : IValidationItem<T, TValu
 
     public ValidationItemBase()
     {
-        this.ItemRuleStack ??= new ValidationRuleStack();
+        this.ItemRuleStack ??= new ValidationRuleQueue();
     }
 
     public Expression<Func<T, TValue>> ItemExpression
@@ -37,7 +37,7 @@ internal abstract class ValidationItemBase<T, TValue> : IValidationItem<T, TValu
 
     public Func<T, bool> ValidationCondition { get; set; }
 
-    public IValidationRuleStack ItemRuleStack { get; }
+    public IValidationRuleQueue ItemRuleStack { get; }
 
     public abstract void Evaluate(IValidationContext context);
 

@@ -46,7 +46,7 @@ public sealed class JsonConfigValidationProfile<T> : IValidationProfile
     /// </summary>
     [JsonPropertyName("$validationItems")]
     public IEnumerable<JsonConfigValidationItem<T>> ValidationItems { get; set; }
-    IValidationItemStack IValidationProfile.ValidationItems { get; } = new ValidationItemStack();
+    IValidationItemQueue IValidationProfile.ValidationItems { get; } = new ValidationItemQueue();
 
     /// <summary>
     /// 

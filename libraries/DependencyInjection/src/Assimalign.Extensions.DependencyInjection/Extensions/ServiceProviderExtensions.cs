@@ -1,10 +1,10 @@
-﻿using Assimalign.Extensions.DependencyInjection.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Assimalign.Extensions.DependencyInjection;
 
+using Assimalign.Extensions.DependencyInjection.Properties;
 
 public static class ServiceProviderExtensions
 {

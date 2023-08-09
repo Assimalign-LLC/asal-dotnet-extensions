@@ -155,6 +155,11 @@ public sealed class Validator : IValidator
     /// <returns></returns>
     public static IValidator Create(Action<ValidatorBuilder> configure)
     {
+        if (configure is null)
+        {
+            throw new ArgumentNullException(nameof(configure));
+        }
+
         var builder = new ValidatorBuilder();
 
         configure.Invoke(builder);

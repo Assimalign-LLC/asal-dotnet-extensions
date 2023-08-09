@@ -36,7 +36,7 @@ public sealed class JsonConfigValidationItem<T> : IValidationItem
     /// </summary>
     [JsonPropertyName("$itemRules")]
     public Stack<JsonConfigValidationRule<T>> ItemRuleStack { get; set; }
-    IValidationRuleStack IValidationItem.ItemRuleStack => new ValidationRuleStack(this.ItemRuleStack);
+    IValidationRuleQueue IValidationItem.ItemRuleStack => new ValidationRuleQueue(this.ItemRuleStack);
 
     /// <summary>
     /// 

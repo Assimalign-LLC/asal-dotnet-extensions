@@ -13,7 +13,7 @@ using Assimalign.Extensions.Validation.Internal;
 public abstract class ValidationProfile<T> : IValidationProfile<T>
 {
     private readonly Type validationType;
-    private readonly IValidationItemStack validationItems;
+    private readonly IValidationItemQueue validationItems;
 
     /// <summary>
     /// 
@@ -21,14 +21,14 @@ public abstract class ValidationProfile<T> : IValidationProfile<T>
     public ValidationProfile()
     {
         this.validationType = typeof(T);
-        this.validationItems = new ValidationItemStack();
+        this.validationItems = new ValidationItemQueue();
     }
 
     /// <summary>
     /// A collection validation rules to apply to the instance of <typeparamref name="T"/>
     /// for a given context.
     /// </summary>
-    public IValidationItemStack ValidationItems => this.validationItems;
+    public IValidationItemQueue ValidationItems => this.validationItems;
 
     /// <summary>
     /// The type of <typeparamref name="T"/> being validated.
@@ -60,7 +60,7 @@ public abstract class ValidationProfile<T> : IValidationProfile<T>
 public abstract class ValidationProfile : IValidationProfile
 {
     private readonly Type validationType;
-    private readonly IValidationItemStack validationItems;
+    private readonly IValidationItemQueue validationItems;
 
     /// <summary>
     /// 
@@ -68,7 +68,7 @@ public abstract class ValidationProfile : IValidationProfile
     public ValidationProfile(Type type)
     {
         this.validationType = type;
-        this.validationItems = new ValidationItemStack();
+        this.validationItems = new ValidationItemQueue();
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ public abstract class ValidationProfile : IValidationProfile
     /// <summary>
     /// 
     /// </summary>
-    public IValidationItemStack ValidationItems => this.validationItems;
+    public IValidationItemQueue ValidationItems => this.validationItems;
 
     /// <summary>
     /// 

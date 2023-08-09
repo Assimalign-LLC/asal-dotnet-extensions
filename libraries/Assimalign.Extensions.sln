@@ -381,6 +381,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.FileS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Assimalign.Extensions.Configuration.Ini", "Configuration\src\Assimalign.Extensions.Configuration.Ini\Assimalign.Extensions.Configuration.Ini.csproj", "{FDE128B8-F1F7-421A-AF31-FB9F628CD81C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SyntaxBridge", "SyntaxBridge", "{8458DFE6-5531-4797-A7CE-D2DA41A4FFE6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D88714E8-C3BF-4260-A4B1-4F4D65F146FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B9965AD8-A2EC-45B9-822D-6409717BE03A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assimalign.Extensions.SyntaxBridge", "SyntaxBridge\src\Assimalign.Extensions.SyntaxBridge\Assimalign.Extensions.SyntaxBridge.csproj", "{3C37F00C-5342-4189-819C-BE17176723A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -647,6 +655,10 @@ Global
 		{FDE128B8-F1F7-421A-AF31-FB9F628CD81C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDE128B8-F1F7-421A-AF31-FB9F628CD81C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDE128B8-F1F7-421A-AF31-FB9F628CD81C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C37F00C-5342-4189-819C-BE17176723A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C37F00C-5342-4189-819C-BE17176723A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C37F00C-5342-4189-819C-BE17176723A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C37F00C-5342-4189-819C-BE17176723A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -794,6 +806,10 @@ Global
 		{339ACCA3-9DE2-4B80-9D0C-7636688ACB1C} = {22384865-0148-43D2-98B3-68637A9A399F}
 		{49F53593-ED94-41BC-9597-96415BE2C55F} = {53EA8CA4-26B0-43F2-B62C-ECF9B741AB25}
 		{FDE128B8-F1F7-421A-AF31-FB9F628CD81C} = {2D484E04-D489-4D22-AB90-25DE24EBFE3D}
+		{8458DFE6-5531-4797-A7CE-D2DA41A4FFE6} = {0FD0D3ED-6214-4029-825F-1B4E67FC9EF1}
+		{D88714E8-C3BF-4260-A4B1-4F4D65F146FE} = {8458DFE6-5531-4797-A7CE-D2DA41A4FFE6}
+		{B9965AD8-A2EC-45B9-822D-6409717BE03A} = {8458DFE6-5531-4797-A7CE-D2DA41A4FFE6}
+		{3C37F00C-5342-4189-819C-BE17176723A8} = {D88714E8-C3BF-4260-A4B1-4F4D65F146FE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FCCF2D81-2E3A-4508-918E-048D800EABE8}

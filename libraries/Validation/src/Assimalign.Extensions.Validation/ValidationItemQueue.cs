@@ -6,37 +6,32 @@ using System.Runtime.CompilerServices;
 
 namespace Assimalign.Extensions.Validation;
 
-
-/// <summary>
-/// A rule set is a collection of validation rules to be used to 
-/// when validating the instance.
-/// </summary>
-public sealed class ValidationRuleStack : IValidationRuleStack
+public class ValidationItemQueue : IValidationItemQueue
 {
 	private int size;
 	private int version;
-	private IValidationRule[] array;
-	
+	private IValidationItem[] array;
+
 
 	bool ICollection.IsSynchronized => false;
 	object ICollection.SyncRoot => this;
 
 
-	public ValidationRuleStack()
+	public ValidationItemQueue()
 	{
-		array = Array.Empty<IValidationRule>();
+		array = Array.Empty<IValidationItem>();
 	}
 
-	public ValidationRuleStack(int capacity)
+	public ValidationItemQueue(int capacity)
 	{
 		if (capacity < 0)
 		{
 			throw new ArgumentOutOfRangeException("capacity", capacity, "Capacity must be greater than 0.");
 		}
-		this.array = new IValidationRule[capacity];
+		this.array = new IValidationItem[capacity];
 	}
 
-	public ValidationRuleStack(IEnumerable<IValidationRule> collection)
+	public ValidationItemQueue(IEnumerable<IValidationItem> collection)
 	{
 		if (collection == null)
 		{
@@ -50,7 +45,7 @@ public sealed class ValidationRuleStack : IValidationRuleStack
 
 	public void Clear()
 	{
-		if (RuntimeHelpers.IsReferenceOrContainsReferences<IValidationRule>())
+		if (RuntimeHelpers.IsReferenceOrContainsReferences<IValidationItem>())
 		{
 			Array.Clear(array, 0, size);
 		}
@@ -58,7 +53,7 @@ public sealed class ValidationRuleStack : IValidationRuleStack
 		version++;
 	}
 
-	public bool Contains(IValidationRule item)
+	public bool Contains(IValidationItem item)
 	{
 		if (size != 0)
 		{
@@ -67,7 +62,7 @@ public sealed class ValidationRuleStack : IValidationRuleStack
 		return false;
 	}
 
-	public void CopyTo(IValidationRule[] array, int arrayIndex)
+	public void CopyTo(IValidationItem[] array, int arrayIndex)
 	{
 		if (array == null)
 		{
@@ -113,7 +108,7 @@ public sealed class ValidationRuleStack : IValidationRuleStack
 		}
 		try
 		{
-            Array.Copy(this.array, 0, array, arrayIndex, size);
+			Array.Copy(this.array, 0, array, arrayIndex, size);
 			Array.Reverse(array, arrayIndex, size);
 		}
 		catch (ArrayTypeMismatchException)
@@ -133,10 +128,10 @@ public sealed class ValidationRuleStack : IValidationRuleStack
 		}
 	}
 
-	IValidationRule IValidationRuleStack.Peek()
+	IValidationItem IValidationItemQueue.Peek()
 	{
 		int num = size - 1;
-		IValidationRule[] array = this.array;
+		IValidationItem[] array = this.array;
 		if ((uint)num >= (uint)array.Length)
 		{
 			ThrowForEmptyStack();
@@ -144,13 +139,13 @@ public sealed class ValidationRuleStack : IValidationRuleStack
 		return array[num];
 	}
 
-	bool IValidationRuleStack.TryPeek([MaybeNullWhen(false)] out IValidationRule result)
+	bool IValidationItemQueue.TryPeek([MaybeNullWhen(false)] out IValidationItem result)
 	{
 		int num = size - 1;
-		IValidationRule[] array = this.array;
+		IValidationItem[] array = this.array;
 		if ((uint)num >= (uint)array.Length)
 		{
-			result = default(IValidationRule);
+			result = default(IValidationItem);
 			return false;
 		}
 		result = array[num];
@@ -158,28 +153,28 @@ public sealed class ValidationRuleStack : IValidationRuleStack
 	}
 
 
-	IValidationRule IValidationRuleStack.Pop()
+	IValidationItem IValidationItemQueue.Pop()
 	{
 		int num = size - 1;
-		IValidationRule[] array = this.array;
+		IValidationItem[] array = this.array;
 		if ((uint)num >= (uint)array.Length)
 		{
 			ThrowForEmptyStack();
 		}
 		version++;
 		size = num;
-		IValidationRule result = array[num];
-		if (RuntimeHelpers.IsReferenceOrContainsReferences<IValidationRule>())
+		IValidationItem result = array[num];
+		if (RuntimeHelpers.IsReferenceOrContainsReferences<IValidationItem>())
 		{
 			array[num] = default;
 		}
 		return result;
 	}
 
-	bool IValidationRuleStack.TryPop([MaybeNullWhen(false)] out IValidationRule result)
+	bool IValidationItemQueue.TryPop([MaybeNullWhen(false)] out IValidationItem result)
 	{
 		int num = size - 1;
-		IValidationRule[] array = this.array;
+		IValidationItem[] array = this.array;
 		if ((uint)num >= (uint)array.Length)
 		{
 			result = default;
@@ -188,17 +183,17 @@ public sealed class ValidationRuleStack : IValidationRuleStack
 		version++;
 		size = num;
 		result = array[num];
-		if (RuntimeHelpers.IsReferenceOrContainsReferences<IValidationRule>())
+		if (RuntimeHelpers.IsReferenceOrContainsReferences<IValidationItem>())
 		{
 			array[num] = default;
 		}
 		return true;
 	}
 
-	void IValidationRuleStack.Push(IValidationRule item)
+	void IValidationItemQueue.Push(IValidationItem item)
 	{
 		int size = this.size;
-		IValidationRule[] array = this.array;
+		IValidationItem[] array = this.array;
 		if ((uint)size < (uint)array.Length)
 		{
 			array[size] = item;
@@ -212,7 +207,7 @@ public sealed class ValidationRuleStack : IValidationRuleStack
 	}
 
 	[MethodImpl(MethodImplOptions.NoInlining)]
-	private void PushWithResize(IValidationRule item)
+	private void PushWithResize(IValidationItem item)
 	{
 		Grow(size + 1);
 		array[size] = item;
@@ -248,13 +243,13 @@ public sealed class ValidationRuleStack : IValidationRuleStack
 		Array.Resize(ref array, num);
 	}
 
-	public IValidationRule[] ToArray()
+	public IValidationItem[] ToArray()
 	{
 		if (size == 0)
 		{
-			return Array.Empty<IValidationRule>();
+			return Array.Empty<IValidationItem>();
 		}
-		IValidationRule[] array = new IValidationRule[size];
+		IValidationItem[] array = new IValidationItem[size];
 		for (int i = 0; i < size; i++)
 		{
 			array[i] = this.array[size - i - 1];
@@ -316,25 +311,25 @@ public sealed class ValidationRuleStack : IValidationRuleStack
 		return Array.Empty<T>();
 	}
 
-    public IEnumerator<IValidationRule> GetEnumerator()
-    {
+	public IEnumerator<IValidationItem> GetEnumerator()
+	{
 		return new Enumerator(this);
-    }
+	}
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
+	IEnumerator IEnumerable.GetEnumerator()
+	{
 		return GetEnumerator();
-    }
+	}
 
-    internal struct Enumerator : IEnumerator<IValidationRule>, IDisposable, IEnumerator
+	internal struct Enumerator : IEnumerator<IValidationItem>, IDisposable, IEnumerator
 	{
 		private readonly int version;
-		private readonly ValidationRuleStack stack;
-		
-		private int index;
-		private IValidationRule current;
+		private readonly ValidationItemQueue stack;
 
-		public IValidationRule Current
+		private int index;
+		private IValidationItem current;
+
+		public IValidationItem Current
 		{
 			get
 			{
@@ -348,7 +343,7 @@ public sealed class ValidationRuleStack : IValidationRuleStack
 
 		object? IEnumerator.Current => Current;
 
-		internal Enumerator(ValidationRuleStack stack)
+		internal Enumerator(ValidationItemQueue stack)
 		{
 			this.stack = stack;
 			this.version = stack.version;

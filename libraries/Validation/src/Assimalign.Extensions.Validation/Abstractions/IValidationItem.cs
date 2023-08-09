@@ -11,7 +11,7 @@ public interface IValidationItem
     /// <summary>
     /// A stack of rules to be evaluated against the given context: <see cref="Evaluate(IValidationContext)"/>.
     /// </summary>
-    IValidationRuleStack ItemRuleStack { get; }
+    IValidationRuleQueue ItemRuleStack { get; }
 
     /// <summary>
     /// 

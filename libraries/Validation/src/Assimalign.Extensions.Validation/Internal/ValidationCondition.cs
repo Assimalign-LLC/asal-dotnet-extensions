@@ -10,10 +10,10 @@ internal sealed class ValidationCondition<T> : IValidationCondition<T>
 {
     public ValidationCondition()
     {
-        this.ValidationItems = new ValidationItemStack();
+        this.ValidationItems = new ValidationItemQueue();
     }
 
-    public IValidationItemStack ValidationItems { get; set; }
+    public IValidationItemQueue ValidationItems { get; set; }
 
     public Expression<Func<T, bool>> Condition { get; set; }
 
@@ -26,7 +26,7 @@ internal sealed class ValidationCondition<T> : IValidationCondition<T>
         };
         var descriptor = new ValidationRuleDescriptor<T>()
         {
-            ValidationItems = new ValidationItemStack(),
+            ValidationItems = new ValidationItemQueue(),
             ValidationCondition = condition.Compile(),
         };
 

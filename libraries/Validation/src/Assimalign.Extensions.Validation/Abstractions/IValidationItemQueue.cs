@@ -7,8 +7,7 @@ namespace Assimalign.Extensions.Validation;
 /// <summary>
 /// 
 /// </summary>
-public interface IValidationItemStack :
-    IEnumerable<IValidationItem>,
+public interface IValidationItemQueue :
     ICollection,
     IReadOnlyCollection<IValidationItem>
 {

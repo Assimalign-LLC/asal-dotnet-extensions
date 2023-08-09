@@ -15,7 +15,7 @@ public interface IValidationProfile
     /// A collection of validation rules to apply 
     /// to the context being validated.
     /// </summary>
-    IValidationItemStack ValidationItems { get; }
+    IValidationItemQueue ValidationItems { get; }
     /// <summary>
     /// Configures the validation rules for the specified type.
     /// </summary>

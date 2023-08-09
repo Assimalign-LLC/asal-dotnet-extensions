@@ -5,13 +5,15 @@ using System.Linq.Expressions;
 
 namespace Assimalign.Extensions.Validation;
 
-
+/// <summary>
+/// 
+/// </summary>
 public interface IValidationRuleDescriptor
 {
     /// <summary>
     /// 
     /// </summary>
-    IValidationItemStack ValidationItems { get; }
+    IValidationItemQueue ValidationItems { get; }
     /// <summary>
     /// 
     /// </summary>

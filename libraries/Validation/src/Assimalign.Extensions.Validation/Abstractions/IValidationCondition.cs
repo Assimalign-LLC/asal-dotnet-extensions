@@ -15,7 +15,7 @@ public interface IValidationCondition
     ///     <b>This Should be set a </b>
     /// </remarks>
     /// </summary>
-    IValidationItemStack ValidationItems { get; }
+    IValidationItemQueue ValidationItems { get; }
 }
 
 
