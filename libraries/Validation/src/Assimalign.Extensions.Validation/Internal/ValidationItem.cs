@@ -4,10 +4,15 @@ using System.Linq;
 
 namespace Assimalign.Extensions.Validation.Internal;
 
-using Assimalign.Extensions.Validation.Internal.Extensions;
-
 internal sealed class ValidationItem<T, TValue> : ValidationItemBase<T, TValue>
 {
+    private readonly Stopwatch stopwatch;
+
+    public ValidationItem()
+    {
+        this.stopwatch = SimpleObjectPool.Rent<Stopwatch>();
+    }
+
     public override void Evaluate(IValidationContext context)
     {
         if (context.Instance is not T instance)
@@ -20,7 +25,6 @@ internal sealed class ValidationItem<T, TValue> : ValidationItemBase<T, TValue>
         }
 
         var value = this.GetValue(instance);
-        var stopwatch = new Stopwatch();
 
         foreach (var rule in this.ItemRuleStack)
         {
@@ -52,5 +56,6 @@ internal sealed class ValidationItem<T, TValue> : ValidationItemBase<T, TValue>
             }
         }
 
+        stopwatch.Reset();
     }
 }

@@ -1,58 +1,143 @@
-﻿
-using Assimalign.Extensions.Validation;
-using static System.Console;
+﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Jobs;
+using BenchmarkDotNet.Running;
+using FluentValidation;
 
-
-var validatorBenchmarkRunTime = DateTime.Now.AddSeconds(20);
-var validatorTestObject = new ValidatorTestObject();
-var validatorElapsedTimerAverager = new ValidatorMovingAverage(15);
-var validator = Validator.Create(configure =>
+var validator1 = Validator.Create(configure =>
 {
-    configure.AddProfile(new ValidatorTestProfile());
+    configure.AddProfile(builder =>
+    {
+        builder.CreateProfile<ValidatorTestObject>(descriptor =>
+        {
+            // Short Tests
+            descriptor.RuleFor(p => p.EqualToFields.ShortEqualToSuccessField)
+                .EqualTo(ValidatorTestValues.ShortEqualToValue);
+
+            descriptor.RuleFor(p => p.EqualToFields.ShortEqualToFailureField)
+                .EqualTo(ValidatorTestValues.ShortEqualToValue);
+
+            // Int Tests
+            descriptor.RuleFor(p => p.EqualToFields.IntEqualToSuccessField)
+                .EqualTo(ValidatorTestValues.IntEqualToValue);
+            descriptor.RuleFor(p => p.EqualToFields.IntEqualToFailureField)
+                .EqualTo(ValidatorTestValues.IntEqualToValue);
+
+            // Long Tests
+            descriptor.RuleFor(p => p.EqualToFields.LongEqualToSuccessField)
+                .EqualTo(ValidatorTestValues.LongEqualToValue);
+            descriptor.RuleFor(p => p.EqualToFields.LongEqualToFailureField)
+                .EqualTo(ValidatorTestValues.LongEqualToValue);
+
+
+            descriptor.RuleFor(p => p.EqualToFields.DateTimeEqualToSuccessField)
+                .EqualTo(ValidatorTestValues.DateTimeEqualTo);
+            descriptor.RuleFor(p => p.EqualToFields.DateTimeEqualToFailureField)
+                .EqualTo(ValidatorTestValues.DateTimeEqualTo);
+        });
+    });
 });
 
-while (DateTime.Now < validatorBenchmarkRunTime)
+validator1!.Validate(new ValidatorTestObject());
+
+///Benchmark comparison between FluentValidation and Assimalign
+
+BenchmarkRunner.Run<ValidatorBenchmarks>();
+
+
+[SimpleJob(RuntimeMoniker.Net60)]
+[SimpleJob(RuntimeMoniker.Net70)]
+[SimpleJob(RuntimeMoniker.Net80)]
+//[SimpleJob(RuntimeMoniker.NativeAot80)]
+//[SimpleJob(RuntimeMoniker.NativeAot70)]
+public class ValidatorBenchmarks
 {
-    var validation = validator.Validate(validatorTestObject);
+    Assimalign.Extensions.Validation.IValidator? validator1;
+    TestFluentValidator? validator2;
+    ValidatorTestObject instance = new();
 
-    SetCursorPosition(0, WindowTop);
-    Write($"Elapsed Ticks: {validation.ValidationElapsedTicks}");
-
-    SetCursorPosition(0, WindowTop + 1);
-    Write($"Elapsed (sec): {validation.ValidationElapsedSeconds}");
-
-    SetCursorPosition(0, WindowTop + 2);
-    Write($"Elapsed (ms):  {validation.ValidationElapsedMilliseconds}");
-
-    SetCursorPosition(0, WindowTop + 3);
-    Write($"Elapsed (ns):  {validation.ValidationElapsedMilliseconds * 1000000}");
-
-    double average = 0;
-
-    if (validation.ValidationElapsedTicks > 0)
+    [GlobalSetup]
+    public void Setup()
     {
-        average = validatorElapsedTimerAverager.GetAverage(validation.ValidationElapsedTicks ?? 0);
+        validator1 = Validator.Create(configure =>
+        {
+            configure.AddProfile(builder =>
+            {
+                builder.CreateProfile<ValidatorTestObject>(descriptor =>
+                {
+                    // Short Tests
+                    descriptor.RuleFor(p => p.EqualToFields.ShortEqualToSuccessField)
+                        .EqualTo(ValidatorTestValues.ShortEqualToValue);
+
+                    descriptor.RuleFor(p => p.EqualToFields.ShortEqualToFailureField)
+                        .EqualTo(ValidatorTestValues.ShortEqualToValue);
+
+                    // Int Tests
+                    descriptor.RuleFor(p => p.EqualToFields.IntEqualToSuccessField)
+                        .EqualTo(ValidatorTestValues.IntEqualToValue);
+                    descriptor.RuleFor(p => p.EqualToFields.IntEqualToFailureField)
+                        .EqualTo(ValidatorTestValues.IntEqualToValue);
+
+                    // Long Tests
+                    descriptor.RuleFor(p => p.EqualToFields.LongEqualToSuccessField)
+                        .EqualTo(ValidatorTestValues.LongEqualToValue);
+                    descriptor.RuleFor(p => p.EqualToFields.LongEqualToFailureField)
+                        .EqualTo(ValidatorTestValues.LongEqualToValue);
+
+
+                    descriptor.RuleFor(p => p.EqualToFields.DateTimeEqualToSuccessField)
+                        .EqualTo(ValidatorTestValues.DateTimeEqualTo);
+                    descriptor.RuleFor(p => p.EqualToFields.DateTimeEqualToFailureField)
+                        .EqualTo(ValidatorTestValues.DateTimeEqualTo);
+                });
+            });
+        });
+        validator2 = new TestFluentValidator();
     }
 
 
-    SetCursorPosition(0, WindowTop + 4);
-    Write($"Current AVG (MS): {average / (double)TimeSpan.TicksPerMillisecond}");
+    [Benchmark]
+    public void AssimalignValidator()
+    {
+        validator1!.Validate(instance);
+    }
+
+    [Benchmark]
+    public void FluentValidationValidator()
+    {
+        validator2!.Validate(instance);
+    }
 }
 
-SetCursorPosition(0, WindowTop + 6);
-Write($"Current AVG (MS):   {validatorElapsedTimerAverager.CurrentAvg}");
 
-SetCursorPosition(0, WindowTop + 8);
-Write($"Highest AVG (MS):   {validatorElapsedTimerAverager.HighestAvg}");
+public class TestFluentValidator : AbstractValidator<ValidatorTestObject>
+{
+    public TestFluentValidator()
+    {
+        // Short Tests
+        RuleFor(p => p.EqualToFields.ShortEqualToSuccessField)
+            .Equals(ValidatorTestValues.ShortEqualToValue);
 
-SetCursorPosition(0, WindowTop + 9);
-Write($"Lowest AVG (MS):    {validatorElapsedTimerAverager.LowestAvg}");
+        RuleFor(p => p.EqualToFields.ShortEqualToFailureField)
+            .Equals(ValidatorTestValues.ShortEqualToValue);
 
-SetCursorPosition(0, WindowTop + 11);
-Write($"Highest Entry (MS): {validatorElapsedTimerAverager.HighestEntry} at {validatorElapsedTimerAverager.HighestEntryOccurance}");
+        // Int Tests
+        RuleFor(p => p.EqualToFields.IntEqualToSuccessField)
+            .Equals(ValidatorTestValues.IntEqualToValue);
 
-SetCursorPosition(0, WindowTop + 12);
-Write($"Lowest Entry (MS):  {validatorElapsedTimerAverager.LowestEntry} at {validatorElapsedTimerAverager.LowestEntryOccurance}");
+        RuleFor(p => p.EqualToFields.IntEqualToFailureField)
+            .Equals(ValidatorTestValues.IntEqualToValue);
 
-SetCursorPosition(0, WindowTop + 14);
-Write($"Total Entries:  {validatorElapsedTimerAverager.TotalEntries}");
+        // Long Tests
+        RuleFor(p => p.EqualToFields.LongEqualToSuccessField)
+            .Equals(ValidatorTestValues.LongEqualToValue);
+
+        RuleFor(p => p.EqualToFields.LongEqualToFailureField)
+            .Equals(ValidatorTestValues.LongEqualToValue);
+
+
+        RuleFor(p => p.EqualToFields.DateTimeEqualToSuccessField)
+            .Equals(ValidatorTestValues.DateTimeEqualTo);
+        RuleFor(p => p.EqualToFields.DateTimeEqualToFailureField)
+            .Equals(ValidatorTestValues.DateTimeEqualTo);
+    }
+}

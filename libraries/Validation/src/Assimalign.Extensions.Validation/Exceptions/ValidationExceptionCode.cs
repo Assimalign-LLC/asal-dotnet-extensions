@@ -3,7 +3,7 @@
 /// <summary>
 /// 
 /// </summary>
-public enum ValidationExceptionCode : int
+public enum ValidationExceptionCode
 {
     /// <summary>
     /// 
@@ -24,7 +24,7 @@ public enum ValidationExceptionCode : int
     /// <summary>
     /// An error that is thrown when creating a validator that has not been configured.
     /// </summary>
-    InvalidValidtorCreation = unchecked(4004),
+    InvalidValidatorCreation = unchecked(4004),
 
     /// <summary>
     /// An error that is thrown when the <see cref="IValidationRule"/> is not supported internally.

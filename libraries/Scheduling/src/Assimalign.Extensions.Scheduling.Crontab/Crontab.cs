@@ -15,16 +15,16 @@ namespace Assimalign.Extensions.Scheduling;
 ///
 /// </summary>
 /// <remarks>
-/// Crontab expression format:					 
-///												 
-/// * * * * *									 
-/// - - - - -									 
-/// | | | | |									 
-/// | | | | +----- day of week (0 - 6) (Sunday=0) 
-/// | | | +------- month (1 - 12)				 
-/// | | +--------- day of month (1 - 31)			 
-/// | +----------- hour (0 - 23)					 
-/// +------------- min (0 - 59)					 
+/// Crontab expression format: <para />
+/// <para /> 
+/// *****	<para />
+/// -----	 <para />
+/// | | | | |	<para />
+/// | | | | +-------- day of week (0 - 6) (Sunday=0)<para />
+/// | | | +---------- month (1 - 12)<para />
+/// | | +------------ day of month (1 - 31) <para />
+/// | +-------------- hour (0 - 23) <para />
+/// +---------------- min (0 - 59) <para />
 /// 
 /// Star (*) in the value field above means all legal values as in
 /// braces for that column. The value column can have a * or a list
@@ -39,7 +39,7 @@ namespace Assimalign.Extensions.Scheduling;
 ///
 /// * * * * * *
 /// - - - - - -
-/// | | | | | |
+/// ||||||
 /// | | | | | +--- day of week (0 - 6) (Sunday=0)
 /// | | | | +----- month (1 - 12)
 /// | | | +------- day of month (1 - 31)
@@ -129,28 +129,28 @@ public readonly struct Crontab : IEquatable<Crontab>, IEnumerable<DateTime>, ISe
     restart:
         for (int a = 0; a < 12; a++)
         {
-            if (!Month.Occurances.Contains(a + 1))
+            if (!Month.Occurrences.Contains(a + 1))
             {
                 next = next.AddMonths(1);
                 continue;
             }
             for (int b = 0; b < DateTime.DaysInMonth(next.Year, a + 1); b++)
             {
-                if (!DayOfMonth.Occurances.Contains(b + 1) || !DayOfWeek.Occurances.Contains((int)next.DayOfWeek))
+                if (!DayOfMonth.Occurrences.Contains(b + 1) || !DayOfWeek.Occurrences.Contains((int)next.DayOfWeek))
                 {
                     next = next.AddDays(1);
                     continue;
                 }
                 for (int c = 0; c < 24; c++)
                 {
-                    if (!Hour.Occurances.Contains(c))
+                    if (!Hour.Occurrences.Contains(c))
                     {
                         next = next.AddHours(1);
                         continue;
                     }
                     for (int d = 0; d < 60; d++)
                     {
-                        if (Minute.Occurances.Contains(d) && next > start)
+                        if (Minute.Occurrences.Contains(d) && next > start)
                         {
                             return next;
                         }

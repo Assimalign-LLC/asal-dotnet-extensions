@@ -7,10 +7,18 @@ namespace Assimalign.Extensions.Validation;
 /// <summary>
 /// 
 /// </summary>
-public interface IValidationItemQueue :
-    ICollection,
-    IReadOnlyCollection<IValidationItem>
+public interface IValidationItemQueue : IEnumerable<IValidationItem>
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    int Count { get; }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    IValidationItem this[int index] { get; }
     /// <summary>
     /// Returns the most recent validation item within the 
     /// stack by removing it.

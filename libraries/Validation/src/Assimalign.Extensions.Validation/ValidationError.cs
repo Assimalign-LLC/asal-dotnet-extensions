@@ -30,6 +30,7 @@ public sealed class ValidationError : IValidationError
     /// <inheritdoc cref="IValidationError.Source"/>
     public string Source { get; set; }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return $"Error {Code}: {Message} {Environment.NewLine} └─> Source: {Source}";

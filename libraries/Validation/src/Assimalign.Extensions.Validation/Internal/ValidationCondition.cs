@@ -14,7 +14,6 @@ internal sealed class ValidationCondition<T> : IValidationCondition<T>
     }
 
     public IValidationItemQueue ValidationItems { get; set; }
-
     public Expression<Func<T, bool>> Condition { get; set; }
 
     public IValidationCondition<T> When(Expression<Func<T, bool>> condition, Action<IValidationRuleDescriptor<T>> configure)

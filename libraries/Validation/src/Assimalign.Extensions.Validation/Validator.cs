@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Collections;
+using Assimalign.Extensions.Validation.Internal;
 
 namespace Assimalign.Extensions.Validation;
 
@@ -58,9 +60,31 @@ public sealed class Validator : IValidator
     /// <inheritdoc cref="IValidator.Validate(IValidationContext)"/>
     public ValidationResult Validate(IValidationContext context)
     {
-        var stopwatch = new Stopwatch();
+        var stopwatch = SimpleObjectPool.Rent<Stopwatch>();
 
         stopwatch.Start();
+
+        //for (int i = 0; i < (Profiles as IList<IValidationProfile>).Count; i++)
+        //{
+        //    var profile = (Profiles as IList<IValidationProfile>)[i];
+
+        //    if (profile.ValidationType == context.InstanceType)
+        //    {
+        //        var isModeStop = context.ValidationMode == ValidationMode.Stop;
+
+        //        for (int a = 0; a < profile.ValidationItems.Count; a++)
+        //        {
+        //            var item = profile.ValidationItems[a];
+
+        //            if (isModeStop && context.Errors.TryGetNonEnumeratedCount(out var count) && count > 0)
+        //            {
+        //                break;
+        //            }
+
+        //            item.Evaluate(context);
+        //        }
+        //    }
+        //}
 
         foreach (var profile in this.Profiles)
         {
@@ -108,7 +132,7 @@ public sealed class Validator : IValidator
     {
         return Task.Run<ValidationResult>(() =>
         {
-            var stopwatch = new Stopwatch();
+            var stopwatch = SimpleObjectPool.Rent<Stopwatch>();
 
             stopwatch.Start();
 

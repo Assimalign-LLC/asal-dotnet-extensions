@@ -15,7 +15,7 @@ public readonly struct CrontabField
 		this.Expression = expression;
 		this.MinBoundary = minBoundary;
 		this.MaxBoundary = maxBoundary;
-		this.Occurances = occurances;
+		this.Occurrences = occurances;
 	}
 
 	/// <summary>
@@ -25,7 +25,7 @@ public readonly struct CrontabField
 	/// <summary>
 	/// An array of all the possible occurrences 
 	/// </summary>
-	public int[] Occurances { get; }
+	public int[] Occurrences { get; }
 	/// <summary>
 	/// 
 	/// </summary>

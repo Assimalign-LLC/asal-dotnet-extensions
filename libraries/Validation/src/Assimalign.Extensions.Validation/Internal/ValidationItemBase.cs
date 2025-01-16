@@ -3,8 +3,6 @@ using System.Linq.Expressions;
 
 namespace Assimalign.Extensions.Validation.Internal;
 
-using Assimalign.Extensions.Validation.Internal.Exceptions;
-
 internal abstract class ValidationItemBase<T, TValue> : IValidationItem<T, TValue>
 {
     private string expressionBody;

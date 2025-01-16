@@ -11,6 +11,7 @@ namespace Assimalign.Extensions.Mapping;
 
 using Assimalign.Extensions.Mapping.Internal;
 using Assimalign.Extensions.Mapping.Internal.Exceptions;
+using System.Diagnostics.CodeAnalysis;
 
 public static class MapperActionDescriptorExtensions
 {
@@ -55,6 +56,8 @@ public static class MapperActionDescriptorExtensions
     /// <param name="source">The property name within the <typeparamref name="TSource"/>.</param>
     /// <returns></returns>
     /// <exception cref="MapperInvalidMappingException"></exception>
+    
+    [RequiresUnreferencedCode("")]
     public static IMapperActionDescriptor<TTarget, TSource> MapMember<TTarget, TSource>(this IMapperActionDescriptor<TTarget, TSource> descriptor, string target, string source)
     {
         var targetParameter = Expression.Parameter(typeof(TTarget));

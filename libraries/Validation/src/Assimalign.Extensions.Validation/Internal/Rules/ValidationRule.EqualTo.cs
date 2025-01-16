@@ -19,7 +19,6 @@ internal sealed class EqualToValidationRule<TValue> : ValidationRuleBase<TValue>
     public override bool TryValidate(object value, out IValidationContext context)
     {
         context = null;
-
         if (value is null)
         {
             context = new ValidationContext<TValue>(default(TValue));

@@ -6,6 +6,7 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<PackageTags>Mapping</PackageTags>
+		<IsAotCompatible>true</IsAotCompatible>
 		<!--Company Branding Information-->
 		<PackageIcon>.assimalign.logo.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

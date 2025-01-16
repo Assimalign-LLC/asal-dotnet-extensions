@@ -47,4 +47,3 @@ public interface IValidator
     /// <returns></returns>
     Task<ValidationResult> ValidateAsync(IValidationContext context, CancellationToken cancellationToken);
 }
-

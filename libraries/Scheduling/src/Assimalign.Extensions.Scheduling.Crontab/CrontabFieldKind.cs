@@ -1,5 +1,6 @@
 ﻿namespace Assimalign.Extensions.Scheduling;
 
+/// <inheritdoc/>
 public enum CrontabFieldKind
 {
     Second = 0, // Keep in order of appearance in expression

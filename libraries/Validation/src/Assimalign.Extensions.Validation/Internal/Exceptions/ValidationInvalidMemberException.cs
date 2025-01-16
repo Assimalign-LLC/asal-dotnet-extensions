@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Assimalign.Extensions.Validation.Internal.Exceptions;
+namespace Assimalign.Extensions.Validation.Internal;
 
 /// <summary>
 /// An exception when the passed Expression is not a MemberExpression 

@@ -23,7 +23,6 @@ internal sealed class BetweenValidationRule<TValue> : ValidationRuleBase<TValue>
     }
 
     public override string Name { get; set; }
-
     public override bool TryValidate(object value, out IValidationContext context)
     {
         context = null;
@@ -43,8 +42,6 @@ internal sealed class BetweenValidationRule<TValue> : ValidationRuleBase<TValue>
             return false;
         }
     }
-
-
     public override bool TryValidate(TValue value, out IValidationContext context)
     {
         try

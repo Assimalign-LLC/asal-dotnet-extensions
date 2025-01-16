@@ -34,7 +34,7 @@ public sealed class ValidationInvocation
     /// <summary>
     /// 
     /// </summary>
-    public double? ElapsedMiliseconds => this.ElapsedTicks is null ? null : (double)this.ElapsedTicks / (double)TimeSpan.TicksPerMillisecond;
+    public double? ElapsedMilliseconds => this.ElapsedTicks is null ? null : (double)this.ElapsedTicks / (double)TimeSpan.TicksPerMillisecond;
     /// <summary>
     /// 
     /// </summary>

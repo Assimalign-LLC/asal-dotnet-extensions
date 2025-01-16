@@ -33,6 +33,22 @@ public sealed class ValidatorBuilder
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="configure"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public ValidatorBuilder AddProfile(Action<IValidationProfileBuilder> configure)
+    {
+        if (configure is null)
+        {
+            throw new ArgumentNullException(nameof(configure));
+        }
+
+        return AddProfile(new ValidationProfileBuilderDefault(configure));
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <exception cref="ArgumentNullException"></exception>
     public ValidatorBuilder AddProfile<TValidationProfileBuilder>() where TValidationProfileBuilder : IValidationProfileBuilder, new()
     {
@@ -50,9 +66,9 @@ public sealed class ValidatorBuilder
         {
             throw new ArgumentNullException(nameof(builder));
         }
-        foreach (var porfile in builder.Build())
+        foreach (var profile in builder.Build())
         {
-            AddProfile(porfile);
+            AddProfile(profile);
         }
 
         return this;

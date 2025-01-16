@@ -5,8 +5,6 @@ using System.Linq.Expressions;
 
 namespace Assimalign.Extensions.Validation.Internal;
 
-using Assimalign.Extensions.Validation.Internal.Exceptions;
-
 internal sealed class ValidationRuleDescriptor : IValidationRuleDescriptor
 {
     public IValidationItemQueue ValidationItems { get; set; }

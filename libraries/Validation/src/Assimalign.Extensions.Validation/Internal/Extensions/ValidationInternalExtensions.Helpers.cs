@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace Assimalign.Extensions.Validation.Internal.Extensions;
+namespace Assimalign.Extensions.Validation.Internal;
 
 
 internal static partial class ValidationInternalExtensions

@@ -13,9 +13,6 @@ public class ValidationItemQueue : IValidationItemQueue
 	private IValidationItem[] array;
 
 
-	bool ICollection.IsSynchronized => false;
-	object ICollection.SyncRoot => this;
-
 
 	public ValidationItemQueue()
 	{
@@ -43,7 +40,9 @@ public class ValidationItemQueue : IValidationItemQueue
 
 	public int Count => size;
 
-	public void Clear()
+    public IValidationItem this[int index] => array[index];
+
+    public void Clear()
 	{
 		if (RuntimeHelpers.IsReferenceOrContainsReferences<IValidationItem>())
 		{
@@ -84,38 +83,38 @@ public class ValidationItemQueue : IValidationItemQueue
 		}
 	}
 
-	void ICollection.CopyTo(Array array, int arrayIndex)
-	{
-		if (array == null)
-		{
-			throw new ArgumentNullException("array");
-		}
-		if (array.Rank != 1)
-		{
-			throw new ArgumentException("Multi-dimension arrays not supported.", "array");
-		}
-		if (array.GetLowerBound(0) != 0)
-		{
-			throw new ArgumentException("Non-zero lower-bound arrays no supported.", "array");
-		}
-		if (arrayIndex < 0 || arrayIndex > array.Length)
-		{
-			throw new ArgumentOutOfRangeException("arrayIndex", arrayIndex, "The index is either less than 0 or greater than the array.");
-		}
-		if (array.Length - arrayIndex < size)
-		{
-			throw new ArgumentException("The size of the array is less than the current size.");
-		}
-		try
-		{
-			Array.Copy(this.array, 0, array, arrayIndex, size);
-			Array.Reverse(array, arrayIndex, size);
-		}
-		catch (ArrayTypeMismatchException)
-		{
-			throw new ArgumentException("The array type is invalid", "array");
-		}
-	}
+	//void ICollection<IValidationItem>.CopyTo(Array array, int arrayIndex)
+	//{
+	//	if (array == null)
+	//	{
+	//		throw new ArgumentNullException("array");
+	//	}
+	//	if (array.Rank != 1)
+	//	{
+	//		throw new ArgumentException("Multi-dimension arrays not supported.", "array");
+	//	}
+	//	if (array.GetLowerBound(0) != 0)
+	//	{
+	//		throw new ArgumentException("Non-zero lower-bound arrays no supported.", "array");
+	//	}
+	//	if (arrayIndex < 0 || arrayIndex > array.Length)
+	//	{
+	//		throw new ArgumentOutOfRangeException("arrayIndex", arrayIndex, "The index is either less than 0 or greater than the array.");
+	//	}
+	//	if (array.Length - arrayIndex < size)
+	//	{
+	//		throw new ArgumentException("The size of the array is less than the current size.");
+	//	}
+	//	try
+	//	{
+	//		Array.Copy(this.array, 0, array, arrayIndex, size);
+	//		Array.Reverse(array, arrayIndex, size);
+	//	}
+	//	catch (ArrayTypeMismatchException)
+	//	{
+	//		throw new ArgumentException("The array type is invalid", "array");
+	//	}
+	//}
 
 
 	public void TrimExcess()

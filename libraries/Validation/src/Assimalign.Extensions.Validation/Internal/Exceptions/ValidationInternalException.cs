@@ -1,7 +1,6 @@
 ﻿using System;
 
-
-namespace Assimalign.Extensions.Validation.Internal.Exceptions;
+namespace Assimalign.Extensions.Validation.Internal;
 
 internal sealed class ValidationInternalException : ValidationException
 {
@@ -21,4 +20,3 @@ internal sealed class ValidationInternalException : ValidationException
         base.Source = source;
     }
 }
-

@@ -39,5 +39,7 @@ public interface IMapperActionDescriptor<TTarget, TSource> : IMapperActionDescri
     /// <param name="source"></param>
     /// <param name="target">An expression the MUST be a <see cref="MemberExpression"/>.</param>
     /// <returns><see cref="IMapperActionDescriptor{TTarget, TSource}"/></returns>
-    IMapperActionDescriptor<TTarget, TSource> MapMember<TTargetMember, TSourceMember>(Expression<Func<TTarget, TTargetMember>> target, Expression<Func<TSource, TSourceMember>> source);
+    IMapperActionDescriptor<TTarget, TSource> MapMember<TTargetMember, TSourceMember>(
+        Expression<Func<TTarget, TTargetMember>> target, 
+        Expression<Func<TSource, TSourceMember>> source);
 }

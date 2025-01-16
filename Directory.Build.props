@@ -1,0 +1,10 @@
+<Project>
+	<PropertyGroup>
+		<Authors>Chase Crawford</Authors>
+		<RepositoryType>git</RepositoryType>
+		<Copyright>© Assimalign LLC $([System.DateTime]::Now.ToString(`yyyy`))</Copyright>
+		<TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+		<VersionPrefix>1.0.0</VersionPrefix>
+		<VersionSuffix>pre.1.0.5</VersionSuffix>
+	</PropertyGroup>
+</Project>

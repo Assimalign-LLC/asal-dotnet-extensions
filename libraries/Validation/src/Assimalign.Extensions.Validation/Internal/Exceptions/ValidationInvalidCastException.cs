@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace Assimalign.Extensions.Validation.Internal.Exceptions;
+namespace Assimalign.Extensions.Validation.Internal;
 
 internal sealed class ValidationInvalidCastException : ValidationException
 {

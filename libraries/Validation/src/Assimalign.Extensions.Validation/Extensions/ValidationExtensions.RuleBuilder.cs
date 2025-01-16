@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Assimalign.Extensions.Validation;
 
 using Assimalign.Extensions.Validation.Properties;
 using Assimalign.Extensions.Validation.Internal;
 using Assimalign.Extensions.Validation.Internal.Rules;
-using System.Diagnostics.CodeAnalysis;
 
 
 /// <summary>

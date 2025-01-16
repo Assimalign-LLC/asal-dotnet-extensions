@@ -4,9 +4,6 @@ namespace Assimalign.Extensions.Validation.Internal;
 
 using Assimalign.Extensions.Validation.Properties;
 using Assimalign.Extensions.Validation.Internal.Rules;
-using Assimalign.Extensions.Validation.Internal.Exceptions;
-using Assimalign.Extensions.Validation.Internal.Extensions;
-
 
 internal sealed class ValidationRuleBuilder<T, TValue> : IValidationRuleBuilder<TValue>
 {
@@ -41,7 +38,7 @@ internal sealed class ValidationRuleBuilder<T, TValue> : IValidationRuleBuilder<
             var validationExpression = this.ValidationItem.ToString();
 
             configure.Code = Resources.DefaultValidationErrorCode;
-            configure.Message = string.Format(Resources.DefaultValidationMessageEqualToRule, validationExpression, typeof(TValue).IsSystemValueType(false) ? value : typeof(TValue).Name);
+            configure.Message = string.Format(Resources.DefaultValidationMessageEqualToRule, validationExpression, typeof(TValue).IsValueType ? value : typeof(TValue).Name);
             configure.Source = validationExpression;
         });
     }
@@ -52,7 +49,7 @@ internal sealed class ValidationRuleBuilder<T, TValue> : IValidationRuleBuilder<
         {
             throw new ArgumentNullException(
                 paramName: nameof(configure),
-                message: "The 'configure' parameter cannot be null in: EqualtTo<TArgument>(TArgument value, Action<IValidationError> configure)")
+                message: "The 'configure' parameter cannot be null in: EqualTo<TArgument>(TArgument value, Action<IValidationError> configure)")
             {
                 Source = $"RuleFor[Each]({this.ValidationItem}).EqualTo<{typeof(TValue).Name}>({value}, {configure})"
             };
@@ -91,7 +88,7 @@ internal sealed class ValidationRuleBuilder<T, TValue> : IValidationRuleBuilder<
                 paramName: nameof(configure),
                 message: "The 'configure' parameter cannot be null in: NotEqualTo<TArgument>(TArgument value, Action<IValidationError> configure)")
             {
-                Source = $"RuleFor[Each]({this.ValidationItem}).NotEqulTo<{typeof(TValue).Name}>({value}, {configure})"
+                Source = $"RuleFor[Each]({this.ValidationItem}).NotEqualTo<{typeof(TValue).Name}>({value}, {configure})"
             };
         }
 

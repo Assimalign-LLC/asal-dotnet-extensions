@@ -17,7 +17,6 @@ public interface IMapperProfileBuilder
     /// <param name="configure"></param>
     /// <returns></returns>
     IMapperProfileBuilder CreateProfile<TTarget, TSource>(Action<IMapperActionDescriptor<TTarget, TSource>> configure);
-
     /// <summary>
     /// Builds the collection of configured profiles.
     /// </summary>
